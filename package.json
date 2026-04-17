@@ -23,6 +23,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular/cdk": "^21.2.7",
     "@angular/common": "^20.3.0",
     "@angular/compiler": "^20.3.0",
     "@angular/core": "^20.3.0",
@@ -32,6 +33,7 @@
     "@angular/router": "^20.3.0",
     "@angular/ssr": "^20.3.3",
     "express": "^5.1.0",
+    "idb": "^8.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

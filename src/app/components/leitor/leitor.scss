@@ -1,0 +1,856 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+/* --- TRAVA MESTRE DO COMPONENTE --- */
+:host {
+  display: block;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+.container-biblia {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #1a1a1a; // Fundo escuro para a biblioteca
+  position: relative;
+}
+
+/* --- TELA 1: ESTANTE HORIZONTAL --- */
+.biblioteca-master {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+
+  .titulo-estante {
+    font-family: 'Cinzel', serif;
+    color: #fdfbf7;
+    margin-bottom: 40px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+  }
+}
+
+.estante-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  padding: 90px 50px 60px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 5px;
+  box-sizing: border-box;
+  padding-left: 150px;
+  padding-right: 150px;
+
+  padding-bottom: 80px; // Espaço para o scroll maior
+  scroll-behavior: smooth; // Suaviza o clique nas zonas laterais
+
+  &::-webkit-scrollbar {
+    height: 12px; // Scroll bem mais visível
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+    &:hover {
+      background: #d4af37;
+    } // Brilho de ouro ao interagir
+  }
+}
+
+.livro-lombada {
+  min-width: 130px;
+  height: 400px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 3px 5px 5px 3px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  border-left: 5px solid rgba(0, 0, 0, 0.3);
+
+  &:nth-child(4n + 1) {
+    background-color: #5c1a1a;
+  }
+  &:nth-child(4n + 2) {
+    background-color: #1a2a3a;
+  }
+  &:nth-child(4n + 3) {
+    background-color: #2d3a1a;
+  }
+  &:nth-child(4n + 4) {
+    background-color: #4a3728;
+  }
+
+  .conteudo-lombada {
+    text-align: center;
+    .titulo-lombada {
+      font-family: 'Cinzel', serif;
+      color: #e0d5c1;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      word-wrap: break-word;
+    }
+    .detalhe-lombada {
+      width: 30px;
+      height: 2px;
+      background: rgba(224, 213, 193, 0.2);
+      margin: 15px auto;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-40px);
+    z-index: 10;
+    filter: brightness(1.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* --- TELA 2: LISTAGEM DE CAPÍTULOS --- */
+.grade-selecao {
+  width: 100%;
+  height: 100%;
+  background-color: #fdfbf7;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 60px 20px;
+
+  .grid-capitulos {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 400px;
+  }
+}
+
+.card-capitulo {
+  background: white;
+  border: 1px solid #a88d6c44;
+  padding: 15px;
+  cursor: pointer;
+  font-family: 'Cinzel', serif;
+  transition: 0.3s;
+  &:hover {
+    background: #a88d6c;
+    color: white;
+    transform: translateX(10px);
+  }
+}
+
+/* --- TELA 3: BÍBLIA ABERTA --- */
+.biblioteca-aberta {
+  background: radial-gradient(circle, #2c2c2c 0%, #1a1a1a 100%);
+  display: flex;
+  flex-direction: column; // Muda para coluna para controlar o alinhamento vertical
+  align-items: center;
+  justify-content: flex-start; // Alinha o conteúdo no topo
+  padding: 40px 0 60px; // Adiciona um padding generoso no topo e no FUNDO
+  height: 100vh;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.livro-fisico {
+  width: 90%;
+  max-width: 1200px;
+  height: 85vh;
+  background-color: #fffbf5;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+}
+
+.livro-prime {
+  width: 92%;
+  max-width: 1300px;
+  // Usamos max-height em vez de height fixo para dar flexibilidade
+  height: 82vh;
+  background-color: #f4eee1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 100px rgba(161, 142, 118, 0.1);
+  border-radius: 2px;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: auto;
+
+  // O segredo para centralizar com respiro nas bordas
+  margin: auto;
+  margin-bottom: 40px; // Espaço garantido no fundo
+
+  // Cantoneiras em ouro velho
+  .cantoneira {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #a18e7633;
+    z-index: 10;
+    &.topo-esq {
+      top: 20px;
+      left: 20px;
+      border-right: none;
+      border-bottom: none;
+    }
+    &.topo-dir {
+      top: 20px;
+      right: 20px;
+      border-left: none;
+      border-bottom: none;
+    }
+    &.baixo-esq {
+      bottom: 20px;
+      left: 20px;
+      border-right: none;
+      border-top: none;
+    }
+    &.baixo-dir {
+      bottom: 20px;
+      right: 20px;
+      border-left: none;
+      border-top: none;
+    }
+  }
+}
+
+.biblia-header-prime {
+  padding: 40px 0 20px;
+  text-align: center;
+  flex-shrink: 0;
+
+  .titulo-livro {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    letter-spacing: 8px;
+    color: #3e2723;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .capitulo-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #a18e76;
+    letter-spacing: 4px;
+    margin-top: 10px;
+  }
+
+  .linha-luxo {
+    height: 1px;
+    width: 150px;
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    margin: 15px auto 0;
+  }
+}
+
+.corpo-paginas-prime {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 5%,
+    black 95%,
+    transparent
+  ); // Suaviza as bordas do scroll
+
+  // O vinco central aprimorado
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 40px;
+    transform: translateX(-50%);
+    background: linear-gradient(
+      to right,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.05) 40%,
+      rgba(0, 0, 0, 0.08) 50%,
+      rgba(0, 0, 0, 0.05) 60%,
+      rgba(0, 0, 0, 0) 100%
+    );
+    z-index: 5;
+  }
+}
+
+.pagina-viva {
+  flex: 1;
+  padding: 20px 60px 60px;
+
+  .texto-manuscrito {
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    line-height: 2.1;
+    color: #2c2825;
+    text-align: justify;
+
+    .v-prime {
+      display: inline;
+      margin-right: 6px;
+      opacity: 0;
+      filter: blur(5px);
+      animation: tintaPrime 1s ease-out forwards;
+
+      &:last-child {
+        display: inline-block; // Mudamos para inline-block para o margin-bottom funcionar
+        margin-bottom: 50px; // Cria o respiro final no papel
+        width: 100%; // Garante que o bloco empurre o scroll até o fim
+      }
+    }
+
+    .n-prime {
+      font-weight: 700;
+      color: #a18e76;
+      font-size: 0.85rem;
+      margin-right: 4px;
+      user-select: none;
+    }
+  }
+}
+
+/* Botão Sumário Estilo Prime */
+.btn-prime-sumario {
+  background: #1a1a1a;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 24px; // Padding unificado
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+  // Flexbox para manter o texto e o ícone centralizados perfeitamente
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 45px; // Altura fixa para evitar mudanças devido ao ícone 📜 ou ‹
+  box-sizing: border-box;
+
+  &:hover {
+    background: #a18e76;
+    color: #1a1a1a;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes tintaPrime {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+/* Scroll Customizado Prime */
+.corpo-paginas-prime::-webkit-scrollbar {
+  width: 4px;
+}
+.corpo-paginas-prime::-webkit-scrollbar-thumb {
+  background: #a18e7644;
+  border-radius: 10px;
+}
+
+.corpo-paginas {
+  flex: 1;
+  display: flex;
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: relative;
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  &::before {
+    // Vinco central
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    transform: translateX(-50%);
+    background: linear-gradient(to right, transparent, rgba(0, 0, 0, 0.05), transparent);
+    z-index: 10;
+    pointer-events: none;
+  }
+}
+
+.biblia-header-central {
+  flex-shrink: 0;
+  text-align: center;
+  padding: 30px;
+  background-color: #fffbf5;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  .identificador-livro {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    margin: 0;
+  }
+}
+
+.pagina-individual {
+  flex: 1;
+  padding: 40px 60px;
+  .texto-contínuo {
+    text-align: justify;
+    line-height: 1.9;
+    font-size: 1.1rem;
+    color: #2c2825;
+  }
+}
+
+/* --- NAVEGAÇÃO --- */
+.zona-clique-prime {
+  position: fixed; // Fixa na janela, independente do tamanho do livro
+  top: 0;
+  bottom: 0;
+  width: 10%; // Área de toque lateral generosa
+  z-index: 1000; // Por cima de todas as camadas do livro
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .seta-luxo {
+    font-size: 6rem;
+    color: #a18e76;
+    font-weight: 100;
+    opacity: 0.3; // Fica sutil para não distrair da leitura
+    transition: all 0.3s ease;
+    user-select: none;
+  }
+
+  &:hover {
+    .seta-luxo {
+      opacity: 1;
+      transform: scale(1.2);
+      text-shadow: 0 0 20px rgba(161, 142, 118, 0.4);
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+    &:hover {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.2), transparent);
+    }
+  }
+
+  &.direita {
+    right: 0;
+    &:hover {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.2), transparent);
+    }
+  }
+}
+
+.navegacao-flutuante {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 1500;
+  pointer-events: auto;
+  .btn-prime-sumario {
+    background: #1a1a1a;
+    border: 1px solid #a18e76;
+    color: #fdfbf7;
+    padding: 12px 20px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); // Reforça a sombra para destacar do fundo
+
+    &:hover {
+      background: #a18e76;
+      color: #1a1a1a;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.navegacao-topo-esquerda {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  z-index: 1500;
+  pointer-events: auto;
+
+  .btn-voltar-estante {
+    background: #1a1a1a;
+    border: 1px solid #a18e76;
+    color: #fdfbf7;
+    padding: 12px 24px; // Padding unificado
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+
+    // Flexbox para manter o texto e o ícone centralizados perfeitamente
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 45px; // Altura fixa para evitar mudanças devido ao ícone 📜 ou ‹
+    box-sizing: border-box;
+
+    &:hover {
+      background: #a18e76;
+      color: #1a1a1a;
+      transform: scale(1.05);
+    }
+
+    &:active {
+      transform: scale(0.95);
+    }
+  }
+}
+
+.header-selecao-capitulo {
+  text-align: center;
+  margin-bottom: 60px;
+
+  .titulo-livro-grande {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: #fdfbf7;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    margin: 0;
+  }
+
+  .linha-separadora {
+    height: 1px;
+    width: 100px;
+    background: #a18e76;
+    margin: 20px auto;
+    opacity: 0.5;
+  }
+}
+
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 10vw 100px; // Aumentei o padding inferior para o scroll maior
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 25px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  z-index: 100;
+
+  /* Mágica do Scrollbar Estilizado (Igual aos Livros) */
+  &::-webkit-scrollbar {
+    height: 12px; // Tamanho maior para acessibilidade
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+    transition: background 0.3s;
+
+    &:hover {
+      background: linear-gradient(
+        to right,
+        transparent,
+        #d4af37,
+        transparent
+      ); // Brilho de ouro no hover
+    }
+
+    &:active {
+      cursor: grabbing;
+    }
+  }
+}
+
+.card-capitulo-luxo {
+  min-width: 120px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #fdfbf7;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero {
+      color: #a18e76;
+    }
+  }
+}
+
+/* --- ZONAS DE NAVEGAÇÃO LATERAIS (FLUTUANTES) --- */
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  z-index: 500; // Menor que o botão voltar (1000)
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // O ícone da flecha
+  &::after {
+    font-size: 5rem;
+    color: #a18e76;
+    opacity: 0.4; // Agora ela começa visível, mas suave
+    transition: all 0.3s ease;
+    user-select: none;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5); // Sombra para dar profundidade
+  }
+
+  /* Quando passa o mouse, ela ganha destaque total */
+  &:hover {
+    &::after {
+      opacity: 1;
+      transform: scale(1.2);
+      color: #d4af37; // Cor de ouro no hover
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+    &::after {
+      content: '‹';
+      margin-right: 20px;
+    }
+    &:hover {
+      background: linear-gradient(to right, rgba(161, 142, 118, 0.1), transparent);
+    }
+  }
+
+  &.direita {
+    right: 0;
+    &::after {
+      content: '›';
+      margin-left: 20px;
+    }
+    &:hover {
+      background: linear-gradient(to left, rgba(161, 142, 118, 0.1), transparent);
+    }
+  }
+}
+
+/* --- ANIMAÇÕES --- */
+.versiculo-container {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(5px);
+  animation: revelacaoTinta 1.2s forwards;
+  display: inline;
+}
+
+@keyframes revelacaoTinta {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.label-biblioteca {
+  font-family: 'Cinzel', serif;
+  color: #a18e76;
+  font-size: 0.8rem;
+  letter-spacing: 4px;
+  opacity: 0.6;
+}
+
+@media (max-width: 900px) {
+  /* Remove as flechas laterais (no celular o usuário faz swipe com o dedo) */
+  .zona-navegacao-lateral {
+    display: none !important;
+  }
+
+  /* Muda o alinhamento do container para evitar esmagamento */
+  .biblioteca-master {
+    justify-content: flex-start; /* Começa a organizar do topo para baixo */
+    padding-top: 30px;
+  }
+
+  /* Tira o botão/rótulo do modo "flutuante" e empilha acima do título */
+  .navegacao-topo-esquerda {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center; /* Centraliza o rótulo BIBLIOTECA ou VOLTAR */
+    margin-bottom: 15px;
+  }
+
+  /* Ajusta o tamanho dos títulos para telas pequenas */
+  .titulo-estante {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .header-selecao-capitulo {
+    margin-bottom: 20px;
+    .titulo-livro-grande {
+      font-size: 1.8rem;
+      letter-spacing: 5px;
+    }
+  }
+
+  /* Reduz os livros e o padding do scroll horizontal para caber melhor */
+  .estante-horizontal,
+  .estante-capitulos-horizontal {
+    padding: 10px 5vw 30px;
+  }
+
+  .livro-lombada {
+    height: 320px; /* Livro ligeiramente menor no celular */
+    min-width: 110px;
+  }
+
+  /* -------------------------------------------------- */
+  /* 2. AJUSTES DA TELA DE LEITURA (TEXTO CORRIDO)      */
+  /* -------------------------------------------------- */
+
+  .livro-prime {
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    .cantoneira {
+      display: none;
+    } // Oculta detalhes para maximizar a leitura
+  }
+
+  /* O botão Sumário continua flutuando durante a leitura */
+  .navegacao-flutuante {
+    position: fixed;
+    top: 15px;
+    left: 15px;
+
+    .btn-prime-sumario {
+      padding: 8px 16px;
+      height: 38px;
+      font-size: 0.7rem;
+    }
+  }
+
+  .biblia-header-prime {
+    padding: 70px 20px 20px; // Empurra o título para baixo do botão Sumário
+    .titulo-livro {
+      font-size: 2rem;
+    }
+  }
+
+  /* Mágica do texto corrido (empilha as páginas) */
+  .corpo-paginas-prime {
+    flex-direction: column;
+    &::before {
+      display: none;
+    } // Remove o vinco do meio do livro
+  }
+
+  .pagina-viva {
+    flex: none;
+    padding: 0 25px;
+
+    &.esq {
+      padding-bottom: 0;
+    }
+    &.dir {
+      padding-top: 5px;
+      padding-bottom: 80px;
+    } // Respiro no fim do capítulo
+  }
+
+  .zona-clique-prime {
+    width: 15%;
+    .seta-luxo {
+      font-size: 3.5rem;
+    } // Seta menor para não cobrir o texto
+  }
+}

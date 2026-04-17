@@ -1,0 +1,112 @@
+<div class="container-biblia">
+
+    @if (!bibleService.selectedBook()) {
+    <div class="biblioteca-master fade-in">
+        <nav class="navegacao-topo-esquerda">
+            <h2 class="label-biblioteca">BIBLIOTECA</h2>
+        </nav>
+
+        <div class="zona-navegacao-lateral esquerda" (click)="scrollEstante(-600)"></div>
+        <div class="zona-navegacao-lateral direita" (click)="scrollEstante(600)"></div>
+
+        <h2 class="titulo-estante">Bíblia Sagrada</h2>
+
+        <div class="estante-horizontal" #estanteLivros>
+            @for (livro of bibleService.allBooks(); track livro.name) {
+            <div class="livro-lombada" (click)="bibleService.selectBook(livro)">
+                <div class="conteudo-lombada">
+                    <span class="titulo-lombada">{{ livro.name }}</span>
+                    <div class="detalhe-lombada"></div>
+                </div>
+            </div>
+            }
+        </div>
+    </div>
+    }
+
+    @else if (bibleService.selectedBook() && bibleService.currentChapterIndex() === null) {
+    <div class="biblioteca-master fade-in">
+
+        <nav class="navegacao-topo-esquerda">
+            <button class="btn-voltar-estante" (click)="bibleService.resetNavigation()">
+                ‹ VOLTAR À ESTANTE
+            </button>
+        </nav>
+
+        <div class="zona-navegacao-lateral esquerda" (click)="scrollEstante(-600)"></div>
+        <div class="zona-navegacao-lateral direita" (click)="scrollEstante(600)"></div>
+
+        <header class="header-selecao-capitulo">
+            <h2 class="titulo-livro-grande">{{ bibleService.selectedBook().name }}</h2>
+            <div class="linha-separadora"></div>
+        </header>
+
+        <div class="estante-capitulos-horizontal" #estanteCaps>
+            @for (cap of bibleService.selectedBook().chapters; track $index) {
+            <button class="card-capitulo-luxo" (click)="bibleService.selectChapter($index)">
+                <span class="cap-label">CAPÍTULO</span>
+                <span class="cap-numero">{{ $index + 1 }}</span>
+            </button>
+            }
+        </div>
+    </div>
+    }
+
+    @else {
+    <div class="biblioteca-aberta fade-in">
+
+        <div class="zona-clique-prime esquerda" (click)="bibleService.prevChapter()">
+            <span class="seta-luxo">‹</span>
+        </div>
+
+        <div class="zona-clique-prime direita" (click)="bibleService.nextChapter()">
+            <span class="seta-luxo">›</span>
+        </div>
+
+        <nav class="navegacao-flutuante">
+            <button class="btn-prime-sumario" (click)="bibleService.selectBook(bibleService.selectedBook())">
+                <span class="icon">📜</span> SUMÁRIO
+            </button>
+        </nav>
+
+        <main class="livro-prime">
+            <div class="cantoneira topo-esq"></div>
+            <div class="cantoneira topo-dir"></div>
+            <div class="cantoneira baixo-esq"></div>
+            <div class="cantoneira baixo-dir"></div>
+
+            <header class="biblia-header-prime">
+                <div class="ornamento-superior"></div>
+                <h1 class="titulo-livro">{{ bibleService.selectedBook().name }}</h1>
+                <p class="capitulo-sub">CAPÍTULO {{ bibleService.currentChapterIndex()! + 1 }}</p>
+                <div class="linha-luxo"></div>
+            </header>
+
+            <div class="corpo-paginas-prime">
+                <article class="pagina-viva esq">
+                    <div class="texto-manuscrito">
+                        @for (versiculo of bibleService.currentChapterHalf1(); track $index; let i = $index) {
+                        <span class="v-prime" [style.animation-delay]="(i * 0.05) + 's'">
+                            <sup class="n-prime">{{ i + 1 }}</sup>{{ versiculo }}
+                        </span>
+                        }
+                    </div>
+                </article>
+
+                <article class="pagina-viva dir">
+                    <div class="texto-manuscrito">
+                        @for (versiculo of bibleService.currentChapterHalf2(); track $index; let i = $index) {
+                        <span class="v-prime"
+                            [style.animation-delay]="((bibleService.currentChapterHalf1().length + i) * 0.05) + 's'">
+                            <sup class="n-prime">{{ bibleService.currentChapterHalf1().length + i + 1 }}</sup>{{
+                            versiculo }}
+                        </span>
+                        }
+                    </div>
+                </article>
+            </div>
+        </main>
+    </div>
+    }
+
+</div>

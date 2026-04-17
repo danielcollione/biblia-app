@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; // Altura exata da tela
+  width: 100vw;  // Largura exata da tela
+  overflow: hidden; // NADA scrola no nível do navegador
+  background-color: #d1ccc0; // Cor de fundo da mesa
+}
+
+/* Força o root do Angular a ocupar a tela toda também */
+app-root {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
