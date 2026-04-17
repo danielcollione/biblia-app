@@ -12,12 +12,18 @@
         <h2 class="titulo-estante">Bíblia Sagrada</h2>
 
         <div class="estante-horizontal" #estanteLivros>
-            @for (livro of bibleService.allBooks(); track livro.name) {
+            @for (livro of bibleService.allBooks(); track livro.name; let i = $index; let total = $count) {
             <div class="livro-lombada" (click)="bibleService.selectBook(livro)">
                 <div class="conteudo-lombada">
                     <span class="titulo-lombada">{{ livro.name }}</span>
                     <div class="detalhe-lombada"></div>
                 </div>
+                <app-lombada-livro [class.modal-invertida]="i > (total - 5)" [livro]="{
+                nome: livro.name,
+                resumo: bibleService.getMetadados(livro.name).resumo,
+                imagemUrl: 'images/' + bibleService.limparNomeParaUrl(livro.name) + '.jpeg'
+            }">
+                </app-lombada-livro>
             </div>
             }
         </div>

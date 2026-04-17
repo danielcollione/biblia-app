@@ -1,0 +1,70 @@
+:host {
+  display: block;
+  position: absolute;
+  top: 20px;
+  z-index: 1000;
+  pointer-events: none;
+
+  // POSIÇÃO PADRÃO (Direita)
+  left: 100%; 
+  
+  // QUANDO FOR PARA INVERTER (Esquerda)
+  &.modal-invertida {
+    left: auto;
+    right: 100%; // Cola na esquerda do livro
+
+    .info-modal {
+      margin-left: 0;
+      margin-right: 40px; // Espaço do fio na esquerda
+      transform: translateX(15px); // Desliza do sentido oposto
+
+      &::before {
+        right: auto;
+        left: 100%; // Fio sai da direita da modal para o livro
+      }
+    }
+  }
+}
+
+.info-modal {
+  width: 320px; // Aumentei de 260px para 320px
+  margin-left: 40px;
+  background: #1a1a1a;
+  border: 1px solid #a18e7644;
+  border-radius: 4px;
+  box-shadow: 15px 15px 40px rgba(0,0,0,0.7);
+  
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-15px);
+  transition: all 0.3s ease-out;
+
+  &::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 30px;
+    width: 40px;
+    height: 1px;
+    background: #a18e76;
+  }
+}
+
+// Hover do pai (livro-lombada)
+:host-context(.livro-lombada:hover) .info-modal {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0) !important;
+}
+
+.modal-image img {
+  width: 100%;
+  height: 180px; // Aumentei a altura da imagem da IA
+  object-fit: cover;
+}
+
+.modal-content {
+  padding: 20px; // Mais respiro interno
+  h4 { font-family: 'Cinzel', serif; color: #a18e76; font-size: 1.2rem; }
+  p { color: #ccc; font-size: 0.95rem; line-height: 1.6; }
+}

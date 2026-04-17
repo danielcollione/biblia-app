@@ -2,6 +2,14 @@ import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
+import livrosMetadados from '../../../public/livros-metadados.json';
+
+export interface LivroMetadados {
+  id: number;
+  nome: string;
+  cor: string;
+  resumo: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class BibleService {
@@ -13,6 +21,7 @@ export class BibleService {
   currentChapterIndex = signal<number | null>(null);
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
+  private readonly metadados: LivroMetadados[] = livrosMetadados;
 
   constructor(
     private http: HttpClient,
@@ -27,6 +36,17 @@ export class BibleService {
       });
       this.initDatabase();
     }
+  }
+
+  getMetadados(nomeLivro: string): LivroMetadados {
+    return (
+      this.metadados.find((m) => m.nome === nomeLivro) || {
+        id: 0,
+        nome: nomeLivro,
+        cor: '#4a3728',
+        resumo: '',
+      }
+    );
   }
 
   // Modifique o initDatabase para preencher a lista de livros
@@ -141,5 +161,13 @@ export class BibleService {
 
   private scrollToTop() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  limparNomeParaUrl(nome: string): string {
+    return nome
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '') // Tira acento: Gênesis -> genesis
+      .replace(/\s+/g, '-'); // Tira espaço: 1 Samuel -> 1-samuel
   }
 }
