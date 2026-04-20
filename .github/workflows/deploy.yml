@@ -1,0 +1,30 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Ou o nome da sua branch principal
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a versão que você está usando no Mint
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build -- --configuration production --base-href /
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist/biblia-app/browser # Verifique se este é o caminho da sua pasta dist
+          branch: gh-pages # O GitHub vai criar esta branch sozinho
