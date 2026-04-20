@@ -31,7 +31,7 @@
   { "id": 30, "nome": "Amós", "cor": "#1a2a3a", "resumo": "Justiça social e retidão. O pastor que profetizou contra a opressão dos pobres e a hipocrisia religiosa.", "imagemUrl": "images/amos.webp" },
   { "id": 31, "nome": "Obadias", "cor": "#2d3a1a", "resumo": "O julgamento de Edom. Uma mensagem contra o orgulho e a traição aos irmãos descendentes de Jacó.", "imagemUrl": "images/obadias.webp" },
   { "id": 32, "nome": "Jonas", "cor": "#4a3728", "resumo": "A misericórdia além das fronteiras. O profeta fujão que testemunha o arrependimento da grande cidade de Nínive.", "imagemUrl": "images/jonas.webp" },
-  { "id": 33, "nome": "Miqueias", "cor": "#5c1a1a", "resumo": "O anúncio do nascimento do Messias em Belém e a definição do que Deus exige: justiça, misericórdia e humildade.", "imagemUrl": "images/miqueias.webp" },
+  { "id": 33, "nome": "Miquéias", "cor": "#5c1a1a", "resumo": "O anúncio do nascimento do Messias em Belém e a definição do que Deus exige: justiça, misericórdia e humildade.", "imagemUrl": "images/miqueias.webp" },
   { "id": 34, "nome": "Naum", "cor": "#1a2a3a", "resumo": "O veredito final contra Nínive. A justiça divina manifestada contra a crueldade do império assírio.", "imagemUrl": "images/naum.webp" },
   { "id": 35, "nome": "Habacuque", "cor": "#2d3a1a", "resumo": "O justo viverá pela fé. Um diálogo honesto com Deus sobre a aparente vitória do mal.", "imagemUrl": "images/habacuque.webp" },
   { "id": 36, "nome": "Sofonias", "cor": "#4a3728", "resumo": "O anúncio do julgamento purificador e a promessa de um remanescente que se alegrará no Senhor.", "imagemUrl": "images/sofonias.webp" },
