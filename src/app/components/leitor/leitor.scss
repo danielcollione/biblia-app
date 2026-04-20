@@ -751,6 +751,7 @@
 
   /* Muda o alinhamento do container para evitar esmagamento */
   .biblioteca-master {
+    margin-top: 50px;
     justify-content: flex-start; /* Começa a organizar do topo para baixo */
     padding-top: 30px;
   }
