@@ -26,5 +26,5 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist/biblia-app/browser # Verifique se este é o caminho da sua pasta dist
+          folder: dist/biblia-interativa/browser # Verifique se este é o caminho da sua pasta dist
           branch: gh-pages # O GitHub vai criar esta branch sozinho
