@@ -1,0 +1,32 @@
+export const INTERFACE_TRANSLATIONS: any = {
+  pt: {
+    title: 'Bíblia Sagrada',
+    library: 'Biblioteca',
+    chapters: 'Capítulos',
+    chapter: 'Capítulo',
+    readMore: 'Ler mais',
+    back: 'Voltar',
+    summary: 'Sumário',
+    backShelf: 'Voltar à estante',
+  },
+  en: {
+    title: 'Holy Bible',
+    library: 'Library',
+    chapters: 'Chapters',
+    chapter: 'Chapter',
+    readMore: 'Read more',
+    back: 'Back',
+    summary: 'Summary',
+    backShelf: 'Back to the shelf',
+  },
+  es: {
+    title: 'Santa Biblia',
+    library: 'Biblioteca',
+    chapters: 'Capítulos',
+    chapter: 'Capítulo',
+    readMore: 'Leer más',
+    back: 'Volver',
+    summary: 'Resumen',
+    backShelf: 'Volver al estante',
+  },
+};

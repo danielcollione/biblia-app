@@ -1,13 +1,22 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <title>A Bíblia Revelada</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:4200; 
+               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
+               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+               font-src 'self' https://fonts.gstatic.com;
+               img-src 'self' data: blob:; 
+               connect-src 'self' http://localhost:4200 ws://localhost:4200;">
   <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2" />
 </head>
+
 <body>
   <app-root></app-root>
 </body>
+
 </html>

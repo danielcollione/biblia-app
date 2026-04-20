@@ -1,0 +1,20 @@
+<div class="version-selector-container">
+  <button class="current-version-btn" (click)="toggleMenu()">
+    <span class="icon">🌐</span> 
+    <span class="version-name">{{ (currentVersion$ | async)?.name || 'Selecionar...' }}</span>
+    <span class="arrow" [class.open]="isMenuOpen">▼</span>
+  </button>
+
+  @if (isMenuOpen) {
+    <div class="dropdown-menu">
+      @for (version of availableVersions; track version.id) {
+        <div 
+          class="dropdown-item" 
+          (click)="selectVersion(version.id)"
+          [class.active]="version.id === (currentVersion$ | async)?.id">
+          {{ version.name }}
+        </div>
+      }
+    </div>
+  }
+</div>

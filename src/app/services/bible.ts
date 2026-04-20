@@ -2,18 +2,21 @@ import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
-import livrosMetadados from '../../../public/livros-metadados.json';
+import { BibleVersion, VersionService } from './version/version-service';
 
 export interface LivroMetadados {
   id: number;
   nome: string;
   cor: string;
   resumo: string;
+  imagemUrl: string;
 }
 
 @Injectable({ providedIn: 'root' })
 export class BibleService {
   private dbPromise: Promise<IDBPDatabase> | null = null;
+
+  // SIGNALS DE ESTADO
   currentChapter = signal<any[]>([]);
   loading = signal<boolean>(false);
   allBooks = signal<any[]>([]);
@@ -21,61 +24,116 @@ export class BibleService {
   currentChapterIndex = signal<number | null>(null);
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
-  private readonly metadados: LivroMetadados[] = livrosMetadados;
+
+  // Agora os metadados também são um Signal reativo
+  metadados = signal<LivroMetadados[]>([]);
 
   constructor(
     private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: Object, // Injeta a identidade da plataforma
+    private versionService: VersionService,
+    @Inject(PLATFORM_ID) private platformId: Object,
   ) {
-    // A MÁGICA: Só executa se for o navegador do usuário (ignora o Node.js)
     if (isPlatformBrowser(this.platformId)) {
       this.dbPromise = openDB('BibliaDB', 1, {
         upgrade(db) {
-          db.createObjectStore('versoes');
+          if (!db.objectStoreNames.contains('versoes')) {
+            db.createObjectStore('versoes');
+          }
         },
       });
-      this.initDatabase();
+
+      // Escuta a mudança de versão para carregar Bíblia + Metadados
+      this.versionService.activeVersion$.subscribe((version) => {
+        this.initDatabase(version);
+      });
     }
   }
 
+  // Busca os metadados traduzidos baseando-se no ID ou Nome
   getMetadados(nomeLivro: string): LivroMetadados {
+    const lista = this.metadados();
     return (
-      this.metadados.find((m) => m.nome === nomeLivro) || {
+      lista.find((m) => m.nome.toLowerCase() === nomeLivro.toLowerCase()) || {
         id: 0,
         nome: nomeLivro,
         cor: '#4a3728',
         resumo: '',
+        imagemUrl: 'images/default-book.jpeg',
       }
     );
   }
 
-  // Modifique o initDatabase para preencher a lista de livros
-  private async initDatabase() {
+  private async initDatabase(version: BibleVersion) {
     if (!this.dbPromise) return;
     const db = await this.dbPromise;
-    const biblia = await db.get('versoes', 'nvi');
+
+    this.loading.set(true);
+
+    // 1. CARREGAR METADADOS PRIMEIRO
+    const langCode = version.id.split('_')[0];
+    const metaFile =
+      langCode === 'pt' ? 'livros-metadados.json' : `livros-metadados-${langCode}.json`;
+
+    this.http.get<LivroMetadados[]>(`/${metaFile}`).subscribe({
+      next: (metaData) => {
+        this.metadados.set(metaData); // Atualiza os metadados traduzidos
+
+        // 2. SÓ DEPOIS CARREGA A BÍBLIA
+        this.loadBibleData(db, version);
+      },
+      error: (err) => {
+        console.error(`Erro ao carregar metadados: ${metaFile}`, err);
+        this.loadBibleData(db, version); // Tenta carregar a bíblia mesmo se o meta falhar
+      },
+    });
+  }
+
+  private async loadBibleData(db: IDBPDatabase, version: BibleVersion) {
+    const biblia = await db.get('versoes', version.id);
 
     if (biblia) {
-      this.allBooks.set(biblia); // Já carrega a lista de livros se existir
+      this.syncCurrentData(biblia);
+      this.loading.set(false);
     } else {
-      this.loading.set(true);
-      this.http.get('/biblia.json').subscribe(async (data: any) => {
-        await db.put('versoes', data, 'nvi');
-        this.allBooks.set(data);
-        this.loading.set(false);
+      this.http.get(`/${version.file}`).subscribe({
+        next: async (data: any) => {
+          await db.put('versoes', data, version.id);
+          this.syncCurrentData(data);
+          this.loading.set(false);
+        },
+        error: () => this.loading.set(false),
       });
     }
   }
 
-  // Funções de navegação
+  private syncCurrentData(data: any) {
+    const lastBookName = this.selectedBook()?.name;
+    this.allBooks.set(data);
+
+    if (lastBookName) {
+      const book = data.find((b: any) => b.name === lastBookName);
+      if (book) {
+        this.selectedBook.set(book);
+        if (this.currentChapterIndex() !== null) {
+          this.selectChapter(this.currentChapterIndex()!);
+        }
+      }
+    }
+  }
+
+  // --- Funções de Navegação ---
+
   selectBook(book: any) {
     this.selectedBook.set(book);
-    this.currentChapterIndex.set(null); // Reseta o capítulo ao trocar de livro
-    this.currentChapter.set([]); // Limpa os versículos da tela
-    console.log(book);
+    this.currentChapterIndex.set(null);
+    this.currentChapter.set([]);
   }
 
   selectChapter(index: number) {
+    // Limpa os versículos por um milissegundo para resetar as animações
+    this.currentChapterHalf1.set([]);
+    this.currentChapterHalf2.set([]);
+
     this.currentChapterIndex.set(index);
     const book = this.selectedBook();
 
@@ -83,10 +141,9 @@ export class BibleService {
       const fullChapter = book.chapters[index];
       this.currentChapter.set(fullChapter);
 
-      // MÁGICA: Divide o array de versículos no meio
       const half = Math.ceil(fullChapter.length / 2);
-      this.currentChapterHalf1.set(fullChapter.slice(0, half)); // Versículos 1 a X
-      this.currentChapterHalf2.set(fullChapter.slice(half)); // Versículos X+1 a Fim
+      this.currentChapterHalf1.set(fullChapter.slice(0, half));
+      this.currentChapterHalf2.set(fullChapter.slice(half));
     }
   }
 
@@ -98,17 +155,12 @@ export class BibleService {
 
   async loadChapter(bookName: string, chapterIndex: number) {
     if (!this.dbPromise) return;
-
     const db = await this.dbPromise;
-    const biblia = await db.get('versoes', 'nvi');
+    const version = this.versionService.getCurrentVersion();
+    const biblia = await db.get('versoes', version.id);
 
-    // ESCUDO: Se a bíblia vier undefined, interrompe a função aqui para não dar erro
-    if (!biblia) {
-      console.warn('A Bíblia ainda não foi carregada no banco local.');
-      return;
-    }
+    if (!biblia) return;
 
-    // Agora é seguro usar o .find()
     const livro = biblia.find((l: any) => l.name === bookName);
     if (livro) {
       this.currentChapter.set(livro.chapters[chapterIndex]);
@@ -119,19 +171,15 @@ export class BibleService {
     const books = this.allBooks();
     const currentBook = this.selectedBook();
     const currentIndex = this.currentChapterIndex();
-
     if (!currentBook || currentIndex === null) return;
 
-    // Se ainda há capítulos no livro atual
     if (currentIndex < currentBook.chapters.length - 1) {
       this.selectChapter(currentIndex + 1);
     } else {
-      // Fim do livro: buscar o próximo livro
       const bookIndex = books.findIndex((b) => b.name === currentBook.name);
-      const nextBookIndex = (bookIndex + 1) % books.length; // Volta para o primeiro se for o último
-
+      const nextBookIndex = (bookIndex + 1) % books.length;
       this.selectBook(books[nextBookIndex]);
-      this.selectChapter(0); // Começa no capítulo 1 do novo livro
+      this.selectChapter(0);
     }
     this.scrollToTop();
   }
@@ -140,34 +188,44 @@ export class BibleService {
     const books = this.allBooks();
     const currentBook = this.selectedBook();
     const currentIndex = this.currentChapterIndex();
-
     if (!currentBook || currentIndex === null) return;
 
-    // Se não é o primeiro capítulo
     if (currentIndex > 0) {
       this.selectChapter(currentIndex - 1);
     } else {
-      // Início do livro: voltar para o livro anterior
       const bookIndex = books.findIndex((b) => b.name === currentBook.name);
-      const prevBookIndex = (bookIndex - 1 + books.length) % books.length; // Vai para o último se estiver no primeiro
-
+      const prevBookIndex = (bookIndex - 1 + books.length) % books.length;
       const prevBook = books[prevBookIndex];
       this.selectBook(prevBook);
-      // Vai para o ÚLTIMO capítulo do livro anterior
       this.selectChapter(prevBook.chapters.length - 1);
     }
     this.scrollToTop();
   }
 
   private scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (isPlatformBrowser(this.platformId)) {
+      // O delay de 10ms é o "pulo do gato" para o Angular renderizar antes do scroll
+      setTimeout(() => {
+        // Buscamos especificamente o container que a imagem mostrou estar com scroll
+        const containerLivro = document.querySelector('.corpo-paginas-prime');
+
+        if (containerLivro) {
+          // Reseta o scroll interno dele
+          containerLivro.scrollTo({ top: 0, behavior: 'instant' });
+          containerLivro.scrollTop = 0;
+        }
+
+        // Reseta o scroll global por precaução
+        window.scrollTo(0, 0);
+      }, 10);
+    }
   }
 
   limparNomeParaUrl(nome: string): string {
     return nome
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '') // Tira acento: Gênesis -> genesis
-      .replace(/\s+/g, '-'); // Tira espaço: 1 Samuel -> 1-samuel
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, '-');
   }
 }

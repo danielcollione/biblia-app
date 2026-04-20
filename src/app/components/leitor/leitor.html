@@ -1,15 +1,16 @@
 <div class="container-biblia">
 
     @if (!bibleService.selectedBook()) {
+    <app-version-selector></app-version-selector>
     <div class="biblioteca-master fade-in">
         <nav class="navegacao-topo-esquerda">
-            <h2 class="label-biblioteca">BIBLIOTECA</h2>
+            <h2 class="label-biblioteca">{{versionService.ui().library}}</h2>
         </nav>
 
         <div class="zona-navegacao-lateral esquerda" (click)="scrollEstante(-600)"></div>
         <div class="zona-navegacao-lateral direita" (click)="scrollEstante(600)"></div>
 
-        <h2 class="titulo-estante">Bíblia Sagrada</h2>
+        <h2 class="titulo-estante">{{versionService.ui().title}}</h2>
 
         <div class="estante-horizontal" #estanteLivros>
             @for (livro of bibleService.allBooks(); track livro.name; let i = $index; let total = $count) {
@@ -21,7 +22,7 @@
                 <app-lombada-livro [class.modal-invertida]="i > (total - 5)" [livro]="{
                 nome: livro.name,
                 resumo: bibleService.getMetadados(livro.name).resumo,
-                imagemUrl: 'images/' + bibleService.limparNomeParaUrl(livro.name) + '.jpeg'
+                imagemUrl: bibleService.getMetadados(livro.name).imagemUrl
             }">
                 </app-lombada-livro>
             </div>
@@ -35,7 +36,7 @@
 
         <nav class="navegacao-topo-esquerda">
             <button class="btn-voltar-estante" (click)="bibleService.resetNavigation()">
-                ‹ VOLTAR À ESTANTE
+                ‹ {{versionService.ui().backShelf}}
             </button>
         </nav>
 
@@ -50,7 +51,7 @@
         <div class="estante-capitulos-horizontal" #estanteCaps>
             @for (cap of bibleService.selectedBook().chapters; track $index) {
             <button class="card-capitulo-luxo" (click)="bibleService.selectChapter($index)">
-                <span class="cap-label">CAPÍTULO</span>
+                <span class="cap-label">{{versionService.ui().chapter}}</span>
                 <span class="cap-numero">{{ $index + 1 }}</span>
             </button>
             }
@@ -59,7 +60,7 @@
     }
 
     @else {
-    <div class="biblioteca-aberta fade-in">
+    <div id="topo-livro" #scrollContainer class="biblioteca-aberta fade-in">
 
         <div class="zona-clique-prime esquerda" (click)="bibleService.prevChapter()">
             <span class="seta-luxo">‹</span>
@@ -71,7 +72,7 @@
 
         <nav class="navegacao-flutuante">
             <button class="btn-prime-sumario" (click)="bibleService.selectBook(bibleService.selectedBook())">
-                <span class="icon">📜</span> SUMÁRIO
+                <span class="icon">📜</span> {{versionService.ui().summary}}
             </button>
         </nav>
 
@@ -84,7 +85,7 @@
             <header class="biblia-header-prime">
                 <div class="ornamento-superior"></div>
                 <h1 class="titulo-livro">{{ bibleService.selectedBook().name }}</h1>
-                <p class="capitulo-sub">CAPÍTULO {{ bibleService.currentChapterIndex()! + 1 }}</p>
+                <p class="capitulo-sub">{{versionService.ui().chapter}} {{ bibleService.currentChapterIndex()! + 1 }}</p>
                 <div class="linha-luxo"></div>
             </header>
 

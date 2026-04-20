@@ -19,7 +19,9 @@ export class LombadaLivro implements AfterViewInit{
 
   isInvertida = false;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) {
+    console.log(this.livro);
+  }
 
   ngAfterViewInit() {
     // Usamos um pequeno intervalo para garantir que o layout foi renderizado
