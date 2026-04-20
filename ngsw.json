@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776707239330,
+  "timestamp": 1776707648905,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -106,7 +106,7 @@
     "/index.html": "1ddd51994ae2273c55b5a9c9432d5f1e6ada31bf",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
     "/main-MWGR2ZVL.js": "b4178e87f230093adce6cf07c7e5fbfc1feebf8d",
-    "/manifest.webmanifest": "b66f04938bedd783104d715f8079c34f9ed2e2af",
+    "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-HIEETOPY.css": "00d4800a808d10beb582b3f373f1368a2bae3742"
   },
   "navigationUrls": [
