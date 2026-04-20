@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776711652192,
+  "timestamp": 1776713003765,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -62,6 +62,7 @@
         "/images/lamentacoes.webp",
         "/images/levitico.webp",
         "/images/malaquias.webp",
+        "/images/mateus.webp",
         "/images/miqueias.webp",
         "/images/naum.webp",
         "/images/neemias.webp",
@@ -115,6 +116,7 @@
     "/images/lamentacoes.webp": "a3cdaba4f476b63d04e445bb1f95672046afb81d",
     "/images/levitico.webp": "a536c4f38bc0caa0ffdac43dd7b51b46873193f2",
     "/images/malaquias.webp": "8f14f099f2181cdea366fd339ce521cb060d7c10",
+    "/images/mateus.webp": "b6fd4d6bc373ce452bf993bee8746c1169a9991f",
     "/images/miqueias.webp": "bf071b98083162ebe04e0a3b1630428d4cedb275",
     "/images/naum.webp": "7cd99e6535fb5eae357cf4871be36d8c84c59881",
     "/images/neemias.webp": "17a5d2e87c3dae1e2d8b19afa11b9211d5ed078f",
