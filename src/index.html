@@ -12,8 +12,18 @@
                font-src 'self' https://fonts.gstatic.com;
                img-src 'self' data: blob:; 
                connect-src 'self' http://localhost:4200 ws://localhost:4200;">
-  <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2"/>
+  <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2" />
   <link rel="manifest" href="manifest.webmanifest">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9JZVVPYX8M"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-9JZVVPYX8M');
+  </script>
 </head>
 
 <body>
