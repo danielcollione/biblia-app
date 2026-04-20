@@ -1,4 +1,4 @@
-import { Injectable, signal, Inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, signal, Inject, PLATFORM_ID, computed } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
@@ -24,6 +24,20 @@ export class BibleService {
   currentChapterIndex = signal<number | null>(null);
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
+
+  searchTerm = signal<string>('');
+
+  filteredBooks = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const books = this.allBooks();
+    
+    if (!term) return books;
+
+    return books.filter(livro => 
+      livro.name.toLowerCase().includes(term) || 
+      this.getMetadados(livro.name).nome.toLowerCase().includes(term)
+    );
+  });
 
   // Agora os metadados também são um Signal reativo
   metadados = signal<LivroMetadados[]>([]);
@@ -61,6 +75,10 @@ export class BibleService {
         imagemUrl: 'images/default-book.webp',
       }
     );
+  }
+
+  setSearchTerm(value: string) {
+    this.searchTerm.set(value);
   }
 
   private async initDatabase(version: BibleVersion) {
@@ -127,6 +145,7 @@ export class BibleService {
     this.selectedBook.set(book);
     this.currentChapterIndex.set(null);
     this.currentChapter.set([]);
+    this.searchTerm.set('');;
   }
 
   selectChapter(index: number) {

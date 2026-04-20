@@ -8,6 +8,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     back: 'Voltar',
     summary: 'Sumário',
     backShelf: 'Voltar à estante',
+    noResult: 'Nenhum livro encontrado com o termo ',
+    searchPlaceholder: 'Pesquisar livro...',
   },
   en: {
     title: 'Holy Bible',
@@ -18,6 +20,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     back: 'Back',
     summary: 'Summary',
     backShelf: 'Back to the shelf',
+    noResult: 'No book found with the term ',
+    searchPlaceholder: 'Search book...',
   },
   es: {
     title: 'Santa Biblia',
@@ -28,5 +32,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     back: 'Volver',
     summary: 'Resumen',
     backShelf: 'Volver al estante',
+    noResult: 'No se encontró ningún libro con el término ',
+    searchPlaceholder: 'Buscar libro...',
   },
 };

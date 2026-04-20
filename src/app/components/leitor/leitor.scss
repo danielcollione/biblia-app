@@ -512,6 +512,7 @@
   left: 40px;
   z-index: 1500;
   pointer-events: auto;
+  margin-left: 130px;
 
   .btn-voltar-estante {
     background: #1a1a1a;
@@ -542,6 +543,13 @@
     &:active {
       transform: scale(0.95);
     }
+  }
+
+  @media (max-width: 768px) {
+    flex-direction: column; // Empilha os elementos verticalmente
+    align-items: flex-start; // Alinha tudo à esquerda
+    gap: 12px; // Espaço entre "BIBLIOTECA" e o Input
+    width: 100%;
   }
 }
 
@@ -858,4 +866,124 @@
 
 .estante-de-livros {
   display: flex;
+}
+
+.selo-luxo {
+  position: absolute;
+  bottom: 40px; // Subi um pouco mais para dar destaque
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.7;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .sigla-latim {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem; // Tamanho maior e legível
+    color: #a18e76;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .divisor-selo {
+    width: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a18e76, transparent);
+    margin: 6px 0;
+  }
+
+  .icone-testamento {
+    width: 32px; // Ícone bem maior
+    height: 32px;
+
+    svg {
+      fill: #a18e76;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+    }
+  }
+}
+
+// Efeito de destaque no Hover do livro
+.livro-lombada:hover {
+  .selo-luxo {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.1);
+
+    .sigla-latim {
+      color: #d4c3ab; // Brilho no dourado ao passar o mouse
+    }
+
+    svg {
+      fill: #d4c3ab;
+    }
+  }
+}
+
+.busca-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-busca {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(161, 142, 118, 0.3); // Cor dourada fosca
+  color: #a18e76;
+  font-family: 'Cinzel', serif;
+  padding: 8px 30px 8px 10px;
+  font-size: 1.2rem;
+  outline: none;
+  width: 250px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    width: 300px;
+    border-bottom-color: #a18e76;
+    background: rgba(161, 142, 118, 0.05);
+  }
+
+  &::placeholder {
+    color: rgba(161, 142, 118, 0.4);
+    font-style: italic;
+  }
+
+  @media (max-width: 768px) {
+    width: 100% !important; // Ocupa 100% da largura abaixo da string
+    max-width: none; // Remove limitações de tamanho
+    font-size: 1rem; // Melhora a leitura no celular
+    padding: 10px 0; // Aumenta a área de toque
+  }
+}
+.icone-busca {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  // Alvo direto no SVG e no PATH interno
+  svg {
+    width: 18px;
+    height: 18px;
+
+    path {
+      fill: #a18e76 !important; /* Força o dourado por cima de qualquer regra */
+    }
+  }
+}
+
+.busca-vazia {
+  font-family: 'Cinzel', serif;
+  color: #a18e76;
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  opacity: 0.7;
+  letter-spacing: 2px;
 }

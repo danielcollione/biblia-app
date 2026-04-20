@@ -7,23 +7,6 @@
 
   // POSIÇÃO PADRÃO (Direita)
   left: 100%; 
-  
-  // QUANDO FOR PARA INVERTER (Esquerda)
-  &.modal-invertida {
-    left: auto;
-    right: 100%; // Cola na esquerda do livro
-
-    .info-modal {
-      margin-left: 0;
-      margin-right: 40px; // Espaço do fio na esquerda
-      transform: translateX(15px); // Desliza do sentido oposto
-
-      &::before {
-        right: auto;
-        left: 100%; // Fio sai da direita da modal para o livro
-      }
-    }
-  }
 }
 
 .info-modal {
