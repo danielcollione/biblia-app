@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776705764898,
+  "timestamp": 1776706312922,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -27,14 +27,13 @@
         "ignoreVary": true
       },
       "urls": [
-        "/icons/icon-128x128.png",
-        "/icons/icon-144x144.png",
-        "/icons/icon-152x152.png",
-        "/icons/icon-192x192.png",
-        "/icons/icon-384x384.png",
-        "/icons/icon-512x512.png",
-        "/icons/icon-72x72.png",
-        "/icons/icon-96x96.png",
+        "/icons/maskable_icon_x128.png",
+        "/icons/maskable_icon_x192.png",
+        "/icons/maskable_icon_x384.png",
+        "/icons/maskable_icon_x48.png",
+        "/icons/maskable_icon_x512.png",
+        "/icons/maskable_icon_x72.png",
+        "/icons/maskable_icon_x96.png",
         "/images/1-cronicas.webp",
         "/images/1-reis.webp",
         "/images/1-samuel.webp",
@@ -69,14 +68,13 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
-    "/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
-    "/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
-    "/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
-    "/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
-    "/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
-    "/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
-    "/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/icons/maskable_icon_x128.png": "f5bcd2a79c9c76cc10da9fea66f8b6b7ed2eb9b5",
+    "/icons/maskable_icon_x192.png": "f075c8b5a14529898772c60e488c7735f211606d",
+    "/icons/maskable_icon_x384.png": "4e271ccb49fa1e01b66ab755a58b5ce122ab7bde",
+    "/icons/maskable_icon_x48.png": "73c0aff511a2a57f3a306ad6ee3933bdb9f23c32",
+    "/icons/maskable_icon_x512.png": "fccacd8c5f5576dce956b90135f7ad76bb61fe91",
+    "/icons/maskable_icon_x72.png": "8c5b3631626d5a0da097d3924553511b68e65fad",
+    "/icons/maskable_icon_x96.png": "39a372cd9ca7077c6326808f7f086df54aba0272",
     "/images/1-cronicas.webp": "6bc2a0d3882b16fc59f0656f383fbda36f59e47f",
     "/images/1-reis.webp": "dff399738931b563cc66ec92be124748923a35ff",
     "/images/1-samuel.webp": "3595855cdb2510c4c45c91e6f5a3841c1a0bd9b1",
@@ -108,7 +106,7 @@
     "/index.html": "fa4bb02cd150800628a047aed95f952571588b1c",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
     "/main-UVRFVJ4H.js": "64e92553a49d528e17c19ac12ae905af9f83b93f",
-    "/manifest.webmanifest": "ce9df1cf527f9bb1f34cb427efe9229cfdba05d1",
+    "/manifest.webmanifest": "b66f04938bedd783104d715f8079c34f9ed2e2af",
     "/styles-HIEETOPY.css": "00d4800a808d10beb582b3f373f1368a2bae3742"
   },
   "navigationUrls": [
