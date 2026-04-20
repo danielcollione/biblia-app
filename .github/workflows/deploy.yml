@@ -18,7 +18,7 @@ jobs:
           node-version: '20' # Use a versão que você está usando no Mint
 
       - name: Install dependencies
-        run: npm install
+        run: npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build -- --configuration production --base-href /
