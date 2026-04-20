@@ -27,13 +27,15 @@
 }
 
 .info-modal {
-  width: 320px; // Aumentei de 260px para 320px
+  width: 320px;
   margin-left: 40px;
   background: #1a1a1a;
   border: 1px solid #a18e7644;
   border-radius: 4px;
   box-shadow: 15px 15px 40px rgba(0,0,0,0.7);
   
+  // GARANTE QUE FIQUE ESCONDIDO POR PADRÃO
+  display: none; 
   opacity: 0;
   visibility: hidden;
   transform: translateX(-15px);
@@ -47,6 +49,20 @@
     width: 40px;
     height: 1px;
     background: #a18e76;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  
+  .info-modal {
+    display: block; // Só existe como elemento no Desktop
+  }
+
+  // Hover do pai (livro-lombada) só funciona no Desktop
+  :host-context(.livro-lombada:hover) .info-modal {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0) !important;
   }
 }
 
