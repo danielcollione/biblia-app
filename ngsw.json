@@ -1,0 +1,133 @@
+{
+  "configVersion": 1,
+  "timestamp": 1776705764898,
+  "index": "/index.csr.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/index.csr.html",
+        "/index.html",
+        "/main-UVRFVJ4H.js",
+        "/manifest.webmanifest",
+        "/styles-HIEETOPY.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/icons/icon-128x128.png",
+        "/icons/icon-144x144.png",
+        "/icons/icon-152x152.png",
+        "/icons/icon-192x192.png",
+        "/icons/icon-384x384.png",
+        "/icons/icon-512x512.png",
+        "/icons/icon-72x72.png",
+        "/icons/icon-96x96.png",
+        "/images/1-cronicas.webp",
+        "/images/1-reis.webp",
+        "/images/1-samuel.webp",
+        "/images/2-cronicas.webp",
+        "/images/2-reis.webp",
+        "/images/2-samuel.webp",
+        "/images/cantico-dos-canticos.webp",
+        "/images/daniel.webp",
+        "/images/deuteronomio.webp",
+        "/images/eclesiastes.webp",
+        "/images/esdras.webp",
+        "/images/ester.webp",
+        "/images/exodo.webp",
+        "/images/ezequiel.webp",
+        "/images/genesis.webp",
+        "/images/isaias.webp",
+        "/images/jeremias.webp",
+        "/images/jo.webp",
+        "/images/josue.webp",
+        "/images/juizes.webp",
+        "/images/lamentacoes.webp",
+        "/images/levitico.webp",
+        "/images/neemias.webp",
+        "/images/numeros.webp",
+        "/images/proverbios.webp",
+        "/images/rute.webp",
+        "/images/salmos.webp",
+        "/logo-sem-fundo.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/icons/icon-128x128.png": "f912963bdc6d5a38d8f1dd0afbaab2ce8d657acb",
+    "/icons/icon-144x144.png": "b155fd5f2fd5d2ea7760721063003c4cd95fd783",
+    "/icons/icon-152x152.png": "eae6e0f0c8afb8aaae339e2a569b43e9238e5e6c",
+    "/icons/icon-192x192.png": "15c4180454633880d98674aa7394656196c91584",
+    "/icons/icon-384x384.png": "94a915751ef6c9282df9aea405ad679230631814",
+    "/icons/icon-512x512.png": "1de182f76f7329dfa8f9fcdd1fdcdd695bea6a99",
+    "/icons/icon-72x72.png": "aa88a6096bd973be7f6d7a5489bfa6bc2463f8c4",
+    "/icons/icon-96x96.png": "7fb8f59c30ce2ff12c700321a0b39e14b3dc8f95",
+    "/images/1-cronicas.webp": "6bc2a0d3882b16fc59f0656f383fbda36f59e47f",
+    "/images/1-reis.webp": "dff399738931b563cc66ec92be124748923a35ff",
+    "/images/1-samuel.webp": "3595855cdb2510c4c45c91e6f5a3841c1a0bd9b1",
+    "/images/2-cronicas.webp": "70f6e11acbbb2e46faecde307c747f37c6681c64",
+    "/images/2-reis.webp": "8ac81da8147642abd52efb5bc8f7fa1d9ecbc4b7",
+    "/images/2-samuel.webp": "de89325f20c9b7580afd92eed87e4dc434ddf90a",
+    "/images/cantico-dos-canticos.webp": "408a0c9b2a223c850a5cdaa13c5fa80fabc45eab",
+    "/images/daniel.webp": "cf5f7c623a4fa5b684ca85c6a9898c7aa32f29b0",
+    "/images/deuteronomio.webp": "b081b8ce71eb2f8aad67cbbb0c3b2a3a0b7f90b5",
+    "/images/eclesiastes.webp": "a94c2da7423026d63997f5987412378781721bcc",
+    "/images/esdras.webp": "69617e6b1ee7782372344a6ec25f69d4fef98fde",
+    "/images/ester.webp": "e0934fc92a2aecfaa2ad62ca6fd29bde2e9daf97",
+    "/images/exodo.webp": "f497849ae4dbd43763729248ac06ba149e6de631",
+    "/images/ezequiel.webp": "85fb5d5c25a197a190fb0563ee9634f519218810",
+    "/images/genesis.webp": "eef33fdda0f4e2b487412a0066e51dc3d3d1b679",
+    "/images/isaias.webp": "18907be9865dde0d3f3ad047afba919c8af105f4",
+    "/images/jeremias.webp": "68d3491045c4cb0aff25433f143a3be7c112be72",
+    "/images/jo.webp": "f59cff2fae06f7421f58055176a0472620bca8fc",
+    "/images/josue.webp": "7c5e0cabf6f2cfd7fcf92a1604036d025e16257e",
+    "/images/juizes.webp": "b699aab138720184351baebb0b1866fbeb060124",
+    "/images/lamentacoes.webp": "a3cdaba4f476b63d04e445bb1f95672046afb81d",
+    "/images/levitico.webp": "a536c4f38bc0caa0ffdac43dd7b51b46873193f2",
+    "/images/neemias.webp": "17a5d2e87c3dae1e2d8b19afa11b9211d5ed078f",
+    "/images/numeros.webp": "0c03f2ad7def23f36590ea520ec37e3bb152fecd",
+    "/images/proverbios.webp": "45a9c46079d19cc8ef1c0ba416684b491b59a1bc",
+    "/images/rute.webp": "c2358cd090e2fd7e34dc25b75e871daab8c1c620",
+    "/images/salmos.webp": "de20a9887c288be0981b3958a0262a503db739e0",
+    "/index.csr.html": "d510cc25edc1ab6d05aa3ddef0a0efb5c0ba6c16",
+    "/index.html": "fa4bb02cd150800628a047aed95f952571588b1c",
+    "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
+    "/main-UVRFVJ4H.js": "64e92553a49d528e17c19ac12ae905af9f83b93f",
+    "/manifest.webmanifest": "ce9df1cf527f9bb1f34cb427efe9229cfdba05d1",
+    "/styles-HIEETOPY.css": "00d4800a808d10beb582b3f373f1368a2bae3742"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
