@@ -53,12 +53,12 @@ export class BibleService {
   getMetadados(nomeLivro: string): LivroMetadados {
     const lista = this.metadados();
     return (
-      lista.find((m) => m.nome.toLowerCase() === nomeLivro.toLowerCase()) || {
+      lista.find((m) => m.nome.toLowerCase() === nomeLivro.toLowerCase() || m.nome.toLowerCase().includes(nomeLivro.toLowerCase())) || {
         id: 0,
         nome: nomeLivro,
         cor: '#4a3728',
         resumo: '',
-        imagemUrl: 'images/default-book.jpeg',
+        imagemUrl: 'images/default-book.webp',
       }
     );
   }
