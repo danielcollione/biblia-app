@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776793270997,
+  "timestamp": 1776794894834,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/index.csr.html",
         "/index.html",
-        "/main-CLI6PBT4.js",
+        "/main-G4BCTCHI.js",
         "/manifest.webmanifest",
         "/styles-DWH5UQXE.css"
       ],
@@ -138,10 +138,10 @@
     "/images/salmos.webp": "de20a9887c288be0981b3958a0262a503db739e0",
     "/images/sofonias.webp": "14aef57052c5bc85074d73437768ed19116c3a7a",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "d5ab56190e2222dc89217351544d1993144fcae6",
-    "/index.html": "4e58ef211a6cb18271b352dabd471e0df17cb6a7",
+    "/index.csr.html": "cfb348df5500cf61780d4202c414df2996bf67b4",
+    "/index.html": "4aec51f8da37878c19f3cc986ee807d90d5f5377",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-CLI6PBT4.js": "a20ade10a89860b5984b2d9667b117384e162901",
+    "/main-G4BCTCHI.js": "6817ae509abb6ea812f43a2ff4f51f4be16be2d5",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
   },
