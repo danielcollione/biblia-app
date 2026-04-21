@@ -29,5 +29,6 @@ export class VersionSelectorComponent implements OnInit {
   selectVersion(versionId: string): void {
     this.versionService.setVersion(versionId);
     this.isMenuOpen = false; // Fecha o menu após selecionar
+    window.location.reload();
   }
 }

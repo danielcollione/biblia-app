@@ -2,16 +2,98 @@
 <html lang="en">
 
 <head>
+  <style>
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .splash-logo {
+      width: 150px;
+      /* Ajuste o tamanho conforme achar melhor */
+      height: auto;
+      margin-bottom: 25px;
+      animation: fadeInPulse 2.5s infinite ease-in-out;
+    }
+
+    .splash-text {
+      font-family: 'Cinzel', serif;
+      color: #a18e76;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .loading-bar {
+      width: 100px;
+      height: 1px;
+      background: rgba(161, 142, 118, 0.2);
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #a18e76;
+      animation: slideProgress 1.5s infinite linear;
+    }
+
+    @keyframes fadeInPulse {
+      0% {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+    }
+
+    @keyframes slideProgress {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
   <meta charset="utf-8">
   <title>The Unveiled Bible</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:4200; 
-               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-               font-src 'self' https://fonts.gstatic.com;
-               img-src 'self' data: blob:; 
-               connect-src 'self' http://localhost:4200 ws://localhost:4200;">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self'; 
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
+  connect-src 'self' https://*.google-analytics.com https://*.google.com https://*.google https://*.doubleclick.net http://localhost:4200 ws://localhost:4200;
+  frame-src 'self' https://*.google.com https://*.google https://*.doubleclick.net https://*.googlesyndication.com;
+">
   <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2" />
   <link rel="manifest" href="manifest.webmanifest">
 
@@ -30,92 +112,12 @@
 </head>
 
 <body>
+  <div id="pwa-splash" class="splash-screen" ngSkipHydration>
+    <img src="./logo-sem-fundo.png" alt="The Unveiled Bible" class="splash-logo">
+    <div class="splash-text">The Unveiled Bible</div>
+    <div class="loading-bar"></div>
+  </div>
   <app-root>
-
-    <style>
-      .splash-screen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        background-color: #1a1a1a;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-      }
-
-      .splash-logo {
-        width: 150px;
-        /* Ajuste o tamanho conforme achar melhor */
-        height: auto;
-        margin-bottom: 25px;
-        animation: fadeInPulse 2.5s infinite ease-in-out;
-      }
-
-      .splash-text {
-        font-family: 'Cinzel', serif;
-        color: #a18e76;
-        font-size: 1.4rem;
-        letter-spacing: 4px;
-        text-transform: uppercase;
-        text-align: center;
-      }
-
-      .loading-bar {
-        width: 100px;
-        height: 1px;
-        background: rgba(161, 142, 118, 0.2);
-        margin-top: 30px;
-        position: relative;
-        overflow: hidden;
-      }
-
-      .loading-bar::after {
-        content: '';
-        position: absolute;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: #a18e76;
-        animation: slideProgress 1.5s infinite linear;
-      }
-
-      @keyframes fadeInPulse {
-        0% {
-          opacity: 0.6;
-          transform: scale(0.98);
-        }
-
-        50% {
-          opacity: 1;
-          transform: scale(1);
-        }
-
-        100% {
-          opacity: 0.6;
-          transform: scale(0.98);
-        }
-      }
-
-      @keyframes slideProgress {
-        0% {
-          left: -100%;
-        }
-
-        100% {
-          left: 100%;
-        }
-      }
-    </style>
-
-    <div class="splash-screen">
-      <img src="logo-sem-fundo.png" alt="The Unveiled Bible" class="splash-logo">
-      <div class="splash-text">The Unveiled Bible</div>
-      <div class="loading-bar"></div>
-    </div>
   </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
