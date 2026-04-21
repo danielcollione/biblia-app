@@ -22,7 +22,7 @@ export class Landing implements OnInit {
 
   setSeoTags() {
     // Título focado em Keywords Internacionais
-    this.titleService.setTitle('The Unveiled Bible | Immersive Biblical Studies & Archaeology');
+    this.titleService.setTitle('The Unveiled Bible | Immersive Biblical Studies');
 
     // Descrição em inglês para o Google Global
     this.metaService.updateTag({

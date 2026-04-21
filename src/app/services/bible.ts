@@ -3,6 +3,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
 import { BibleVersion, VersionService } from './version/version-service';
+import { Meta, Title } from '@angular/platform-browser';
 
 export interface LivroMetadados {
   id: number;
@@ -47,6 +48,8 @@ export class BibleService {
     private http: HttpClient,
     private versionService: VersionService,
     @Inject(PLATFORM_ID) private platformId: Object,
+    private titleService: Title,
+    private metaService: Meta,
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.dbPromise = openDB('BibliaDB', 1, {
@@ -151,6 +154,7 @@ export class BibleService {
     this.currentChapterIndex.set(null);
     this.currentChapter.set([]);
     this.searchTerm.set('');
+    this.updateSEO(book, 1);
   }
 
   selectChapter(index: number) {
@@ -263,5 +267,45 @@ export class BibleService {
 
     // Se o índice for 39 ou maior (Mateus em diante), é NT
     return indexOriginal >= 39;
+  }
+
+  updateSEO(bookName: string, chapter: number) {
+    const displayTitle = `Holy Bible | The Unveiled Bible`;
+
+    // Atualiza o Título da Aba
+    this.titleService.setTitle(displayTitle);
+
+    // Meta Tags em Inglês para Indexação Global
+    this.metaService.updateTag({
+      name: 'description',
+      content: `Read and study ${bookName}, Chapter ${chapter + 1} online. Explore the historical context and deep spiritual insights of the Holy Scriptures on The Unveiled Bible.`,
+    });
+
+    // Open Graph (Redes Sociais)
+    this.metaService.updateTag({ property: 'og:title', content: displayTitle });
+    this.metaService.updateTag({
+      property: 'og:description',
+      content: `Immersive reading of ${bookName} ${chapter + 1}.`,
+    });
+    this.injectJSONLD(bookName, chapter);
+  }
+
+  injectJSONLD(book: string, chapter: number) {
+    const script = document.getElementById('bible-jsonld') || document.createElement('script');
+    script.id = 'bible-jsonld';
+    (script as HTMLScriptElement).type = 'application/ld+json';
+    script.innerHTML = JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Book',
+      name: 'The Holy Bible',
+      abstract: `Reading ${book} chapter ${chapter + 1}`,
+      publisher: {
+        '@type': 'Organization',
+        name: 'The Unveiled Bible',
+      },
+    });
+    if (!document.getElementById('bible-jsonld')) {
+      document.head.appendChild(script);
+    }
   }
 }

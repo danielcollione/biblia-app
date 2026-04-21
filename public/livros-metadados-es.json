@@ -51,7 +51,7 @@
   { "id": 50, "nome": "Philippians", "cor": "#2d3a1a", "resumo": "Carta de gozo escrita desde la prisión, alentando el contentamiento.", "imagemUrl": "images/filipenses.webp" },
   { "id": 51, "nome": "Colossians", "cor": "#4a3728", "resumo": "La preeminencia de Cristo y nuestra plenitud en Él.", "imagemUrl": "images/colossenses.webp" },
   { "id": 52, "nome": "1 Thessalonians", "cor": "#5c1a1a", "resumo": "Ánimo para una iglesia joven y enseñanzas sobre la segunda venida.", "imagemUrl": "images/1-tessalonicenses.webp" },
-  { "id": 53, "nome": "2 Thessalonians", "cor": "#1a2a3a", "resumo": "Clarificación sobre el 'Día del Señor' y llamado a la firmeza.", "imagemUrl": "images/2-tessalonicenses.webp" },
+  { "id": 53, "nome": "2 Thessalonians", "cor": "#1a2a3a", "resumo": "Clarificación sobre el 'Día del Señor' y llamado a la firmeza.", "imagemUrl": "images/1-tessalonicenses.webp" },
   { "id": 54, "nome": "1 Timothy", "cor": "#2d3a1a", "resumo": "Instrucciones para el liderazgo de la iglesia y la sana doctrina.", "imagemUrl": "images/1-timoteo.webp" },
   { "id": 55, "nome": "2 Timothy", "cor": "#4a3728", "resumo": "Última carta de Pablo, instando a la fidelidad al evangelio.", "imagemUrl": "images/2-timoteo.webp" },
   { "id": 56, "nome": "Tito", "cor": "#5c1a1a", "resumo": "Guía sobre el liderazgo y la vida piadosa en la isla de Creta.", "imagemUrl": "images/tito.webp" },
