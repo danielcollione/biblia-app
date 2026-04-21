@@ -2,7 +2,7 @@ export const INTERFACE_TRANSLATIONS: any = {
   pt: {
     jornadaAlemdaLetra: 'Jornada Além da Escrita',
     unveiledBible: 'A BÍBLIA REVELADA',
-    title: 'Bíblia Sagrada',
+    title: 'Bíblia',
     library: 'Biblioteca',
     chapters: 'Capítulos',
     chapter: 'Capítulo',
@@ -27,7 +27,7 @@ export const INTERFACE_TRANSLATIONS: any = {
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
     unveiledBible: 'THE UNVEILED BIBLE',
-    title: 'Holy Bible',
+    title: 'Bible',
     library: 'Library',
     chapters: 'Chapters',
     chapter: 'Chapter',
@@ -52,7 +52,7 @@ export const INTERFACE_TRANSLATIONS: any = {
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
     unveiledBible: 'LA BIBLIA REVELADA',
-    title: 'Santa Biblia',
+    title: 'Biblia',
     library: 'Biblioteca',
     chapters: 'Capítulos',
     chapter: 'Capítulo',

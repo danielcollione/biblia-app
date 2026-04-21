@@ -7,15 +7,21 @@
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1000;
+  // Aumentamos de 1000 para 10000 para garantir que fique acima de qualquer card ou livro
+  z-index: 10000 !important;
   background: transparent;
-  padding: 25px 5%; // Um pouco mais de respiro no topo
+  padding: 25px 5%;
+
+  // Garante que o container do header não bloqueie cliques no que está atrás,
+  // mas que seus filhos (links e botões) funcionem.
+  pointer-events: none;
 }
 
 .header-content {
+  pointer-events: auto; // Reativa os cliques apenas para o conteúdo real do menu
   display: flex;
-  justify-content: space-between; // Joga um para cada ponta
-  align-items: center; // Alinha verticalmente na mesma linha
+  justify-content: space-between;
+  align-items: center;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -98,16 +104,51 @@
   cursor: pointer;
 }
 
+.nav-right {
+  margin-right: 40px;
+}
+
 // RESPONSIVIDADE SIMPLES
 @media (max-width: 768px) {
+  .logo-left {
+    margin-left: 10px;
+  }
+
+  .main-header {
+    // Reduzimos o padding lateral para quase nada para o ícone não cair
+    padding: 15px 2% !important;
+  }
+
+  .header-content {
+    // Garante que o container ocupe 100% da largura sem sobras
+    width: 100%;
+    justify-content: space-between;
+    gap: 5px;
+  }
+
   .nav-links {
-    gap: 15px;
+    // Gap bem curto para caber tudo na mesma linha
+    gap: 10px !important;
+
     li a {
-      font-size: 0.7rem;
-      letter-spacing: 1px;
+      font-size: 1rem;
+      letter-spacing: 1px; // Diminuir o espaçamento de 3px para 1px salva muito espaço
     }
   }
+
   .header-logo {
-    height: 35px;
+    height: 30px !important; // Logo menor para sobrar espaço para o menu
+  }
+
+  .lang-selector {
+    display: flex;
+    align-items: center;
+    // Pequena margem à direita para o ícone não colar no vidro do celular
+    margin-right: 5px;
+
+    app-version-selector {
+      display: block;
+      width: 20px; // Força uma largura mínima para o componente ser renderizado
+    }
   }
 }

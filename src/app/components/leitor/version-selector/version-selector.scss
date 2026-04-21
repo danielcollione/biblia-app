@@ -2,6 +2,11 @@
 
 :host {
   font-family: 'Cinzel', serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  min-width: 20px;
 }
 
 .version-selector-container {
@@ -41,6 +46,7 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
   overflow: hidden;
   animation: fadeInDown 0.2s ease-out;
+  z-index: 999;
 }
 
 .dropdown-item {
