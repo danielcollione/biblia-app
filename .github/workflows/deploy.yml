@@ -3,7 +3,10 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches:
-      - main  # Ou o nome da sua branch principal
+      - main
+
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
@@ -15,16 +18,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Use a versão que você está usando no Mint
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install --legacy-peer-deps
 
       - name: Build
-        run: npm run build -- --configuration production --base-href /
+        # Adicionei o comando explícito de prerender para garantir a geração das rotas estáticas
+        run: npx ng build --configuration production --base-href /
+
+      - name: Fix for GitHub Pages (404 workaround)
+        # Como o GitHub Pages não lida bem com rotas SPA sem SSR,
+        # copiamos o index.html para 404.html para evitar erros ao dar F5
+        run: cp dist/biblia-interativa/browser/index.html dist/biblia-interativa/browser/404.html
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist/biblia-interativa/browser # Verifique se este é o caminho da sua pasta dist
-          branch: gh-pages # O GitHub vai criar esta branch sozinho
+          folder: dist/biblia-interativa/browser
+          branch: gh-pages
+          clean: true

@@ -3,6 +3,7 @@ import { Article, ArticlesService } from '../../services/articles/articles';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs'; // Adicione este import
 import { VersionService } from '../../services/version/version-service';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog',
@@ -18,6 +19,8 @@ export class Blog implements OnInit {
   constructor(
     private articleService: ArticlesService,
     public versionService: VersionService,
+    private titleService: Title,
+    private metaService: Meta,
   ) {}
 
   ngOnInit(): void {
@@ -26,6 +29,20 @@ export class Blog implements OnInit {
 
   selectArticle(article: Article) {
     this.selectedArticle = article;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    this.titleService.setTitle(`${article.title} | The Unveiled Bible`);
+
+    // Atualiza as Meta Tags para Google e Redes Sociais
+    this.metaService.updateTag({ name: 'description', content: article.excerpt });
+    this.metaService.updateTag({ property: 'og:title', content: article.title });
+    this.metaService.updateTag({ property: 'og:description', content: article.excerpt });
+    this.metaService.updateTag({ property: 'og:image', content: article.thumbnail });
+    this.metaService.updateTag({
+      property: 'og:url',
+      content: `https://theunveiledbible.com/blog/${article.id}`,
+    });
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
