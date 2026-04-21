@@ -1,0 +1,59 @@
+<div class="deep-studies-container">
+
+    <header class="section-header" *ngIf="!selectedArticle">
+        <h1 class="gold-text-glow">{{versionService.ui().deepStudies}}</h1>
+        <p class="subtitle">{{versionService.ui().exploreDeeper}}</p>
+    </header>
+
+    <div class="articles-grid" *ngIf="!selectedArticle">
+        <div class="article-card" (click)="selectArticle(article)" *ngFor="let article of (articles$ | async)">
+            <div class="card-image-wrapper">
+                <img [src]="article.thumbnail" alt="Thumbnail">
+                <div class="image-overlay"></div>
+            </div>
+            <div class="card-content">
+                <span class="category">{{ article.category }}</span>
+                <h3>{{ article.title }}</h3>
+                <p>{{ article.excerpt }}</p>
+                <button class="read-more">{{ versionService.ui().readMore }}</button>
+            </div>
+        </div>
+    </div>
+
+    <article class="article-reader" *ngIf="selectedArticle">
+        <button class="back-button" (click)="backToList()">← {{ versionService.ui().backToStudies }}</button>
+
+        <header class="article-hero">
+            <img [src]="selectedArticle!.thumbnail" class="hero-bg">
+            <div class="hero-content">
+                <h1 class="gold-text-glow">{{ selectedArticle!.title }}</h1>
+                <div class="article-meta">DANIEL FAIS</div>
+            </div>
+        </header>
+
+        <div class="article-body" [innerHTML]="selectedArticle!.content"></div>
+
+        <section class="affiliate-section" *ngIf="selectedArticle?.affiliate">
+            <div class="affiliate-card">
+                <div class="badge">{{ versionService.ui().recomendationsOfStudy }}</div>
+
+                <div class="card-body">
+                    <div class="product-image">
+                        <img [src]="selectedArticle!.affiliate!.image" [alt]="selectedArticle!.affiliate!.productName">
+                    </div>
+
+                    <div class="product-info">
+                        <h3>{{ selectedArticle!.affiliate!.productName }}</h3>
+                        <p>{{ selectedArticle!.affiliate!.description }}</p>
+                        <div class="price">{{ selectedArticle!.affiliate!.price }}</div>
+
+                        <a [href]="selectedArticle!.affiliate!.link" target="_blank" class="cta-button">
+                            {{ versionService.ui().catchToMyLibrary }}
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </article>
+
+</div>

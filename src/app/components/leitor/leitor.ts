@@ -1,7 +1,6 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { BibleService } from '../../services/bible';
-import { LivroInfo, LombadaLivro } from './lombada-livro/lombada-livro';
-import { VersionSelectorComponent } from './version-selector/version-selector';
+import { LombadaLivro } from './lombada-livro/lombada-livro';
 import { VersionService } from '../../services/version/version-service';
 
 @Component({
@@ -9,7 +8,7 @@ import { VersionService } from '../../services/version/version-service';
   standalone: true,
   templateUrl: './leitor.html',
   styleUrl: './leitor.scss',
-  imports: [LombadaLivro, VersionSelectorComponent],
+  imports: [LombadaLivro],
 })
 export class Leitor implements OnInit {
   bibleService = inject(BibleService);

@@ -1,0 +1,296 @@
+.lp-container {
+  min-height: 100vh;
+  height: auto; // PERMITE CRESCER
+  display: flex;
+  flex-direction: column;
+  background-color: #050505;
+
+  // No mobile, o background-attachment: fixed às vezes trava o scroll.
+  // Vamos deixar ele "scroll" apenas no mobile.
+  background-attachment: scroll;
+  font-family: 'Cinzel', serif;
+  background-color: #050505;
+  background-image:
+    radial-gradient(circle at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
+    url('/assets/images/seu-fundo-epico.jpg'); // Nomeie o arquivo como preferir
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  font-family: 'Cinzel', serif;
+
+  @media (min-width: 1024px) {
+    background-attachment: fixed;
+  }
+}
+
+.hero {
+  // Mudança: min-height em vez de height fixo
+  min-height: 100vh;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  // Padding dinâmico: menos espaço no topo para mobile
+  padding: clamp(100px, 15vh, 170px) 20px 80px;
+
+  // MUDANÇA IMPORTANTE:
+  background: transparent; // Fica transparente para mostrar o fundo do container
+
+  .hero-content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+  }
+
+  .gold-text {
+    color: #f1e5ac;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    font-weight: 50;
+    font-size: clamp(2.2rem, 10vw, 5.5rem);
+    letter-spacing: clamp(2px, 1.5vw, 12px);
+    font-family: Cinzel, serif;
+    -webkit-background-clip: text;
+    flex-wrap: wrap;
+    margin: 0;
+    display: block;
+  }
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 40px;
+  transition:
+    transform 0.3s ease,
+    border 0.3s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-10px);
+    border-color: #cfb53b;
+    background: rgba(207, 181, 59, 0.05);
+  }
+}
+
+.subtitle {
+  color: white;
+  font-family: Cinzel, serif;
+  -webkit-background-clip: text;
+  letter-spacing: 12px;
+  font-size: clamp(0.7rem, 2vw, 1.1rem);
+  letter-spacing: clamp(3px, 1.5vw, 8px);
+  padding: 0 20px;
+  text-align: center;
+}
+
+.portal-grid {
+  display: flex;
+  flex-direction: column; // PADRÃO: Um em cima do outro (Mobile First)
+  align-items: center;
+  gap: 30px;
+  width: 100%;
+  margin-top: 20px;
+
+  // QUANDO A TELA FOR GRANDE (DESKTOP) -> Lado a Lado
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 25px;
+  }
+}
+
+.portal-card {
+  width: 80%;
+  max-width: 400px;
+  padding: 60px 60px;
+  height: 350px;
+  box-sizing: border-box;
+  text-align: center;
+
+  // 1. ESPECIFICIDADE: Animamos apenas o necessário para não sobrecarregar a GPU
+  transition:
+    transform 0.5s cubic-bezier(0.2, 1, 0.3, 1),
+    background 0.5s ease,
+    border-color 0.5s ease,
+    box-shadow 0.5s ease;
+
+  // 2. ESTABILIDADE: Força a renderização em 3D para evitar o "fuzziness"
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: antialiased; // Deixa a Cinzel ultra nítida
+  will-change: transform, opacity; // Avisa o navegador para preparar a placa de vídeo
+
+  // Glassmorphism
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(212, 175, 55, 0.1);
+  border-radius: 4px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at center, rgba(212, 175, 55, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+  }
+
+  &:hover {
+    // RETIRADO O SCALE: O scale(1.02) é o que geralmente causa o borrão nas fontes.
+    // Aumentamos o deslocamento vertical para compensar o impacto visual.
+    transform: translateY(-12px) translateZ(0);
+
+    border-color: rgba(212, 175, 55, 0.6);
+    background: rgba(15, 15, 15, 0.6); // Escurece levemente para dar contraste
+    box-shadow:
+      0 20px 40px rgba(0, 0, 0, 0.6),
+      0 0 20px rgba(212, 175, 55, 0.05);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .lux-icon {
+      // No ícone o scale funciona bem porque ele é uma imagem/vetor
+      transform: translateY(-8px) scale(1.08);
+      filter: drop-shadow(0 8px 12px rgba(212, 175, 55, 0.3));
+    }
+
+    .lux-divider {
+      width: 70px;
+      background: #d4af37;
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    }
+
+    .lux-title {
+      color: #f1e5ac; // Dá um leve brilho no título ao focar
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
+    }
+  }
+}
+
+// Estilo para garantir que as fontes fiquem "Sharp" (Afiadas)
+.lux-title,
+.lux-description {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-wrapper {
+  margin-bottom: 30px;
+
+  .lux-icon {
+    width: 60px;
+    height: auto;
+    transition: all 0.6s ease;
+    opacity: 0.9;
+  }
+}
+
+.lux-title {
+  font-family: 'Cinzel', serif;
+  font-weight: 400; // O mais fino da Cinzel
+  font-size: 1.6rem;
+  color: #d4af37; // Dourado Clássico
+  letter-spacing: 6px; // Espaçamento que traz o ar de "100" de peso
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.lux-divider {
+  width: 40px;
+  height: 1px;
+  background: rgba(212, 175, 55, 0.3);
+  margin: 0 auto 25px;
+  transition: all 0.6s ease;
+}
+
+.lux-description {
+  font-family: 'Cinzel', serif; // Mantendo a unidade visual
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.8;
+  letter-spacing: 2px;
+  font-weight: 400;
+}
+
+.lp-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #050505;
+  // Use "scroll" ou deixe o padrão para permitir que o conteúdo desça
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  background-image:
+    radial-gradient(circle at center, rgba(10, 10, 10, 0.5) 0%, rgba(5, 5, 5, 0.95) 100%),
+    url('/images/poster.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+@keyframes elegantRevealLeft {
+  from {
+    opacity: 0;
+    // Começa 30px à esquerda e 10px para baixo (sutil efeito 3D)
+    transform: translateX(-30px) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+}
+
+.animate-reveal {
+  // Configurações comuns
+  display: block; // Garante que o transform funcione
+  opacity: 0; // Começa escondido
+  animation-name: elegantRevealLeft;
+  animation-duration: 4s; // Duração total da animação
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1); // Timing ultra suave (quad-out)
+  animation-fill-mode: both; // Mantém o estado final
+}
+
+h1.gold-text.animate-reveal {
+  // O título começa instantaneamente ou com um delay muito curto
+  animation-delay: 0.1s;
+}
+
+p.subtitle.animate-reveal {
+  // O subtítulo é retardado para criar o efeito "escada" (Staggered)
+  animation-delay: 0.3s;
+}
+
+@media (max-width: 768px) {
+  .gold-text {
+    letter-spacing: 4px; // Menos espaço entre letras para caber no celular
+  }
+
+  .portal-grid {
+    margin-top: 30px;
+    gap: 40px; // Mais espaço entre um card e outro para não embolar
+  }
+
+  .portal-card {
+    padding: 30px 20px;
+
+    h3 {
+      font-size: 1.2rem;
+      letter-spacing: 3px;
+    }
+    p {
+      font-size: 0.8rem;
+    }
+  }
+}

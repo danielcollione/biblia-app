@@ -1,0 +1,22 @@
+<header class="main-header">
+    <div class="header-content">
+
+        <div class="logo-left">
+            <a routerLink="/" class="logo-link"><img src="logo-sem-fundo.png" alt="The Unveiled Bible"
+                    class="header-logo"></a>
+        </div>
+
+        <nav class="nav-right">
+            <ul class="nav-links">
+                <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
+                <!-- <li><a routerLink="/news">{{versionService.ui().news}}</a></li> -->
+                <li><a routerLink="/blog">{{versionService.ui().blog}}</a></li>
+                <!-- <li><a routerLink="/about">{{versionService.ui().aboutUs}}</a></li> -->
+                <li class="lang-selector">
+                    <app-version-selector></app-version-selector>
+                </li>
+            </ul>
+        </nav>
+
+    </div>
+</header>

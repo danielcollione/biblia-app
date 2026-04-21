@@ -282,26 +282,6 @@
     black 95%,
     transparent
   ); // Suaviza as bordas do scroll
-
-  // O vinco central aprimorado
-  &::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 0;
-    bottom: 0;
-    width: 40px;
-    transform: translateX(-50%);
-    background: linear-gradient(
-      to right,
-      rgba(0, 0, 0, 0) 0%,
-      rgba(0, 0, 0, 0.05) 40%,
-      rgba(0, 0, 0, 0.08) 50%,
-      rgba(0, 0, 0, 0.05) 60%,
-      rgba(0, 0, 0, 0) 100%
-    );
-    z-index: 5;
-  }
 }
 
 .pagina-viva {
@@ -364,6 +344,10 @@
     background: #a18e76;
     color: #1a1a1a;
     transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
   }
 }
 
@@ -481,34 +465,15 @@
 }
 
 .navegacao-flutuante {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  z-index: 1500;
-  pointer-events: auto;
-  .btn-prime-sumario {
-    background: #1a1a1a;
-    border: 1px solid #a18e76;
-    color: #fdfbf7;
-    padding: 12px 20px;
-    font-family: 'Cinzel', serif;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-    cursor: pointer;
-    transition: 0.3s;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5); // Reforça a sombra para destacar do fundo
-
-    &:hover {
-      background: #a18e76;
-      color: #1a1a1a;
-      transform: scale(1.05);
-    }
-  }
+  position: fixed;
+  top: 30px;
+  left: 30px;
+  z-index: 1001; // Acima de tudo
 }
 
 .navegacao-topo-esquerda {
   position: absolute;
-  top: 40px;
+  top: 120px;
   left: 40px;
   z-index: 1500;
   pointer-events: auto;
@@ -746,9 +711,8 @@
 .label-biblioteca {
   font-family: 'Cinzel', serif;
   color: #a18e76;
-  font-size: 0.8rem;
+  font-size: 1rem;
   letter-spacing: 4px;
-  opacity: 0.6;
 }
 
 @media (max-width: 900px) {
@@ -759,7 +723,7 @@
 
   /* Muda o alinhamento do container para evitar esmagamento */
   .biblioteca-master {
-    margin-top: 50px;
+    margin-top: 90px;
     justify-content: flex-start; /* Começa a organizar do topo para baixo */
     padding-top: 30px;
   }
@@ -767,11 +731,11 @@
   /* Tira o botão/rótulo do modo "flutuante" e empilha acima do título */
   .navegacao-topo-esquerda {
     position: relative;
-    top: 0;
-    left: 0;
+    top: -10px;
+    left: -40px;
     width: 100%;
     display: flex;
-    justify-content: center; /* Centraliza o rótulo BIBLIOTECA ou VOLTAR */
+    justify-content: center;
     margin-bottom: 15px;
   }
 
@@ -793,7 +757,7 @@
   /* Reduz os livros e o padding do scroll horizontal para caber melhor */
   .estante-horizontal,
   .estante-capitulos-horizontal {
-    padding: 10px 5vw 30px;
+    padding: 20px 5vw 30px;
   }
 
   .livro-lombada {
@@ -823,8 +787,8 @@
 
     .btn-prime-sumario {
       padding: 8px 16px;
-      height: 38px;
-      font-size: 0.7rem;
+      height: 50px;
+      font-size: 0.9rem;
     }
   }
 
@@ -838,9 +802,6 @@
   /* Mágica do texto corrido (empilha as páginas) */
   .corpo-paginas-prime {
     flex-direction: column;
-    &::before {
-      display: none;
-    } // Remove o vinco do meio do livro
   }
 
   .pagina-viva {

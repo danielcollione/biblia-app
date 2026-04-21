@@ -30,12 +30,13 @@ export class BibleService {
   filteredBooks = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const books = this.allBooks();
-    
+
     if (!term) return books;
 
-    return books.filter(livro => 
-      livro.name.toLowerCase().includes(term) || 
-      this.getMetadados(livro.name).nome.toLowerCase().includes(term)
+    return books.filter(
+      (livro) =>
+        livro.name.toLowerCase().includes(term) ||
+        this.getMetadados(livro.name).nome.toLowerCase().includes(term),
     );
   });
 
@@ -67,7 +68,11 @@ export class BibleService {
   getMetadados(nomeLivro: string): LivroMetadados {
     const lista = this.metadados();
     return (
-      lista.find((m) => m.nome.toLowerCase() === nomeLivro.toLowerCase() || m.nome.toLowerCase().includes(nomeLivro.toLowerCase())) || {
+      lista.find(
+        (m) =>
+          m.nome.toLowerCase() === nomeLivro.toLowerCase() ||
+          m.nome.toLowerCase().includes(nomeLivro.toLowerCase()),
+      ) || {
         id: 0,
         nome: nomeLivro,
         cor: '#4a3728',
@@ -145,7 +150,7 @@ export class BibleService {
     this.selectedBook.set(book);
     this.currentChapterIndex.set(null);
     this.currentChapter.set([]);
-    this.searchTerm.set('');;
+    this.searchTerm.set('');
   }
 
   selectChapter(index: number) {
@@ -240,11 +245,23 @@ export class BibleService {
     }
   }
 
+  isReadingMode = computed(() => {
+    return this.selectedBook() !== null && this.currentChapterIndex() !== null;
+  });
+
   limparNomeParaUrl(nome: string): string {
     return nome
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .replace(/\s+/g, '-');
+  }
+
+  isNovoTestamento(nomeLivro: string): boolean {
+    // Procuramos o índice desse livro no array COMPLETO (allBooks)
+    const indexOriginal = this.allBooks().findIndex((b) => b.name === nomeLivro);
+
+    // Se o índice for 39 ou maior (Mateus em diante), é NT
+    return indexOriginal >= 39;
   }
 }

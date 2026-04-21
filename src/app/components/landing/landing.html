@@ -1,0 +1,31 @@
+<div class="lp-container">
+    <section class="hero">
+        <div class="hero-content fade-in">
+            <h1 class="gold-text animate-reveal">{{versionService.ui().unveiledBible}}</h1>
+            <p class="subtitle animate-reveal">{{versionService.ui().jornadaAlemdaLetra.toUpperCase()}}</p>
+            <section class="portal-grid">
+                <div class="portal-card glass" (click)="irParaBiblia()">
+                    <div class="card-content">
+                        <div class="icon-wrapper">
+                            <img src="images/open-bible.png" alt="Library Icon" class="lux-icon">
+                        </div>
+                        <h3 class="lux-title">{{versionService.ui().libraryPrime.toUpperCase()}}</h3>
+                        <div class="lux-divider"></div>
+                        <p class="lux-description">{{versionService.ui().libraryPrimeDescription}}</p>
+                    </div>
+                </div>
+
+                <div class="portal-card glass" (click)="irParaBlog()">
+                    <div class="card-content">
+                        <div class="icon-wrapper">
+                            <img src="images/key.png" alt="Studies Icon" class="lux-icon">
+                        </div>
+                        <h3 class="lux-title">{{versionService.ui().deepStudies.toUpperCase()}}</h3>
+                        <div class="lux-divider"></div>
+                        <p class="lux-description">{{versionService.ui().deepStudiesDescription}}</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </section>
+</div>

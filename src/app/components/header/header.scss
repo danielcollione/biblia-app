@@ -1,0 +1,113 @@
+:host {
+  font-family: 'Cinzel', serif;
+}
+
+.main-header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background: transparent;
+  padding: 25px 5%; // Um pouco mais de respiro no topo
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between; // Joga um para cada ponta
+  align-items: center; // Alinha verticalmente na mesma linha
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// LOGO LADO ESQUERDO
+.logo-left {
+  display: flex;
+  align-items: center;
+
+  .header-logo {
+    height: 75px; // Tamanho elegante para header
+    width: auto;
+    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+    cursor: pointer;
+  }
+}
+
+// MENU LADO DIREITO
+.nav-links {
+  display: flex;
+  list-style: none;
+  align-items: center;
+  gap: 40px;
+  margin: 0;
+  padding: 0;
+
+  li a {
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #e0e0e0; // Prata Claro
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    transition: all 0.3s ease;
+    position: relative;
+
+    &:hover {
+      color: #ffffff;
+      text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+    }
+
+    // Linha sutil no hover
+    &::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 1px;
+      bottom: -5px;
+      left: 0;
+      background: linear-gradient(to right, transparent, #e0e0e0, transparent);
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+  }
+}
+
+// ÍCONE DE MUNDO
+.icon-globe {
+  width: 18px;
+  height: 18px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    color: #ffffff;
+    transform: scale(1.1);
+  }
+}
+
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  cursor: pointer;
+}
+
+// RESPONSIVIDADE SIMPLES
+@media (max-width: 768px) {
+  .nav-links {
+    gap: 15px;
+    li a {
+      font-size: 0.7rem;
+      letter-spacing: 1px;
+    }
+  }
+  .header-logo {
+    height: 35px;
+  }
+}

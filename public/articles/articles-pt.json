@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "title": "Os Segredos do Mar Morto",
+    "category": "Arqueologia",
+    "excerpt": "Uma análise profunda sobre como os manuscritos encontrados em Qumran mudaram nossa visão sobre a preservação das escrituras.",
+    "thumbnail": "articles/images/dead-sea-scrolls.webp",
+    "imageUrl": "articles/images/dead-sea-scrolls.webp",
+    "content": "<h3>O Achado que Silenciou os Céticos</h3><p>Em 1947, nas cavernas áridas de Qumran, um pastor beduíno acidentalmente tropeçou no que viria a ser a maior descoberta arqueológica do século XX. O que ele encontrou não foram apenas pergaminhos antigos, mas uma cápsula do tempo que preservou a integridade da Bíblia por mais de dois milênios.</p><h3>A Precisão dos Escribas Essênios</h3><p>A comunidade de Qumran, identificada majoritariamente como os Essênios, dedicava suas vidas à cópia meticulosa dos textos sagrados. A análise do <strong>Grande Manuscrito de Isaías</strong> revelou algo assombroso: apesar do hiato de mil anos entre esses rolos e os manuscritos masoréticos mais antigos conhecidos anteriormente, a variação textual era praticamente inexistente. Isso prova que a transmissão do texto bíblico não foi um processo de 'telefone sem fio', mas uma disciplina de precisão matemática.</p><h3>Luz sobre o Novo Testamento</h3><p>Os pergaminhos não contêm apenas textos bíblicos, mas também regras comunitárias e visões apocalípticas que lançam luz sobre o contexto judaico em que Jesus e os apóstolos viveram. Conceitos como a 'Luta entre os Filhos da Luz e os Filhos das Trevas' ecoam fortemente nos escritos joaninos, mostrando que o solo onde o Cristianismo brotou era rico em fervor messiânico e purismo teológico.</p><h3>Conclusão: A Rocha da Historicidade</h3><p>Estudar os manuscritos do Mar Morto é entender que a Bíblia que temos hoje não é fruto de lendas medievais, mas um registro histórico fixado em pergaminho muito antes das grandes divisões teológicas da era moderna. É a prova física de que a Palavra sobreviveu ao tempo, às guerras e ao deserto.</p>",
+    "author": "Daniel Christino",
+    "date": "2026-04-15",
+    "readingTime": "7 min",
+    "affiliate": {
+      "link": "https://amzn.to/4vJU8Ok",
+      "productName": "Rose Book of Bible Charts, Maps, and Time Lines",
+      "description": "The #1 Bible reference book celebrates its 10th anniversary with an updated 230-page edition that features more Bible maps, charts, and illustrations than the original! This stunning, easy-to-understand reference book still provides the same full-color, REPRODUCIBLE Bible charts and overviews that made the original a favorite, but in an easier-to-use, updated format!",
+      "price": "Essential Resource",
+      "image": "https://m.media-amazon.com/images/I/71oCoN2f7cL._SY342_.jpg"
+    }
+  }
+]

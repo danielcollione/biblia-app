@@ -26,20 +26,10 @@
       animation: fadeInPulse 2.5s infinite ease-in-out;
     }
 
-    .splash-text {
-      font-family: 'Cinzel', serif;
-      color: #a18e76;
-      font-size: 1.4rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      text-align: center;
-    }
-
     .loading-bar {
       width: 100px;
       height: 1px;
       background: rgba(161, 142, 118, 0.2);
-      margin-top: 30px;
       position: relative;
       overflow: hidden;
     }
@@ -87,12 +77,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta http-equiv="Content-Security-Policy" content="
   default-src 'self'; 
-  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
-  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-  font-src 'self' https://fonts.gstatic.com;
-  img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
-  connect-src 'self' https://*.google-analytics.com https://*.google.com https://*.google https://*.doubleclick.net http://localhost:4200 ws://localhost:4200;
-  frame-src 'self' https://*.google.com https://*.google https://*.doubleclick.net https://*.googlesyndication.com;
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' 
+             https://*.googletagmanager.com 
+             https://*.google.com 
+             https://*.googlesyndication.com 
+             https://*.google 
+             https://*.amazon-adsystem.com; 
+  style-src 'self' 'unsafe-inline' 
+            https://fonts.googleapis.com; 
+  font-src 'self' 
+           https://fonts.gstatic.com;
+  img-src 'self' data: blob: 
+          https://*.google-analytics.com 
+          https://*.googletagmanager.com 
+          https://*.google.com 
+          https://*.googlesyndication.com 
+          https://*.google 
+          https://m.media-amazon.com 
+          https://images-na.ssl-images-amazon.com 
+          https://*.amazon.com 
+          https://*.media-amazon.com; 
+  connect-src 'self' 
+              https://*.google-analytics.com 
+              https://*.google.com 
+              https://*.google 
+              https://*.doubleclick.net 
+              http://localhost:4200 
+              ws://localhost:* https://*.amazon-adsystem.com;
+  frame-src 'self' 
+            https://*.google.com 
+            https://*.google 
+            https://*.doubleclick.net 
+            https://*.googlesyndication.com 
+            https://*.amazon-adsystem.com;
 ">
   <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2" />
   <link rel="manifest" href="manifest.webmanifest">
@@ -114,7 +131,6 @@
 <body>
   <div id="pwa-splash" class="splash-screen" ngSkipHydration>
     <img src="./logo-sem-fundo.png" alt="The Unveiled Bible" class="splash-logo">
-    <div class="splash-text">The Unveiled Bible</div>
     <div class="loading-bar"></div>
   </div>
   <app-root>

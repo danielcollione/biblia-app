@@ -1,11 +1,7 @@
 /* version-selector.component.scss */
 
 :host {
-  position: fixed;
-  right: 20px;          /* Fixado na direita */
-  top: 20px;            /* Fixado no topo */
-  z-index: 10000;       /* Valor bem alto para garantir visibilidade */
-  font-family: 'Cinzel', serif; 
+  font-family: 'Cinzel', serif;
 }
 
 .version-selector-container {
@@ -13,52 +9,32 @@
   display: inline-block;
 }
 
-.current-version-btn {
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: #e0d5c1;
-  padding: 10px 15px;
-  border-radius: 4px;
+.lang-btn {
+  background: none;
+  border: none;
+  padding: 0;
   display: flex;
-  flex-direction: row;      /* Texto na horizontal agora */
-  align-items: center;
-  gap: 10px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.icon-globe {
+  width: 18px;
+  height: 18px;
+  color: #e0e0e0;
+  cursor: pointer;
+  transition: transform 0.3s ease;
 
   &:hover {
-    background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(212, 175, 55, 0.5);
-  }
-
-  .icon {
-    font-size: 1rem;
-  }
-
-  .version-name {
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    /* Removido o writing-mode vertical */
-  }
-
-  .arrow {
-    font-size: 0.6rem;
-    transition: transform 0.3s ease;
-    &.open {
-      transform: rotate(180deg); /* Gira para cima ao abrir */
-    }
+    color: #ffffff;
+    transform: scale(1.1);
   }
 }
 
 .dropdown-menu {
   position: absolute;
-  right: 0;             /* Alinha o menu com a borda direita do botão */
+  right: 0; /* Alinha o menu com a borda direita do botão */
   top: calc(100% + 8px); /* Abre exatamente abaixo */
-  background-color: #1a1a1a; 
+  background-color: #1a1a1a;
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 4px;
   min-width: 200px;
@@ -92,6 +68,12 @@
 }
 
 @keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
