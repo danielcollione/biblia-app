@@ -23,6 +23,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
+              "src/ads.txt",
               { "glob": "**/*", "input": "public", "output": "/" }
             ],
             "styles": ["src/styles.scss"],
