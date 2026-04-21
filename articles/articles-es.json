@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "title": "Los Secretos del Mar Muerto",
+    "category": "Arqueología",
+    "excerpt": "Un análisis profundo sobre cómo los manuscritos encontrados en Qumrán cambiaron nuestra visión sobre la preservación de las Escrituras.",
+    "thumbnail": "articles/images/dead-sea-scrolls.webp",
+    "imageUrl": "articles/images/dead-sea-scrolls.webp",
+    "content": "<h3>El Hallazgo que Silenció a los Críticos</h3><p>En 1947, en las áridas cuevas de Qumrán, un pastor beduino tropezó accidentalmente con lo que se convertiría en el mayor descubrimiento arqueológico do siglo XX. Lo que encontró no fueron solo pergaminos antiguos, sino una cápsula del tiempo que preservó la integridad de la Biblia durante más de dos milenios.</p><h3>La Precisión de los Escribas Esenios</h3><p>La comunidad de Qumrán, identificada mayoritariamente como los Esenios, dedicaba sus vidas a la copia meticulosa de los textos sagrados. El análisis del <strong>Gran Manuscrito de Isaías</strong> reveló algo asombroso: a pesar del lapso de mil años entre estos rollos y los manuscritos masoréticos más antiguos conocidos anteriormente, la variación textual era prácticamente inexistente. Esto demuestra que la transmisión del texto bíblico no fue un proceso de 'teléfono descompuesto', sino una disciplina de precisión matemática.</p><h3>Luz sobre el Nuevo Testamento</h3><p>Los pergaminos no contienen solo textos bíblicos, sino también reglas comunitarias y visiones apocalípticas que arrojan luz sobre el contexto judío en el que vivieron Jesús y los apóstoles. Conceptos como la 'Lucha entre los Hijos de la Luz y los Hijos de las Tinieblas' resuenan fuertemente en los escritos joánicos, mostrando que el suelo donde brotó el cristianismo era rico en fervor mesiánico y purismo teológico.</p><h3>Conclusión: La Roca de la Historicidad</h3><p>Estudiar los manuscritos del Mar Muerto es entender que la Biblia que tenemos hoy no es fruto de leyendas medievales, sino un registro histórico fijado en pergamino mucho antes de las grandes divisiones teológicas de la era moderna. Es la prueba física de que la Palabra sobrevivió ao tiempo, a las guerras y al desierto.</p>",
+    "author": "Daniel Christino",
+    "date": "2026-04-15",
+    "readingTime": "7 min",
+    "affiliate": {
+      "link": "https://amzn.to/4vJU8Ok",
+      "productName": "Rose Book of Bible Charts, Maps, and Time Lines",
+      "description": "The #1 Bible reference book celebrates its 10th anniversary with an updated 230-page edition that features more Bible maps, charts, and illustrations than the original! This stunning, easy-to-understand reference book still provides the same full-color, REPRODUCIBLE Bible charts and overviews that made the original a favorite, but in an easier-to-use, updated format!",
+      "price": "Essential Resource",
+      "image": "https://m.media-amazon.com/images/I/71oCoN2f7cL._SY342_.jpg"
+    }
+  }
+]

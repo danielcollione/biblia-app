@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "title": "The Secrets of the Dead Sea Scrolls",
+    "category": "Archaeology",
+    "excerpt": "A deep analysis of how the manuscripts found in Qumran changed our view of the preservation of the Scriptures.",
+    "thumbnail": "articles/images/dead-sea-scrolls.webp",
+    "imageUrl": "articles/images/dead-sea-scrolls.webp",
+    "content": "<h3>The Find That Silenced the Critics</h3><p>In 1947, in the arid caves of Qumran, a Bedouin shepherd accidentally stumbled upon what would become the greatest archaeological discovery of the 20th century. What he found were not just ancient scrolls, but a time capsule that preserved the integrity of the Bible for over two millennia.</p><h3>The Precision of the Essene Scribes</h3><p>The Qumran community, mostly identified as the Essenes, dedicated their lives to the meticulous copying of sacred texts. The analysis of the <strong>Great Isaiah Scroll</strong> revealed something astonishing: despite a thousand-year gap between these rolls and the oldest previously known Masoretic manuscripts, textual variation was virtually non-existent. This proves that the transmission of the biblical text was not a game of 'broken telephone' but a discipline of mathematical precision.</p><h3>Light on the New Testament</h3><p>The scrolls contain not only biblical texts but also community rules and apocalyptic visions that shed light on the Jewish context in which Jesus and the apostles lived. Concepts like the 'War of the Sons of Light Against the Sons of Darkness' echo strongly in Johannine writings, showing that the soil where Christianity sprouted was rich in messianic fervor and theological purism.</p><h3>Conclusion: The Rock of Historicity</h3><p>To study the Dead Sea Scrolls is to understand that the Bible we have today is not the result of medieval legends, but a historical record fixed on parchment long before the major theological divisions of the modern era. It is physical proof that the Word has survived time, wars, and the desert.</p>",
+    "author": "Daniel Christino",
+    "date": "2026-04-15",
+    "readingTime": "7 min",
+    "affiliate": {
+      "link": "https://amzn.to/4vJU8Ok",
+      "productName": "Rose Book of Bible Charts, Maps, and Time Lines",
+      "description": "The #1 Bible reference book celebrates its 10th anniversary with an updated 230-page edition that features more Bible maps, charts, and illustrations than the original! This stunning, easy-to-understand reference book still provides the same full-color, REPRODUCIBLE Bible charts and overviews that made the original a favorite, but in an easier-to-use, updated format!",
+      "price": "Essential Resource",
+      "image": "https://m.media-amazon.com/images/I/71oCoN2f7cL._SY342_.jpg"
+    }
+  }
+]

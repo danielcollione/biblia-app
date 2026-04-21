@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776746054625,
+  "timestamp": 1776793270997,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -13,9 +13,9 @@
       "urls": [
         "/index.csr.html",
         "/index.html",
-        "/main-QRJEKQLW.js",
+        "/main-CLI6PBT4.js",
         "/manifest.webmanifest",
-        "/styles-HIEETOPY.css"
+        "/styles-DWH5UQXE.css"
       ],
       "patterns": []
     },
@@ -27,6 +27,7 @@
         "ignoreVary": true
       },
       "urls": [
+        "/articles/images/dead-sea-scrolls.webp",
         "/icons/maskable_icon_x128.png",
         "/icons/maskable_icon_x192.png",
         "/icons/maskable_icon_x384.png",
@@ -59,6 +60,7 @@
         "/images/jonas.webp",
         "/images/josue.webp",
         "/images/juizes.webp",
+        "/images/key.png",
         "/images/lamentacoes.webp",
         "/images/levitico.webp",
         "/images/malaquias.webp",
@@ -68,7 +70,10 @@
         "/images/neemias.webp",
         "/images/numeros.webp",
         "/images/obadias.webp",
+        "/images/open-bible.png",
         "/images/oseias.webp",
+        "/images/poster.jpeg",
+        "/images/pray.png",
         "/images/proverbios.webp",
         "/images/rute.webp",
         "/images/salmos.webp",
@@ -81,6 +86,7 @@
   ],
   "dataGroups": [],
   "hashTable": {
+    "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/icons/maskable_icon_x128.png": "f5bcd2a79c9c76cc10da9fea66f8b6b7ed2eb9b5",
     "/icons/maskable_icon_x192.png": "f075c8b5a14529898772c60e488c7735f211606d",
     "/icons/maskable_icon_x384.png": "4e271ccb49fa1e01b66ab755a58b5ce122ab7bde",
@@ -113,6 +119,7 @@
     "/images/jonas.webp": "654798bee750f4cf32b4014d42627ba12181d730",
     "/images/josue.webp": "7c5e0cabf6f2cfd7fcf92a1604036d025e16257e",
     "/images/juizes.webp": "b699aab138720184351baebb0b1866fbeb060124",
+    "/images/key.png": "060bc4b3bef22ebf7e734a0a380d937d37cfb7a3",
     "/images/lamentacoes.webp": "a3cdaba4f476b63d04e445bb1f95672046afb81d",
     "/images/levitico.webp": "a536c4f38bc0caa0ffdac43dd7b51b46873193f2",
     "/images/malaquias.webp": "8f14f099f2181cdea366fd339ce521cb060d7c10",
@@ -122,18 +129,21 @@
     "/images/neemias.webp": "17a5d2e87c3dae1e2d8b19afa11b9211d5ed078f",
     "/images/numeros.webp": "0c03f2ad7def23f36590ea520ec37e3bb152fecd",
     "/images/obadias.webp": "50164d98dbed26c3539e674df3496e6dd4a9a238",
+    "/images/open-bible.png": "6fc8c8422129cef398fbf51241eeacf2fdf8f658",
     "/images/oseias.webp": "d42cbe49a084478993b80ee70a79e8fc9b9fe84a",
+    "/images/poster.jpeg": "a79c855fa1c4b587cf03cee245701cb17724c097",
+    "/images/pray.png": "1ce3e544b371f131f19054f3bc5f08a3280d84e5",
     "/images/proverbios.webp": "45a9c46079d19cc8ef1c0ba416684b491b59a1bc",
     "/images/rute.webp": "c2358cd090e2fd7e34dc25b75e871daab8c1c620",
     "/images/salmos.webp": "de20a9887c288be0981b3958a0262a503db739e0",
     "/images/sofonias.webp": "14aef57052c5bc85074d73437768ed19116c3a7a",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "3a33636ae3602028333123f205c45b97ffe54dea",
-    "/index.html": "49410465779051f726eb1a90747d262ce4b73324",
+    "/index.csr.html": "d5ab56190e2222dc89217351544d1993144fcae6",
+    "/index.html": "4e58ef211a6cb18271b352dabd471e0df17cb6a7",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-QRJEKQLW.js": "1de1507f4a79618ce82cc8b343b2abdd274bb8ed",
+    "/main-CLI6PBT4.js": "a20ade10a89860b5984b2d9667b117384e162901",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
-    "/styles-HIEETOPY.css": "00d4800a808d10beb582b3f373f1368a2bae3742"
+    "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
   },
   "navigationUrls": [
     {
