@@ -1,14 +1,96 @@
 <!DOCTYPE html><html lang="en" data-beasties-container><head>
+  <style>
+    .splash-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #1a1a1a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.3s ease-out;
+    }
+
+    .splash-logo {
+      width: 150px;
+      /* Ajuste o tamanho conforme achar melhor */
+      height: auto;
+      margin-bottom: 25px;
+      animation: fadeInPulse 2.5s infinite ease-in-out;
+    }
+
+    .splash-text {
+      font-family: 'Cinzel', serif;
+      color: #a18e76;
+      font-size: 1.4rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .loading-bar {
+      width: 100px;
+      height: 1px;
+      background: rgba(161, 142, 118, 0.2);
+      margin-top: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: #a18e76;
+      animation: slideProgress 1.5s infinite linear;
+    }
+
+    @keyframes fadeInPulse {
+      0% {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+
+      50% {
+        opacity: 1;
+        transform: scale(1);
+      }
+
+      100% {
+        opacity: 0.6;
+        transform: scale(0.98);
+      }
+    }
+
+    @keyframes slideProgress {
+      0% {
+        left: -100%;
+      }
+
+      100% {
+        left: 100%;
+      }
+    }
+  </style>
   <meta charset="utf-8">
   <title>The Unveiled Bible</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' http://localhost:4200; 
-               script-src 'self' 'unsafe-inline' 'unsafe-eval'; 
-               style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
-               font-src 'self' https://fonts.gstatic.com;
-               img-src 'self' data: blob:; 
-               connect-src 'self' http://localhost:4200 ws://localhost:4200;">
+  <meta http-equiv="Content-Security-Policy" content="
+  default-src 'self'; 
+  script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
+  style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; 
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data: blob: https://*.google-analytics.com https://*.googletagmanager.com https://*.google.com https://*.googlesyndication.com https://*.google; 
+  connect-src 'self' https://*.google-analytics.com https://*.google.com https://*.google https://*.doubleclick.net http://localhost:4200 ws://localhost:4200;
+  frame-src 'self' https://*.google.com https://*.google https://*.doubleclick.net https://*.googlesyndication.com;
+">
   <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2">
   <link rel="manifest" href="manifest.webmanifest">
 
@@ -28,8 +110,13 @@
 
 <body><!--nghm--><script type="text/javascript" id="ng-event-dispatch-contract">(()=>{function p(t,n,r,o,e,i,f,m){return{eventType:t,event:n,targetElement:r,eic:o,timeStamp:e,eia:i,eirp:f,eiack:m}}function u(t){let n=[],r=e=>{n.push(e)};return{c:t,q:n,et:[],etc:[],d:r,h:e=>{r(p(e.type,e,e.target,t,Date.now()))}}}function s(t,n,r){for(let o=0;o<n.length;o++){let e=n[o];(r?t.etc:t.et).push(e),t.c.addEventListener(e,t.h,r)}}function c(t,n,r,o,e=window){let i=u(t);e._ejsas||(e._ejsas={}),e._ejsas[n]=i,s(i,r),s(i,o,!0)}window.__jsaction_bootstrap=c;})();
 </script><script>window.__jsaction_bootstrap(document.body,"ng",["input","click"],[]);</script>
+  <div id="pwa-splash" class="splash-screen" ngskiphydration>
+    <img src="./logo-sem-fundo.png" alt="The Unveiled Bible" class="splash-logo">
+    <div class="splash-text">The Unveiled Bible</div>
+    <div class="loading-bar"></div>
+  </div>
   <app-root ng-version="20.3.19" ngh="2" ng-server-context="ssg"><router-outlet></router-outlet><app-leitor _nghost-ng-c878729675 ngh="1"><div _ngcontent-ng-c878729675 class="container-biblia"><app-version-selector _ngcontent-ng-c878729675 _nghost-ng-c146112504 ngh="0"><div _ngcontent-ng-c146112504 class="version-selector-container"><button _ngcontent-ng-c146112504 class="current-version-btn" jsaction="click:;"><span _ngcontent-ng-c146112504 class="icon">🌐</span><span _ngcontent-ng-c146112504 class="version-name">English (KJV)</span><span _ngcontent-ng-c146112504 class="arrow">▼</span></button><!----></div></app-version-selector><div _ngcontent-ng-c878729675 class="biblioteca-master fade-in"><nav _ngcontent-ng-c878729675 class="navegacao-topo-esquerda"><h2 _ngcontent-ng-c878729675 class="label-biblioteca">Library</h2><div _ngcontent-ng-c878729675 class="busca-container"><input _ngcontent-ng-c878729675 type="text" class="input-busca" placeholder="Search book..." jsaction="input:;"><span _ngcontent-ng-c878729675 class="icone-busca"><svg _ngcontent-ng-c878729675="" viewBox="0 0 24 24" width="18" height="18"><path _ngcontent-ng-c878729675="" fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg></span></div></nav><div _ngcontent-ng-c878729675 class="zona-navegacao-lateral esquerda" jsaction="click:;"></div><div _ngcontent-ng-c878729675 class="zona-navegacao-lateral direita" jsaction="click:;"></div><h2 _ngcontent-ng-c878729675 class="titulo-estante">Holy Bible</h2><div _ngcontent-ng-c878729675 class="estante-horizontal"><!----><div _ngcontent-ng-c878729675 class="busca-vazia fade-in"><p _ngcontent-ng-c878729675>No book found with the term  ""</p></div><!----></div></div><!----><!----><!----></div></app-leitor><!----></app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
-<script src="main-EBT6FPZT.js" type="module"></script>
+<script src="main-QRJEKQLW.js" type="module"></script>
 
 <script id="ng-state" type="application/json">{"__nghData__":[{"t":{"9":"t1"},"c":{"9":[]}},{"t":{"1":"t0","2":"t4","3":"t5"},"c":{"1":[{"i":"t0","r":2,"t":{"18":"t2","19":"t3"},"c":{"18":[],"19":[{"i":"t3","r":1}]}}],"2":[],"3":[]}},{"c":{"0":[{"i":"c878729675","r":1}]}}]}</script></body></html>
