@@ -31,7 +31,7 @@ export class Blog implements OnInit {
     this.selectedArticle = article;
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    this.titleService.setTitle(`${article.title} | The Unveiled Bible`);
+    this.titleService.setTitle(`${article.title} | A Bíblia Revelada`);
 
     // Atualiza as Meta Tags para Google e Redes Sociais
     this.metaService.updateTag({ name: 'description', content: article.excerpt });

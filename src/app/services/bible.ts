@@ -270,7 +270,7 @@ export class BibleService {
   }
 
   updateSEO(bookName: string, chapter: number) {
-    const displayTitle = `Holy Bible | The Unveiled Bible`;
+    const displayTitle = `Bíblia Sagrada | A Bíblia Revelada`;
 
     // Atualiza o Título da Aba
     this.titleService.setTitle(displayTitle);
@@ -278,7 +278,7 @@ export class BibleService {
     // Meta Tags em Inglês para Indexação Global
     this.metaService.updateTag({
       name: 'description',
-      content: `Read and study ${bookName}, Chapter ${chapter + 1} online. Explore the historical context and deep spiritual insights of the Holy Scriptures on The Unveiled Bible.`,
+      content: `Leia e estude ${bookName}, Capítulo ${chapter + 1} online. Explore o contexto histórico e os profundos insights espirituais das Sagradas Escrituras em A Bíblia Revelada.`,
     });
 
     // Open Graph (Redes Sociais)
@@ -301,7 +301,7 @@ export class BibleService {
       abstract: `Reading ${book} chapter ${chapter + 1}`,
       publisher: {
         '@type': 'Organization',
-        name: 'The Unveiled Bible',
+        name: 'A Bíblia Revelada',
       },
     });
     if (!document.getElementById('bible-jsonld')) {

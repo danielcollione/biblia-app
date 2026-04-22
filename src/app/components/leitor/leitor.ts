@@ -57,7 +57,7 @@ export class Leitor implements OnInit {
   }
 
   updateSEO(bookName: string, chapter: number) {
-    const displayTitle = `Holy Bible | The Unveiled Bible`;
+    const displayTitle = `Bíblia Sagrada | A Bíblia Revelada`;
 
     // Atualiza o Título da Aba
     this.titleService.setTitle(displayTitle);
