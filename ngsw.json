@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1776882553208,
+  "timestamp": 1776921620111,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/index.csr.html",
         "/index.html",
-        "/main-VHMYKKQW.js",
+        "/main-UX44NV3A.js",
         "/manifest.webmanifest",
         "/styles-DWH5UQXE.css"
       ],
@@ -29,6 +29,7 @@
       "urls": [
         "/articles/images/dead-sea-scrolls.webp",
         "/articles/images/noli-me-tangere.webp",
+        "/e-book/bible-ia-cover.png",
         "/icons/maskable_icon_x128.png",
         "/icons/maskable_icon_x192.png",
         "/icons/maskable_icon_x384.png",
@@ -114,6 +115,7 @@
   "hashTable": {
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
+    "/e-book/bible-ia-cover.png": "33639ca3d46b824c776b62c7b6150234e4548db0",
     "/icons/maskable_icon_x128.png": "f5bcd2a79c9c76cc10da9fea66f8b6b7ed2eb9b5",
     "/icons/maskable_icon_x192.png": "f075c8b5a14529898772c60e488c7735f211606d",
     "/icons/maskable_icon_x384.png": "4e271ccb49fa1e01b66ab755a58b5ce122ab7bde",
@@ -190,10 +192,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "856c104b628f0e9c31df9e163620d4e7539230fd",
-    "/index.html": "2a4242bc43e3826280cf12e42a30e2d8f0aa0c83",
+    "/index.csr.html": "f54ea6bc15e7772b9e81955c2c8bc626f78bb637",
+    "/index.html": "4172952c7f77f50e92a2e419dca5fb4e9d7b4f16",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-VHMYKKQW.js": "d29b267f15dcb791af5fedf24ec41b8801132a14",
+    "/main-UX44NV3A.js": "a9296eb7767ed441cdf476e5aad90c5300a94c0f",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
   },
