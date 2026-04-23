@@ -5,12 +5,12 @@
 .main-header {
   width: 100%;
   position: absolute;
+  margin-top: 25px;
   top: 0;
   left: 0;
   // Aumentamos de 1000 para 10000 para garantir que fique acima de qualquer card ou livro
   z-index: 10000 !important;
   background: transparent;
-  padding: 25px 5%;
 
   // Garante que o container do header não bloqueie cliques no que está atrás,
   // mas que seus filhos (links e botões) funcionem.
@@ -26,13 +26,12 @@
   margin: 0 auto;
 }
 
-// LOGO LADO ESQUERDO
 .logo-left {
   display: flex;
   align-items: center;
 
   .header-logo {
-    height: 75px; // Tamanho elegante para header
+    height: 75px !important; // Tamanho elegante para header
     width: auto;
     filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
     cursor: pointer;
@@ -104,51 +103,140 @@
   cursor: pointer;
 }
 
-.nav-right {
-  margin-right: 40px;
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+
+  a {
+    font-family: 'Cinzel', serif;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+
+    &:hover,
+    &.active-link {
+      color: #d4af37;
+    }
+  }
 }
 
-// RESPONSIVIDADE SIMPLES
-@media (max-width: 768px) {
-  .logo-left {
-    margin-left: 10px;
-  }
+/* --- MOBILE ESTRUTURA --- */
 
-  .main-header {
-    // Reduzimos o padding lateral para quase nada para o ícone não cair
-    padding: 15px 2% !important;
-  }
+.menu-toggle {
+  display: none; // Escondido no Desktop
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  z-index: 1100;
 
-  .header-content {
-    // Garante que o container ocupe 100% da largura sem sobras
-    width: 100%;
+  .hamburger {
+    width: 25px;
+    height: 18px;
+    display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    gap: 5px;
+
+    span {
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #d4af37;
+      transition: all 0.3s ease-in-out;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .main-header {
+    margin-top: 0px !important;
+    width: 100%;
+    height: 80px;
+    background: rgba(5, 5, 5, 0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+    position: fixed;
+    top: 0;
+    z-index: 1000;
+
+    .header-content {
+      max-width: 1400px;
+      height: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-right {
+    position: fixed;
+    top: 0;
+    right: -100%; // Escondido fora da tela
+    width: 280px;
+    height: 100vh;
+    background: #050505;
+    border-left: 1px solid rgba(212, 175, 55, 0.2);
+    padding: 100px 40px;
+    transition: right 0.4s cubic-bezier(0.25, 1, 0.33, 1);
+    z-index: 1050;
+
+    &.open {
+      right: 0; // Desliza para dentro
+    }
   }
 
   .nav-links {
-    // Gap bem curto para caber tudo na mesma linha
-    gap: 10px !important;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
 
-    li a {
-      font-size: 1rem;
-      letter-spacing: 1px; // Diminuir o espaçamento de 3px para 1px salva muito espaço
+    a {
+      font-size: 1.1rem;
     }
   }
 
-  .header-logo {
-    height: 30px !important; // Logo menor para sobrar espaço para o menu
+  /* Animação do ícone X quando aberto */
+  .menu-active {
+    .hamburger {
+      span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+      }
+      span:nth-child(2) {
+        opacity: 0;
+      }
+      span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+      }
+    }
   }
 
-  .lang-selector {
+  .logo-left {
     display: flex;
     align-items: center;
-    // Pequena margem à direita para o ícone não colar no vidro do celular
-    margin-right: 5px;
 
-    app-version-selector {
-      display: block;
-      width: 20px; // Força uma largura mínima para o componente ser renderizado
+    .header-logo {
+      height: 55px !important; // Tamanho elegante para header
+      width: auto;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.3));
+      cursor: pointer;
     }
   }
+}
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(3px);
+  z-index: 1040;
 }

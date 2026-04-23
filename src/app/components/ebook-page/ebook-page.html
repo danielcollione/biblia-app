@@ -1,0 +1,41 @@
+@if (ebookData()) {
+<div class="reader-page">
+    <main class="reader-container">
+        <article class="reading-area">
+
+            <div class="nav-wrapper">
+                <button class="back-btn-lux" (click)="voltarParaHome()">
+                    ← {{versionService.ui().back.toUpperCase()}}
+                </button>
+            </div>
+
+            <header class="book-header">
+                <h1 class="main-title">{{ ebookData()?.['title:'] }}</h1>
+                <p class="main-description">{{ ebookData()?.ebookIntro?.description }}</p>
+
+                <div class="lux-hr"></div>
+            </header>
+
+            <section class="chapter-content">
+                <h2 class="section-label">{{ versionService.ui().introduction }}</h2>
+                <h3 class="inner-subtitle">{{ ebookData()?.ebookIntro?.['sub-title'] }}</h3>
+
+                <div class="reading-text">
+                    <p class="reader-p">{{ ebookData()?.ebookIntro?.content }}</p>
+                </div>
+            </section>
+
+            <section class="reader-paywall">
+                <div class="paywall-gradient"></div>
+                <div class="paywall-content">
+                    <p class="cta-text">{{ ebookData()?.ebookIntro?.ctaText }}</p>
+
+                    <button class="stripe-btn" (click)="irParaCheckout()">
+                        {{ ebookData()?.ebookIntro?.buttonTextBuy }}
+                    </button>
+                </div>
+            </section>
+        </article>
+    </main>
+</div>
+}

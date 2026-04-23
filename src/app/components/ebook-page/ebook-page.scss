@@ -1,0 +1,166 @@
+/* Reset e Base */
+$gold-primary: #c5a059;
+
+.reader-page {
+  min-height: 100vh;
+  background-color: #1a1a1a; /* Preto absoluto para luxo */
+  color: white;
+  display: flex;
+  flex-direction: column;
+}
+
+.reader-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 40px 20px 0; /* Padding superior menor para o botão de voltar */
+}
+
+.reading-area {
+  max-width: 750px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Botão Voltar Personalizado */
+.nav-wrapper {
+  margin-top: 100px;
+}
+
+.back-btn-lux {
+  background: none;
+    border: 1px solid rgba($gold-primary, 0.3);
+    color: $gold-primary;
+    font-family: 'Cinzel', serif;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      background: rgba($gold-primary, 0.1);
+    }
+}
+
+/* Tipografia e Estrutura do Livro */
+.book-header {
+  margin-bottom: 60px;
+
+  .main-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    line-height: 1.1;
+    color: #f1e5ac;
+    margin-bottom: 30px;
+    font-weight: 700;
+  }
+
+  .main-description {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .lux-hr {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0.4), transparent);
+    margin-top: 40px;
+  }
+}
+
+.chapter-content {
+  .section-label {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #f1e5ac;
+    margin-bottom: 30px;
+    font-weight: 400;
+  }
+
+  .inner-subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #d4af37;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+  }
+
+  .reader-p {
+    font-family: 'Inter', sans-serif; /* Fonte limpa conforme solicitado */
+    font-size: 1.2rem;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: justify;
+    margin-bottom: 30px;
+  }
+}
+
+.reader-paywall {
+  position: relative;
+  margin-top: -300px; /* Aumentado para um fade muito mais longo */
+  padding-bottom: 100px;
+  
+  .paywall-gradient {
+    height: 400px; /* Transição muito mais alta e suave */
+    /* Gradiente que funde o transparente com a sua nova cor #1a1a1a */
+    background: linear-gradient(to bottom, transparent 0%, #1a1a1a 75%, #1a1a1a 100%);
+    pointer-events: none;
+  }
+
+  .paywall-content {
+    background: #1a1a1a; /* Cor fixa que você pediu */
+    padding: 20px 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .cta-text {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.15rem;
+      color: white;
+      margin-bottom: 40px;
+      line-height: 1.6;
+      max-width: 80%;
+    }
+  }
+}
+
+.stripe-btn {
+  background: #d4af37;
+  color: #000;
+  border: none;
+  padding: 22px 60px;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+
+  &:hover {
+    background: #f1e5ac;
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .book-header .main-title {
+    font-size: 1.8rem;
+  }
+  .chapter-content .section-label {
+    font-size: 1.6rem;
+  }
+  .reader-p {
+    text-align: left;
+  }
+  .stripe-btn {
+    width: 100%;
+  }
+}

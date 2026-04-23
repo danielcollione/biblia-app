@@ -26,6 +26,74 @@
                     </div>
                 </div>
             </section>
+            <span class="scroll-text">{{ versionService.ui().discoverMore }}</span>
+            <div class="scroll-line">
+                <div class="scroll-dot"></div>
+            </div>
         </div>
     </section>
+
+    <section class="ebook-intro" id="ebook-section">
+        @if (ebookData()) {
+        <div class="pre-title-wrapper">
+            <span class="pre-title">{{ ebookData().ebookIntro.preTitle }}</span>
+        </div>
+        }
+        <div class="intro-container">
+            <div class="mockup-column">
+                <div class="book-wrapper">
+                    <img src="e-book/bible-ia-cover.png" alt="E-book Mockup" class="book-mockup">
+                    <div class="book-glow"></div>
+                </div>
+            </div>
+
+            @if (ebookData()) {
+            <div class="copy-column">
+
+                <h2 class="section-title">{{ ebookData().ebookIntro.sectionTitle }}</h2>
+
+                <div class="lux-divider-left"></div>
+
+                <p class="intro-text" [innerHTML]="ebookData().ebookIntro.paragraph2"></p>
+
+                <p class="intro-text highlight-text">{{ ebookData().ebookIntro.highlightText }}</p>
+
+                <ul class="luxury-benefits">
+                    @for (benefit of ebookData().ebookIntro.benefits; track benefit.title) {
+                    <li>
+                        <span class="star">✦</span>
+                        <span><strong>{{ benefit.title }}</strong> {{ benefit.description }}</span>
+                    </li>
+                    }
+                </ul>
+
+                <button class="lux-ghost-btn" (click)="abrirLeitor()">{{ ebookData().ebookIntro.buttonText }}</button>
+            </div>
+            } @else {
+            <div class="copy-column">
+                <p class="intro-text" style="color: #d4af37; opacity: 0.7;">Carregando o Novo Pergaminho...</p>
+            </div>
+            }
+        </div>
+    </section>
+
+    <footer class="lux-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="logo-sem-fundo.png" alt="Logo The Unveiled Bible" class="logo-img">
+            </div>
+
+            <div class="footer-divider"></div>
+
+            <h2 class="footer-brand">{{ versionService.ui().unveiledBible }}</h2>
+
+            <a href="mailto:contact.theunveiledbible@gmail.com" class="footer-email">
+                <span class="email-icon">&#x2709;</span> contact.theunveiledbible@gmail.com
+            </a>
+
+            <p class="footer-copyright">
+                &copy; {{ 2026 }} — {{ versionService.ui().allCopyright }}
+            </p>
+        </div>
+    </footer>
 </div>
