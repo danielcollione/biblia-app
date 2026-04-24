@@ -23,6 +23,17 @@ $gold-primary: #c5a059;
   flex-direction: column;
 }
 
+.reading-text {
+  /* Cria o cartão de destaque */
+  background-color: #222222;
+  padding: 45px 55px;
+  border-radius: 12px;
+  border: 1px solid rgba(212, 175, 55, 0.15); /* Borda usando seu tom de dourado */
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  position: relative;
+  margin-top: 10px;
+}
+
 /* Botão Voltar Personalizado */
 .nav-wrapper {
   margin-top: 100px;
@@ -30,20 +41,20 @@ $gold-primary: #c5a059;
 
 .back-btn-lux {
   background: none;
-    border: 1px solid rgba($gold-primary, 0.3);
-    color: $gold-primary;
-    font-family: 'Cinzel', serif;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: 0.3s;
-    &:hover {
-      background: rgba($gold-primary, 0.1);
-    }
+  border: 1px solid rgba($gold-primary, 0.3);
+  color: $gold-primary;
+  font-family: 'Cinzel', serif;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: 0.3s;
+  &:hover {
+    background: rgba($gold-primary, 0.1);
+  }
 }
 
 /* Tipografia e Estrutura do Livro */
 .book-header {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 
   .main-title {
     font-family: 'Cinzel', serif;
@@ -90,19 +101,32 @@ $gold-primary: #c5a059;
 
   .reader-p {
     font-family: 'Inter', sans-serif; /* Fonte limpa conforme solicitado */
-    font-size: 1.2rem;
+    font-size: 1rem;
     line-height: 2;
     color: rgba(255, 255, 255, 0.8);
     text-align: justify;
     margin-bottom: 30px;
+    hyphens: auto;
+    -webkit-hyphens: auto;
+    word-spacing: -0.05em;
   }
+}
+
+.reading-text .reader-p:first-of-type::first-letter {
+  font-family: 'Cinzel', serif;
+  font-size: 5rem;
+  color: #d4af37;
+  float: left;
+  line-height: 0.85;
+  padding-right: 12px;
+  margin-top: 4px;
 }
 
 .reader-paywall {
   position: relative;
   margin-top: -300px; /* Aumentado para um fade muito mais longo */
   padding-bottom: 100px;
-  
+
   .paywall-gradient {
     height: 400px; /* Transição muito mais alta e suave */
     /* Gradiente que funde o transparente com a sua nova cor #1a1a1a */

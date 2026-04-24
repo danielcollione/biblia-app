@@ -18,10 +18,14 @@
 
             <section class="chapter-content">
                 <h2 class="section-label">{{ versionService.ui().introduction }}</h2>
-                <h3 class="inner-subtitle">{{ ebookData()?.ebookIntro?.['sub-title'] }}</h3>
+                <h3 class="inner-subtitle">{{ ebookData()?.ebookIntro?.subtitle }}</h3>
 
                 <div class="reading-text">
-                    <p class="reader-p">{{ ebookData()?.ebookIntro?.content }}</p>
+                    @for (paragraph of ebookData()?.ebookIntro?.content.split('\n'); track $index) {
+                    @if (paragraph.trim()) {
+                    <p class="reader-p">{{ paragraph }}</p>
+                    }
+                    }
                 </div>
             </section>
 
