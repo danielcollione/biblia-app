@@ -12,7 +12,7 @@ export interface BibleVersion {
 
 export const AVAILABLE_VERSIONS: BibleVersion[] = [
   { id: 'en_kjv', name: 'English (KJV)', file: 'en_kjv.json', flagCode: 'US' },
-  { id: 'pt_nvi', name: 'Português (NVI)', file: 'pt_acf.json', flagCode: 'BR' },
+  { id: 'pt_ave_maria', name: 'Português (Ave Maria)', file: 'bibliaAveMaria.json', flagCode: 'BR' },
   { id: 'es_rvr', name: 'Español (RVR)', file: 'es_rvr.json', flagCode: 'ES' },
   // Adicione outras que você baixou
 ];

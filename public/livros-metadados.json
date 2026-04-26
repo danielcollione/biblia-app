@@ -64,5 +64,12 @@
   { "id": 63, "nome": "2 João", "cor": "#4a3728", "resumo": "Andando na verdade. Um breve alerta para não receber aqueles que distorcem o ensinamento de Cristo.", "imagemUrl": "images/2-joao.webp" },
   { "id": 64, "nome": "3 João", "cor": "#5c1a1a", "resumo": "Hospitalidade e serviço. O elogio a Gaio e a reprovação da soberba de Diótrefes na comunidade.", "imagemUrl": "images/3-joao.webp" },
   { "id": 65, "nome": "Judas", "cor": "#1a2a3a", "resumo": "Batalha pela fé. Um chamado urgente para lutar contra a infiltração de erros morais na igreja.", "imagemUrl": "images/judas.webp" },
-  { "id": 66, "nome": "Apocalipse", "cor": "#2d3a1a", "resumo": "A vitória final. A revelação de Jesus Cristo, o triunfo sobre o mal e a restauração de todas as coisas.", "imagemUrl": "images/apocalipse.webp" }
+  { "id": 66, "nome": "Apocalipse", "cor": "#2d3a1a", "resumo": "A vitória final. A revelação de Jesus Cristo, o triunfo sobre o mal e a restauração de todas as coisas.", "imagemUrl": "images/apocalipse.webp" },
+  { "id": 67, "nome": "Tobias", "cor": "#4a3728", "resumo": "Uma história de fé, cura e providência divina. Tobias, guiado pelo anjo Rafael, encontra cura para o pai cego e uma esposa fiel.", "imagemUrl": "images/default-book.webp" },
+  { "id": 68, "nome": "Judite", "cor": "#5c1a1a", "resumo": "A coragem de uma viúva piedosa. Judite arrisca a vida ao seduzir e decapitar o general Holofernes, salvando Israel.", "imagemUrl": "images/default-book.webp" },
+  { "id": 69, "nome": "1 Macabeus", "cor": "#1a2a3a", "resumo": "A revolta dos Macabeus contra a opressão selêucida. A luta heroica de Judas Macabeu pela liberdade religiosa de Israel.", "imagemUrl": "images/default-book.webp" },
+  { "id": 70, "nome": "2 Macabeus", "cor": "#2d3a1a", "resumo": "A teologia do martírio e da ressurreição. Relatos de fidelidade extrema à Lei e a reconquista do Templo de Jerusalém.", "imagemUrl": "images/default-book.webp" },
+  { "id": 71, "nome": "Sabedoria", "cor": "#4a3728", "resumo": "O louvor à Sabedoria divina. Reflexões sobre a imortalidade da alma justa e a loucura da idolatria.", "imagemUrl": "images/default-book.webp" },
+  { "id": 72, "nome": "Eclesiástico", "cor": "#5c1a1a", "resumo": "O Sirácida. Uma vasta coleção de ensinamentos sobre sabedoria prática, ética familiar e o louvor aos grandes heróis de Israel.", "imagemUrl": "images/default-book.webp" },
+  { "id": 73, "nome": "Baruc", "cor": "#1a2a3a", "resumo": "Uma meditação sobre o exílio. Confissão dos pecados de Israel, elogio à Sabedoria como dom de Deus e promessa de restauração.", "imagemUrl": "images/default-book.webp" }
 ]
