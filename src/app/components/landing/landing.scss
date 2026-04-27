@@ -711,3 +711,30 @@ p.subtitle.animate-reveal {
     }
   }
 }
+
+@media (max-width: 1023px) {
+  .lp-container {
+    /* Remove a imagem de fundo do container para usar no pseudo-elemento */
+    background-image: none; 
+    position: relative;
+    z-index: 1; /* Cria o contexto de empilhamento correto */
+  }
+
+  .lp-container::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    
+    /* Movemos o background color para cá também */
+    background-color: #050505;
+    background-image:
+      radial-gradient(circle at center, rgba(10, 10, 10, 0.3) 0%, rgba(5, 5, 5, 0.95) 100%),
+      url('/images/poster.jpeg');
+    background-size: cover;
+    background-position: top center; /* Foca no topo da imagem no mobile */
+  }
+}
