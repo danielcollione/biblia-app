@@ -1,17 +1,27 @@
-<header class="main-header">
+<header class="main-header" [class.menu-active]="isMenuOpen()">
     <div class="header-content">
 
         <div class="logo-left">
-            <a routerLink="/" class="logo-link"><img src="logo-sem-fundo.png" alt="A Bíblia Revelada"
-                    class="header-logo"></a>
+            <a routerLink="/" class="logo-link" (click)="closeMenu()">
+                <img src="logo-sem-fundo.png" alt="A Bíblia Revelada" class="header-logo">
+            </a>
         </div>
 
-        <nav class="nav-right">
+        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir Menu">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </button>
+
+        <nav class="nav-right" [class.open]="isMenuOpen()">
             <ul class="nav-links">
-                <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
-                <!-- <li><a routerLink="/news">{{versionService.ui().news}}</a></li> -->
-                <li><a routerLink="/blog">{{versionService.ui().blog}}</a></li>
-                <!-- <li><a routerLink="/about">{{versionService.ui().aboutUs}}</a></li> -->
+                <li><a routerLink="/" (click)="closeMenu()">{{versionService.ui().start}}</a></li>
+                <li><a routerLink="/read" routerLinkActive="active-link" (click)="closeMenu()">{{versionService.ui().title}}</a></li>
+                <li><a [routerLink]="['/']" fragment="ebook-section" (click)="closeMenu()">E-BOOKS</a></li>
+                <li><a routerLink="/blog" (click)="closeMenu()">{{versionService.ui().blog}}</a></li>
+                
                 <li class="lang-selector">
                     <app-version-selector></app-version-selector>
                 </li>
@@ -20,3 +30,7 @@
 
     </div>
 </header>
+
+@if (isMenuOpen()) {
+    <div class="menu-overlay" (click)="closeMenu()"></div>
+}

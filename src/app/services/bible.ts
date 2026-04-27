@@ -52,11 +52,12 @@ export class BibleService {
     private metaService: Meta,
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      this.dbPromise = openDB('BibliaDB', 1, {
+      this.dbPromise = openDB('BibliaDB', 2, {
         upgrade(db) {
-          if (!db.objectStoreNames.contains('versoes')) {
-            db.createObjectStore('versoes');
+          if (db.objectStoreNames.contains('versoes')) {
+            db.deleteObjectStore('versoes');
           }
+          db.createObjectStore('versoes');
         },
       });
 
@@ -69,12 +70,17 @@ export class BibleService {
 
   // Busca os metadados traduzidos baseando-se no ID ou Nome
   getMetadados(nomeLivro: string): LivroMetadados {
+    const nomeNorm = (nomeLivro || '').toLowerCase().trim();
+    if (!nomeNorm) {
+      return { id: 0, nome: nomeLivro || '', cor: '#4a3728', resumo: '', imagemUrl: 'images/default-book.webp' };
+    }
     const lista = this.metadados();
     return (
       lista.find(
         (m) =>
-          m.nome.toLowerCase() === nomeLivro.toLowerCase() ||
-          m.nome.toLowerCase().includes(nomeLivro.toLowerCase()),
+          m?.nome &&
+          (m.nome.toLowerCase() === nomeNorm ||
+            m.nome.toLowerCase().includes(nomeNorm)),
       ) || {
         id: 0,
         nome: nomeLivro,

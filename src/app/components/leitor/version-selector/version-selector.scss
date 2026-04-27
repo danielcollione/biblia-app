@@ -37,49 +37,69 @@
 
 .dropdown-menu {
   position: absolute;
-  right: 0; /* Alinha o menu com a borda direita do botão */
-  top: calc(100% + 8px); /* Abre exatamente abaixo */
+  /* 1. PADRÃO DESKTOP: Alinha à direita e desce */
+  right: 0;
+  top: calc(100% + 12px);
+
   background-color: #1a1a1a;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(212, 175, 55, 0.2); /* Borda dourada sutil em vez de branca */
   border-radius: 4px;
-  min-width: 200px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+  min-width: 220px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.8);
   overflow: hidden;
-  animation: fadeInDown 0.2s ease-out;
-  z-index: 999;
+  z-index: 9999; /* Garante que fique acima de tudo */
+
+  /* Animação mais refinada */
+  transform-origin: top right;
+  animation: luxFadeIn 0.3s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .dropdown-item {
-  padding: 12px 18px;
-  color: #b0a89a;
+  padding: 14px 20px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: 'Montserrat', sans-serif; /* Fonte de leitura mais limpa */
   font-size: 0.85rem;
+  letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.2s;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-  &:last-child {
-    border-bottom: none;
-  }
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 
   &:hover {
     background-color: rgba(212, 175, 55, 0.1);
-    color: #fff;
+    color: #f1e5ac;
+    padding-left: 25px; /* Leve deslize para a direita no hover */
   }
 
   &.active {
     color: #d4af37;
     background-color: rgba(212, 175, 55, 0.05);
-    font-weight: bold;
+    border-left: 2px solid #d4af37; /* Marcador lateral de luxo */
   }
 }
 
-@keyframes fadeInDown {
+@keyframes luxFadeIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(10px) scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 992px) {
+  .dropdown-menu {
+    /* Inverte o alinhamento: agora ele cresce para a DIREITA */
+    right: auto;
+    left: 0; 
+    transform-origin: top left;
+    
+    /* Opcional: Se o ícone estiver muito no canto, 
+       podemos centralizar o menu no ícone usando:
+    left: 50%;
+    transform: translateX(-50%); 
+    transform-origin: top center;
+    */
   }
 }

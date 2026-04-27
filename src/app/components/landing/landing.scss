@@ -1,21 +1,20 @@
+/* =========================================
+   ESTILOS GERAIS & CONTAINER PRINCIPAL
+   ========================================= */
 .lp-container {
   min-height: 100vh;
-  height: auto; // PERMITE CRESCER
   display: flex;
   flex-direction: column;
   background-color: #050505;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-  // No mobile, o background-attachment: fixed às vezes trava o scroll.
-  // Vamos deixar ele "scroll" apenas no mobile.
-  background-attachment: scroll;
-  font-family: 'Cinzel', serif;
-  background-color: #050505;
   background-image:
-    radial-gradient(circle at center, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.8) 100%),
-    url('/assets/images/seu-fundo-epico.jpg'); // Nomeie o arquivo como preferir
+    radial-gradient(circle at center, rgba(10, 10, 10, 0.5) 0%, rgba(5, 5, 5, 0.95) 100%),
+    url('/images/poster.jpeg'); /* Ajuste o path conforme sua estrutura */
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
+  background-attachment: scroll; /* Scroll no mobile */
   font-family: 'Cinzel', serif;
 
   @media (min-width: 1024px) {
@@ -23,19 +22,18 @@
   }
 }
 
+/* =========================================
+   SEÇÃO HERO (DOBRA PRINCIPAL)
+   ========================================= */
 .hero {
-  // Mudança: min-height em vez de height fixo
   min-height: 100vh;
   height: auto;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  // Padding dinâmico: menos espaço no topo para mobile
-  padding: clamp(100px, 15vh, 170px) 20px 80px;
-
-  // MUDANÇA IMPORTANTE:
-  background: transparent; // Fica transparente para mostrar o fundo do container
+  padding: clamp(100px, 20vh, 170px) 20px 80px;
+  background: transparent;
 
   .hero-content {
     width: 100%;
@@ -52,7 +50,7 @@
     font-weight: 50;
     font-size: clamp(2.2rem, 10vw, 5.5rem);
     letter-spacing: clamp(2px, 1.5vw, 12px);
-    font-family: Cinzel, serif;
+    font-family: 'Cinzel', serif;
     -webkit-background-clip: text;
     flex-wrap: wrap;
     margin: 0;
@@ -60,44 +58,27 @@
   }
 }
 
-.glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 15px;
-  padding: 40px;
-  transition:
-    transform 0.3s ease,
-    border 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    transform: translateY(-10px);
-    border-color: #cfb53b;
-    background: rgba(207, 181, 59, 0.05);
-  }
-}
-
 .subtitle {
   color: white;
-  font-family: Cinzel, serif;
+  font-family: 'Cinzel', serif;
   -webkit-background-clip: text;
-  letter-spacing: 12px;
   font-size: clamp(0.7rem, 2vw, 1.1rem);
   letter-spacing: clamp(3px, 1.5vw, 8px);
   padding: 0 20px;
   text-align: center;
 }
 
+/* =========================================
+   CARDS DA HERO (PORTAL GRID)
+   ========================================= */
 .portal-grid {
   display: flex;
-  flex-direction: column; // PADRÃO: Um em cima do outro (Mobile First)
+  flex-direction: column;
   align-items: center;
   gap: 30px;
   width: 100%;
   margin-top: 20px;
 
-  // QUANDO A TELA FOR GRANDE (DESKTOP) -> Lado a Lado
   @media (min-width: 1024px) {
     flex-direction: row;
     justify-content: center;
@@ -112,21 +93,19 @@
   height: 400px;
   box-sizing: border-box;
   text-align: center;
+  cursor: pointer;
 
-  // 1. ESPECIFICIDADE: Animamos apenas o necessário para não sobrecarregar a GPU
   transition:
     transform 0.5s cubic-bezier(0.2, 1, 0.3, 1),
     background 0.5s ease,
     border-color 0.5s ease,
     box-shadow 0.5s ease;
 
-  // 2. ESTABILIDADE: Força a renderização em 3D para evitar o "fuzziness"
   transform: translateZ(0);
   backface-visibility: hidden;
-  -webkit-font-smoothing: antialiased; // Deixa a Cinzel ultra nítida
-  will-change: transform, opacity; // Avisa o navegador para preparar a placa de vídeo
+  -webkit-font-smoothing: antialiased;
+  will-change: transform, opacity;
 
-  // Glassmorphism
   background: rgba(255, 255, 255, 0.02);
   backdrop-filter: blur(15px);
   -webkit-backdrop-filter: blur(15px);
@@ -144,12 +123,9 @@
   }
 
   &:hover {
-    // RETIRADO O SCALE: O scale(1.02) é o que geralmente causa o borrão nas fontes.
-    // Aumentamos o deslocamento vertical para compensar o impacto visual.
     transform: translateY(-12px) translateZ(0);
-
     border-color: rgba(212, 175, 55, 0.6);
-    background: rgba(15, 15, 15, 0.6); // Escurece levemente para dar contraste
+    background: rgba(15, 15, 15, 0.6);
     box-shadow:
       0 20px 40px rgba(0, 0, 0, 0.6),
       0 0 20px rgba(212, 175, 55, 0.05);
@@ -159,7 +135,6 @@
     }
 
     .lux-icon {
-      // No ícone o scale funciona bem porque ele é uma imagem/vetor
       transform: translateY(-8px) scale(1.08);
       filter: drop-shadow(0 8px 12px rgba(212, 175, 55, 0.3));
     }
@@ -171,18 +146,10 @@
     }
 
     .lux-title {
-      color: #f1e5ac; // Dá um leve brilho no título ao focar
+      color: #f1e5ac;
       text-shadow: 0 0 8px rgba(212, 175, 55, 0.2);
     }
   }
-}
-
-// Estilo para garantir que as fontes fiquem "Sharp" (Afiadas)
-.lux-title,
-.lux-description {
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-wrapper {
@@ -196,12 +163,19 @@
   }
 }
 
+.lux-title,
+.lux-description {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .lux-title {
   font-family: 'Cinzel', serif;
-  font-weight: 400; // O mais fino da Cinzel
+  font-weight: 400;
   font-size: 1.6rem;
-  color: #d4af37; // Dourado Clássico
-  letter-spacing: 6px; // Espaçamento que traz o ar de "100" de peso
+  color: #d4af37;
+  letter-spacing: 6px;
   text-transform: uppercase;
   margin-bottom: 20px;
 }
@@ -215,7 +189,7 @@
 }
 
 .lux-description {
-  font-family: 'Cinzel', serif; // Mantendo a unidade visual
+  font-family: 'Cinzel', serif;
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.6);
   line-height: 1.8;
@@ -223,27 +197,12 @@
   font-weight: 400;
 }
 
-.lp-container {
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background-color: #050505;
-  // Use "scroll" ou deixe o padrão para permitir que o conteúdo desça
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  background-image:
-    radial-gradient(circle at center, rgba(10, 10, 10, 0.5) 0%, rgba(5, 5, 5, 0.95) 100%),
-    url('/images/poster.jpeg');
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
-}
-
+/* =========================================
+   ANIMAÇÕES GERAIS
+   ========================================= */
 @keyframes elegantRevealLeft {
   from {
     opacity: 0;
-    // Começa 30px à esquerda e 10px para baixo (sutil efeito 3D)
     transform: translateX(-30px) translateY(10px);
   }
   to {
@@ -253,33 +212,300 @@
 }
 
 .animate-reveal {
-  // Configurações comuns
-  display: block; // Garante que o transform funcione
-  opacity: 0; // Começa escondido
+  display: block;
+  opacity: 0;
   animation-name: elegantRevealLeft;
-  animation-duration: 4s; // Duração total da animação
-  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1); // Timing ultra suave (quad-out)
-  animation-fill-mode: both; // Mantém o estado final
+  animation-duration: 4s;
+  animation-timing-function: cubic-bezier(0.23, 1, 0.32, 1);
+  animation-fill-mode: both;
 }
 
 h1.gold-text.animate-reveal {
-  // O título começa instantaneamente ou com um delay muito curto
   animation-delay: 0.1s;
 }
-
 p.subtitle.animate-reveal {
-  // O subtítulo é retardado para criar o efeito "escada" (Staggered)
   animation-delay: 0.3s;
 }
 
+/* =========================================
+   NOVA SEÇÃO: INTRODUÇÃO DO E-BOOK (LUXO)
+   ========================================= */
+.ebook-intro {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: clamp(60px, 10vh, 120px) 20px;
+  position: relative;
+  z-index: 10;
+
+  /* * A MÁGICA DA TRANSIÇÃO SUAVE AQUI:
+   * 0%: Começa 100% transparente logo abaixo do "Descubra mais".
+   * 15%: Começa a escurecer levemente.
+   * 30%: Fica 100% preto escuro (logo antes de chegar no seu pré-título).
+   * 100%: Continua preto até o final da seção.
+   */
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(5, 5, 5, 0.8) 15%,
+    #050505 30%,
+    #050505 100%
+  );
+
+  /* IMPORTANTE: Remova ou apague o bloco &::before que estava aqui antes! */
+}
+
+.intro-container {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 50px;
+
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 80px;
+  }
+}
+
+.mockup-column {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .book-wrapper {
+    position: relative;
+    perspective: 1200px;
+
+    .book-mockup {
+      max-width: 100%;
+      width: clamp(250px, 40vw, 400px);
+      height: auto;
+      position: relative;
+      z-index: 2;
+      border-radius: 10px;
+
+      /* Posição de repouso (no chão) */
+      transform: translateY(0) rotateY(0) rotateX(0);
+
+      /* Brilho dourado inicial (desligado/muito sutil) */
+      box-shadow:
+        0 0 15px rgba(212, 175, 55, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.15);
+
+      /* Transição suave para quando o mouse SAIR do livro */
+      transition:
+        box-shadow 0.6s ease,
+        transform 0.6s ease;
+      transform-style: preserve-3d;
+
+      &:hover {
+        /* Inicia o loop de decolagem e flutuação sem trancos */
+        animation: floatingBook 5s ease-in-out infinite;
+
+        /* O brilho dourado aumenta intensamente no hover */
+        box-shadow:
+          0 0 25px rgba(212, 175, 55, 0.7),
+          0 0 45px rgba(212, 175, 55, 0.35);
+      }
+    }
+
+    .book-glow {
+      display: none;
+    }
+  }
+}
+
+/* O MOTOR DA ANIMAÇÃO SUAVE */
+@keyframes floatingBook {
+  0% {
+    /* Começa exatamente onde o livro já está (sem tranco) */
+    transform: translateY(0px) rotateY(0deg) rotateX(0deg);
+  }
+  50% {
+    /* Ponto mais alto da flutuação (ápice do luxo) */
+    transform: translateY(-20px) rotateY(-8deg) rotateX(5deg);
+  }
+  100% {
+    /* Volta para o chão suavemente para reiniciar o loop */
+    transform: translateY(0px) rotateY(0deg) rotateX(0deg);
+  }
+}
+
+.pre-title-wrapper {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 10px; /* Dá um respiro antes do livro e do título principal começarem */
+
+  .pre-title {
+    font-family: 'Cinzel', serif;
+    color: rgba(212, 175, 55, 0.8);
+    font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+    letter-spacing: 6px;
+    text-transform: uppercase;
+
+    /* Isso força o texto a ficar em uma única linha no desktop */
+    white-space: nowrap;
+
+    @media (max-width: 768px) {
+      /* No celular, permitimos quebrar a linha, mas mantemos no centro */
+      white-space: normal;
+      letter-spacing: 4px;
+    }
+  }
+}
+
+/* --- Coluna de Textos (Copy) --- */
+.copy-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  .section-title {
+    font-family: 'Cinzel', serif;
+    color: #f1e5ac;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    line-height: 1.25;
+    font-weight: 400;
+    margin-bottom: 25px;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+  }
+
+  .lux-divider-left {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, #d4af37, transparent);
+    margin-bottom: 35px;
+  }
+
+  .intro-text {
+    font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 15px;
+
+    strong {
+      color: #f1e5ac;
+      font-weight: 500;
+    }
+  }
+
+  .highlight-text {
+    color: #d4af37;
+    font-weight: 500;
+    margin-top: 15px;
+    margin-bottom: 10px;
+  }
+
+  .luxury-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0 40px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+    li {
+      font-family: 'Montserrat', 'Helvetica Neue', sans-serif;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.9rem;
+      line-height: 1.6;
+      display: flex;
+      align-items: flex-start;
+      background: rgba(255, 255, 255, 0.02);
+      padding: 15px;
+      border-radius: 4px;
+      border-left: 2px solid transparent;
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(212, 175, 55, 0.05);
+        border-left: 2px solid #d4af37;
+        transform: translateX(5px);
+      }
+
+      .star {
+        color: #d4af37;
+        margin-right: 15px;
+        font-size: 1rem;
+        margin-top: 2px;
+      }
+
+      strong {
+        color: #f1e5ac;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  /* --- Botão Elegante --- */
+  .lux-ghost-btn {
+    font-family: 'Cinzel', serif;
+    background: transparent;
+    color: #d4af37;
+    border: 1px solid rgba(212, 175, 55, 0.5);
+    padding: 16px 45px;
+    font-size: 0.95rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    align-self: flex-start;
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.1), transparent);
+      transition: all 0.6s ease;
+    }
+
+    &:hover {
+      border-color: #d4af37;
+      color: #f1e5ac;
+      background: rgba(212, 175, 55, 0.05);
+      transform: translateY(-3px);
+      box-shadow:
+        0 10px 25px rgba(0, 0, 0, 0.4),
+        0 0 20px rgba(212, 175, 55, 0.15);
+
+      &::before {
+        left: 100%;
+      }
+    }
+  }
+}
+
+/* =========================================
+   MEDIA QUERIES (MOBILE)
+   ========================================= */
 @media (max-width: 768px) {
   .gold-text {
-    letter-spacing: 4px; // Menos espaço entre letras para caber no celular
+    letter-spacing: 4px;
   }
 
   .portal-grid {
     margin-top: 30px;
-    gap: 40px; // Mais espaço entre um card e outro para não embolar
+    gap: 40px;
   }
 
   .portal-card {
@@ -291,6 +517,197 @@ p.subtitle.animate-reveal {
     }
     p {
       font-size: 0.8rem;
+    }
+  }
+
+  .copy-column {
+    .lux-ghost-btn {
+      align-self: stretch; /* Botão ocupa largura toda no mobile */
+      text-align: center;
+    }
+  }
+}
+
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  z-index: 20;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 1;
+
+    .scroll-text {
+      color: #f1e5ac;
+      text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+    }
+  }
+}
+
+.scroll-text {
+  margin-top: 120px;
+  font-family: 'Cinzel', serif;
+  color: rgba(212, 175, 55, 0.7);
+  font-size: 0.65rem;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  /* O feixe de luz que cai */
+  .scroll-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: linear-gradient(to bottom, transparent, #d4af37, #ffffff);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    animation: scrollDrop 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+
+/* Animação do feixe caindo */
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}
+
+/* Ajuste no Mobile para não ficar muito espremido */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 20px;
+  }
+  .scroll-line {
+    height: 40px;
+  }
+}
+
+.lux-footer {
+  width: 100%;
+  background-color: #1a1a1a;
+  padding: 40px 20px; // Espaço generoso para parecer premium
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border-top: 1px solid rgba(212, 175, 55, 0.1); // Borda dourada quase invisível
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+  }
+
+  .footer-logo {
+    margin-bottom: 30px;
+
+    .logo-img {
+      height: 45px; // Altura elegante para o logo
+      width: auto;
+      opacity: 0.8;
+      transition: opacity 0.5s ease;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+
+  .footer-divider {
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    margin-bottom: 30px;
+  }
+
+  .footer-brand {
+    font-family: 'Cinzel', serif;
+    color: #f1e5ac;
+    font-size: 1.2rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    font-weight: 400;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  .footer-copyright {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.3);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .footer-email {
+    font-family: 'Montserrat', sans-serif;
+    color: rgba(255, 255, 255, 0.6); /* Cinza claro suave */
+    font-size: 0.8rem;
+    text-decoration: none;
+    letter-spacing: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Distância entre o ícone e o texto */
+    margin-bottom: 30px; /* Distância para o copyright abaixo */
+    transition: all 0.3s ease;
+
+    .email-icon {
+      color: #d4af37; /* Dourado da marca */
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+    }
+
+    /* Efeito ao passar o mouse */
+    &:hover {
+      color: #f1e5ac; /* Texto clareia */
+      transform: translateY(-2px); /* Leve subidinha */
+
+      .email-icon {
+        text-shadow: 0 0 10px rgba(212, 175, 55, 0.8); /* Ícone brilha */
+      }
+    }
+  }
+}
+
+/* Ajuste Mobile */
+@media (max-width: 768px) {
+  .lux-footer {
+    padding: 60px 20px;
+
+    .footer-brand {
+      font-size: 1rem;
+      letter-spacing: 5px;
+      text-align: center;
     }
   }
 }
