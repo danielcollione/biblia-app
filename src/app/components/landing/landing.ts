@@ -59,7 +59,6 @@ export class Landing implements OnInit {
     this.metaService.updateTag({
       property: 'og:description',
       content: 'Revele os mistérios de manuscritos antigos e exegese histórica.',
-
     });
     this.metaService.updateTag({
       property: 'og:image',
@@ -81,6 +80,8 @@ export class Landing implements OnInit {
   }
 
   abrirLeitor() {
-    this.router.navigate(['/ebook-page']);
+    // Substitua pelo seu link de pagamento real do Stripe
+    const stripeUrl = 'https://pay.hotmart.com/L105521057X';
+    window.open(stripeUrl, '_blank');
   }
 }
