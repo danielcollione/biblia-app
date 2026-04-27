@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777217941036,
+  "timestamp": 1777293423830,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/index.csr.html",
         "/index.html",
-        "/main-A4WRY6CN.js",
+        "/main-36FXXD56.js",
         "/manifest.webmanifest",
         "/styles-DWH5UQXE.css"
       ],
@@ -192,10 +192,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "3ef5773c3f49f95b9a618e0f0b2dd949757739e2",
-    "/index.html": "c565f1f3bc869ebe7ca3e99ff9c84eaa6c31d3ee",
+    "/index.csr.html": "f0a4b75100bb58ffc53d1663eb0dec0defba1b51",
+    "/index.html": "60f3f13d4e7f672f60ce8a99883823a9dcb92ba5",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-A4WRY6CN.js": "48accb9c9988052c31e367b379f27d8e16da42fd",
+    "/main-36FXXD56.js": "9eaa2ef4ee9b2e64ed6c582db5eaa1e24d533ea2",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
   },
