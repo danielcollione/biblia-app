@@ -39,7 +39,7 @@ export class EbookPage {
 
   irParaCheckout() {
     // Substitua pelo seu link de pagamento real do Stripe
-    const stripeUrl = 'https://go.hotmart.com/L105521057X?dp=1';
-    window.open(stripeUrl, '_blank'); 
+    const stripeUrl = 'https://pay.hotmart.com/L105521057X';
+    window.open(stripeUrl, '_blank');
   }
 }
