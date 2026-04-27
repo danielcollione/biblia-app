@@ -28,6 +28,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     allCopyright: 'Todos os direitos reservados.',
     introduction: 'Introdução',
     start: 'Início',
+    readBible: 'Ler a Bíblia',
   },
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
@@ -58,6 +59,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     allCopyright: 'All rights reserved.',
     introduction: 'Introduction',
     start: 'Start',
+    readBible: 'Read the Bible',
   },
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
@@ -88,5 +90,6 @@ export const INTERFACE_TRANSLATIONS: any = {
     allCopyright: 'Todos los derechos reservados.',
     introduction: 'Introducción',
     start: 'Inicio',
+    readBible: 'Leer la Biblia',
   },
 };
