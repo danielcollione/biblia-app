@@ -1,10 +1,11 @@
-<div class="deep-studies-container">
+<section class="deep-studies-container">
 
-    <header class="section-header" *ngIf="!selectedArticle">
-        <h1 class="gold-text-glow">{{versionService.ui().deepStudies}}</h1>
-        <p class="subtitle">{{versionService.ui().exploreDeeper}}</p>
-    </header>
-
+    <div class="section-header" *ngIf="!selectedArticle">
+        <span class="section-pre-title">✦ {{ versionService.ui().blog }} ✦</span>
+        <h2 class="section-title">{{versionService.ui().deepStudies.toUpperCase()}}</h2>
+        <p class="section-subtitle">{{versionService.ui().exploreDeeper}}</p>
+    </div>
+    <hr class="luxury-divider">
     <div class="articles-grid" *ngIf="!selectedArticle">
         <div class="article-card" (click)="selectArticle(article)" *ngFor="let article of (articles$ | async)">
             <div class="card-image-wrapper">
@@ -26,8 +27,8 @@
         <header class="article-hero">
             <img [src]="selectedArticle!.thumbnail" class="hero-bg">
             <div class="hero-content">
-                <h1 class="gold-text-glow">{{ selectedArticle!.title }}</h1>
-                <div class="article-meta">DANIEL FAIS</div>
+                <h1 class="section-title">{{ selectedArticle!.title }}</h1>
+                <div class="section-subtitle hidden">{{versionService.ui().unveiledBible}}</div>
             </div>
         </header>
 
@@ -56,4 +57,4 @@
         </section>
     </article>
 
-</div>
+</section>

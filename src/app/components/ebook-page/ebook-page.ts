@@ -39,7 +39,7 @@ export class EbookPage {
 
   irParaCheckout() {
     // Substitua pelo seu link de pagamento real do Stripe
-    const stripeUrl = 'https://buy.stripe.com/7sYeVd7GN1RLaHxaAndQQ00';
+    const stripeUrl = 'https://theunveiledbible.gumroad.com/l/bible-in-the-age-of-ai';
     window.open(stripeUrl, '_blank'); 
   }
 }

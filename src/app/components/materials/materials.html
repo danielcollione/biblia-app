@@ -1,0 +1,61 @@
+<section class="material-container">
+
+    <div class="section-header">
+        <span class="section-pre-title">✦ {{ versionService.ui().materialsCollection }} ✦</span>
+        <h2 class="section-title">{{ versionService.ui().digitalBooks }}</h2>
+        <p class="section-subtitle">
+            {{ versionService.ui().materialsSubtitle }}
+        </p>
+    </div>
+    <hr class="luxury-divider">
+    <ng-container *ngFor="let material of materialsList()">
+        <div class="ebook-card">
+            <div class="badge-premium">{{ versionService.ui().recomendationsOfStudy }}</div>
+            <div class="card-content">
+                <div class="card-visual">
+                    <div class="tablet-mockup">
+                        <img [src]="material.coverUrl" [alt]="material.title">
+                    </div>
+                </div>
+
+                <div class="card-info">
+                    <span class="pre-title">{{ material.ebookIntro.preTitle }}</span>
+
+                    <h2 class="main-title">{{ material.title.split(':')[0] }}</h2>
+                    <h3 class="sub-title">{{ material.ebookIntro.subtitle }}</h3>
+
+                    <p class="description">
+                        {{ material.ebookIntro.description }}
+                    </p>
+
+                    <p class="highlight-text">{{ material.ebookIntro.highlightText }}</p>
+
+                    <ul class="benefits-list">
+                        <li *ngFor="let benefit of material.ebookIntro.benefits">
+                            <strong>{{ benefit.title }}</strong> {{ benefit.description }}
+                        </li>
+                    </ul>
+
+                    <button class="btn-unlock" (click)="openLink(material.ebookIntro.link)">
+                        <span>{{ versionService.ui().unlockKnowledge }}</span>
+                        <div class="lock-icon">
+                            <svg class="lock-closed" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <svg class="lock-open" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 9.9-1"></path>
+                            </svg>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-line">
+            <div class="scroll-dot"></div>
+        </div>
+    </ng-container>
+</section>

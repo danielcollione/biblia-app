@@ -25,13 +25,10 @@ $gold-primary: #c5a059;
 
 .reading-text {
   /* Cria o cartão de destaque */
-  background-color: #222222;
-  padding: 45px 55px;
-  border-radius: 12px;
-  border: 1px solid rgba(212, 175, 55, 0.15); /* Borda usando seu tom de dourado */
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-  position: relative;
-  margin-top: 10px;
+  max-width: 1000px;
+  margin: 150px auto 40px;
+  padding: 0 20px;
+  font-family: 'Lora', serif;
 }
 
 /* Botão Voltar Personalizado */

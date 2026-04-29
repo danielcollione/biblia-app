@@ -75,11 +75,12 @@ export class Landing implements OnInit {
     this.router.navigate(['/read']);
   }
 
-  irParaBlog() {
-    this.router.navigate(['/blog']);
+  irParaMateriais() {
+    this.router.navigate(['/materials']);
   }
 
   abrirLeitor() {
-    this.router.navigate(['/ebook-page']);
+    const stripeUrl = 'https://theunveiledbible.gumroad.com/l/bible-in-the-age-of-ai';
+    window.open(stripeUrl, '_blank');
   }
 }
