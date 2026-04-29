@@ -29,6 +29,12 @@ export const INTERFACE_TRANSLATIONS: any = {
     introduction: 'Introdução',
     start: 'Início',
     readBible: 'Ler a Bíblia',
+    materialsCollection: 'NOSSO ACERVO',
+    digitalBooks: 'GUIAS E LIVROS DIGITAIS',
+    materialsSubtitle:
+      'Cada conteúdo foi criado para levar você a um encontro mais profundo com a Palavra de Deus.',
+    unlockKnowledge: 'DESBLOQUEAR CONHECIMENTO',
+    materials: 'Materiais',
   },
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
@@ -60,6 +66,12 @@ export const INTERFACE_TRANSLATIONS: any = {
     introduction: 'Introduction',
     start: 'Start',
     readBible: 'Read the Bible',
+    materialsCollection: 'OUR COLLECTION',
+    digitalBooks: 'GUIDES AND DIGITAL BOOKS',
+    materialsSubtitle:
+      'Each content was created to lead you into a deeper encounter with the Word of God.',
+    unlockKnowledge: 'UNLOCK KNOWLEDGE',
+    materials: 'Materials',
   },
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
@@ -91,5 +103,11 @@ export const INTERFACE_TRANSLATIONS: any = {
     introduction: 'Introducción',
     start: 'Inicio',
     readBible: 'Leer la Biblia',
+    materialsCollection: 'NUESTRA COLECCIÓN',
+    digitalBooks: 'GUÍAS Y LIBROS DIGITALES',
+    materialsSubtitle:
+      'Cada contenido fue creado para llevarte a un encuentro más profundo con la Palabra de Dios.',
+    unlockKnowledge: 'DESBLOQUEAR CONOCIMIENTO',
+    materials: 'Materiales',
   },
 };

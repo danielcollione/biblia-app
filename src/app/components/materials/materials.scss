@@ -1,0 +1,349 @@
+// Variáveis locais do componente
+$gold-primary: #c5a059;
+$gold-dark: #8e6d31;
+$gold-light: #e2c98d;
+$black-card: #141414;
+$text-gray: #b0b0b0;
+
+@keyframes fadeUpEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px); // Começa um pouco mais abaixo
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); // Para na posição original
+  }
+}
+
+hr.luxury-divider {
+  display: block;
+  height: 2px; // Espessura
+  margin: 40px auto 70px auto; // Dá um respiro de 40px em cima e embaixo, e centraliza
+  border: 0; // Remove a borda padrão feia do HTML
+
+  // O degradê transparente nas pontas e brilhante no centro
+  background: linear-gradient(90deg, transparent 0%, $gold-light 50%, transparent 100%);
+  animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+.material-container {
+  max-width: 1000px;
+  margin: 150px auto 40px;
+  padding: 0 20px;
+  font-family: 'Lora', serif;
+
+  // Estilização do cabeçalho (Títulos e Subtítulos)
+  .section-header {
+    text-align: center;
+    margin-bottom: 50px;
+
+    animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+    .section-pre-title {
+      color: $gold-primary;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      font-family: 'Cinzel', serif;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.5rem;
+      color: #ffffff;
+      margin: 0 0 15px 0;
+
+      @media (max-width: 768px) {
+        font-size: 2rem;
+      }
+    }
+
+    .section-subtitle {
+      color: $text-gray;
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+  }
+
+  // O CARD PRINCIPAL
+  .ebook-card {
+    background: linear-gradient(145deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid rgba($gold-primary, 0.3);
+    border-radius: 12px;
+    padding: 0; // Padding 0 para permitir que a imagem cresça livremente
+    position: relative;
+    overflow: visible;
+    margin-bottom: 20px;
+    animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+    &:hover {
+      border-color: #c5a059;
+      box-shadow: 0 0 30px rgba(197, 160, 89, 0.1);
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      pointer-events: none;
+    }
+
+    .badge-premium {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translate(-50%, -50%); // Centraliza exatamente em cima da borda
+
+      background-color: #121212; // Fundo sólido escuro para "cortar" a linha do card que passa por trás
+      border: 1px solid rgba($gold-primary, 0.6); // Borda fina dourada
+      color: $gold-primary; // Texto dourado
+
+      font-family: 'Cinzel', serif;
+      font-size: 0.75rem;
+      font-weight: 400; // Tiramos o negrito (bold) para manter a estética fina e sofisticada
+      padding: 8px 24px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      white-space: nowrap; // Impede que o texto quebre em duas linhas
+      z-index: 10;
+    }
+
+    .card-content {
+      display: flex;
+      gap: 0; // Gap 0 para não afastar a imagem do texto artificialmente
+      align-items: center;
+      flex-wrap: wrap;
+
+      @media (max-width: 768px) {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    // A ÁREA DA IMAGEM
+    .card-visual {
+      flex: 1;
+      min-width: 450px; // Garante o espaço largo para os 500px de altura
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0;
+
+      @media (max-width: 768px) {
+        min-width: 100%;
+        padding-top: 40px;
+      }
+
+      .tablet-mockup {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+
+        // Puxa a imagem um pouco para a esquerda para compensar a borda transparente do arquivo
+        margin-left: -30px;
+
+        @media (max-width: 768px) {
+          margin-left: 0;
+        }
+
+        img {
+          width: 100%;
+          min-height: 500px;
+          object-fit: contain;
+
+          transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        &:hover img {
+          transform: translateY(-8px) scale(1.05);
+        }
+      }
+    }
+
+    // A ÁREA DO TEXTO
+    .card-info {
+      flex: 1.5;
+      min-width: 300px;
+
+      // O padding foi movido para cá: Topo, Direita, Baixo, Esquerda(0 para colar na imagem)
+      padding: 40px 40px 40px 0;
+
+      @media (max-width: 768px) {
+        padding: 0 30px 40px 30px;
+      }
+
+      .pre-title {
+        color: $gold-primary;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
+        font-family: 'Cinzel', serif;
+      }
+
+      .main-title {
+        font-family: 'Cinzel', serif;
+        font-size: 2.2rem;
+        margin: 10px 0;
+        background: linear-gradient(to right, #fff, $gold-light);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+
+        @media (max-width: 768px) {
+          font-size: 1.8rem;
+        }
+      }
+
+      .sub-title {
+        font-size: 1.1rem;
+        color: $gold-primary;
+        font-weight: 400;
+        margin-bottom: 20px;
+      }
+
+      .description {
+        color: $text-gray;
+        line-height: 1.6;
+        font-size: 0.95rem;
+        margin-bottom: 15px;
+      }
+
+      .highlight-text {
+        color: #fff;
+        font-weight: bold;
+        margin-top: 20px;
+      }
+
+      .benefits-list {
+        list-style: none;
+        padding: 0;
+        margin: 15px 0 30px 0;
+
+        li {
+          margin-bottom: 12px;
+          padding-left: 25px;
+          position: relative;
+          font-size: 0.9rem;
+          color: #e0e0e0;
+
+          @media (max-width: 768px) {
+            text-align: left;
+          }
+
+          &::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: $gold-primary;
+          }
+        }
+      }
+
+      .btn-unlock {
+        align-items: center;
+        cursor: pointer;
+        display: inline-flex;
+        background-size: 200% auto;
+        padding: 16px 32px;
+        gap: 15px;
+        background: transparent;
+        border: 1px solid #c5a059;
+        color: #c5a059;
+        text-decoration: none;
+        font-family: 'Cinzel', serif;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        transition: 0.3s;
+
+        &:hover {
+          background: #c5a059;
+          color: #0a0a0a;
+          background-position: right center;
+          transform: translateY(-2px);
+
+          .lock-icon {
+            .lock-closed {
+              opacity: 0;
+            }
+            .lock-open {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+        }
+
+        .lock-icon {
+          width: 20px;
+          height: 20px;
+          position: relative;
+          pointer-events: none;
+
+          .lock-closed,
+          .lock-open {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            transition:
+              opacity 0.3s ease,
+              transform 0.3s ease;
+          }
+
+          .lock-open {
+            opacity: 0;
+            transform: translateY(2px);
+          }
+        }
+      }
+    }
+  }
+}
+
+.scroll-line {
+  width: 1px;
+  height: 80px; // Altura da conexão entre os cards
+  
+  // O "auto" nas laterais é o segredo para centralizar exatamente no meio da tela
+  margin: 10px auto 40px auto; 
+  
+  // Linha de fundo com degradê para não ter um corte seco
+  background: linear-gradient(to bottom, transparent, rgba($gold-primary, 0.3), transparent); 
+  position: relative;
+  overflow: hidden;
+
+  /* O feixe de luz que cai */
+  .scroll-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 15px;
+    background: linear-gradient(to bottom, transparent, #d4af37, #ffffff);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.8);
+    animation: scrollDrop 2s cubic-bezier(0.77, 0, 0.175, 1) infinite;
+  }
+}
+
+@keyframes scrollDrop {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(60px);
+    opacity: 0;
+  }
+}

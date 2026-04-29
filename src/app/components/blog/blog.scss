@@ -1,40 +1,81 @@
-@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
-
 // Variáveis de Estilo
 $gold-primary: #c5a059;
 $gold-light: #f3e5ab;
 $deep-black: #0a0a0a;
 $glass-bg: rgba(255, 255, 255, 0.03);
+$text-gray: #b0b0b0;
 
-.deep-studies-container {
-  min-height: 100vh;
-  padding: 70px 5% 60px; // Espaço para o header fixo
-  background: radial-gradient(circle at top, #1a1a1a 0%, $deep-black 100%);
-  color: white;
-  font-family: 'Cormorant Garamond', serif;
+@keyframes fadeUpEntrance {
+  0% {
+    opacity: 0;
+    transform: translateY(40px); // Começa um pouco mais abaixo
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0); // Para na posição original
+  }
 }
 
-// Cabeçalho da Seção
+.hidden {
+  visibility: hidden
+}
+
+hr.luxury-divider {
+  width: 1000px;
+  display: block;
+  height: 2px; // Espessura
+  margin: 40px auto 70px auto; // Dá um respiro de 40px em cima e embaixo, e centraliza
+  border: 0; // Remove a borda padrão feia do HTML
+
+  // O degradê transparente nas pontas e brilhante no centro
+  background: linear-gradient(90deg, transparent 0%, $gold-light 50%, transparent 100%);
+  animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+  @media (max-width: 1000px) {
+    width: auto;
+  }
+}
+
+.deep-studies-container {
+  max-width: 1000px;
+  margin: 150px auto 40px;
+  padding: 0 20px;
+  font-family: 'Lora', serif;
+}
+
+.section-title {
+  font-family: 'Cinzel', serif;
+  font-size: 2.5rem;
+  color: #ffffff;
+  margin: 0 0 15px 0;
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.section-subtitle {
+  color: $text-gray;
+  font-size: 1.05rem;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+}
+
 .section-header {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 50px;
 
-  .gold-text-glow {
-    font-family: 'Cinzel', serif;
-    font-size: 3.5rem;
+  animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+
+  .section-pre-title {
     color: $gold-primary;
     text-transform: uppercase;
-    letter-spacing: 8px;
-    margin-bottom: 10px;
-    text-shadow: 0 0 20px rgba(197, 160, 89, 0.3);
-  }
-
-  .subtitle {
+    font-size: 0.85rem;
+    letter-spacing: 3px;
     font-family: 'Cinzel', serif;
-    font-size: 0.9rem;
-    color: rgba(255, 255, 255, 0.6);
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    display: block;
+    margin-bottom: 12px;
   }
 }
 
@@ -56,6 +97,7 @@ $glass-bg: rgba(255, 255, 255, 0.03);
   transition: all 0.5s cubic-bezier(0.2, 1, 0.3, 1);
   cursor: pointer;
   position: relative;
+  animation: fadeUpEntrance 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 
   &:hover {
     transform: translateY(-12px);
@@ -182,6 +224,12 @@ $glass-bg: rgba(255, 255, 255, 0.03);
   }
 
   .article-body {
+    background-color: #222222;
+    padding: 45px 55px;
+    border-radius: 12px;
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    position: relative;
+    margin-top: 10px;
     font-size: 1.3rem;
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.85);
@@ -248,7 +296,10 @@ $glass-bg: rgba(255, 255, 255, 0.03);
       gap: 30px;
       align-items: center;
 
-      @media (max-width: 600px) { flex-direction: column; text-align: center; }
+      @media (max-width: 600px) {
+        flex-direction: column;
+        text-align: center;
+      }
     }
 
     .product-image {
@@ -258,7 +309,7 @@ $glass-bg: rgba(255, 255, 255, 0.03);
         height: auto;
         border-radius: 2px;
         filter: sepia(0.2) contrast(1.1);
-        box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+        box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.5);
       }
     }
 

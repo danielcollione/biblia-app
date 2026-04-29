@@ -19,7 +19,7 @@
             <ul class="nav-links">
                 <li><a routerLink="/" (click)="closeMenu()">{{versionService.ui().start}}</a></li>
                 <li><a routerLink="/read" routerLinkActive="active-link" (click)="closeMenu()">{{versionService.ui().title}}</a></li>
-                <li><a [routerLink]="['/']" fragment="ebook-section" (click)="closeMenu()">E-BOOKS</a></li>
+                <li><a routerLink="/materials" routerLinkActive="active-link" (click)="closeMenu()">{{versionService.ui().materials}}</a></li>
                 <li><a routerLink="/blog" (click)="closeMenu()">{{versionService.ui().blog}}</a></li>
                 
                 <li class="lang-selector">

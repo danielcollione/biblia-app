@@ -75,8 +75,8 @@ export class Landing implements OnInit {
     this.router.navigate(['/read']);
   }
 
-  irParaBlog() {
-    this.router.navigate(['/blog']);
+  irParaMateriais() {
+    this.router.navigate(['/materials']);
   }
 
   abrirLeitor() {

@@ -1,9 +1,10 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
 import { BibleService } from './services/bible';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -14,10 +15,15 @@ import { filter } from 'rxjs';
 export class App implements OnInit {
   public bibleService = inject(BibleService);
   protected readonly title = signal('biblia-interativa');
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(private swUpdate: SwUpdate) {}
 
   ngOnInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
     // Mantém a splash screen por 2 segundos (2000ms) para o usuário curtir a animação
     setTimeout(() => {
       const splash = document.getElementById('pwa-splash');
@@ -41,7 +47,7 @@ export class App implements OnInit {
           // Aqui está o pulo do gato: ativa a nova versão e recarrega a página
           this.swUpdate.activateUpdate().then(() => {
             console.log('App atualizado para a versão mais recente!');
-            document.location.reload(); 
+            window.location.reload(); 
           });
         });
     }
