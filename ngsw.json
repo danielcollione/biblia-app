@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777634574720,
+  "timestamp": 1777635281252,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -196,8 +196,8 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "6544f83097b4dc3d431e50aead1307ea26df4400",
-    "/index.html": "dbbae899d393ae14fc331a413c889c67e7fc5a68",
+    "/index.csr.html": "909732ff94588e83dc9ee9e4136d849adfc239e7",
+    "/index.html": "10ac633b3866808fb11368bc5e80f8fb652f6b95",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
     "/main-FWNY2JKS.js": "53443e936e8400980f5f0a02e0b423c2593d1152",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
