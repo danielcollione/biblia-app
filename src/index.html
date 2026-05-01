@@ -178,9 +178,38 @@
     <img src="./logo-sem-fundo.png" alt="A Bíblia Revelada" class="splash-logo">
     <div class="loading-bar"></div>
   </div>
+  <noscript>
+    <style>
+      #pwa-splash {
+        display: none !important;
+      }
+
+      html,
+      body,
+      app-root {
+        height: auto !important;
+        min-height: 100%;
+        overflow: visible !important;
+      }
+
+      body {
+        background: #050505;
+      }
+
+      .noscript-banner {
+        display: block !important;
+      }
+    </style>
+  </noscript>
+  <noscript>
+    <div class="noscript-banner"
+      style="display:none;padding:12px 16px;background:#1f1609;color:#f1e5ac;font:500 14px/1.5 Arial, sans-serif;text-align:center;border-bottom:1px solid rgba(212,175,55,0.35);">
+      JavaScript is disabled. Pre-rendered static content will remain available, but PWA interactive features will be
+      limited.
+    </div>
+  </noscript>
   <app-root>
   </app-root>
-  <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
 
 </html>
