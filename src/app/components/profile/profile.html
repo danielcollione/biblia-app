@@ -1,55 +1,46 @@
-<!-- ESTADO DE LOADING (Imersivo) -->
+<!-- O Loading aparece acima de tudo enquanto o back-end processa -->
 <div class="loading-overlay" *ngIf="auth.isLoading()">
   <div class="luxury-spinner"></div>
-  <p class="cinzel-heading">Consultando os Registros...</p>
+  <p class="cinzel-heading">Validando sua entrada no acervo...</p>
 </div>
 
-<!-- CONTAINER DO PERFIL -->
 <div class="profile-page-container" *ngIf="!auth.isLoading() && auth.usuario() as user">
   <div class="profile-card-luxury">
     
-    <!-- Cabeçalho com Avatar e Rank -->
     <header class="card-header">
       <div class="avatar-wrapper">
-        <!-- Ajustado para pictureUrl conforme seu backend -->
-        <img [src]="user.pictureUrl || 'assets/default-avatar.png'" [alt]="user.name">
+        <!-- Lógica de Fallback para a imagem -->
+        <img [src]="user.pictureUrl || 'default-avatar.png'" class="profile-avatar">
         <div class="level-badge">LVL {{ user.level }}</div>
       </div>
       <h1 class="cinzel-heading">{{ user.name }}</h1>
-      <span class="membership-badge">{{ user.cargo }}</span> <!-- Ex: Apprentice -->
+      <span class="membership-badge">{{ user.cargo }}</span>
     </header>
 
-    <!-- Conteúdo Informativo e Gamificação -->
     <main class="card-body">
-      
-      <!-- Barra de Experiência -->
-      <div class="experience-section">
-        <div class="exp-label">
-          <span>Conhecimento Adquirido</span>
+      <div class="xp-section">
+        <div class="xp-text">
+          <span>Experiência</span>
           <span>{{ user.experiencia }} XP</span>
         </div>
-        <div class="exp-bar-container">
-          <!-- Lógica simples: XP atual / Próximo Nível (ex: 1000) -->
-          <div class="exp-bar-fill" [style.width.%]="(user.experiencia % 100)"></div>
+        <div class="xp-bar-bg">
+          <div class="xp-bar-fill" [style.width.%]="(user.experiencia % 100)"></div>
         </div>
       </div>
 
       <div class="info-section">
         <div class="info-group">
-          <label>{{ versionService.ui().profileIdentityAddress }}</label>
+          <label>Identidade</label>
           <p>{{ user.email }}</p>
         </div>
-        
         <div class="info-group">
-          <label>Status da Alma</label>
-          <p class="status-indicator">Sincronizado com a Nuvem</p>
+          <label>Status</label>
+          <p class="gold-text">Sincronizado com Google Cloud</p>
         </div>
       </div>
     </main>
 
-    <!-- Ações -->
     <footer class="card-footer">
-      <button class="btn-outline-gold">Configurações</button>
       <button class="btn-exit" (click)="auth.logout()">Encerrar Sessão</button>
     </footer>
   </div>

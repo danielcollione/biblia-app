@@ -1,49 +1,91 @@
+/* profile.component.css */
+
+.profile-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #050505; /* Fundo imersivo */
+  padding: 20px;
+}
+
+.profile-card-luxury {
+  width: 100%;
+  max-width: 450px;
+  background: #111;
+  border: 1px solid #222;
+  border-top: 3px solid #d4af37; /* Detalhe em ouro */
+  padding: 40px 30px;
+  text-align: center;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+}
+
+/* Avatar e Tags */
 .avatar-wrapper {
   position: relative;
-  border: 3px solid #d4af37; /* Dourado */
-  border-radius: 50%;
-  padding: 5px;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 20px;
 }
 
-.level-badge {
-  position: absolute;
-  bottom: -5px;
-  right: -5px;
-  background: #d4af37;
-  color: #1a1a1a;
-  font-weight: bold;
-  padding: 2px 8px;
-  border-radius: 10px;
-  font-size: 0.8rem;
-}
-
-.exp-bar-container {
+.profile-avatar {
   width: 100%;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.1);
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #d4af37;
+}
+
+.level-tag {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: #d4af37;
+  color: #000;
+  font-weight: bold;
+  padding: 4px 8px;
+  font-size: 12px;
   border-radius: 4px;
-  margin-top: 10px;
+}
+
+/* Gamificação */
+.xp-bar-bg {
+  width: 100%;
+  height: 6px;
+  background: #222;
+  border-radius: 10px;
+  margin: 10px 0 25px;
   overflow: hidden;
 }
 
-.exp-bar-fill {
+.xp-bar-fill {
   height: 100%;
   background: linear-gradient(90deg, #d4af37, #f9e29b);
-  box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-  transition: width 0.5s ease-in-out;
+  transition: width 1s ease-out;
 }
 
-/* Loading Spinner de Luxo */
+/* Loading Overlay Estilo "The Unveiled" */
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
 .luxury-spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid rgba(212, 175, 55, 0.1);
+  border: 3px solid #222;
   border-top: 3px solid #d4af37;
   border-radius: 50%;
   animation: spin 1s linear infinite;
+  margin-bottom: 20px;
 }
 
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.loading-text { color: #d4af37; font-family: 'Cinzel', serif; letter-spacing: 2px; }

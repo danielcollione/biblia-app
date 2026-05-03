@@ -7,7 +7,7 @@ import { Observable, tap, finalize } from 'rxjs';
 export interface Usuario {
   name: string;
   email: string;
-  pictureUrl?: string; // Sincronizado com seu back-end
+  pictureUrl?: string; // Ajustado para o nome real no banco/token
   level: number;
   experiencia: number;
   cargo: string;
@@ -23,10 +23,10 @@ export class AuthService {
   private readonly TOKEN_KEY = 'auth_token';
 
   private _usuario = signal<Usuario | null>(null);
-  private _isLoading = signal<boolean>(false); // O novo sinal de loading
+  private _isLoading = signal<boolean>(false); // Sinal para o Loading
 
   readonly usuario = computed(() => this._usuario());
-  readonly isLoading = computed(() => this._isLoading()); // Exposto para a UI
+  readonly isLoading = computed(() => this._isLoading());
   readonly estaAutenticado = computed(() => !!this._usuario());
 
   constructor() {
@@ -36,10 +36,10 @@ export class AuthService {
   }
 
   loginComGoogle(googleToken: string): Observable<string> {
-    this._isLoading.set(true); // Ativa o loading
+    this._isLoading.set(true); 
     return this.http.post(`${this.apiUrl}/google`, { token: googleToken }, { responseType: 'text' }).pipe(
       tap(jwt => this.processarSucessoLogin(jwt)),
-      finalize(() => this._isLoading.set(false)) // Desativa ao finalizar
+      finalize(() => this._isLoading.set(false))
     );
   }
 
@@ -86,13 +86,13 @@ export class AuthService {
         this._usuario.set({
           name: payload.name,
           email: payload.email,
-          pictureUrl: payload.pictureUrl, // Mapeado para bater com o Java
+          pictureUrl: payload.pictureUrl, // Mapeamento corrigido conforme o print do banco
           level: payload.level || 1,
           experiencia: payload.experiencia || 0,
           cargo: payload.cargo || 'Apprentice'
         });
       } catch (e) {
-        console.error('Falha na integridade do token:', e);
+        console.error('Erro no token:', e);
         this.logout();
       }
     }
