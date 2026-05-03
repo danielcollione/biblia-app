@@ -20,7 +20,6 @@
 
     .splash-logo {
       width: 150px;
-      /* Ajuste o tamanho conforme achar melhor */
       height: auto;
       margin-bottom: 25px;
       animation: fadeInPulse 2.5s infinite ease-in-out;
@@ -45,36 +44,22 @@
     }
 
     @keyframes fadeInPulse {
-      0% {
-        opacity: 0.6;
-        transform: scale(0.98);
-      }
-
-      50% {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      100% {
-        opacity: 0.6;
-        transform: scale(0.98);
-      }
+      0% { opacity: 0.6; transform: scale(0.98); }
+      50% { opacity: 1; transform: scale(1); }
+      100% { opacity: 0.6; transform: scale(0.98); }
     }
 
     @keyframes slideProgress {
-      0% {
-        left: -100%;
-      }
-
-      100% {
-        left: 100%;
-      }
+      0% { left: -100%; }
+      100% { left: 100%; }
     }
   </style>
   <meta charset="utf-8">
   <title>The Unveiled Bible</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Content Security Policy Atualizado -->
   <meta http-equiv="Content-Security-Policy" content="
   default-src 'self'; 
   script-src 'self' 'unsafe-inline' 'unsafe-eval' 
@@ -98,6 +83,7 @@
           https://*.amazon.com 
           https://*.media-amazon.com; 
   connect-src 'self' 
+              https://backendtub.onrender.com 
               https://*.google-analytics.com 
               https://*.google.com 
               https://*.google 
@@ -111,6 +97,7 @@
             https://*.googlesyndication.com 
             https://*.amazon-adsystem.com;
 ">
+
   <link rel="icon" type="image/png" href="/logo-sem-fundo.png?v=2">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="alternate" hreflang="pt" href="https://theunveiledbible.com/?lang=pt">
@@ -124,7 +111,6 @@
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
-
     gtag('config', 'G-9JZVVPYX8M');
   </script>
 
@@ -180,35 +166,15 @@
   </div>
   <noscript>
     <style>
-      #pwa-splash {
-        display: none !important;
-      }
-
-      html,
-      body,
-      app-root {
-        height: auto !important;
-        min-height: 100%;
-        overflow: visible !important;
-      }
-
-      body {
-        background: #050505;
-      }
-
-      .noscript-banner {
-        display: block !important;
-      }
+      #pwa-splash { display: none !important; }
+      body { background: #050505; }
+      .noscript-banner { display: block !important; }
     </style>
-  </noscript>
-  <noscript>
     <div class="noscript-banner" style="display:none;padding:12px 16px;background:#1f1609;color:#f1e5ac;font:500 14px/1.5 Arial, sans-serif;text-align:center;border-bottom:1px solid rgba(212,175,55,0.35);">
-      JavaScript is disabled. Pre-rendered static content will remain available, but PWA interactive features will be
-      limited.
+      JavaScript is disabled. Pre-rendered static content will remain available, but PWA interactive features will be limited.
     </div>
   </noscript>
-  <app-root>
-  </app-root>
+  <app-root></app-root>
 <script src="main-JV2W77JG.js" type="module"></script></body>
 
 </html>
