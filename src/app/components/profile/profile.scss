@@ -1,86 +1,21 @@
 /* profile.component.css */
 
-.profile-page-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: #050505; /* Fundo imersivo */
-  padding: 20px;
-}
-
-.profile-card-luxury {
-  width: 100%;
-  max-width: 450px;
-  background: #111;
-  border: 1px solid #222;
-  border-top: 3px solid #d4af37; /* Detalhe em ouro */
-  padding: 40px 30px;
-  text-align: center;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-}
-
-/* Avatar e Tags */
-.avatar-wrapper {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  margin: 0 auto 20px;
-}
-
-.profile-avatar {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #d4af37;
-}
-
-.level-tag {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  background: #d4af37;
-  color: #000;
-  font-weight: bold;
-  padding: 4px 8px;
-  font-size: 12px;
-  border-radius: 4px;
-}
-
-/* Gamificação */
-.xp-bar-bg {
-  width: 100%;
-  height: 6px;
-  background: #222;
-  border-radius: 10px;
-  margin: 10px 0 25px;
-  overflow: hidden;
-}
-
-.xp-bar-fill {
-  height: 100%;
-  background: linear-gradient(90deg, #d4af37, #f9e29b);
-  transition: width 1s ease-out;
-}
-
-/* Loading Overlay Estilo "The Unveiled" */
 .loading-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.95);
+  background: rgba(0, 0, 0, 0.98); /* Fundo quase todo preto para imersão */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 10000;
+  z-index: 99999; /* Garante que fica por cima de tudo */
 }
 
 .luxury-spinner {
-  width: 50px;
-  height: 50px;
-  border: 3px solid #222;
-  border-top: 3px solid #d4af37;
+  width: 60px;
+  height: 60px;
+  border: 4px solid #1a1a1a;
+  border-top: 4px solid #d4af37; /* Dourado */
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin-bottom: 20px;
@@ -88,4 +23,36 @@
 
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.loading-text { color: #d4af37; font-family: 'Cinzel', serif; letter-spacing: 2px; }
+.loading-text {
+  color: #d4af37;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+/* Estilos do Card */
+.profile-page-container {
+  min-height: 100vh;
+  background: #050505;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.profile-card-luxury {
+  background: #111;
+  border: 1px solid #222;
+  border-top: 3px solid #d4af37;
+  padding: 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #d4af37;
+  object-fit: cover;
+}

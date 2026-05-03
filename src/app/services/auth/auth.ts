@@ -76,25 +76,28 @@ export class AuthService {
     this.router.navigate(['/profile']);
   }
 
-  private carregarSessaoDoStorage(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+// auth.service.ts
+private carregarSessaoDoStorage(): void {
+  if (!isPlatformBrowser(this.platformId)) return;
 
-    const token = localStorage.getItem(this.TOKEN_KEY);
-    if (token) {
-      try {
-        const payload = JSON.parse(atob(token.split('.')[1]));
-        this._usuario.set({
-          name: payload.name,
-          email: payload.email,
-          pictureUrl: payload.pictureUrl, // Mapeamento corrigido conforme o print do banco
-          level: payload.level || 1,
-          experiencia: payload.experiencia || 0,
-          cargo: payload.cargo || 'Apprentice'
-        });
-      } catch (e) {
-        console.error('Erro no token:', e);
-        this.logout();
-      }
+  const token = localStorage.getItem(this.TOKEN_KEY);
+  if (token) {
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      
+      // CRÍTICO: Mapear 'picture_url' (do banco) para o objeto do Front
+      this._usuario.set({
+        name: payload.name,
+        email: payload.email,
+        pictureUrl: payload.picture_url, // Pegando exatamente do token
+        level: payload.level || 1,
+        experiencia: payload.experiencia || 0,
+        cargo: payload.cargo || 'Apprentice'
+      });
+    } catch (e) {
+      console.error('Falha na integridade do token:', e);
+      this.logout();
     }
   }
+}
 }

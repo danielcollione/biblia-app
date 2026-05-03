@@ -1,25 +1,28 @@
-<!-- O Loading aparece acima de tudo enquanto o back-end processa -->
+<!-- 1. LOADING GLOBAL: Aparece sempre que isLoading for true -->
 <div class="loading-overlay" *ngIf="auth.isLoading()">
   <div class="luxury-spinner"></div>
-  <p class="cinzel-heading">Validando sua entrada no acervo...</p>
+  <p class="loading-text">Sincronizando com o Acervo...</p>
 </div>
 
+<!-- 2. CONTEÚDO: Só aparece quando o loading termina e o usuário existe -->
 <div class="profile-page-container" *ngIf="!auth.isLoading() && auth.usuario() as user">
   <div class="profile-card-luxury">
     
     <header class="card-header">
       <div class="avatar-wrapper">
-        <!-- Lógica de Fallback para a imagem -->
-        <img [src]="user.pictureUrl || 'default-avatar.png'" class="profile-avatar">
-        <div class="level-badge">LVL {{ user.level }}</div>
+        <!-- Tenta carregar a pictureUrl do DB, se não houver, usa a default -->
+        <img [src]="user.pictureUrl || 'default-avatar.png'" 
+             (error)="$any($event.target).src = 'default-avatar.png'"
+             class="profile-avatar">
+        <div class="level-tag">LVL {{ user.level }}</div>
       </div>
-      <h1 class="cinzel-heading">{{ user.name }}</h1>
-      <span class="membership-badge">{{ user.cargo }}</span>
+      <h1 class="user-name cinzel-heading">{{ user.name }}</h1>
+      <div class="rank-badge">{{ user.cargo }}</div>
     </header>
 
     <main class="card-body">
-      <div class="xp-section">
-        <div class="xp-text">
+      <div class="xp-container">
+        <div class="xp-header">
           <span>Experiência</span>
           <span>{{ user.experiencia }} XP</span>
         </div>
@@ -28,14 +31,14 @@
         </div>
       </div>
 
-      <div class="info-section">
-        <div class="info-group">
-          <label>Identidade</label>
-          <p>{{ user.email }}</p>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <span class="label">Identidade</span>
+          <span class="value">{{ user.email }}</span>
         </div>
-        <div class="info-group">
-          <label>Status</label>
-          <p class="gold-text">Sincronizado com Google Cloud</p>
+        <div class="stat-item">
+          <span class="label">Status</span>
+          <span class="value gold-text">Sincronizado via Google</span>
         </div>
       </div>
     </main>
