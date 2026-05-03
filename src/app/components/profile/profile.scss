@@ -1,58 +1,182 @@
-/* profile.component.css */
+/* Importando a Cinzel se não estiver no index.html */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@300;400&display=swap');
 
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.98); /* Fundo quase todo preto para imersão */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 99999; /* Garante que fica por cima de tudo */
-}
-
-.luxury-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid #1a1a1a;
-  border-top: 4px solid #d4af37; /* Dourado */
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: 20px;
-}
-
-@keyframes spin { to { transform: rotate(360deg); } }
-
-.loading-text {
-  color: #d4af37;
-  font-family: 'Cinzel', serif;
-  letter-spacing: 3px;
-  text-transform: uppercase;
-}
-
-/* Estilos do Card */
 .profile-page-container {
   min-height: 100vh;
-  background: #050505;
+  background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px;
+  font-family: 'Inter', sans-serif;
 }
 
 .profile-card-luxury {
-  background: #111;
-  border: 1px solid #222;
-  border-top: 3px solid #d4af37;
-  padding: 40px;
+  background: #0f0f0f;
+  border: 1px solid rgba(212, 175, 55, 0.2);
+  border-top: 4px solid #d4af37;
+  padding: 3rem 2rem;
   width: 100%;
-  max-width: 400px;
-  text-align: center;
+  max-width: 450px;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Avatar e Level */
+.avatar-perspective {
+  position: relative;
+  width: 140px;
+  margin: 0 auto 1.5rem;
 }
 
 .profile-avatar {
-  width: 120px;
-  height: 120px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  border: 2px solid #d4af37;
+  border: 3px solid #d4af37;
+  padding: 5px;
+  background: #0f0f0f;
   object-fit: cover;
+  position: relative;
+  z-index: 2;
+}
+
+.level-badge {
+  position: absolute;
+  bottom: -5px;
+  right: -5px;
+  background: linear-gradient(135deg, #d4af37, #aa891e);
+  color: #000;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-family: 'Cinzel', serif;
+  font-weight: bold;
+  z-index: 3;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  text-align: center;
+}
+
+.lvl-label { font-size: 0.6rem; }
+.lvl-value { font-size: 1.1rem; }
+
+/* Tipografia */
+.cinzel-heading {
+  font-family: 'Cinzel', serif;
+  color: #d4af37;
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+  font-size: 1.8rem;
+}
+
+/* Tag de Cargo (Apprentice) */
+.rank-tag {
+  display: inline-block;
+  padding: 4px 20px;
+  border: 1px solid #d4af37;
+  color: #d4af37;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  background: rgba(212, 175, 55, 0.05);
+  border-radius: 50px;
+  margin-bottom: 2rem;
+}
+
+/* Barra RPG Interativa */
+.xp-system { margin-bottom: 2.5rem; }
+
+.xp-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.rpg-bar-container {
+  position: relative;
+  height: 14px;
+  background: #1a1a1a;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.rpg-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #8e6d1a 0%, #d4af37 50%, #f9f295 100%);
+  position: relative;
+  transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bar-shimmer {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 100%
+  );
+  animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Detalhes e Status */
+.detail-box {
+  background: rgba(255,255,255,0.02);
+  padding: 15px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  text-align: left;
+  border-left: 2px solid #333;
+}
+
+.detail-box label {
+  display: block;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  color: #666;
+  letter-spacing: 1px;
+}
+
+.detail-box p { color: #ccc; margin: 5px 0 0; font-size: 0.9rem; }
+.gold-status { color: #d4af37 !important; font-weight: 500; }
+
+/* Botão de Saída de Luxo */
+.btn-luxury-exit {
+  background: transparent;
+  border: none;
+  padding: 15px 40px;
+  color: #d4af37;
+  font-family: 'Cinzel', serif;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-luxury-exit:hover {
+  background: #d4af37;
+  color: #000;
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
+.btn-border {
+  position: absolute;
+  inset: 0;
+  border: 1px solid #d4af37;
+  opacity: 0.5;
 }

@@ -1,50 +1,66 @@
-<!-- 1. LOADING GLOBAL: Aparece sempre que isLoading for true -->
+<!-- 1. LOADING GLOBAL -->
 <div class="loading-overlay" *ngIf="auth.isLoading()">
   <div class="luxury-spinner"></div>
-  <p class="loading-text">Sincronizando com o Acervo...</p>
+  <p class="loading-text">Desvendando o Acervo...</p>
 </div>
 
-<!-- 2. CONTEÚDO: Só aparece quando o loading termina e o usuário existe -->
+<!-- 2. CONTEÚDO PRINCIPAL -->
 <div class="profile-page-container" *ngIf="!auth.isLoading() && auth.usuario() as user">
   <div class="profile-card-luxury">
     
     <header class="card-header">
-      <div class="avatar-wrapper">
-        <!-- Tenta carregar a pictureUrl do DB, se não houver, usa a default -->
-        <img [src]="user.pictureUrl || 'default-avatar.png'" 
-             (error)="$any($event.target).src = 'default-avatar.png'"
+      <div class="avatar-perspective">
+        <div class="avatar-glow"></div>
+        <img [src]="user.pictureUrl" 
+             [alt]="'Avatar de ' + user.name"
              class="profile-avatar">
-        <div class="level-tag">LVL {{ user.level }}</div>
+        <div class="level-badge">
+          <span class="lvl-label">LVL</span>
+          <span class="lvl-value">{{ user.level }}</span>
+        </div>
       </div>
+      
       <h1 class="user-name cinzel-heading">{{ user.name }}</h1>
-      <div class="rank-badge">{{ user.cargo }}</div>
+      <!-- Tag de Cargo Estilizada -->
+      <div class="rank-tag-container">
+        <span class="rank-tag">{{ user.cargo }}</span>
+      </div>
     </header>
 
     <main class="card-body">
-      <div class="xp-container">
-        <div class="xp-header">
-          <span>Experiência</span>
-          <span>{{ user.experiencia }} XP</span>
+      <!-- RPG Experience Bar -->
+      <div class="xp-system">
+        <div class="xp-info">
+          <span class="xp-label">Progresso da Alma</span>
+          <span class="xp-value">{{ user.experiencia | number }} XP</span>
         </div>
-        <div class="xp-bar-bg">
-          <div class="xp-bar-fill" [style.width.%]="(user.experiencia % 100)"></div>
+        <div class="rpg-bar-container">
+          <div class="rpg-bar-bg">
+            <div class="rpg-bar-fill" [style.width.%]="(user.experiencia % 100)">
+              <div class="bar-shimmer"></div>
+            </div>
+          </div>
+          <div class="bar-frame"></div>
         </div>
       </div>
 
-      <div class="stats-grid">
-        <div class="stat-item">
-          <span class="label">Identidade</span>
-          <span class="value">{{ user.email }}</span>
+      <div class="details-grid">
+        <div class="detail-box">
+          <label>Identidade Digital</label>
+          <p>{{ user.email }}</p>
         </div>
-        <div class="stat-item">
-          <span class="label">Status</span>
-          <span class="value gold-text">Sincronizado via Google</span>
+        <div class="detail-box">
+          <label>Vínculo</label>
+          <p class="gold-status">Sincronizado via Google</p>
         </div>
       </div>
     </main>
 
     <footer class="card-footer">
-      <button class="btn-exit" (click)="auth.logout()">Encerrar Sessão</button>
+      <button class="btn-luxury-exit" (click)="auth.logout()">
+        <span class="btn-text">Encerrar Sessão</span>
+        <div class="btn-border"></div>
+      </button>
     </footer>
   </div>
 </div>

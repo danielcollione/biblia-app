@@ -43,19 +43,17 @@ export class AuthService {
     );
   }
 
-  loginTradicional(email: string, senha: string): Observable<any> {
+  loginTradicional(email: string, senha: string): Observable<string> {
     this._isLoading.set(true);
-    return this.http.post(`${this.apiUrl}/login`, { email, senha }).pipe(
-      tap((res: any) => {
-        if (res?.token) this.processarSucessoLogin(res.token);
-      }),
+    return this.http.post(this.apiUrl + "/login", { email, password: senha }, { responseType: "text" }).pipe(
+      tap((token) => this.processarSucessoLogin(token)),
       finalize(() => this._isLoading.set(false))
     );
   }
 
   cadastrarTradicional(nome: string, email: string, senha: string): Observable<any> {
     this._isLoading.set(true);
-    return this.http.post(`${this.apiUrl}/register`, { nome, email, senha }).pipe(
+    return this.http.post(`${this.apiUrl}/register`, { name: nome, email, password: senha }).pipe(
       finalize(() => this._isLoading.set(false))
     );
   }
@@ -84,12 +82,12 @@ private carregarSessaoDoStorage(): void {
   if (token) {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      
+      console.log(payload);
       // CRÍTICO: Mapear 'picture_url' (do banco) para o objeto do Front
       this._usuario.set({
         name: payload.name,
-        email: payload.email,
-        pictureUrl: payload.picture_url, // Pegando exatamente do token
+        email: payload.sub,
+        pictureUrl: payload.picture, // Pegando exatamente do token
         level: payload.level || 1,
         experiencia: payload.experiencia || 0,
         cargo: payload.cargo || 'Apprentice'

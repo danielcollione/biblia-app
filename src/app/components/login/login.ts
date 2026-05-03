@@ -4,6 +4,7 @@ import { AuthService } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VersionService } from '../../services/version/version-service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 declare var google: any;
 
@@ -91,26 +92,69 @@ export class Login implements OnInit, AfterViewInit {
     this.carregando = true;
     this.authService.loginComGoogle(response.credential).subscribe({
       next: () => this.carregando = false,
-      error: (err) => { this.carregando = false; this.erroMensagem = "Erro Google"; }
+      error: (err: HttpErrorResponse) => {
+        this.carregando = false;
+        this.erroMensagem = this.versionService.ui().loginErrorGoogle;
+      }
     });
   }
 
-  onSubmitTradicional() {
-    this.erroMensagem = null;
-    if (this.isLoginMode) {
-      this.authService.loginTradicional(this.email, this.senha).subscribe({
-        next: () => console.log('Logado'),
-        error: (err) => this.erroMensagem = "Erro ao entrar"
-      });
-    } else {
-      if (this.senha !== this.confirmarSenha) {
-        this.erroMensagem = "As senhas não coincidem";
-        return;
-      }
-      this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
-        next: () => this.toggleMode(),
-        error: (err) => this.erroMensagem = "Erro ao cadastrar"
-      });
+  private resolveErrorMessage(err: HttpErrorResponse, fallbackKey: string): string {
+    // Mensagem textual enviada pelo backend tem prioridade
+    if (typeof err.error === 'string' && err.error.trim().length > 0) {
+      return err.error.trim();
     }
+    // Fallback por status HTTP
+    if (err.status === 401 || err.status === 403) {
+      return this.versionService.ui().loginErrorInvalidCredentials;
+    }
+    if (err.status === 400 && !this.isLoginMode) {
+      return this.versionService.ui().loginErrorEmailAlreadyExists;
+    }
+    return (this.versionService.ui() as any)[fallbackKey] ?? this.versionService.ui().loginErrorGeneric;
+  }
+
+  onSubmitTradicional() {
+    if (this.carregando) return;
+
+    this.erroMensagem = null;
+
+    if (this.isLoginMode) {
+      this.carregando = true;
+      this.authService.loginTradicional(this.email, this.senha).subscribe({
+        next: () => {
+          this.carregando = false;
+        },
+        error: (err: HttpErrorResponse) => {
+          this.carregando = false;
+          this.erroMensagem = this.resolveErrorMessage(err, 'loginErrorInvalidCredentials');
+        }
+      });
+      return;
+    }
+
+    if (this.senha !== this.confirmarSenha) {
+      this.erroMensagem = this.versionService.ui().loginPasswordsMustMatch;
+      return;
+    }
+
+    this.carregando = true;
+    this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
+      next: () => {
+        this.authService.loginTradicional(this.email, this.senha).subscribe({
+          next: () => {
+            this.carregando = false;
+          },
+          error: (err: HttpErrorResponse) => {
+            this.carregando = false;
+            this.erroMensagem = this.versionService.ui().loginErrorAutoLogin;
+          }
+        });
+      },
+      error: (err: HttpErrorResponse) => {
+        this.carregando = false;
+        this.erroMensagem = this.resolveErrorMessage(err, 'loginErrorGeneric');
+      }
+    });
   }
 }

@@ -60,6 +60,13 @@ $error-red: #8b0000;
   display: flex;
   justify-content: center;
   margin-bottom: 25px;
+  transition: opacity 0.25s ease;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.45;
+    filter: grayscale(0.35);
+  }
 }
 
 .divider {
@@ -187,12 +194,34 @@ $error-red: #8b0000;
       color: $bg-dark;
     }
 
-    /* NOVO: O estilo quando a trava está ativa */
+    .btn-content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 20px;
+    }
+
+    .btn-content.is-loading {
+      letter-spacing: 1.5px;
+    }
+
+    .btn-spinner {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      border: 2px solid rgba(197, 160, 89, 0.2);
+      border-top-color: $gold-primary;
+      animation: spin-lux 0.75s linear infinite;
+      box-shadow: 0 0 10px rgba(197, 160, 89, 0.45);
+    }
+
     &:disabled {
-      opacity: 0.3;
+      opacity: 0.65;
       cursor: not-allowed;
-      border-color: #555;
-      color: #555;
+      border-color: rgba(197, 160, 89, 0.55);
+      color: rgba(197, 160, 89, 0.85);
+      background: linear-gradient(120deg, rgba(197, 160, 89, 0.08), rgba(197, 160, 89, 0.02));
     }
   }
 }
@@ -202,6 +231,12 @@ $error-red: #8b0000;
   color: $text-muted;
   font-size: 0.85rem;
   font-weight: 300;
+  transition: opacity 0.25s ease;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.45;
+  }
 
   a {
     color: $gold-primary;
@@ -250,6 +285,11 @@ $error-red: #8b0000;
     outline: none;
     transition: transform 0.2s ease;
 
+    &:disabled {
+      opacity: 0.35;
+      cursor: not-allowed;
+    }
+
     &:active {
       transform: scale(0.9); // Efeito de clique sutil
     }
@@ -263,5 +303,11 @@ $error-red: #8b0000;
       // Garante que o SVG não receba eventos de clique próprios
       pointer-events: none;
     }
+  }
+}
+
+@keyframes spin-lux {
+  to {
+    transform: rotate(360deg);
   }
 }
