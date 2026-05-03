@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
@@ -23,8 +23,8 @@ export class Login implements OnInit, AfterViewInit {
   private clientId = '774261062071-pkncaa6t7bli08qg27dmhfgi802v5m0p.apps.googleusercontent.com';
 
   isLoginMode = true;
-  carregando = false;
-  erroMensagem: string | null = null;
+  carregando = signal(false);
+  erroMensagem = signal<string | null>(null);
 
   // Dados do Formulário
   nome = '';
@@ -45,29 +45,25 @@ export class Login implements OnInit, AfterViewInit {
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.limparCampos();
-    // Reseta o "olhinho" ao trocar de modo
     this.verSenha = false;
     this.verConfirmarSenha = false;
     setTimeout(() => this.renderizarBotaoGoogle(), 0);
   }
 
   private limparCampos() {
-    this.erroMensagem = null;
+    this.erroMensagem.set(null);
     this.senha = '';
     this.confirmarSenha = '';
   }
 
-  // Alterna visibilidade da senha principal
   toggleVerSenha(): void {
     this.verSenha = !this.verSenha;
   }
 
-  // Alterna visibilidade da confirmação
   toggleVerConfirmarSenha(): void {
     this.verConfirmarSenha = !this.verConfirmarSenha;
   }
 
-  // --- Lógica de Autenticação (Mantida conforme sua versão) ---
   iniciarBotaoGoogleSeguro() {
     if (typeof google === 'undefined' || !google.accounts) {
       setTimeout(() => this.iniciarBotaoGoogleSeguro(), 50);
@@ -89,22 +85,20 @@ export class Login implements OnInit, AfterViewInit {
   }
 
   handleGoogleResponse(response: any) {
-    this.carregando = true;
+    this.carregando.set(true);
     this.authService.loginComGoogle(response.credential).subscribe({
-      next: () => this.carregando = false,
+      next: () => this.carregando.set(false),
       error: (err: HttpErrorResponse) => {
-        this.carregando = false;
-        this.erroMensagem = this.versionService.ui().loginErrorGoogle;
+        this.carregando.set(false);
+        this.erroMensagem.set(this.versionService.ui().loginErrorGoogle);
       }
     });
   }
 
   private resolveErrorMessage(err: HttpErrorResponse, fallbackKey: string): string {
-    // Mensagem textual enviada pelo backend tem prioridade
     if (typeof err.error === 'string' && err.error.trim().length > 0) {
       return err.error.trim();
     }
-    // Fallback por status HTTP
     if (err.status === 401 || err.status === 403) {
       return this.versionService.ui().loginErrorInvalidCredentials;
     }
@@ -115,45 +109,41 @@ export class Login implements OnInit, AfterViewInit {
   }
 
   onSubmitTradicional() {
-    if (this.carregando) return;
+    if (this.carregando()) return;
 
-    this.erroMensagem = null;
+    this.erroMensagem.set(null);
 
     if (this.isLoginMode) {
-      this.carregando = true;
+      this.carregando.set(true);
       this.authService.loginTradicional(this.email, this.senha).subscribe({
-        next: () => {
-          this.carregando = false;
-        },
+        next: () => this.carregando.set(false),
         error: (err: HttpErrorResponse) => {
-          this.carregando = false;
-          this.erroMensagem = this.resolveErrorMessage(err, 'loginErrorInvalidCredentials');
+          this.carregando.set(false);
+          this.erroMensagem.set(this.resolveErrorMessage(err, 'loginErrorInvalidCredentials'));
         }
       });
       return;
     }
 
     if (this.senha !== this.confirmarSenha) {
-      this.erroMensagem = this.versionService.ui().loginPasswordsMustMatch;
+      this.erroMensagem.set(this.versionService.ui().loginPasswordsMustMatch);
       return;
     }
 
-    this.carregando = true;
+    this.carregando.set(true);
     this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
       next: () => {
         this.authService.loginTradicional(this.email, this.senha).subscribe({
-          next: () => {
-            this.carregando = false;
-          },
+          next: () => this.carregando.set(false),
           error: (err: HttpErrorResponse) => {
-            this.carregando = false;
-            this.erroMensagem = this.versionService.ui().loginErrorAutoLogin;
+            this.carregando.set(false);
+            this.erroMensagem.set(this.versionService.ui().loginErrorAutoLogin);
           }
         });
       },
       error: (err: HttpErrorResponse) => {
-        this.carregando = false;
-        this.erroMensagem = this.resolveErrorMessage(err, 'loginErrorGeneric');
+        this.carregando.set(false);
+        this.erroMensagem.set(this.resolveErrorMessage(err, 'loginErrorGeneric'));
       }
     });
   }

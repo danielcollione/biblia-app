@@ -51,9 +51,9 @@ export class AuthService {
     );
   }
 
-  cadastrarTradicional(nome: string, email: string, senha: string): Observable<any> {
+  cadastrarTradicional(nome: string, email: string, senha: string): Observable<string> {
     this._isLoading.set(true);
-    return this.http.post(`${this.apiUrl}/register`, { name: nome, email, password: senha }).pipe(
+    return this.http.post(this.apiUrl + '/register', { name: nome, email, password: senha }, { responseType: 'text' }).pipe(
       finalize(() => this._isLoading.set(false))
     );
   }
