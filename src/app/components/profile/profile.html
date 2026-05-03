@@ -1,17 +1,39 @@
-<div class="profile-page-container" *ngIf="auth.usuario() as user">
+<!-- ESTADO DE LOADING (Imersivo) -->
+<div class="loading-overlay" *ngIf="auth.isLoading()">
+  <div class="luxury-spinner"></div>
+  <p class="cinzel-heading">Consultando os Registros...</p>
+</div>
+
+<!-- CONTAINER DO PERFIL -->
+<div class="profile-page-container" *ngIf="!auth.isLoading() && auth.usuario() as user">
   <div class="profile-card-luxury">
     
-    <!-- Cabeçalho com Avatar e Nome -->
+    <!-- Cabeçalho com Avatar e Rank -->
     <header class="card-header">
       <div class="avatar-wrapper">
-        <img [src]="user.picture || 'assets/default-avatar.png'" [alt]="versionService.ui().profileAvatarOf + ' ' + user.name">
+        <!-- Ajustado para pictureUrl conforme seu backend -->
+        <img [src]="user.pictureUrl || 'assets/default-avatar.png'" [alt]="user.name">
+        <div class="level-badge">LVL {{ user.level }}</div>
       </div>
       <h1 class="cinzel-heading">{{ user.name }}</h1>
-      <span class="membership-badge">{{ versionService.ui().profileRoyalCollectionMember }}</span>
+      <span class="membership-badge">{{ user.cargo }}</span> <!-- Ex: Apprentice -->
     </header>
 
-    <!-- Conteúdo Informativo -->
+    <!-- Conteúdo Informativo e Gamificação -->
     <main class="card-body">
+      
+      <!-- Barra de Experiência -->
+      <div class="experience-section">
+        <div class="exp-label">
+          <span>Conhecimento Adquirido</span>
+          <span>{{ user.experiencia }} XP</span>
+        </div>
+        <div class="exp-bar-container">
+          <!-- Lógica simples: XP atual / Próximo Nível (ex: 1000) -->
+          <div class="exp-bar-fill" [style.width.%]="(user.experiencia % 100)"></div>
+        </div>
+      </div>
+
       <div class="info-section">
         <div class="info-group">
           <label>{{ versionService.ui().profileIdentityAddress }}</label>
@@ -19,24 +41,16 @@
         </div>
         
         <div class="info-group">
-          <label>{{ versionService.ui().profileAccessStatus }}</label>
-          <p class="status-indicator">{{ versionService.ui().profileSyncedViaGoogleCloud }}</p>
-        </div>
-
-        <div class="info-group">
-          <label>{{ versionService.ui().profileSignupOrigin }}</label>
-          <p>{{ versionService.ui().profileSignupOriginValue }}</p>
+          <label>Status da Alma</label>
+          <p class="status-indicator">Sincronizado com a Nuvem</p>
         </div>
       </div>
     </main>
 
-    <!-- Ações de Saída -->
+    <!-- Ações -->
     <footer class="card-footer">
-      <button class="btn-outline-gold">{{ versionService.ui().profileAccountSettings }}</button>
-      <button class="btn-exit" (click)="auth.logout()">
-        {{ versionService.ui().profileEndSessionCollection }}
-      </button>
+      <button class="btn-outline-gold">Configurações</button>
+      <button class="btn-exit" (click)="auth.logout()">Encerrar Sessão</button>
     </footer>
-
   </div>
 </div>

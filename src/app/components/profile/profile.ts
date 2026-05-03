@@ -8,11 +8,19 @@ import { VersionService } from '../../services/version/version-service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profile.html',
-  styleUrls: ['./profile.scss']
+  styleUrl: './profile.css'
 })
 export class Profile {
-  protected readonly auth = inject(AuthService);
-  protected readonly versionService = inject(VersionService);
+  // Injeção de serviços modernos
+  public readonly auth = inject(AuthService);
+  public readonly versionService = inject(VersionService);
 
-  // O HTML acessará auth.usuario() diretamente de forma reativa
+  /**
+   * Calcula o progresso dentro do nível atual.
+   * Exemplo simples: cada nível exige 100 de XP.
+   */
+  get calculoProgressoXP(): number {
+    const exp = this.auth.usuario()?.experiencia || 0;
+    return exp % 100; 
+  }
 }
