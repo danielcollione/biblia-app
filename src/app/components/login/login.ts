@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { VersionService } from '../../services/version/version-service';
 
 declare var google: any;
 
@@ -27,6 +28,7 @@ export class Login implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private router: Router,
+    public readonly versionService: VersionService,
   ) {}
 
   ngOnInit(): void {}

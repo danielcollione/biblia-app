@@ -3,8 +3,8 @@
 
         <div class="brand-header">
             <div class="icon-book">📖</div>
-            <h2>{{ isLoginMode ? 'Acesso ao Acervo' : 'Junte-se ao Acervo' }}</h2>
-            <p>{{ isLoginMode ? 'Entre para continuar sua jornada.' : 'Crie sua conta para iniciar suas descobertas.' }}
+            <h2>{{ isLoginMode ? versionService.ui().loginAccessCollection : versionService.ui().loginJoinCollection }}</h2>
+            <p>{{ isLoginMode ? versionService.ui().loginContinueJourney : versionService.ui().loginCreateAccountStartDiscoveries }}
             </p>
         </div>
 
@@ -13,46 +13,46 @@
         </div>
 
         <div class="divider">
-            <span>OU USE SEU E-MAIL</span>
+            <span>{{ versionService.ui().loginOrUseEmail }}</span>
         </div>
 
         <!-- Criamos a variável authForm para o Angular monitorar tudo -->
         <form class="luxury-form" #authForm="ngForm" (ngSubmit)="onSubmitTradicional()">
 
             <div class="input-group" *ngIf="!isLoginMode">
-                <label>Nome Completo</label>
+                <label>{{ versionService.ui().loginFullName }}</label>
                 <!-- required: torna o campo obrigatório -->
                 <input type="text" name="nome" [(ngModel)]="nome" required minlength="3"
-                    placeholder="Como deseja ser chamado?">
+                    [placeholder]="versionService.ui().loginHowShouldWeCallYou">
             </div>
 
             <div class="input-group">
-                <label>E-mail</label>
+                <label>{{ versionService.ui().loginEmail }}</label>
                 <!-- required e email: obriga a ter texto e ter o @ -->
-                <input type="email" name="email" [(ngModel)]="email" required email placeholder="seu@email.com">
+                <input type="email" name="email" [(ngModel)]="email" required email [placeholder]="versionService.ui().loginEmailPlaceholder">
             </div>
 
             <div class="input-group">
-                <label>Senha</label>
-                <input type="password" name="senha" [(ngModel)]="senha" required minlength="6" placeholder="••••••••">
+                <label>{{ versionService.ui().loginPassword }}</label>
+                <input type="password" name="senha" [(ngModel)]="senha" required minlength="6" [placeholder]="versionService.ui().loginPasswordPlaceholder">
             </div>
 
             <div class="input-group" *ngIf="!isLoginMode">
-                <label>Confirmar Senha</label>
+                <label>{{ versionService.ui().loginConfirmPassword }}</label>
                 <input type="password" name="confirmarSenha" [(ngModel)]="confirmarSenha" required minlength="6"
-                    placeholder="••••••••" [class.input-error]="erroSenha">
-                <span class="error-msg" *ngIf="erroSenha">As senhas precisam ser idênticas.</span>
+                    [placeholder]="versionService.ui().loginPasswordPlaceholder" [class.input-error]="erroSenha">
+                <span class="error-msg" *ngIf="erroSenha">{{ versionService.ui().loginPasswordsMustMatch }}</span>
             </div>
 
             <!-- A TRAVA: O botão fica desativado se o formulário for inválido -->
             <button type="submit" class="btn-gold" [disabled]="authForm.invalid">
-                {{ isLoginMode ? 'Entrar no Acervo' : 'Criar minha Conta' }}
+                {{ isLoginMode ? versionService.ui().loginEnterCollection : versionService.ui().loginCreateMyAccount }}
             </button>
         </form>
 
         <div class="toggle-mode">
-            <p *ngIf="isLoginMode">Ainda não tem uma conta? <a (click)="toggleMode()">Cadastre-se</a></p>
-            <p *ngIf="!isLoginMode">Já possui uma conta? <a (click)="toggleMode()">Faça Login</a></p>
+            <p *ngIf="isLoginMode">{{ versionService.ui().loginDontHaveAccount }} <a (click)="toggleMode()">{{ versionService.ui().loginSignUp }}</a></p>
+            <p *ngIf="!isLoginMode">{{ versionService.ui().loginAlreadyHaveAccount }} <a (click)="toggleMode()">{{ versionService.ui().loginDoLogin }}</a></p>
         </div>
 
     </div>
