@@ -1,6 +1,6 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth';
+import { AuthService } from '../../services/auth/auth'; // Verifique se este caminho está correto conforme sua pasta
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VersionService } from '../../services/version/version-service';
@@ -15,21 +15,23 @@ declare var google: any;
   styleUrls: ['./login.scss'],
 })
 export class Login implements OnInit, AfterViewInit {
+  private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
+  public readonly versionService = inject(VersionService);
+
   private clientId = '774261062071-pkncaa6t7bli08qg27dmhfgi802v5m0p.apps.googleusercontent.com';
 
   isLoginMode = true;
-
+  
+  // Dados do Formulário
   nome = '';
   email = '';
   senha = '';
-  confirmarSenha = ''; // NOVO: Campo de confirmação
-  erroSenha = false; // NOVO: Controle de erro de senha
+  confirmarSenha = '';
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    public readonly versionService: VersionService,
-  ) {}
+  // Controle de Erros e UI
+  erroMensagem: string | null = null;
+  carregando = false;
 
   ngOnInit(): void {}
 
@@ -39,10 +41,15 @@ export class Login implements OnInit, AfterViewInit {
 
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
-    this.erroSenha = false; // Limpa o erro ao trocar de tela
+    this.limparCampos();
+    setTimeout(() => this.renderizarBotaoGoogle(), 0);
+  }
+
+  private limparCampos() {
+    this.erroMensagem = null;
     this.senha = '';
     this.confirmarSenha = '';
-    setTimeout(() => this.renderizarBotaoGoogle(), 0);
+    // Mantemos o email para conveniência do usuário
   }
 
   iniciarBotaoGoogleSeguro() {
@@ -71,29 +78,89 @@ export class Login implements OnInit, AfterViewInit {
   }
 
   handleGoogleResponse(response: any) {
+    this.carregando = true;
     const googleToken = response.credential;
     this.authService.loginComGoogle(googleToken).subscribe({
-      next: (token) => console.log('Login Google Sucesso!'),
-      error: (err) => console.error(err),
+      next: () => {
+        this.carregando = false;
+        console.log('Login Google realizado com sucesso.');
+      },
+      error: (err) => {
+        this.carregando = false;
+        this.erroMensagem = "Falha na autenticação com o Google.";
+        console.error(err);
+      },
     });
   }
 
-onSubmitTradicional() {
-  if (this.isLoginMode) {
+  onSubmitTradicional() {
+    this.erroMensagem = null;
+
+    if (this.isLoginMode) {
+      this.executarLogin();
+    } else {
+      this.executarCadastro();
+    }
+  }
+
+  private executarLogin() {
+    if (!this.email || !this.senha) {
+      this.erroMensagem = "Preencha todos os campos para entrar.";
+      return;
+    }
+
+    this.carregando = true;
     this.authService.loginTradicional(this.email, this.senha).subscribe({
-      next: () => console.log('Login tradicional realizado.'),
-      error: (err) => console.error('Erro no login:', err)
-    });
-  } else {
-    if (this.senha !== this.confirmarSenha) return;
-    
-    this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
       next: () => {
-        console.log('Cadastro realizado. Redirecionando para login...');
-        this.toggleMode(); // Volta para a tela de login
+        this.carregando = false;
+        console.log('Login realizado.');
       },
-      error: (err) => console.error('Erro no cadastro:', err)
+      error: (err) => {
+        this.carregando = false;
+        this.erroMensagem = "E-mail ou senha incorretos.";
+        console.error('Erro no login:', err);
+      }
     });
   }
-}
+
+  private executarCadastro() {
+    // 1. Validação de campos vazios
+    if (!this.nome || !this.email || !this.senha) {
+      this.erroMensagem = "Todos os campos são obrigatórios.";
+      return;
+    }
+
+    // 2. Validação de formato de e-mail
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(this.email)) {
+      this.erroMensagem = "Insira um endereço de e-mail válido.";
+      return;
+    }
+
+    // 3. Validação de tamanho de senha
+    if (this.senha.length < 6) {
+      this.erroMensagem = "A senha deve ter no mínimo 6 caracteres.";
+      return;
+    }
+
+    // 4. Validação de coincidência de senhas
+    if (this.senha !== this.confirmarSenha) {
+      this.erroMensagem = "As senhas não coincidem.";
+      return;
+    }
+
+    this.carregando = true;
+    this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
+      next: () => {
+        this.carregando = false;
+        alert('Cadastro realizado! Agora você pode entrar.');
+        this.toggleMode(); 
+      },
+      error: (err) => {
+        this.carregando = false;
+        this.erroMensagem = "Não foi possível criar sua conta. Tente outro e-mail.";
+        console.error('Erro no cadastro:', err);
+      }
+    });
+  }
 }

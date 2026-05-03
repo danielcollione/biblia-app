@@ -180,3 +180,14 @@ $error-red: #8B0000;
     }
   }
 }
+
+.error-alert {
+  background-color: rgba(139, 0, 0, 0.1); // Vermelho escuro sutil
+  border: 1px solid #8B0000;
+  color: #ffb3b3;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  text-align: center;
+}

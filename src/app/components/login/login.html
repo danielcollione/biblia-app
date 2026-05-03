@@ -3,8 +3,10 @@
 
         <div class="brand-header">
             <div class="icon-book">📖</div>
-            <h2>{{ isLoginMode ? versionService.ui().loginAccessCollection : versionService.ui().loginJoinCollection }}</h2>
-            <p>{{ isLoginMode ? versionService.ui().loginContinueJourney : versionService.ui().loginCreateAccountStartDiscoveries }}
+            <h2>{{ isLoginMode ? versionService.ui().loginAccessCollection : versionService.ui().loginJoinCollection }}
+            </h2>
+            <p>{{ isLoginMode ? versionService.ui().loginContinueJourney :
+                versionService.ui().loginCreateAccountStartDiscoveries }}
             </p>
         </div>
 
@@ -19,6 +21,10 @@
         <!-- Criamos a variável authForm para o Angular monitorar tudo -->
         <form class="luxury-form" #authForm="ngForm" (ngSubmit)="onSubmitTradicional()">
 
+            <div class="error-alert" *ngIf="erroMensagem">
+                {{ erroMensagem }}
+            </div>
+
             <div class="input-group" *ngIf="!isLoginMode">
                 <label>{{ versionService.ui().loginFullName }}</label>
                 <!-- required: torna o campo obrigatório -->
@@ -29,19 +35,21 @@
             <div class="input-group">
                 <label>{{ versionService.ui().loginEmail }}</label>
                 <!-- required e email: obriga a ter texto e ter o @ -->
-                <input type="email" name="email" [(ngModel)]="email" required email [placeholder]="versionService.ui().loginEmailPlaceholder">
+                <input type="email" name="email" [(ngModel)]="email" required email
+                    [placeholder]="versionService.ui().loginEmailPlaceholder">
             </div>
 
             <div class="input-group">
                 <label>{{ versionService.ui().loginPassword }}</label>
-                <input type="password" name="senha" [(ngModel)]="senha" required minlength="6" [placeholder]="versionService.ui().loginPasswordPlaceholder">
+                <input type="password" name="senha" [(ngModel)]="senha" required minlength="6"
+                    [placeholder]="versionService.ui().loginPasswordPlaceholder">
             </div>
 
             <div class="input-group" *ngIf="!isLoginMode">
                 <label>{{ versionService.ui().loginConfirmPassword }}</label>
                 <input type="password" name="confirmarSenha" [(ngModel)]="confirmarSenha" required minlength="6"
-                    [placeholder]="versionService.ui().loginPasswordPlaceholder" [class.input-error]="erroSenha">
-                <span class="error-msg" *ngIf="erroSenha">{{ versionService.ui().loginPasswordsMustMatch }}</span>
+                    [placeholder]="versionService.ui().loginPasswordPlaceholder" [class.input-error]="erroMensagem">
+                <span class="error-msg" *ngIf="erroMensagem">{{ versionService.ui().loginPasswordsMustMatch }}</span>
             </div>
 
             <!-- A TRAVA: O botão fica desativado se o formulário for inválido -->
@@ -51,8 +59,10 @@
         </form>
 
         <div class="toggle-mode">
-            <p *ngIf="isLoginMode">{{ versionService.ui().loginDontHaveAccount }} <a (click)="toggleMode()">{{ versionService.ui().loginSignUp }}</a></p>
-            <p *ngIf="!isLoginMode">{{ versionService.ui().loginAlreadyHaveAccount }} <a (click)="toggleMode()">{{ versionService.ui().loginDoLogin }}</a></p>
+            <p *ngIf="isLoginMode">{{ versionService.ui().loginDontHaveAccount }} <a (click)="toggleMode()">{{
+                    versionService.ui().loginSignUp }}</a></p>
+            <p *ngIf="!isLoginMode">{{ versionService.ui().loginAlreadyHaveAccount }} <a (click)="toggleMode()">{{
+                    versionService.ui().loginDoLogin }}</a></p>
         </div>
 
     </div>

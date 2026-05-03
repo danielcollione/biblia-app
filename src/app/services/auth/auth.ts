@@ -16,22 +16,23 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
   
-  private readonly apiUrl = '/api/v1/auth';
+  // URL de Produção: Apontando diretamente para o seu back-end no Render
+  private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
 
-  // Estado reativo para UI (Signals)
+  // Estado reativo para a UI (Signals)
   private _usuario = signal<Usuario | null>(null);
   readonly usuario = computed(() => this._usuario());
   readonly estaAutenticado = computed(() => !!this._usuario());
 
   constructor() {
-    // Inicializa a sessão apenas se estiver rodando no Navegador
+    // Inicializa a sessão apenas se estiver rodando no Navegador (SSR Safe)
     if (isPlatformBrowser(this.platformId)) {
       this.carregarSessaoDoStorage();
     }
   }
 
-  // 1. Fluxo Google
+  // 1. Fluxo Google (Login/Cadastro Automático)
   loginComGoogle(googleToken: string): Observable<string> {
     return this.http.post(`${this.apiUrl}/google`, { token: googleToken }, { responseType: 'text' }).pipe(
       tap(jwt => this.processarSucessoLogin(jwt))
@@ -47,11 +48,12 @@ export class AuthService {
     );
   }
 
-  // 3. Cadastro Tradicional (O método que estava faltando)
+  // 3. Cadastro Tradicional
   cadastrarTradicional(nome: string, email: string, senha: string): Observable<any> {
     return this.http.post(`${this.apiUrl}/register`, { nome, email, senha });
   }
 
+  // Encerra a sessão e limpa os sinais
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.TOKEN_KEY);
@@ -60,21 +62,23 @@ export class AuthService {
     this.router.navigate(['/login']);
   }
 
+  // Centraliza o armazenamento do token e atualização do estado
   private processarSucessoLogin(token: string): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.TOKEN_KEY, token);
       this.carregarSessaoDoStorage();
     }
-    this.router.navigate(['/perfil']);
+    this.router.navigate(['/profile']);
   }
 
+  // Decodifica o JWT para popular o sinal do usuário
   private carregarSessaoDoStorage(): void {
     if (!isPlatformBrowser(this.platformId)) return;
 
     const token = localStorage.getItem(this.TOKEN_KEY);
     if (token) {
       try {
-        // Decodifica o payload do JWT (nome, email, foto)
+        // Decodifica o payload (Base64) do JWT
         const payload = JSON.parse(atob(token.split('.')[1]));
         this._usuario.set({
           name: payload.name,
@@ -82,7 +86,7 @@ export class AuthService {
           picture: payload.picture
         });
       } catch (e) {
-        console.error('Erro ao decodificar token:', e);
+        console.error('Falha na integridade do token:', e);
         this.logout();
       }
     }
