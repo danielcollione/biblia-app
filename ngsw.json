@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777835113550,
+  "timestamp": 1777835612205,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -13,7 +13,7 @@
       "urls": [
         "/index.csr.html",
         "/index.html",
-        "/main-NFGYASAV.js",
+        "/main-OV6YQ7FV.js",
         "/manifest.webmanifest",
         "/styles-DWH5UQXE.css"
       ],
@@ -196,10 +196,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "c6cf7acbdb847e6110bd4bb852ba702430495b1d",
-    "/index.html": "39ca7c11e7ad94f207429ddec4212f9854e5167b",
+    "/index.csr.html": "f6c591c7affc83bd15b0c31e050688200686379f",
+    "/index.html": "5da25ca4691fa6272bbacd0163f5b8549c6bd458",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-NFGYASAV.js": "352828bda9a3cb4c5535990f4038b2912ce4b310",
+    "/main-OV6YQ7FV.js": "3c44ba46515b7785dc23a15aed742f16c3490bd1",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
   },
