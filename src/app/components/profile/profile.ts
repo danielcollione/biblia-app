@@ -8,7 +8,7 @@ import { VersionService } from '../../services/version/version-service';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './profile.html',
-  styleUrl: './profile.css'
+  styleUrl: './profile.scss'
 })
 export class Profile {
   // Injeção de serviços modernos
