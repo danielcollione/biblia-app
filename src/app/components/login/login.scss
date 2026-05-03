@@ -262,6 +262,30 @@ $error-red: #8b0000;
   text-align: center;
 }
 
+.forgot-password {
+  margin-top: -8px;
+  margin-bottom: 14px;
+  text-align: right;
+  transition: opacity 0.25s ease;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0.45;
+  }
+
+  a {
+    color: #c5a059;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-family: 'Cinzel', serif;
+    letter-spacing: 0.4px;
+
+    &:hover {
+      opacity: 0.75;
+    }
+  }
+}
+
 .input-wrapper {
   position: relative;
   display: flex;

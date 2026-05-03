@@ -58,6 +58,20 @@ export class AuthService {
     );
   }
 
+  forgotPassword(email: string): Observable<string> {
+    this._isLoading.set(true);
+    return this.http.post(this.apiUrl + '/forgot-password', { email }, { responseType: 'text' }).pipe(
+      finalize(() => this._isLoading.set(false))
+    );
+  }
+
+  resetPassword(token: string, newPassword: string): Observable<string> {
+    this._isLoading.set(true);
+    return this.http.post(this.apiUrl + '/reset-password', { token, newPassword }, { responseType: 'text' }).pipe(
+      finalize(() => this._isLoading.set(false))
+    );
+  }
+
   logout(): void {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.TOKEN_KEY);

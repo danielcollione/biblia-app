@@ -3,11 +3,11 @@
 
         <div class="logo-left">
             <a routerLink="/" class="logo-link" (click)="closeMenu()">
-                <img src="logo-sem-fundo.png" alt="The Unveiled Bible" class="header-logo">
+                <img src="logo-sem-fundo.png" [alt]="versionService.ui().headerLogoAlt" class="header-logo">
             </a>
         </div>
 
-        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir Menu">
+        <button class="menu-toggle" (click)="toggleMenu()" [attr.aria-label]="versionService.ui().headerOpenMenuAriaLabel">
             <div class="hamburger">
                 <span></span>
                 <span></span>

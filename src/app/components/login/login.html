@@ -61,6 +61,10 @@
                 </div>
             </div>
 
+            <div class="forgot-password" *ngIf="isLoginMode" [class.disabled]="carregando()">
+                <a routerLink="/forgot-password">{{ versionService.ui().loginForgotPasswordLink }}</a>
+            </div>
+
             <div class="input-group" *ngIf="!isLoginMode">
                 <label>{{ versionService.ui().loginConfirmPassword }}</label>
                 <div class="input-wrapper">
