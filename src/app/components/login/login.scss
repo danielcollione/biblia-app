@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Inter:wght@300;400&display=swap');
+
+// Variáveis de Cores Premium
+$bg-dark: #050505;
+$card-dark: #0a0a0a;
+$gold-primary: #C5A059;
+$gold-muted: rgba(197, 160, 89, 0.3);
+$text-light: #E0E0E0;
+$text-muted: #888888;
+$error-red: #8B0000;
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $bg-dark;
+  font-family: 'Inter', sans-serif; // Fonte secundária para leitura fácil
+}
+
+.login-card {
+  background-color: $card-dark;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px;
+  border-radius: 8px;
+  
+  /* O pedido: Zero sombra, apenas borda */
+  box-shadow: none;
+  border: 1px solid $gold-muted; 
+  
+  text-align: center;
+}
+
+.brand-header {
+  margin-bottom: 30px;
+
+  .icon-book {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+
+  h2 {
+    font-family: 'Cinzel', serif; /* Fonte Elegante */
+    font-weight: 400; /* Menos peso */
+    color: $gold-primary;
+    font-size: 1.8rem;
+    margin: 0 0 10px 0;
+    letter-spacing: 1px;
+  }
+
+  p {
+    color: $text-muted;
+    font-size: 0.9rem;
+    font-weight: 300;
+  }
+}
+
+.google-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 20px 0;
+  color: $text-muted;
+
+  &::before, &::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #222;
+  }
+
+  span {
+    padding: 0 15px;
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+  }
+}
+
+.luxury-form {
+  text-align: left;
+
+  .input-group {
+    margin-bottom: 20px;
+    position: relative;
+
+    label {
+      display: block;
+      color: $text-muted;
+      font-size: 0.8rem;
+      margin-bottom: 8px;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 1px;
+      color: #c5a059;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px 0;
+      background: transparent; /* Minimalista */
+      border: none;
+      border-bottom: 1px solid #333; /* Borda apenas embaixo */
+      color: $text-light;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      outline: none;
+
+      &::placeholder {
+        color: #444;
+      }
+
+      &:focus {
+        border-bottom-color: $gold-primary;
+      }
+
+      &.input-error {
+        border-bottom-color: $error-red;
+      }
+    }
+
+    .error-msg {
+      color: $error-red;
+      font-size: 0.75rem;
+      position: absolute;
+      bottom: -18px;
+      left: 0;
+    }
+  }
+
+.btn-gold {
+    width: 100%;
+    padding: 14px;
+    background-color: transparent;
+    color: $gold-primary;
+    border: 1px solid $gold-primary;
+    font-family: 'Cinzel', serif;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    margin-top: 15px;
+
+    &:hover:not(:disabled) {
+      background-color: $gold-primary;
+      color: $bg-dark;
+    }
+
+    /* NOVO: O estilo quando a trava está ativa */
+    &:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+      border-color: #555;
+      color: #555;
+    }
+  }
+}
+
+.toggle-mode {
+  margin-top: 30px;
+  color: $text-muted;
+  font-size: 0.85rem;
+  font-weight: 300;
+  
+  a {
+    color: $gold-primary;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity 0.3s;
+    font-family: 'Cinzel', serif;
+    
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+}

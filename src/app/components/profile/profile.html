@@ -1,0 +1,42 @@
+<div class="profile-page-container" *ngIf="auth.usuario() as user">
+  <div class="profile-card-luxury">
+    
+    <!-- Cabeçalho com Avatar e Nome -->
+    <header class="card-header">
+      <div class="avatar-wrapper">
+        <img [src]="user.picture || 'assets/default-avatar.png'" alt="Avatar de {{ user.name }}">
+      </div>
+      <h1 class="cinzel-heading">{{ user.name }}</h1>
+      <span class="membership-badge">Membro do Acervo Real</span>
+    </header>
+
+    <!-- Conteúdo Informativo -->
+    <main class="card-body">
+      <div class="info-section">
+        <div class="info-group">
+          <label>Endereço de Identidade</label>
+          <p>{{ user.email }}</p>
+        </div>
+        
+        <div class="info-group">
+          <label>Status de Acesso</label>
+          <p class="status-indicator">Sincronizado via Google Cloud</p>
+        </div>
+
+        <div class="info-group">
+          <label>Origem do Cadastro</label>
+          <p>theunveiledbible.com</p>
+        </div>
+      </div>
+    </main>
+
+    <!-- Ações de Saída -->
+    <footer class="card-footer">
+      <button class="btn-outline-gold">Configurações de Conta</button>
+      <button class="btn-exit" (click)="auth.logout()">
+        Encerrar Sessão no Acervo
+      </button>
+    </footer>
+
+  </div>
+</div>
