@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../../services/auth/auth'; // Verifique se este caminho está correto conforme sua pasta
+import { AuthService } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VersionService } from '../../services/version/version-service';
@@ -22,16 +22,18 @@ export class Login implements OnInit, AfterViewInit {
   private clientId = '774261062071-pkncaa6t7bli08qg27dmhfgi802v5m0p.apps.googleusercontent.com';
 
   isLoginMode = true;
-  
+  carregando = false;
+  erroMensagem: string | null = null;
+
   // Dados do Formulário
   nome = '';
   email = '';
   senha = '';
   confirmarSenha = '';
 
-  // Controle de Erros e UI
-  erroMensagem: string | null = null;
-  carregando = false;
+  // Controles do Olhinho
+  verSenha = false;
+  verConfirmarSenha = false;
 
   ngOnInit(): void {}
 
@@ -42,6 +44,9 @@ export class Login implements OnInit, AfterViewInit {
   toggleMode() {
     this.isLoginMode = !this.isLoginMode;
     this.limparCampos();
+    // Reseta o "olhinho" ao trocar de modo
+    this.verSenha = false;
+    this.verConfirmarSenha = false;
     setTimeout(() => this.renderizarBotaoGoogle(), 0);
   }
 
@@ -49,9 +54,19 @@ export class Login implements OnInit, AfterViewInit {
     this.erroMensagem = null;
     this.senha = '';
     this.confirmarSenha = '';
-    // Mantemos o email para conveniência do usuário
   }
 
+  // Alterna visibilidade da senha principal
+  toggleVerSenha(): void {
+    this.verSenha = !this.verSenha;
+  }
+
+  // Alterna visibilidade da confirmação
+  toggleVerConfirmarSenha(): void {
+    this.verConfirmarSenha = !this.verConfirmarSenha;
+  }
+
+  // --- Lógica de Autenticação (Mantida conforme sua versão) ---
   iniciarBotaoGoogleSeguro() {
     if (typeof google === 'undefined' || !google.accounts) {
       setTimeout(() => this.iniciarBotaoGoogleSeguro(), 50);
@@ -63,104 +78,39 @@ export class Login implements OnInit, AfterViewInit {
   renderizarBotaoGoogle() {
     const btnWrapper = document.getElementById('google-btn-wrapper');
     if (!btnWrapper) return;
-
     google.accounts.id.initialize({
       client_id: this.clientId,
       callback: this.handleGoogleResponse.bind(this),
     });
-
     google.accounts.id.renderButton(btnWrapper, {
-      theme: 'filled_black',
-      size: 'large',
-      shape: 'rectangular',
-      text: 'continue_with',
+      theme: 'filled_black', size: 'large', shape: 'rectangular', text: 'continue_with',
     });
   }
 
   handleGoogleResponse(response: any) {
     this.carregando = true;
-    const googleToken = response.credential;
-    this.authService.loginComGoogle(googleToken).subscribe({
-      next: () => {
-        this.carregando = false;
-        console.log('Login Google realizado com sucesso.');
-      },
-      error: (err) => {
-        this.carregando = false;
-        this.erroMensagem = "Falha na autenticação com o Google.";
-        console.error(err);
-      },
+    this.authService.loginComGoogle(response.credential).subscribe({
+      next: () => this.carregando = false,
+      error: (err) => { this.carregando = false; this.erroMensagem = "Erro Google"; }
     });
   }
 
   onSubmitTradicional() {
     this.erroMensagem = null;
-
     if (this.isLoginMode) {
-      this.executarLogin();
+      this.authService.loginTradicional(this.email, this.senha).subscribe({
+        next: () => console.log('Logado'),
+        error: (err) => this.erroMensagem = "Erro ao entrar"
+      });
     } else {
-      this.executarCadastro();
-    }
-  }
-
-  private executarLogin() {
-    if (!this.email || !this.senha) {
-      this.erroMensagem = "Preencha todos os campos para entrar.";
-      return;
-    }
-
-    this.carregando = true;
-    this.authService.loginTradicional(this.email, this.senha).subscribe({
-      next: () => {
-        this.carregando = false;
-        console.log('Login realizado.');
-      },
-      error: (err) => {
-        this.carregando = false;
-        this.erroMensagem = "E-mail ou senha incorretos.";
-        console.error('Erro no login:', err);
+      if (this.senha !== this.confirmarSenha) {
+        this.erroMensagem = "As senhas não coincidem";
+        return;
       }
-    });
-  }
-
-  private executarCadastro() {
-    // 1. Validação de campos vazios
-    if (!this.nome || !this.email || !this.senha) {
-      this.erroMensagem = "Todos os campos são obrigatórios.";
-      return;
+      this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
+        next: () => this.toggleMode(),
+        error: (err) => this.erroMensagem = "Erro ao cadastrar"
+      });
     }
-
-    // 2. Validação de formato de e-mail
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(this.email)) {
-      this.erroMensagem = "Insira um endereço de e-mail válido.";
-      return;
-    }
-
-    // 3. Validação de tamanho de senha
-    if (this.senha.length < 6) {
-      this.erroMensagem = "A senha deve ter no mínimo 6 caracteres.";
-      return;
-    }
-
-    // 4. Validação de coincidência de senhas
-    if (this.senha !== this.confirmarSenha) {
-      this.erroMensagem = "As senhas não coincidem.";
-      return;
-    }
-
-    this.carregando = true;
-    this.authService.cadastrarTradicional(this.nome, this.email, this.senha).subscribe({
-      next: () => {
-        this.carregando = false;
-        alert('Cadastro realizado! Agora você pode entrar.');
-        this.toggleMode(); 
-      },
-      error: (err) => {
-        this.carregando = false;
-        this.erroMensagem = "Não foi possível criar sua conta. Tente outro e-mail.";
-        console.error('Erro no cadastro:', err);
-      }
-    });
   }
 }

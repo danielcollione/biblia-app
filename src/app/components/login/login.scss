@@ -3,11 +3,11 @@
 // Variáveis de Cores Premium
 $bg-dark: #050505;
 $card-dark: #0a0a0a;
-$gold-primary: #C5A059;
+$gold-primary: #c5a059;
 $gold-muted: rgba(197, 160, 89, 0.3);
-$text-light: #E0E0E0;
+$text-light: #e0e0e0;
 $text-muted: #888888;
-$error-red: #8B0000;
+$error-red: #8b0000;
 
 .login-wrapper {
   display: flex;
@@ -24,11 +24,11 @@ $error-red: #8B0000;
   max-width: 420px;
   padding: 40px;
   border-radius: 8px;
-  
+
   /* O pedido: Zero sombra, apenas borda */
   box-shadow: none;
-  border: 1px solid $gold-muted; 
-  
+  border: 1px solid $gold-muted;
+
   text-align: center;
 }
 
@@ -69,7 +69,8 @@ $error-red: #8B0000;
   margin: 20px 0;
   color: $text-muted;
 
-  &::before, &::after {
+  &::before,
+  &::after {
     content: '';
     flex: 1;
     border-bottom: 1px solid #222;
@@ -89,6 +90,40 @@ $error-red: #8B0000;
   .input-group {
     margin-bottom: 20px;
     position: relative;
+
+    .input-wrapper {
+      position: relative; // Faz o botão se basear neste container
+      display: flex;
+      align-items: center;
+
+      input {
+        width: 100%;
+        padding-right: 40px; // Espaço para o ícone não cobrir o texto
+        // Mantenha aqui seus estilos de borda e cor
+      }
+
+      .eye-btn {
+        position: absolute;
+        right: 0px; // Alinha ao fim do input
+        background: none;
+        border: none;
+        color: #c5a059; // Dourado do seu tema
+        cursor: pointer;
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        outline: none;
+
+        &:hover {
+          opacity: 0.8;
+        }
+
+        .icon {
+          font-size: 1.2rem;
+        }
+      }
+    }
 
     label {
       display: block;
@@ -133,7 +168,7 @@ $error-red: #8B0000;
     }
   }
 
-.btn-gold {
+  .btn-gold {
     width: 100%;
     padding: 14px;
     background-color: transparent;
@@ -167,14 +202,14 @@ $error-red: #8B0000;
   color: $text-muted;
   font-size: 0.85rem;
   font-weight: 300;
-  
+
   a {
     color: $gold-primary;
     cursor: pointer;
     text-decoration: none;
     transition: opacity 0.3s;
     font-family: 'Cinzel', serif;
-    
+
     &:hover {
       opacity: 0.7;
     }
@@ -183,11 +218,50 @@ $error-red: #8B0000;
 
 .error-alert {
   background-color: rgba(139, 0, 0, 0.1); // Vermelho escuro sutil
-  border: 1px solid #8B0000;
+  border: 1px solid #8b0000;
   color: #ffb3b3;
   padding: 12px;
   margin-bottom: 20px;
   font-family: 'Inter', sans-serif;
   font-size: 0.85rem;
   text-align: center;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input {
+    width: 100%;
+    padding-right: 45px; // Espaço para o ícone não sobrepor o texto
+  }
+
+  .eye-btn {
+    position: absolute;
+    right: 0px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    transition: transform 0.2s ease;
+
+    &:active {
+      transform: scale(0.9); // Efeito de clique sutil
+    }
+
+    .icon-svg {
+      width: 20px;
+      height: 20px;
+      color: #c5a059; // Cor dourada do seu tema
+      stroke-width: 1.5px; // Deixa o traço mais fino e elegante
+
+      // Garante que o SVG não receba eventos de clique próprios
+      pointer-events: none;
+    }
+  }
 }
