@@ -11,6 +11,9 @@ export interface Usuario {
   level: number;
   experiencia: number;
   cargo: string;
+  subscriptionType?: 'FREE' | 'STANDARD' | 'PREMIUM' | 'LIFETIME' | null;
+  subscriptionActive?: boolean;
+  subscriptionExpiresAt?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -42,6 +45,7 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       this.carregarSessaoDoStorage();
       this.startProfileAutoRefresh();
+      this.refreshUserProfileFromServer();
     }
   }
 
@@ -126,7 +130,10 @@ export class AuthService {
           pictureUrl: profile.pictureUrl,
           level: profile.level ?? 1,
           experiencia: profile.experiencia ?? 0,
-          cargo: profile.cargo || 'Apprentice'
+          cargo: profile.cargo || 'Apprentice',
+          subscriptionType: profile.subscriptionType ?? null,
+          subscriptionActive: profile.subscriptionActive ?? false,
+          subscriptionExpiresAt: profile.subscriptionExpiresAt ?? null
         });
       },
       error: () => {
@@ -172,7 +179,10 @@ private carregarSessaoDoStorage(): void {
         pictureUrl: payload.picture, // Pegando exatamente do token
         level: payload.level || 1,
         experiencia: payload.experiencia || 0,
-        cargo: payload.cargo || 'Apprentice'
+        cargo: payload.cargo || 'Apprentice',
+        subscriptionType: payload.subscriptionType || null,
+        subscriptionActive: payload.subscriptionActive || false,
+        subscriptionExpiresAt: payload.subscriptionExpiresAt || null
       });
     } catch (e) {
       console.error('Falha na integridade do token:', e);
