@@ -47,6 +47,8 @@ export class Home {
   isMobileMenuOpen = signal(false);
   isSidebarOpen = signal(true);
   isLangMenuOpen = signal(false);
+  isRouteFading = signal(false);
+  private routeFadeTimeoutId: number | null = null;
 
   readonly availableLangs: BibleVersion[] = this.versionService.getAvailableVersions();
   readonly currentVersion = toSignal(this.versionService.activeVersion$);
@@ -176,8 +178,34 @@ export class Home {
   }
 
   ngOnDestroy(): void {
+    if (this.routeFadeTimeoutId !== null && typeof window !== 'undefined') {
+      window.clearTimeout(this.routeFadeTimeoutId);
+      this.routeFadeTimeoutId = null;
+    }
+
     if (typeof document !== 'undefined') {
       document.body.style.overflow = '';
     }
+  }
+
+  onSubpageActivated(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    this.isRouteFading.set(false);
+
+    window.requestAnimationFrame(() => {
+      this.isRouteFading.set(true);
+
+      if (this.routeFadeTimeoutId !== null) {
+        window.clearTimeout(this.routeFadeTimeoutId);
+      }
+
+      this.routeFadeTimeoutId = window.setTimeout(() => {
+        this.isRouteFading.set(false);
+        this.routeFadeTimeoutId = null;
+      }, 320);
+    });
   }
 }

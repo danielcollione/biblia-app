@@ -96,7 +96,7 @@
         (ngModelChange)="inputMessage.set($event)"
         (keydown)="onComposerEnter($event)"
         name="message"
-        rows="3"
+        rows="2"
         [disabled]="!hasActiveSubscription()"
         [placeholder]="versionService.ui().sageChatInputPlaceholder"></textarea>
 

@@ -45,8 +45,6 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly insightPrompts = computed(() => [
     this.versionService.ui().sageChatInsightOne,
     this.versionService.ui().sageChatInsightTwo,
-    this.versionService.ui().sageChatInsightThree,
-    this.versionService.ui().sageChatInsightFour,
   ]);
 
   private streamAbortController: AbortController | null = null;
