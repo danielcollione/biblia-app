@@ -1,1 +1,0 @@
-import{Qa as t,mb as n}from"./chunk-ZNSPETM7.js";var s=class o{static \u0275fac=function(e){return new(e||o)};static \u0275cmp=t({type:o,selectors:[["app-recommendations-page"]],decls:1,vars:0,consts:[[1,"home-page-stub"]],template:function(e,m){e&1&&n(0,"div",0)},styles:[".home-page-stub[_ngcontent-%COMP%]{flex:1}"]})};export{s as RecommendationsPage};
