@@ -1,6 +1,6 @@
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
 
 :host {
@@ -349,7 +349,7 @@
 .floating-create-button {
   position: fixed;
   right: 28px;
-  bottom: 28px;
+  bottom: calc(28px + env(safe-area-inset-bottom, 0px));
   z-index: 20;
   display: flex;
   align-items: center;
@@ -534,6 +534,6 @@
 
   .floating-create-button {
     right: 16px;
-    bottom: 16px;
+    bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   }
 }
