@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777912885697,
+  "timestamp": 1777913455017,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -11,7 +11,7 @@
         "ignoreVary": true
       },
       "urls": [
-        "/chunk-5RCYTSK3.js",
+        "/chunk-2GVJBLMY.js",
         "/chunk-732CWCIY.js",
         "/chunk-BPN2IQNE.js",
         "/chunk-C63A7IFB.js",
@@ -25,7 +25,7 @@
         "/chunk-ZGDZ3USJ.js",
         "/index.csr.html",
         "/index.html",
-        "/main-PEK4GUNA.js",
+        "/main-E6OMIOKV.js",
         "/manifest.webmanifest",
         "/styles-IHPUF5IZ.css"
       ],
@@ -129,7 +129,7 @@
   "hashTable": {
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
-    "/chunk-5RCYTSK3.js": "5c6e41ea670d8a8f1b5568c986d8dab18fb1272c",
+    "/chunk-2GVJBLMY.js": "bcd3d653fa82d2f1cc9bc594d11d85af2f20e18d",
     "/chunk-732CWCIY.js": "45b757e493c34311b6effc5ad75d3c06c45aa946",
     "/chunk-BPN2IQNE.js": "e9d2cf0a1db1160cdf08133387e719fe122b2f5f",
     "/chunk-C63A7IFB.js": "868212151164257f885ede6a3050f2ba71bcb2e6",
@@ -220,10 +220,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "4b0c0dc3000636f5d0eec3c9062f308c4dcff4ba",
-    "/index.html": "808989f8ecd87eb2b4a0bd103b9c2e1c6e22b2bc",
+    "/index.csr.html": "ba53519986ab766089a44ecc26b19e9fb443e2c1",
+    "/index.html": "41667291f2edc0a4d19ea78081c97de7d5bcf31f",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-PEK4GUNA.js": "d7f0d85613557b178d283dc1cccd26b7c9d71fa3",
+    "/main-E6OMIOKV.js": "2e1d76d05b85228ab46de5392d93d850156d3eec",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
