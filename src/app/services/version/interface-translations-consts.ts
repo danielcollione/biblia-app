@@ -135,6 +135,9 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePagePracticalApplication: 'Aplicação Prática',
     sagePageConclusion: 'Conclusão',
     sagePageError: 'Ocorreu um erro ao gerar o estudo. Tente novamente.',
+    sagePageExportWhatsApp: 'WhatsApp',
+    sagePageExportPdf: 'Exportar PDF',
+    sagePageCopied: 'Copiado!',
   },
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
@@ -272,6 +275,9 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePagePracticalApplication: 'Practical Application',
     sagePageConclusion: 'Conclusion',
     sagePageError: 'An error occurred while generating the study. Please try again.',
+    sagePageExportWhatsApp: 'WhatsApp',
+    sagePageExportPdf: 'Export PDF',
+    sagePageCopied: 'Copied!',
   },
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
@@ -409,5 +415,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePagePracticalApplication: 'Aplicación Práctica',
     sagePageConclusion: 'Conclusión',
     sagePageError: 'Ocurrió un error al generar el estudio. Inténtalo de nuevo.',
+    sagePageExportWhatsApp: 'WhatsApp',
+    sagePageExportPdf: 'Exportar PDF',
+    sagePageCopied: '¡Copiado!',
   },
 };

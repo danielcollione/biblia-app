@@ -19,6 +19,7 @@ $bg-panel: #0d0d0d;
 .sage-shell {
   max-width: 720px;
   margin: 0 auto;
+  margin-bottom: 100px;
 }
 
 .sage-form-wrap {
@@ -97,7 +98,9 @@ $bg-panel: #0d0d0d;
   font-family: 'Inter', sans-serif;
   font-size: 0.9rem;
   outline: none;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    box-shadow 0.2s;
 
   &::placeholder {
     color: rgba(184, 175, 160, 0.5);
@@ -191,7 +194,9 @@ $bg-panel: #0d0d0d;
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 .sage-error {
@@ -213,8 +218,14 @@ $bg-panel: #0d0d0d;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .result-header {
@@ -238,7 +249,10 @@ $bg-panel: #0d0d0d;
   cursor: pointer;
   transition: all 0.2s;
 
-  svg { width: 15px; height: 15px; }
+  svg {
+    width: 15px;
+    height: 15px;
+  }
 
   &:hover {
     border-color: $gold;
@@ -255,6 +269,62 @@ $bg-panel: #0d0d0d;
   font-size: 0.68rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
+}
+
+.export-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.export-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  background: rgba(255, 255, 255, 0.03);
+  color: $text-muted;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    border-color: rgba(197, 160, 89, 0.6);
+    color: $text-light;
+    background: rgba(197, 160, 89, 0.06);
+  }
+
+  &--wa {
+    color: #6fcf97;
+    border-color: rgba(111, 207, 151, 0.3);
+    background: rgba(111, 207, 151, 0.04);
+
+    &:hover {
+      border-color: rgba(111, 207, 151, 0.6);
+      background: rgba(111, 207, 151, 0.08);
+      color: #6fcf97;
+    }
+  }
+
+  &--pdf {
+    color: $gold;
+    border-color: rgba(197, 160, 89, 0.3);
+
+    &:hover {
+      border-color: $gold;
+      color: $gold;
+    }
+  }
 }
 
 .result-title {
