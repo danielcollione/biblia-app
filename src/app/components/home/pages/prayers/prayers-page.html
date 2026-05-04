@@ -6,8 +6,8 @@
       <p class="subtitle">{{ versionService.ui().prayersSubtitle }}</p>
     </div>
 
-    <button class="refresh-button" type="button" (click)="refreshPrayers()" [disabled]="isRefreshing()">
-      @if (isRefreshing()) {
+    <button class="refresh-button" type="button" (click)="refreshPrayers()" [disabled]="isLoading()">
+      @if (isLoading()) {
         <span class="mini-spinner"></span>
       }
       {{ versionService.ui().prayersRefresh }}
@@ -33,7 +33,7 @@
       <p>{{ versionService.ui().prayersLoading }}</p>
     </div>
   } @else {
-    <section #board class="prayers-board" [style.minHeight.px]="boardHeight()">
+    <section class="prayers-board">
       @if (!prayers().length) {
         <div class="empty-state">
           <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
@@ -43,11 +43,7 @@
       }
 
       @for (prayer of prayers(); track prayer.id) {
-        <article class="prayer-balloon" [style.transform]="balloonTransform(prayer)">
-          <button class="drag-handle" type="button" (pointerdown)="startDrag($event, prayer.id)">
-            <span></span><span></span><span></span>
-          </button>
-
+        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser">
           <div class="balloon-topline">
             <div>
               <strong>{{ prayer.authorName }}</strong>
@@ -59,7 +55,7 @@
 
           <div class="balloon-footer">
             <button class="like-button" type="button" [disabled]="!hasActiveSubscription()" (click)="toggleLike(prayer, $event)">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 24 24" [class.liked]="prayer.likedByCurrentUser" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 21s-6.7-4.35-9.19-8.1C.8 9.89 2.16 5.5 6.22 5.07c2-.21 3.28.74 4.11 1.9.84-1.16 2.12-2.11 4.12-1.9 4.06.43 5.41 4.82 3.41 7.83C18.7 16.65 12 21 12 21z"></path>
               </svg>
             </button>
@@ -70,6 +66,17 @@
             </div>
           </div>
         </article>
+      }
+
+      @if (hasMorePages()) {
+        <div class="load-more-container">
+          <button class="load-more-button" type="button" (click)="loadMorePrayers()" [disabled]="isLoadingMore()">
+            @if (isLoadingMore()) {
+              <span class="mini-spinner"></span>
+            }
+            {{ isLoadingMore() ? 'Carregando...' : 'Carregar Mais Orações' }}
+          </button>
+        </div>
       }
     </section>
   }

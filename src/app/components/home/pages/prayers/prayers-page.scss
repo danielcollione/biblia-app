@@ -46,17 +46,18 @@
 .refresh-button,
 .floating-create-button,
 .like-button,
-.drag-handle,
 .close-modal,
 .secondary-action,
 .primary-action,
-.flash {
+.flash,
+.load-more-button {
   cursor: pointer;
 }
 
 .refresh-button,
 .secondary-action,
-.primary-action {
+.primary-action,
+.load-more-button {
   border: 1px solid rgba(211, 171, 99, 0.34);
   border-radius: 999px;
   padding: 12px 18px;
@@ -67,7 +68,8 @@
 
 .refresh-button:hover,
 .secondary-action:hover,
-.primary-action:hover {
+.primary-action:hover,
+.load-more-button:hover {
   background: rgba(211, 171, 99, 0.14);
 }
 
@@ -113,8 +115,10 @@
 }
 
 .prayers-board {
-  position: relative;
-  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 32px;
+  padding: 32px;
   border-radius: 30px;
   border: 1px solid rgba(211, 171, 99, 0.16);
   background:
@@ -122,21 +126,20 @@
     radial-gradient(circle at 88% 10%, rgba(255, 255, 255, 0.06), transparent 24%),
     linear-gradient(180deg, rgba(17, 12, 9, 0.98), rgba(8, 8, 8, 0.94));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 30px 60px rgba(0, 0, 0, 0.28);
+  min-height: 420px;
 }
 
 .prayer-balloon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 280px;
+  width: 100%;
   padding: 20px 20px 18px;
   border-radius: 28px 28px 28px 12px;
   background: linear-gradient(180deg, rgba(247, 237, 216, 0.97), rgba(231, 216, 188, 0.93));
   color: #2e2417;
   box-shadow: 0 26px 34px rgba(0, 0, 0, 0.23);
   user-select: none;
-  touch-action: none;
-
+  animation: floatingBubble 6s ease-in-out infinite;
+  position: relative;
+  
   &::after {
     content: '';
     position: absolute;
@@ -149,31 +152,15 @@
   }
 }
 
-.drag-handle {
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  display: inline-flex;
-  gap: 4px;
-  align-items: center;
-  justify-content: center;
-  width: 38px;
-  height: 38px;
-  border: 0;
-  border-radius: 999px;
-  background: rgba(46, 36, 23, 0.08);
+.prayer-balloon:hover {
+  box-shadow: 0 32px 44px rgba(0, 0, 0, 0.26);
+}
 
-  span {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: rgba(46, 36, 23, 0.54);
-  }
+.prayer-balloon-liked {
+  background: linear-gradient(180deg, rgba(255, 237, 224, 0.98), rgba(244, 201, 179, 0.92));
 }
 
 .balloon-topline {
-  padding-right: 42px;
-
   strong {
     display: block;
     font-family: 'Cinzel', serif;
@@ -208,10 +195,16 @@
   place-items: center;
   background: rgba(141, 61, 61, 0.1);
   color: #8d3d3d;
+  flex-shrink: 0;
 
   svg {
     width: 24px;
     height: 24px;
+    transition: fill 0.2s ease;
+    
+    &.liked {
+      fill: currentColor;
+    }
   }
 }
 
@@ -239,6 +232,19 @@
     font-family: 'Cinzel', serif;
     font-size: 1.2rem;
   }
+}
+
+.load-more-container {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+}
+
+.load-more-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .floating-create-button {
@@ -396,6 +402,15 @@
   }
 }
 
+@keyframes floatingBubble {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
 @media (max-width: 720px) {
   :host {
     padding: 14px;
@@ -403,6 +418,12 @@
 
   .prayers-hero {
     flex-direction: column;
+  }
+
+  .prayers-board {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 20px;
   }
 
   .floating-create-button {

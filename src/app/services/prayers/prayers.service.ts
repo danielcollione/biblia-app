@@ -11,6 +11,7 @@ export interface PrayerItemDto {
   content: string;
   likesCount: number;
   createdAt: string;
+  likedByCurrentUser: boolean;
 }
 
 export interface PrayerPageDto {

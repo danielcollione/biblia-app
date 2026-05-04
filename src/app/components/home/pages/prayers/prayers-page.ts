@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, ViewChild, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
 import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
@@ -6,18 +6,6 @@ import { finalize } from 'rxjs';
 import { AuthService } from '../../../../services/auth/auth';
 import { PrayerItemDto, PrayersService } from '../../../../services/prayers/prayers.service';
 import { VersionService } from '../../../../services/version/version-service';
-
-type PositionedPrayer = PrayerItemDto & {
-  x: number;
-  y: number;
-  localLiked: boolean;
-};
-
-type DragState = {
-  prayerId: string;
-  offsetX: number;
-  offsetY: number;
-};
 
 @Component({
   selector: 'app-prayers-page',
@@ -31,20 +19,17 @@ export class PrayersPage implements AfterViewInit {
   private readonly prayersService = inject(PrayersService);
   readonly versionService = inject(VersionService);
 
-  @ViewChild('board') private boardRef?: ElementRef<HTMLDivElement>;
-
-  readonly prayers = signal<PositionedPrayer[]>([]);
+  readonly prayers = signal<PrayerItemDto[]>([]);
   readonly isLoading = signal(true);
-  readonly isRefreshing = signal(false);
+  readonly isLoadingMore = signal(false);
   readonly isSubmitting = signal(false);
   readonly isModalOpen = signal(false);
   readonly newPrayerContent = signal('');
   readonly modalError = signal<string | null>(null);
   readonly flashMessage = signal<string | null>(null);
   readonly flashIsError = signal(false);
-  readonly boardHeight = signal(720);
-
-  private dragState: DragState | null = null;
+  readonly currentPage = signal(0);
+  readonly hasMorePages = signal(true);
 
   readonly remainingCharacters = computed(() => 280 - this.newPrayerContent().length);
   readonly canSubmitPrayer = computed(() => this.hasActiveSubscription() && this.newPrayerContent().trim().length > 0);
@@ -101,7 +86,8 @@ export class PrayersPage implements AfterViewInit {
         next: () => {
           this.closeCreateModal();
           this.showFlash(this.versionService.ui().prayersCreateSuccess, false);
-          this.loadPrayers(true);
+          this.currentPage.set(0);
+          this.loadPrayers();
         },
         error: (error) => {
           this.modalError.set(this.resolveHttpError(error, this.versionService.ui().prayersCreateError));
@@ -110,10 +96,33 @@ export class PrayersPage implements AfterViewInit {
   }
 
   refreshPrayers(): void {
-    this.loadPrayers(true);
+    this.currentPage.set(0);
+    this.loadPrayers();
   }
 
-  toggleLike(prayer: PositionedPrayer, event?: Event): void {
+  loadMorePrayers(): void {
+    if (this.isLoadingMore() || !this.hasMorePages()) {
+      return;
+    }
+
+    this.isLoadingMore.set(true);
+    const nextPage = this.currentPage() + 1;
+
+    this.prayersService.list(nextPage, 10)
+      .pipe(finalize(() => this.isLoadingMore.set(false)))
+      .subscribe({
+        next: (page) => {
+          this.prayers.update(items => [...items, ...page.content]);
+          this.currentPage.set(nextPage);
+          this.hasMorePages.set(!page.last);
+        },
+        error: (error) => {
+          this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersLoadError), true);
+        }
+      });
+  }
+
+  toggleLike(prayer: PrayerItemDto, event?: Event): void {
     event?.stopPropagation();
 
     if (!this.hasActiveSubscription()) {
@@ -124,7 +133,7 @@ export class PrayersPage implements AfterViewInit {
     this.prayersService.toggleLike(prayer.id).subscribe({
       next: (updated) => {
         this.prayers.update((items) => items.map((item) => item.id === prayer.id
-          ? { ...item, likesCount: updated.likesCount, localLiked: !item.localLiked }
+          ? { ...item, likesCount: updated.likesCount, likedByCurrentUser: !item.likedByCurrentUser }
           : item));
       },
       error: (error) => {
@@ -133,119 +142,25 @@ export class PrayersPage implements AfterViewInit {
     });
   }
 
-  startDrag(event: PointerEvent, prayerId: string): void {
-    const board = this.boardRef?.nativeElement;
-    const prayer = this.prayers().find((item) => item.id === prayerId);
-    if (!board || !prayer) {
-      return;
-    }
-
-    const rect = board.getBoundingClientRect();
-    this.dragState = {
-      prayerId,
-      offsetX: event.clientX - rect.left - prayer.x,
-      offsetY: event.clientY - rect.top - prayer.y,
-    };
-
-    (event.currentTarget as HTMLElement | null)?.setPointerCapture?.(event.pointerId);
-  }
-
-  @HostListener('document:pointermove', ['$event'])
-  onPointerMove(event: PointerEvent): void {
-    if (!this.dragState || !this.boardRef?.nativeElement) {
-      return;
-    }
-
-    const board = this.boardRef.nativeElement;
-    const rect = board.getBoundingClientRect();
-    const maxX = Math.max(0, rect.width - this.resolveBalloonWidth(rect.width));
-    const maxY = Math.max(0, rect.height - 210);
-    const x = this.clamp(event.clientX - rect.left - this.dragState.offsetX, 0, maxX);
-    const y = this.clamp(event.clientY - rect.top - this.dragState.offsetY, 0, maxY);
-
-    this.prayers.update((items) => items.map((item) => item.id === this.dragState?.prayerId ? { ...item, x, y } : item));
-  }
-
-  @HostListener('document:pointerup')
-  onPointerUp(): void {
-    this.dragState = null;
-  }
-
-  @HostListener('window:resize')
-  onResize(): void {
-    this.positionPrayers(false);
-  }
-
-  balloonTransform(prayer: PositionedPrayer): string {
-    return `translate(${prayer.x}px, ${prayer.y}px)`;
-  }
-
   clearFlash(): void {
     this.flashMessage.set(null);
   }
 
-  private loadPrayers(background = false): void {
-    if (background) {
-      this.isRefreshing.set(true);
-    } else {
-      this.isLoading.set(true);
-    }
+  private loadPrayers(): void {
+    this.isLoading.set(true);
 
-    this.prayersService.list(0, 36)
-      .pipe(finalize(() => {
-        this.isLoading.set(false);
-        this.isRefreshing.set(false);
-      }))
+    this.prayersService.list(0, 10)
+      .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (page) => {
-          this.prayers.set(page.content.map((item) => ({ ...item, x: 0, y: 0, localLiked: false })));
-          setTimeout(() => this.positionPrayers(true));
+          this.prayers.set(page.content);
+          this.currentPage.set(0);
+          this.hasMorePages.set(!page.last);
         },
         error: (error) => {
           this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersLoadError), true);
         }
       });
-  }
-
-  private positionPrayers(withJitter: boolean): void {
-    const board = this.boardRef?.nativeElement;
-    if (!board) {
-      return;
-    }
-
-    const width = board.clientWidth || 960;
-    const balloonWidth = this.resolveBalloonWidth(width);
-    const columns = Math.max(1, Math.floor(width / (balloonWidth + 24)));
-    const gap = 24;
-    const columnWidth = balloonWidth + gap;
-
-    this.prayers.update((items) => items.map((item, index) => {
-      const column = index % columns;
-      const row = Math.floor(index / columns);
-      const jitterX = withJitter ? ((index % 2 === 0 ? 1 : -1) * ((index * 9) % 18)) : 0;
-      const jitterY = withJitter ? ((index * 7) % 20) : 0;
-
-      return {
-        ...item,
-        x: this.clamp(column * columnWidth + jitterX, 0, Math.max(0, width - balloonWidth)),
-        y: Math.max(0, row * 228 + jitterY),
-      };
-    }));
-
-    const rows = Math.max(1, Math.ceil(this.prayers().length / columns));
-    this.boardHeight.set(Math.max(560, rows * 228 + 60));
-  }
-
-  private resolveBalloonWidth(boardWidth: number): number {
-    if (boardWidth < 520) {
-      return Math.max(250, boardWidth - 24);
-    }
-
-    return 280;
-  }
-
-  private clamp(value: number, min: number, max: number): number {
-    return Math.min(max, Math.max(min, value));
   }
 
   private resolveHttpError(error: { status?: number; error?: { message?: string } | string }, fallback: string): string {
