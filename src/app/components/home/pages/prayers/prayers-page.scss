@@ -129,92 +129,132 @@
   min-height: 420px;
 }
 
+/* ==========================================================================
+   ESTILIZAÇÃO DE LUXO: BALÕES DE ORAÇÃO E BOTÃO DE LIKE
+   ========================================================================== */
+
 .prayer-balloon {
   width: 100%;
-  padding: 20px 20px 18px;
-  border-radius: 28px 28px 28px 12px;
-  background: linear-gradient(180deg, rgba(247, 237, 216, 0.97), rgba(231, 216, 188, 0.93));
-  color: #2e2417;
-  box-shadow: 0 26px 34px rgba(0, 0, 0, 0.23);
-  user-select: none;
-  animation: floatingBubble 6s ease-in-out infinite;
+  padding: 24px;
+  border-radius: 18px 18px 18px 4px;
+  background: linear-gradient(145deg, rgba(34, 26, 18, 0.95), rgba(15, 11, 8, 0.98));
+  border: 1px solid rgba(211, 171, 99, 0.15);
+  color: #f4ead4;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   
   &::after {
     content: '';
     position: absolute;
-    left: 18px;
-    bottom: -14px;
-    width: 30px;
-    height: 30px;
-    background: inherit;
-    clip-path: polygon(0 0, 100% 0, 0 100%);
+    left: 20px;
+    bottom: -7px;
+    width: 14px;
+    height: 14px;
+    background: #0d0906;
+    border-bottom: 1px solid rgba(211, 171, 99, 0.15);
+    border-right: 1px solid rgba(211, 171, 99, 0.15);
+    transform: rotate(45deg);
+    border-bottom-right-radius: 2px;
+    transition: all 0.4s ease;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 20px rgba(211, 171, 99, 0.05);
+    border-color: rgba(211, 171, 99, 0.35);
+
+    &::after {
+      border-color: rgba(211, 171, 99, 0.35);
+    }
   }
 }
 
-.prayer-balloon:hover {
-  box-shadow: 0 32px 44px rgba(0, 0, 0, 0.26);
-}
-
 .prayer-balloon-liked {
-  background: linear-gradient(180deg, rgba(255, 237, 224, 0.98), rgba(244, 201, 179, 0.92));
+  background: linear-gradient(145deg, rgba(46, 36, 23, 0.95), rgba(20, 15, 10, 0.98));
+  border-color: rgba(211, 171, 99, 0.4);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(211, 171, 99, 0.1);
+
+  &::after {
+    background: #120d09;
+    border-color: rgba(211, 171, 99, 0.4);
+  }
+
+  .likes-copy strong {
+    color: #d3ab63;
+  }
 }
 
 .balloon-topline {
   strong {
     display: block;
     font-family: 'Cinzel', serif;
-    font-size: 0.96rem;
+    font-size: 1.05rem;
+    color: #d3ab63;
+    letter-spacing: 0.05em;
   }
 
   span {
     font-size: 0.72rem;
-    color: rgba(46, 36, 23, 0.62);
+    color: #8c8170;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
   }
 }
 
 .balloon-content {
-  margin: 16px 0 20px;
-  line-height: 1.6;
+  margin: 18px 0 24px;
+  line-height: 1.75;
   white-space: pre-wrap;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
+  font-weight: 300;
+  color: #e8dcc4;
 }
 
 .balloon-footer {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  border-top: 1px solid rgba(211, 171, 99, 0.1);
+  padding-top: 16px;
 }
 
 .like-button {
-  width: 52px;
-  height: 52px;
-  border: 0;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(211, 171, 99, 0.2);
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: rgba(141, 61, 61, 0.1);
-  color: #8d3d3d;
+  background: rgba(10, 7, 5, 0.4);
+  color: rgba(211, 171, 99, 0.5);
   flex-shrink: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &:hover:not(:disabled) {
+    background: rgba(211, 171, 99, 0.15);
+    border-color: #d3ab63;
+    color: #d3ab63;
+    transform: scale(1.08) translateY(-2px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(211, 171, 99, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.3;
+  }
 
   svg {
-    width: 24px;
-    height: 24px;
-    transition: fill 0.2s ease;
+    width: 18px;
+    height: 18px;
+    transition: all 0.3s ease;
     
     &.liked {
-      fill: currentColor;
+      fill: #d3ab63;
+      stroke: #d3ab63;
+      filter: drop-shadow(0 0 6px rgba(211, 171, 99, 0.6));
+      transform: scale(1.15);
     }
   }
-}
-
-.like-button:hover:not(:disabled) {
-  background: rgba(141, 61, 61, 0.16);
-  transform: scale(1.05);
-}
-
-.like-button:disabled {
-  opacity: 0.45;
 }
 
 .likes-copy {
@@ -222,17 +262,25 @@
 
   span {
     display: block;
-    font-size: 0.7rem;
-    letter-spacing: 0.16em;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
-    color: rgba(46, 36, 23, 0.56);
+    color: #8c8170;
+    margin-bottom: 2px;
   }
 
   strong {
     font-family: 'Cinzel', serif;
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+    color: #f4ead4;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    transition: color 0.3s ease;
   }
 }
+
+/* ==========================================================================
+   RESTANTE DO CÓDIGO ORIGINAL (INTACTO)
+   ========================================================================== */
 
 .load-more-container {
   grid-column: 1 / -1;
