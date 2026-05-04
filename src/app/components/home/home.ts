@@ -30,6 +30,20 @@ type HomeMenuItem = {
 export class Home {
   private readonly authService = inject(AuthService);
   public readonly versionService = inject(VersionService);
+  // Must match backend UserRank.requiredXp thresholds.
+  private readonly levelXpThresholds = [
+    0,      // level 1
+    1000,   // level 2
+    2500,   // level 3
+    5000,   // level 4
+    9000,   // level 5
+    15000,  // level 6
+    25000,  // level 7
+    40000,  // level 8
+    60000,  // level 9
+    100000, // level 10
+  ];
+
   isMobileMenuOpen = signal(false);
   isSidebarOpen = signal(true);
   isLangMenuOpen = signal(false);
@@ -79,14 +93,24 @@ export class Home {
     const usuario = this.authService.usuario();
     const level = Math.max(1, Number(usuario?.level ?? 1));
     const xp = Math.max(0, Number(usuario?.experiencia ?? 0));
-    const xpToNextLevel = Math.max(100, level * 100);
     const name = usuario?.name?.trim() || ui.profileRoyalCollectionMember;
+    const currentLevelIndex = Math.min(level - 1, this.levelXpThresholds.length - 1);
+    const currentLevelStartXp = this.levelXpThresholds[currentLevelIndex] ?? 0;
+    const hasNextLevel = currentLevelIndex < this.levelXpThresholds.length - 1;
+    const nextLevelStartXp = hasNextLevel
+      ? (this.levelXpThresholds[currentLevelIndex + 1] ?? currentLevelStartXp)
+      : currentLevelStartXp;
+    const xpInsideCurrentLevel = Math.max(0, xp - currentLevelStartXp);
+    const xpNeededInCurrentLevel = Math.max(1, nextLevelStartXp - currentLevelStartXp);
+    const xpToNextLevel = hasNextLevel ? Math.max(0, nextLevelStartXp - xp) : 0;
 
     return {
       name,
       avatar: name.charAt(0).toUpperCase() || 'U',
       level,
       xp,
+      xpInsideCurrentLevel,
+      xpNeededInCurrentLevel,
       xpToNextLevel,
       role: usuario?.cargo || ui.profileRoyalCollectionMember,
     };
@@ -94,7 +118,14 @@ export class Home {
 
   readonly xpPercent = computed(() => {
     const data = this.userProfile();
-    return Math.min(100, Math.round((data.xp / data.xpToNextLevel) * 100));
+    if (data.xpToNextLevel === 0) {
+      return 100;
+    }
+
+    return Math.min(
+      100,
+      Math.max(0, Math.round((data.xpInsideCurrentLevel / data.xpNeededInCurrentLevel) * 100))
+    );
   });
 
   toggleMobileMenu() {

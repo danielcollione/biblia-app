@@ -438,7 +438,10 @@ $text-muted: #b8afa0;
   display: flex;
   flex-direction: column;
   gap: 18px;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-height: 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .hero-card,
@@ -576,7 +579,9 @@ $text-muted: #b8afa0;
   .home-main {
     height: calc(100dvh - 72px);
     padding: 16px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 0;
   }
 
   .sidebar-footer {
