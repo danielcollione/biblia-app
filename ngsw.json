@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777918537340,
+  "timestamp": 1777918872090,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -14,9 +14,9 @@
         "/chunk-2OI2CSJJ.js",
         "/chunk-424Y7MGC.js",
         "/chunk-CBHVWBKZ.js",
+        "/chunk-HPA7SKLW.js",
         "/chunk-IYCL2LXK.js",
         "/chunk-KAHZRZJ6.js",
-        "/chunk-KSHOP7O2.js",
         "/chunk-LTOTMMTX.js",
         "/chunk-O6OMXQSK.js",
         "/chunk-OEMU6CCW.js",
@@ -25,7 +25,7 @@
         "/chunk-YBMTX7V2.js",
         "/index.csr.html",
         "/index.html",
-        "/main-IUUTLLXY.js",
+        "/main-WDZOXDLF.js",
         "/manifest.webmanifest",
         "/styles-IHPUF5IZ.css"
       ],
@@ -132,9 +132,9 @@
     "/chunk-2OI2CSJJ.js": "31b9221f1517e7ff702a91950bca1b8d3a1049bb",
     "/chunk-424Y7MGC.js": "8260fbfcd9a392072980cb637b04dcb93fb2c792",
     "/chunk-CBHVWBKZ.js": "236dba39380b97cb378956e6ca08456a365178d4",
+    "/chunk-HPA7SKLW.js": "c370111fe7fab40c92605c7c568c25b7e5c463df",
     "/chunk-IYCL2LXK.js": "ba90ae34865fa469f60956e23220f6804c5ec869",
     "/chunk-KAHZRZJ6.js": "18d6403ee0936e84619807c6066f60422034f258",
-    "/chunk-KSHOP7O2.js": "4992bd18a77d7464d1e8dd4c5eb2ed54322759eb",
     "/chunk-LTOTMMTX.js": "40a996803b97a5115f3022c4354771c2b2e45f50",
     "/chunk-O6OMXQSK.js": "3267506cad39465106684cd0200011a6330eda3a",
     "/chunk-OEMU6CCW.js": "4a7d3af31270c1a9d9c3c2297507fd51dc94588c",
@@ -220,10 +220,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "0dff00c89df1eeb03b4858e2d57d421d95b2c538",
-    "/index.html": "3ec1cbefac2b72c1022ec5922920b119639b3e3e",
+    "/index.csr.html": "93c7a63abb441958a0d504a8f9e2760e95c041c4",
+    "/index.html": "a0032583ed6cb72021aed00d4373e32c28be4562",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-IUUTLLXY.js": "6532f8bdae04ae0e7183169cfb0c7f481a2e5761",
+    "/main-WDZOXDLF.js": "91a6e717c928c28f618744cd768cf1815954ebf4",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
