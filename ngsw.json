@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777921557499,
+  "timestamp": 1777922153132,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -12,10 +12,10 @@
       },
       "urls": [
         "/chunk-2OI2CSJJ.js",
+        "/chunk-3HY4HL5T.js",
         "/chunk-424Y7MGC.js",
         "/chunk-73UEJXD6.js",
         "/chunk-CBHVWBKZ.js",
-        "/chunk-IQ7FYB2W.js",
         "/chunk-IYCL2LXK.js",
         "/chunk-KAHZRZJ6.js",
         "/chunk-L6ODYTSK.js",
@@ -25,7 +25,7 @@
         "/chunk-YHGQUG27.js",
         "/index.csr.html",
         "/index.html",
-        "/main-D2LV47XM.js",
+        "/main-S34UDQD6.js",
         "/manifest.webmanifest",
         "/styles-IHPUF5IZ.css"
       ],
@@ -130,10 +130,10 @@
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
     "/chunk-2OI2CSJJ.js": "31b9221f1517e7ff702a91950bca1b8d3a1049bb",
+    "/chunk-3HY4HL5T.js": "fe7be3601512bc9aad0723f36ca818a9d9a2cbf4",
     "/chunk-424Y7MGC.js": "8260fbfcd9a392072980cb637b04dcb93fb2c792",
     "/chunk-73UEJXD6.js": "53b7315fa3de07baa494a408f6a840dff86bd38c",
     "/chunk-CBHVWBKZ.js": "236dba39380b97cb378956e6ca08456a365178d4",
-    "/chunk-IQ7FYB2W.js": "d0459235f3e54e40655ee61723bbebc253c1c020",
     "/chunk-IYCL2LXK.js": "ba90ae34865fa469f60956e23220f6804c5ec869",
     "/chunk-KAHZRZJ6.js": "18d6403ee0936e84619807c6066f60422034f258",
     "/chunk-L6ODYTSK.js": "bb5a02bdc6bfb78f48d9b8a1c25363ae4ded71cf",
@@ -220,10 +220,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "79f38dfcdc3b1d7fd273fd514c5c1e61bb6b37fa",
-    "/index.html": "ace0eeceb116eab723ac1727f945f227878992e2",
+    "/index.csr.html": "886d6d8cd5d21d09cc18347f46158795ee27c515",
+    "/index.html": "75bb37dbdf401d0d0893903582279e5334cd54ef",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-D2LV47XM.js": "387f00eb487d9f5c86d5fa6a214e9d4d9ba98277",
+    "/main-S34UDQD6.js": "f75726bce74f6b7be519ddfa0b9d14947695fe96",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
