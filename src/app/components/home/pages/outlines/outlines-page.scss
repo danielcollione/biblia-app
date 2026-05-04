@@ -193,9 +193,92 @@ $bg-panel: #0d0d0d;
   animation: spin 0.8s linear infinite;
 }
 
+.sage-loading-oracle {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 88px;
+  padding: 18px 20px;
+  border-radius: 18px;
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  background:
+    radial-gradient(circle at top, rgba(197, 160, 89, 0.14), transparent 58%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.04), rgba(197, 160, 89, 0.03));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.03),
+    0 18px 40px rgba(0, 0, 0, 0.22);
+}
+
+.oracle-halo {
+  position: absolute;
+  inset: auto auto -46px -20px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.22), transparent 68%);
+  filter: blur(8px);
+  animation: oraclePulse 3.2s ease-in-out infinite;
+}
+
+.oracle-copy-wrap {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  text-align: center;
+}
+
+.oracle-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  color: rgba(197, 160, 89, 0.76);
+}
+
+.oracle-copy {
+  max-width: 28rem;
+  color: $text-light;
+  font-family: 'Lora', serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: balance;
+  animation: oracleReveal 0.45s ease;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes oraclePulse {
+  0%,
+  100% {
+    transform: scale(0.92);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes oracleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
@@ -439,5 +522,14 @@ $bg-panel: #0d0d0d;
 
   .result-title {
     font-size: 1.3rem;
+  }
+
+  .sage-loading-oracle {
+    min-height: 96px;
+    padding: 16px;
+  }
+
+  .oracle-copy {
+    font-size: 0.95rem;
   }
 }

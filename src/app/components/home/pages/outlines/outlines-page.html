@@ -79,6 +79,16 @@
           }
         </button>
 
+        @if (isLoading()) {
+          <div class="sage-loading-oracle" aria-live="polite">
+            <div class="oracle-halo"></div>
+            <div class="oracle-copy-wrap">
+              <span class="oracle-label">{{ versionService.ui().sagePageLoading }}</span>
+              <strong class="oracle-copy">{{ currentLoadingMessage() }}</strong>
+            </div>
+          </div>
+        }
+
       </form>
     </div>
   }
@@ -139,7 +149,7 @@
         </div>
       }
 
-      @if (study.topics?.length) {
+      @if (study.topics.length) {
         <div class="result-topics">
           @for (topic of study.topics; track $index) {
             <div class="topic-card">

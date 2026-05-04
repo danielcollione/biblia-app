@@ -1,8 +1,8 @@
 import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, tap, finalize } from 'rxjs';
+import { Observable, Subscription, finalize, interval, tap } from 'rxjs';
 
 export interface Usuario {
   name: string;
@@ -21,9 +21,11 @@ export class AuthService {
   
   private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
+  private readonly PROFILE_REFRESH_INTERVAL_MS = 15000;
 
   private _usuario = signal<Usuario | null>(null);
   private _isLoading = signal<boolean>(false); // Sinal para o Loading
+  private profileRefreshSubscription: Subscription | null = null;
 
   readonly usuario = computed(() => this._usuario());
   readonly isLoading = computed(() => this._isLoading());
@@ -39,6 +41,7 @@ export class AuthService {
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.carregarSessaoDoStorage();
+      this.startProfileAutoRefresh();
     }
   }
 
@@ -80,6 +83,8 @@ export class AuthService {
   }
 
   logout(): void {
+    this.stopProfileAutoRefresh();
+
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.TOKEN_KEY);
     }
@@ -91,8 +96,64 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.TOKEN_KEY, token);
       this.carregarSessaoDoStorage();
+      this.startProfileAutoRefresh();
+      this.refreshUserProfileFromServer();
     }
     this.router.navigate(['/home']);
+  }
+
+  refreshUserProfileFromServer(): void {
+    const token = this.getToken();
+
+    if (!token || !isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    });
+
+    this.http.get<Usuario>(`${this.apiUrl}/me`, { headers }).subscribe({
+      next: (profile) => {
+        if (!profile) {
+          return;
+        }
+
+        this._usuario.set({
+          name: profile.name,
+          email: profile.email,
+          pictureUrl: profile.pictureUrl,
+          level: profile.level ?? 1,
+          experiencia: profile.experiencia ?? 0,
+          cargo: profile.cargo || 'Apprentice'
+        });
+      },
+      error: () => {
+        // Silently ignore refresh failures to avoid UI interruptions.
+      }
+    });
+  }
+
+  private startProfileAutoRefresh(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    this.stopProfileAutoRefresh();
+
+    if (!this.getToken()) {
+      return;
+    }
+
+    this.profileRefreshSubscription = interval(this.PROFILE_REFRESH_INTERVAL_MS).subscribe(() => {
+      this.refreshUserProfileFromServer();
+    });
+  }
+
+  private stopProfileAutoRefresh(): void {
+    this.profileRefreshSubscription?.unsubscribe();
+    this.profileRefreshSubscription = null;
   }
 
 // auth.service.ts

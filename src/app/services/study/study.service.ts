@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { AuthService } from '../auth/auth';
 
 export interface StudyRequestDto {
@@ -37,6 +37,8 @@ export class StudyService {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
-    return this.http.post<StudyResponseDto>(this.apiUrl, request, { headers });
+    return this.http.post<StudyResponseDto>(this.apiUrl, request, { headers }).pipe(
+      tap(() => this.authService.refreshUserProfileFromServer())
+    );
   }
 }

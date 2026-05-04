@@ -1,4 +1,4 @@
-import { Component, inject, signal, computed } from '@angular/core';
+import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { VersionService } from '../../../../services/version/version-service';
@@ -16,6 +16,7 @@ export class OutlinesPage {
   readonly versionService = inject(VersionService);
   private readonly studyService = inject(StudyService);
   private readonly document = inject(DOCUMENT);
+  private loadingMessageIntervalId: ReturnType<typeof setInterval> | null = null;
 
   themeOrVerse = '';
   contentType = 'Study';
@@ -25,6 +26,7 @@ export class OutlinesPage {
   readonly result = signal<StudyResponseDto | null>(null);
   readonly errorMessage = signal<string | null>(null);
   readonly copied = signal(false);
+  readonly activeLoadingMessageIndex = signal(0);
 
   readonly contentTypes = computed(() => {
     const ui = this.versionService.ui();
@@ -33,6 +35,22 @@ export class OutlinesPage {
       { value: 'Sermon',     label: ui.sagePageTypeSermon },
       { value: 'Study',      label: ui.sagePageTypeStudy },
     ];
+  });
+
+  readonly loadingMessages = computed(() => {
+    const ui = this.versionService.ui();
+    return [
+      ui.sagePageLoadingStepOne,
+      ui.sagePageLoadingStepTwo,
+      ui.sagePageLoadingStepThree,
+      ui.sagePageLoadingStepFour,
+    ];
+  });
+
+  readonly currentLoadingMessage = computed(() => {
+    const messages = this.loadingMessages();
+    const index = this.activeLoadingMessageIndex();
+    return messages[index] ?? messages[0] ?? this.versionService.ui().sagePageLoading;
   });
 
   private readonly languageMap: Record<string, string> = {
@@ -48,6 +66,8 @@ export class OutlinesPage {
     const language = this.languageMap[langCode] ?? 'Portuguese';
 
     this.isLoading.set(true);
+    this.activeLoadingMessageIndex.set(0);
+    this.startLoadingMessageRotation();
     this.result.set(null);
     this.errorMessage.set(null);
 
@@ -61,16 +81,19 @@ export class OutlinesPage {
       .subscribe({
         next: (res) => {
           this.result.set(res);
+          this.stopLoadingMessageRotation();
           this.isLoading.set(false);
         },
         error: () => {
           this.errorMessage.set(this.versionService.ui().sagePageError);
+          this.stopLoadingMessageRotation();
           this.isLoading.set(false);
         },
       });
   }
 
   reset(): void {
+    this.stopLoadingMessageRotation();
     this.result.set(null);
     this.errorMessage.set(null);
     this.themeOrVerse = '';
@@ -177,6 +200,30 @@ ${study.conclusion ? `<div class="section"><h2>${ui.sagePageConclusion}</h2><p>$
     if (win) {
       win.document.write(html);
       win.document.close();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.stopLoadingMessageRotation();
+  }
+
+  private startLoadingMessageRotation(): void {
+    this.stopLoadingMessageRotation();
+
+    this.loadingMessageIntervalId = setInterval(() => {
+      const messages = this.loadingMessages();
+      if (!messages.length) {
+        return;
+      }
+
+      this.activeLoadingMessageIndex.update((currentIndex) => (currentIndex + 1) % messages.length);
+    }, 1900);
+  }
+
+  private stopLoadingMessageRotation(): void {
+    if (this.loadingMessageIntervalId !== null) {
+      clearInterval(this.loadingMessageIntervalId);
+      this.loadingMessageIntervalId = null;
     }
   }
 }
