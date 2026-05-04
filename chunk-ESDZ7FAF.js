@@ -1,0 +1,1 @@
+import{Ra as t,nb as a}from"./chunk-REMCBQOM.js";var o=class n{static \u0275fac=function(e){return new(e||n)};static \u0275cmp=t({type:n,selectors:[["app-ranking-page"]],decls:1,vars:0,consts:[[1,"home-page-stub"]],template:function(e,i){e&1&&a(0,"div",0)},styles:[".home-page-stub[_ngcontent-%COMP%]{flex:1}"]})};export{o as RankingPage};

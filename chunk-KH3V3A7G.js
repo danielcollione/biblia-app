@@ -1,0 +1,1 @@
+import{Ra as a,nb as o}from"./chunk-REMCBQOM.js";var n=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=a({type:t,selectors:[["app-library-page"]],decls:1,vars:0,consts:[[1,"home-page-stub"]],template:function(e,s){e&1&&o(0,"div",0)},styles:[".home-page-stub[_ngcontent-%COMP%]{flex:1}"]})};export{n as LibraryPage};
