@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777841803641,
+  "timestamp": 1777862770089,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -11,11 +11,23 @@
         "ignoreVary": true
       },
       "urls": [
+        "/chunk-33MQJSW6.js",
+        "/chunk-64FN2JBQ.js",
+        "/chunk-6NZAEEXU.js",
+        "/chunk-6VMZWSXN.js",
+        "/chunk-7DGJ6EUP.js",
+        "/chunk-JSOGZSY2.js",
+        "/chunk-LXBHGSM6.js",
+        "/chunk-NFJTPOW6.js",
+        "/chunk-QOBINZLG.js",
+        "/chunk-QX42HKGT.js",
+        "/chunk-TPQJJEVB.js",
+        "/chunk-ZNSPETM7.js",
         "/index.csr.html",
         "/index.html",
-        "/main-2L3JA5T4.js",
+        "/main-KSII3T7M.js",
         "/manifest.webmanifest",
-        "/styles-DWH5UQXE.css"
+        "/styles-IHPUF5IZ.css"
       ],
       "patterns": []
     },
@@ -117,6 +129,18 @@
   "hashTable": {
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
+    "/chunk-33MQJSW6.js": "771632dad65af883f80db7e2fbd21c166e7332f3",
+    "/chunk-64FN2JBQ.js": "aaa25653cf05a7f3cbabdd02007eeb0b697399bd",
+    "/chunk-6NZAEEXU.js": "4bc411328e890434e50e702adc810af75f31925e",
+    "/chunk-6VMZWSXN.js": "0a9f7cf6543a1e9e350220ba26fd34c3112a721c",
+    "/chunk-7DGJ6EUP.js": "0e8ae8543f273a657485078ee4ece3f1779ab7eb",
+    "/chunk-JSOGZSY2.js": "1a6818b73656e6eee1b2234d0f95870cba9eff49",
+    "/chunk-LXBHGSM6.js": "eb49ee7cc5b485e6ca23e7ab29104ea24a7c5c26",
+    "/chunk-NFJTPOW6.js": "f7df662d1dde5df4b9aa1b268dc5fe4e7823dcb0",
+    "/chunk-QOBINZLG.js": "0a27bb5d96866bf3b35fdf72f254f23cafcb09ce",
+    "/chunk-QX42HKGT.js": "8b5e2d789fa12b5459b18c8087fac1ed4b6996c6",
+    "/chunk-TPQJJEVB.js": "c14152d8a273b82b87bb6a4883b949fcaa748a33",
+    "/chunk-ZNSPETM7.js": "b677c860dc4a4fac5a29169ed013d4af2fa1a1be",
     "/e-book/bible-ia-cover.png": "33639ca3d46b824c776b62c7b6150234e4548db0",
     "/e-book/bible/cover.png": "998a8d10283d5e89abdf646bb505019266130bca",
     "/e-book/path-jesus/cover.png": "976ac48eefb68f3331cffa48635994949b3b2027",
@@ -196,12 +220,12 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "d6e81503a330db9f247bb874ad6774c601e6f2ee",
-    "/index.html": "c5625dc3f9b4386240bedb8f85cc97ae4599436e",
+    "/index.csr.html": "f62dae68545893bf10c5bf66206ee59bff4be2be",
+    "/index.html": "9873e3124926c8256e163524d7b8f888e9e60011",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-2L3JA5T4.js": "ecc8fc2d2413a6638167a15531c88f56f93f08d6",
+    "/main-KSII3T7M.js": "6a71c1044c76d8415c58e6579e5b3f408d6ced9d",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
-    "/styles-DWH5UQXE.css": "63f41ce567d2cab2d9cbf482e38cb42a100b6bae"
+    "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
   "navigationUrls": [
     {
