@@ -17,7 +17,7 @@
   justify-content: space-between;
   align-items: flex-start;
   gap: 24px;
-  margin-bottom: 22px;
+  margin-bottom: 40px; /* Aumentei a margem para desgrudar os balões do título */
 
   h1 {
     margin: 0;
@@ -64,6 +64,7 @@
   background: rgba(255, 255, 255, 0.05);
   color: #f4ead4;
   font-weight: 600;
+  transition: background 0.3s ease;
 }
 
 .refresh-button:hover,
@@ -93,7 +94,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: 30px;
   padding: 14px 18px;
   border-radius: 18px;
   border: 1px solid rgba(211, 171, 99, 0.28);
@@ -109,31 +110,27 @@
   min-height: 420px;
   text-align: center;
   border-radius: 28px;
-  border: 1px solid rgba(211, 171, 99, 0.16);
-  background: radial-gradient(circle at top, rgba(211, 171, 99, 0.14), rgba(255, 255, 255, 0.03) 64%);
+  border: 1px dashed rgba(211, 171, 99, 0.16);
   color: #f4ead4;
 }
 
+/* ==========================================================================
+   O BOARD FOI REMOVIDO: AGORA É UM GRID INVISÍVEL E ESPALHADO
+   ========================================================================== */
 .prayers-board {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 32px;
-  padding: 32px;
-  border-radius: 30px;
-  border: 1px solid rgba(211, 171, 99, 0.16);
-  background:
-    radial-gradient(circle at 14% 10%, rgba(211, 171, 99, 0.14), transparent 28%),
-    radial-gradient(circle at 88% 10%, rgba(255, 255, 255, 0.06), transparent 24%),
-    linear-gradient(180deg, rgba(17, 12, 9, 0.98), rgba(8, 8, 8, 0.94));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 30px 60px rgba(0, 0, 0, 0.28);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* Auto-fit espalha os cards */
+  gap: 40px 32px; /* Espaçamento: 40px vertical, 32px horizontal */
+  padding: 10px 0;
   min-height: 420px;
 }
 
 /* ==========================================================================
-   ESTILIZAÇÃO DE LUXO: BALÕES DE ORAÇÃO E BOTÃO DE LIKE
+   BALÕES DE ORAÇÃO: CORRIGIDO O OVERLAP E MANTIDO O LUXO
    ========================================================================== */
 
 .prayer-balloon {
+  box-sizing: border-box; /* ISSO RESOLVE OS CARDS UM EM CIMA DO OUTRO */
   width: 100%;
   padding: 24px;
   border-radius: 18px 18px 18px 4px;
@@ -219,15 +216,19 @@
   padding-top: 16px;
 }
 
+/* ==========================================================================
+   BOTÃO DE LIKE E CORAÇÃO CORRIGIDOS
+   ========================================================================== */
 .like-button {
   width: 44px;
   height: 44px;
   border: 1px solid rgba(211, 171, 99, 0.2);
   border-radius: 50%;
-  display: grid;
-  place-items: center;
+  display: flex; /* Flex centraliza o SVG melhor que Grid em alguns navegadores */
+  align-items: center;
+  justify-content: center;
   background: rgba(10, 7, 5, 0.4);
-  color: rgba(211, 171, 99, 0.5);
+  color: rgba(211, 171, 99, 0.5); /* Cor original do stroke (outline) */
   flex-shrink: 0;
   transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 
@@ -244,12 +245,15 @@
   }
 
   svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
+    fill: none; /* Garante que o coração é apenas o contorno por padrão */
+    stroke: currentColor;
+    stroke-width: 2px;
     transition: all 0.3s ease;
     
     &.liked {
-      fill: #d3ab63;
+      fill: #d3ab63; /* Preenche de ouro quando curtido */
       stroke: #d3ab63;
       filter: drop-shadow(0 0 6px rgba(211, 171, 99, 0.6));
       transform: scale(1.15);
@@ -279,20 +283,21 @@
 }
 
 /* ==========================================================================
-   RESTANTE DO CÓDIGO ORIGINAL (INTACTO)
+   BOTÃO "CARREGAR MAIS" E COMPONENTES GERAIS
    ========================================================================== */
 
 .load-more-container {
-  grid-column: 1 / -1;
+  grid-column: 1 / -1; /* Garante que o botão fique na largura inteira no fim do grid */
   display: flex;
   justify-content: center;
-  padding: 20px 0;
+  padding: 40px 0 20px;
 }
 
 .load-more-button {
   display: flex;
   align-items: center;
   gap: 8px;
+  padding: 14px 28px;
 }
 
 .floating-create-button {
@@ -445,33 +450,22 @@
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 @keyframes floatingBubble {
-  0%, 100% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
 }
 
 @media (max-width: 720px) {
-  :host {
-    padding: 14px;
-  }
-
-  .prayers-hero {
-    flex-direction: column;
-  }
-
+  :host { padding: 14px; }
+  .prayers-hero { flex-direction: column; }
+  
   .prayers-board {
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 20px;
+    gap: 32px;
+    padding: 10px 0;
   }
 
   .floating-create-button {
