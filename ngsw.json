@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777912419486,
+  "timestamp": 1777912885697,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -11,13 +11,13 @@
         "ignoreVary": true
       },
       "urls": [
+        "/chunk-5RCYTSK3.js",
         "/chunk-732CWCIY.js",
         "/chunk-BPN2IQNE.js",
         "/chunk-C63A7IFB.js",
         "/chunk-EQ2QNVYB.js",
         "/chunk-ESDZ7FAF.js",
         "/chunk-KH3V3A7G.js",
-        "/chunk-LWMIDRSE.js",
         "/chunk-N64GQ4RE.js",
         "/chunk-NU7FK23Q.js",
         "/chunk-REMCBQOM.js",
@@ -25,7 +25,7 @@
         "/chunk-ZGDZ3USJ.js",
         "/index.csr.html",
         "/index.html",
-        "/main-6HSKHQCC.js",
+        "/main-PEK4GUNA.js",
         "/manifest.webmanifest",
         "/styles-IHPUF5IZ.css"
       ],
@@ -129,13 +129,13 @@
   "hashTable": {
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
+    "/chunk-5RCYTSK3.js": "5c6e41ea670d8a8f1b5568c986d8dab18fb1272c",
     "/chunk-732CWCIY.js": "45b757e493c34311b6effc5ad75d3c06c45aa946",
     "/chunk-BPN2IQNE.js": "e9d2cf0a1db1160cdf08133387e719fe122b2f5f",
     "/chunk-C63A7IFB.js": "868212151164257f885ede6a3050f2ba71bcb2e6",
     "/chunk-EQ2QNVYB.js": "023a48d8446e467761fba2c0b1fbe2d6a239e995",
     "/chunk-ESDZ7FAF.js": "06841b6a4ece7435e14f745508dd8f670f5ae0fc",
     "/chunk-KH3V3A7G.js": "8c48a36ab89a9c5494ce3706f29f0719c23a4383",
-    "/chunk-LWMIDRSE.js": "3ca535b1e22c6a7ca5941cfd0d1a18440bd3ddef",
     "/chunk-N64GQ4RE.js": "2feea6a80a58f3936ca055ffa462ce3a3db432c2",
     "/chunk-NU7FK23Q.js": "d4d7a9657cede32ecab8aa6e0f2603b24a7bd1d7",
     "/chunk-REMCBQOM.js": "b870471b04decc8486d33ec43daf54cb04d329b5",
@@ -220,10 +220,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "eb2fc2fbf4416f645605557ea71b4706ce2fc9fc",
-    "/index.html": "659a345dc4297706724ea4194485aa3a9b257872",
+    "/index.csr.html": "4b0c0dc3000636f5d0eec3c9062f308c4dcff4ba",
+    "/index.html": "808989f8ecd87eb2b4a0bd103b9c2e1c6e22b2bc",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-6HSKHQCC.js": "2b0a2ddb263b0ceece69cbdee4db46765f887ed0",
+    "/main-PEK4GUNA.js": "d7f0d85613557b178d283dc1cccd26b7c9d71fa3",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
