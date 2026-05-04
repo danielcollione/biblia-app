@@ -51,6 +51,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
   private streamAbortController: AbortController | null = null;
   private audioContext: AudioContext | null = null;
+  private scrollAnimationFrameId: number | null = null;
 
   constructor() {
     this.bootstrap();
@@ -63,6 +64,10 @@ export class SagePage implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.streamAbortController?.abort();
     this.audioContext?.close().catch(() => undefined);
+    if (this.scrollAnimationFrameId !== null) {
+      cancelAnimationFrame(this.scrollAnimationFrameId);
+      this.scrollAnimationFrameId = null;
+    }
   }
 
   async createNewSession(): Promise<void> {
@@ -228,13 +233,28 @@ export class SagePage implements AfterViewInit, OnDestroy {
   }
 
   private scrollToBottom(): void {
-    queueMicrotask(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    if (this.scrollAnimationFrameId !== null) {
+      cancelAnimationFrame(this.scrollAnimationFrameId);
+    }
+
+    this.scrollAnimationFrameId = requestAnimationFrame(() => {
       const viewport = this.messagesViewportRef?.nativeElement;
       if (!viewport) {
+        this.scrollAnimationFrameId = null;
         return;
       }
 
       viewport.scrollTop = viewport.scrollHeight;
+
+      // A second frame helps keep the viewport pinned while streamed text expands.
+      this.scrollAnimationFrameId = requestAnimationFrame(() => {
+        viewport.scrollTop = viewport.scrollHeight;
+        this.scrollAnimationFrameId = null;
+      });
     });
   }
 
