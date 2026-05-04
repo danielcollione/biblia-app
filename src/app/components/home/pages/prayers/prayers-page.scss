@@ -1,0 +1,412 @@
+:host {
+  display: block;
+  min-height: 100%;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.prayers-shell {
+  position: relative;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding-bottom: 120px;
+}
+
+.prayers-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  margin-bottom: 22px;
+
+  h1 {
+    margin: 0;
+    color: #f4ead4;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 3vw, 2.8rem);
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #d3ab63;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  max-width: 54rem;
+  color: #bdb19d;
+  line-height: 1.6;
+}
+
+.refresh-button,
+.floating-create-button,
+.like-button,
+.drag-handle,
+.close-modal,
+.secondary-action,
+.primary-action,
+.flash {
+  cursor: pointer;
+}
+
+.refresh-button,
+.secondary-action,
+.primary-action {
+  border: 1px solid rgba(211, 171, 99, 0.34);
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4ead4;
+  font-weight: 600;
+}
+
+.refresh-button:hover,
+.secondary-action:hover,
+.primary-action:hover {
+  background: rgba(211, 171, 99, 0.14);
+}
+
+.flash {
+  width: 100%;
+  margin-bottom: 16px;
+  border: 0;
+  border-radius: 16px;
+  padding: 13px 16px;
+  text-align: left;
+  background: rgba(98, 181, 119, 0.18);
+  color: #dff5e2;
+}
+
+.flash-error {
+  background: rgba(208, 86, 86, 0.16);
+  color: #ffd8d8;
+}
+
+.access-banner {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 16px;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(211, 171, 99, 0.28);
+  background: linear-gradient(135deg, rgba(211, 171, 99, 0.15), rgba(255, 255, 255, 0.03));
+  color: #f4ead4;
+}
+
+.prayers-loading,
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  min-height: 420px;
+  text-align: center;
+  border-radius: 28px;
+  border: 1px solid rgba(211, 171, 99, 0.16);
+  background: radial-gradient(circle at top, rgba(211, 171, 99, 0.14), rgba(255, 255, 255, 0.03) 64%);
+  color: #f4ead4;
+}
+
+.prayers-board {
+  position: relative;
+  overflow: hidden;
+  border-radius: 30px;
+  border: 1px solid rgba(211, 171, 99, 0.16);
+  background:
+    radial-gradient(circle at 14% 10%, rgba(211, 171, 99, 0.14), transparent 28%),
+    radial-gradient(circle at 88% 10%, rgba(255, 255, 255, 0.06), transparent 24%),
+    linear-gradient(180deg, rgba(17, 12, 9, 0.98), rgba(8, 8, 8, 0.94));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03), 0 30px 60px rgba(0, 0, 0, 0.28);
+}
+
+.prayer-balloon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 280px;
+  padding: 20px 20px 18px;
+  border-radius: 28px 28px 28px 12px;
+  background: linear-gradient(180deg, rgba(247, 237, 216, 0.97), rgba(231, 216, 188, 0.93));
+  color: #2e2417;
+  box-shadow: 0 26px 34px rgba(0, 0, 0, 0.23);
+  user-select: none;
+  touch-action: none;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 18px;
+    bottom: -14px;
+    width: 30px;
+    height: 30px;
+    background: inherit;
+    clip-path: polygon(0 0, 100% 0, 0 100%);
+  }
+}
+
+.drag-handle {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(46, 36, 23, 0.08);
+
+  span {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: rgba(46, 36, 23, 0.54);
+  }
+}
+
+.balloon-topline {
+  padding-right: 42px;
+
+  strong {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.96rem;
+  }
+
+  span {
+    font-size: 0.72rem;
+    color: rgba(46, 36, 23, 0.62);
+  }
+}
+
+.balloon-content {
+  margin: 16px 0 20px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  font-size: 0.95rem;
+}
+
+.balloon-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.like-button {
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(141, 61, 61, 0.1);
+  color: #8d3d3d;
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+.like-button:hover:not(:disabled) {
+  background: rgba(141, 61, 61, 0.16);
+  transform: scale(1.05);
+}
+
+.like-button:disabled {
+  opacity: 0.45;
+}
+
+.likes-copy {
+  text-align: right;
+
+  span {
+    display: block;
+    font-size: 0.7rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(46, 36, 23, 0.56);
+  }
+
+  strong {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+  }
+}
+
+.floating-create-button {
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px 14px 14px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #d3ab63, #a87227);
+  color: #1e1408;
+  box-shadow: 0 20px 38px rgba(0, 0, 0, 0.3);
+
+  span {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: rgba(255, 255, 255, 0.34);
+    font-size: 1.9rem;
+    line-height: 1;
+  }
+
+  small {
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+}
+
+.locked {
+  filter: grayscale(0.12);
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(7, 7, 7, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.prayer-modal {
+  width: min(560px, 100%);
+  border-radius: 28px;
+  padding: 24px;
+  background: linear-gradient(180deg, #17120d, #0d0d0d);
+  border: 1px solid rgba(211, 171, 99, 0.26);
+  color: #f4ead4;
+  box-shadow: 0 30px 65px rgba(0, 0, 0, 0.4);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+  }
+}
+
+.close-modal {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4ead4;
+}
+
+.modal-copy {
+  color: #bdb19d;
+  line-height: 1.6;
+}
+
+.prayer-textarea {
+  width: 100%;
+  min-height: 160px;
+  margin-top: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  resize: none;
+  border-radius: 18px;
+  border: 1px solid rgba(211, 171, 99, 0.26);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4ead4;
+}
+
+.modal-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: #bdb19d;
+  font-size: 0.82rem;
+}
+
+.modal-error {
+  margin: 14px 0 0;
+  color: #ffd7d7;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.big-spinner,
+.mini-spinner {
+  display: inline-block;
+  border-radius: 50%;
+  border: 2px solid rgba(211, 171, 99, 0.28);
+  border-top-color: #d3ab63;
+  animation: spin 0.85s linear infinite;
+}
+
+.big-spinner {
+  width: 42px;
+  height: 42px;
+}
+
+.mini-spinner {
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.empty-icon {
+  width: 74px;
+  height: 74px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  background: rgba(211, 171, 99, 0.14);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 720px) {
+  :host {
+    padding: 14px;
+  }
+
+  .prayers-hero {
+    flex-direction: column;
+  }
+
+  .floating-create-button {
+    right: 16px;
+    bottom: 16px;
+  }
+}
