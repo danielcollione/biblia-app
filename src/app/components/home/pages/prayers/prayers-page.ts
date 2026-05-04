@@ -154,6 +154,35 @@ export class PrayersPage implements AfterViewInit {
     });
   }
 
+  canDeletePrayer(): boolean {
+    const user = this.authService.usuario();
+    if (!user) {
+      return false;
+    }
+
+    const isLifetime = user.subscriptionType === 'LIFETIME';
+    return isLifetime && this.hasActiveSubscription();
+  }
+
+  deletePrayer(prayer: PrayerItemDto, event?: Event): void {
+    event?.stopPropagation();
+
+    if (!this.canDeletePrayer()) {
+      this.showFlash('Only LIFETIME users can delete prayers.', true);
+      return;
+    }
+
+    this.prayersService.delete(prayer.id).subscribe({
+      next: () => {
+        this.prayers.update(items => items.filter(item => item.id !== prayer.id));
+        this.showFlash('Prayer deleted successfully.', false);
+      },
+      error: (error) => {
+        this.showFlash(this.resolveHttpError(error, 'Unable to delete this prayer right now.'), true);
+      }
+    });
+  }
+
   clearFlash(): void {
     this.flashMessage.set(null);
   }

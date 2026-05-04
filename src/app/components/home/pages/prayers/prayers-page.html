@@ -49,6 +49,12 @@
                     <strong>{{ prayer.authorName }}</strong>
                     <span>{{ prayer.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
                 </div>
+
+                @if (canDeletePrayer()) {
+                <button class="delete-prayer-button" type="button" (click)="deletePrayer(prayer, $event)">
+                    Excluir
+                </button>
+                }
             </div>
 
             <p class="balloon-content">{{ prayer.content }}</p>

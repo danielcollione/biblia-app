@@ -52,6 +52,12 @@ export class PrayersService {
     });
   }
 
+  delete(prayerId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${prayerId}`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
   private buildHeaders(): HttpHeaders {
     const token = this.authService.getToken();
 
