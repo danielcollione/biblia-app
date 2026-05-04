@@ -443,6 +443,10 @@ $text-muted: #b8afa0;
   min-height: 0;
   -webkit-overflow-scrolling: touch;
 
+  > * {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
 }
 
 .hero-card,

@@ -37,6 +37,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly isLoadingSessions = signal(true);
   readonly isLoadingMessages = signal(false);
   readonly isSending = signal(false);
+  readonly isSessionsPanelOpen = signal(false);
   readonly errorMessage = signal<string | null>(null);
 
   readonly hasMessages = computed(() => this.messages().length > 0);
@@ -92,9 +93,23 @@ export class SagePage implements AfterViewInit, OnDestroy {
       this.activeSessionId.set(created.id);
       this.messages.set([]);
       this.inputMessage.set('');
+      this.isSessionsPanelOpen.set(false);
     } catch (error) {
       this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionCreateError));
     }
+  }
+
+  toggleSessionsPanel(): void {
+    this.isSessionsPanelOpen.update((current) => !current);
+  }
+
+  closeSessionsPanel(): void {
+    this.isSessionsPanelOpen.set(false);
+  }
+
+  selectSession(sessionId: string): void {
+    this.activeSessionId.set(sessionId);
+    this.isSessionsPanelOpen.set(false);
   }
 
   async sendCurrentMessage(): Promise<void> {
