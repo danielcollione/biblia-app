@@ -24,7 +24,7 @@ export class AuthService {
   
   private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly PROFILE_REFRESH_INTERVAL_MS = 15000;
+  private readonly PROFILE_REFRESH_INTERVAL_MS = 60000;
 
   private _usuario = signal<Usuario | null>(null);
   private _isLoading = signal<boolean>(false); // Sinal para o Loading
