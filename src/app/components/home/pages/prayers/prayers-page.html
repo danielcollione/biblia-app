@@ -54,19 +54,9 @@
             <p class="balloon-content">{{ prayer.content }}</p>
 
             <div class="balloon-footer">
-                <button class="like-button" type="button" [disabled]="!hasActiveSubscription()"
-                    (click)="toggleLike(prayer, $event)">
-                    <!-- Ícone Minimalista de Mãos em Oração -->
-                    <svg viewBox="0 0 24 24" [class.liked]="prayer.likedByCurrentUser" fill="none" stroke="currentColor"
-                        stroke-linecap="round" stroke-linejoin="round">
-                        <!-- Ponta dos dedos -->
-                        <path d="M14.5 10c-.5-1.5-1.5-4-2.5-4s-2 2.5-2.5 4"></path>
-                        <!-- Linha central das mãos juntas -->
-                        <path d="M12 14v7"></path>
-                        <!-- Base das mãos e polegares -->
-                        <path d="M9 18l-2.5-2.5C5 14 5 12 6.5 10.5s3.5-1.5 5.5 1.5c2-3 4-3 5.5-1.5s1.5 3.5 0 5L15 18">
-                        </path>
-                    </svg>
+                <button class="like-button" [class.liked]="prayer.likedByCurrentUser" type="button"
+                    [disabled]="!hasActiveSubscription()" (click)="toggleLike(prayer, $event)">
+                    🙏
                 </button>
 
                 <div class="likes-copy">
@@ -112,11 +102,11 @@
 
             <textarea class="prayer-textarea" [ngModel]="newPrayerContent()"
                 (ngModelChange)="updatePrayerContent($event)"
-                [placeholder]="versionService.ui().prayersTextareaPlaceholder" rows="6"></textarea>
+                [placeholder]="versionService.ui().prayersTextareaPlaceholder" rows="6" [maxlength]="maxPrayerLength"></textarea>
 
             <div class="modal-meta">
                 <span>{{ versionService.ui().prayersCharactersLabel }} {{ remainingCharacters() }}</span>
-                <span>{{ newPrayerContent().length }}/280</span>
+                <span>{{ newPrayerContent().length }}/{{ maxPrayerLength }}</span>
             </div>
 
             @if (modalError()) {

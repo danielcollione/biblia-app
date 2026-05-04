@@ -15,6 +15,8 @@ import { VersionService } from '../../../../services/version/version-service';
   styleUrl: './prayers-page.scss'
 })
 export class PrayersPage implements AfterViewInit {
+  readonly maxPrayerLength = 280;
+
   private readonly authService = inject(AuthService);
   private readonly prayersService = inject(PrayersService);
   readonly versionService = inject(VersionService);
@@ -31,8 +33,11 @@ export class PrayersPage implements AfterViewInit {
   readonly currentPage = signal(0);
   readonly hasMorePages = signal(true);
 
-  readonly remainingCharacters = computed(() => 280 - this.newPrayerContent().length);
-  readonly canSubmitPrayer = computed(() => this.hasActiveSubscription() && this.newPrayerContent().trim().length > 0);
+  readonly remainingCharacters = computed(() => Math.max(0, this.maxPrayerLength - this.newPrayerContent().length));
+  readonly canSubmitPrayer = computed(() => {
+    const contentLength = this.newPrayerContent().trim().length;
+    return this.hasActiveSubscription() && contentLength > 0 && contentLength <= this.maxPrayerLength;
+  });
 
   ngAfterViewInit(): void {
     this.loadPrayers();
@@ -66,7 +71,7 @@ export class PrayersPage implements AfterViewInit {
   }
 
   updatePrayerContent(content: string): void {
-    this.newPrayerContent.set(content.slice(0, 280));
+    this.newPrayerContent.set(this.sanitizePrayerContent(content));
   }
 
   submitPrayer(): void {
@@ -77,10 +82,17 @@ export class PrayersPage implements AfterViewInit {
       return;
     }
 
+    const contentToSend = this.sanitizePrayerContent(this.newPrayerContent()).trim();
+    this.newPrayerContent.set(contentToSend);
+
+    if (!contentToSend.length) {
+      return;
+    }
+
     this.isSubmitting.set(true);
     this.modalError.set(null);
 
-    this.prayersService.create(this.newPrayerContent().trim())
+    this.prayersService.create(contentToSend)
       .pipe(finalize(() => this.isSubmitting.set(false)))
       .subscribe({
         next: () => {
@@ -182,5 +194,9 @@ export class PrayersPage implements AfterViewInit {
   private showFlash(message: string, isError: boolean): void {
     this.flashMessage.set(message);
     this.flashIsError.set(isError);
+  }
+
+  private sanitizePrayerContent(content: string): string {
+    return (content ?? '').slice(0, this.maxPrayerLength);
   }
 }
