@@ -43,15 +43,6 @@
       </div>
     </header>
 
-    <div class="insights-wrap">
-      <span>{{ versionService.ui().sageChatInsightsLabel }}</span>
-      <div class="insight-chips">
-        @for (prompt of insightPrompts(); track prompt) {
-          <button type="button" class="insight-chip" (click)="useInsightPrompt(prompt)">{{ prompt }}</button>
-        }
-      </div>
-    </div>
-
     @if (errorMessage()) {
       <p class="chat-error">{{ errorMessage() }}</p>
     }
@@ -72,20 +63,34 @@
       }
 
       @for (message of messages(); track $index) {
-        <article class="message-bubble" [class.user]="message.role === 'USER'" [class.sage]="message.role === 'SAGE'">
+        <article class="message-bubble" [class.user]="message.role === 'USER'" [class.sage]="message.role === 'SAGE'" [class.stream-active]="message.streaming">
           <header>
             <span>{{ message.role === 'USER' ? versionService.ui().sageChatYouLabel : versionService.ui().sageChatSageLabel }}</span>
             <small>{{ message.timestamp | date:'HH:mm' }}</small>
           </header>
           <p>{{ message.content }}</p>
           @if (message.streaming) {
-            <span class="streaming-indicator">{{ versionService.ui().sageChatStreaming }}</span>
+            <span class="streaming-indicator">
+              {{ versionService.ui().sageChatStreaming }}
+              <span class="typing-dots" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </span>
+            </span>
           }
         </article>
       }
     </div>
 
     <form class="composer" (ngSubmit)="sendCurrentMessage()">
+      <div class="composer-insights">
+        <span>{{ versionService.ui().sageChatInsightsLabel }}</span>
+        <div class="insight-chips">
+          @for (prompt of insightPrompts(); track prompt) {
+            <button type="button" class="insight-chip" [disabled]="!hasActiveSubscription()" (click)="useInsightPrompt(prompt)">{{ prompt }}</button>
+          }
+        </div>
+      </div>
+
       <textarea
         [ngModel]="inputMessage()"
         (ngModelChange)="inputMessage.set($event)"

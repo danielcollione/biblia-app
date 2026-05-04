@@ -50,6 +50,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
   ]);
 
   private streamAbortController: AbortController | null = null;
+  private audioContext: AudioContext | null = null;
 
   constructor() {
     this.bootstrap();
@@ -61,6 +62,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.streamAbortController?.abort();
+    this.audioContext?.close().catch(() => undefined);
   }
 
   async createNewSession(): Promise<void> {
@@ -112,12 +114,18 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
     this.streamAbortController?.abort();
     this.streamAbortController = new AbortController();
+    let responseSoundPlayed = false;
 
     try {
       await this.sageChatService.streamReply(
         this.activeSessionId()!,
         trimmed,
         (chunk) => {
+          if (!responseSoundPlayed && chunk.trim()) {
+            responseSoundPlayed = true;
+            this.playSageReplySound();
+          }
+
           this.messages.update((current) => {
             const next = [...current];
             const last = next[next.length - 1];
@@ -138,6 +146,9 @@ export class SagePage implements AfterViewInit, OnDestroy {
           last.streaming = false;
           if (!last.content.trim()) {
             last.content = this.versionService.ui().sageChatEmptyAnswerFallback;
+          } else if (!responseSoundPlayed) {
+            responseSoundPlayed = true;
+            this.playSageReplySound();
           }
         }
         return next;
@@ -258,5 +269,40 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
     const expiresAt = new Date(user.subscriptionExpiresAt).getTime();
     return Number.isFinite(expiresAt) && expiresAt > Date.now();
+  }
+
+  private playSageReplySound(): void {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const AudioContextCtor = window.AudioContext || (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioContextCtor) {
+      return;
+    }
+
+    this.audioContext ??= new AudioContextCtor();
+
+    if (this.audioContext.state === 'suspended') {
+      this.audioContext.resume().catch(() => undefined);
+    }
+
+    const now = this.audioContext.currentTime;
+    const oscillator = this.audioContext.createOscillator();
+    const gainNode = this.audioContext.createGain();
+
+    oscillator.type = 'sine';
+    oscillator.frequency.setValueAtTime(880, now);
+    oscillator.frequency.exponentialRampToValueAtTime(660, now + 0.12);
+
+    gainNode.gain.setValueAtTime(0.0001, now);
+    gainNode.gain.exponentialRampToValueAtTime(0.06, now + 0.02);
+    gainNode.gain.exponentialRampToValueAtTime(0.0001, now + 0.16);
+
+    oscillator.connect(gainNode);
+    gainNode.connect(this.audioContext.destination);
+
+    oscillator.start(now);
+    oscillator.stop(now + 0.18);
   }
 }
