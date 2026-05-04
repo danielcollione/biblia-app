@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777922405250,
+  "timestamp": 1777923896651,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -11,11 +11,11 @@
         "ignoreVary": true
       },
       "urls": [
-        "/chunk-4PTV5LN3.js",
         "/chunk-5UZWDTKH.js",
         "/chunk-66Q5RJVS.js",
         "/chunk-6J7M33XB.js",
         "/chunk-6YBNXVXL.js",
+        "/chunk-FNB3DVYA.js",
         "/chunk-KAHZRZJ6.js",
         "/chunk-L6ODYTSK.js",
         "/chunk-LMTLWNEW.js",
@@ -25,7 +25,7 @@
         "/chunk-Z5ASJVD3.js",
         "/index.csr.html",
         "/index.html",
-        "/main-UO3K6LUY.js",
+        "/main-C6S2AJJR.js",
         "/manifest.webmanifest",
         "/styles-IHPUF5IZ.css"
       ],
@@ -129,11 +129,11 @@
   "hashTable": {
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
-    "/chunk-4PTV5LN3.js": "8e13e6c7189bf4841aee72849e6ac47b2c8181b4",
     "/chunk-5UZWDTKH.js": "2ccd76c2e328f4d4a209c9fd24e43bdead99d3f6",
     "/chunk-66Q5RJVS.js": "4dad94e516bc1154f5c3266ece7ee7c379540dcf",
     "/chunk-6J7M33XB.js": "0d7e6f8b7e0ed3d00ae107e0f8a9463dc255ca78",
     "/chunk-6YBNXVXL.js": "53d844f0ad6ca826a3dc2adb955ef48e366e30aa",
+    "/chunk-FNB3DVYA.js": "da33ff5fd72188c923570a2398d8d3d1eca06718",
     "/chunk-KAHZRZJ6.js": "18d6403ee0936e84619807c6066f60422034f258",
     "/chunk-L6ODYTSK.js": "bb5a02bdc6bfb78f48d9b8a1c25363ae4ded71cf",
     "/chunk-LMTLWNEW.js": "b93e1193b56e28fc2e357a49b1cd2219fcef6aae",
@@ -220,10 +220,10 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "49c4faa4c3bf704e8d2f22469c844b461bb51635",
-    "/index.html": "c20ab69e94a8b340759834fda351a5c91438024f",
+    "/index.csr.html": "ffb18ae9b22b0455378a7a19007e7b5a5c336aa6",
+    "/index.html": "ea2d4adaedcd79015777c7508a28e4a18331e9d3",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-UO3K6LUY.js": "a1ef5c5d2a58b1a0b0fd3daa57bd37413ff524fa",
+    "/main-C6S2AJJR.js": "613a695d500ba189b87a3f6ef715c8996c90a1d1",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
     "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
   },
