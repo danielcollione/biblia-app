@@ -16,6 +16,13 @@ export interface CreateChatSessionDto {
   createdAt: string;
 }
 
+export interface ChatMessageDto {
+  id: string;
+  role: string;
+  content: string;
+  createdAt: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class SageChatService {
   private readonly http = inject(HttpClient);
@@ -24,6 +31,12 @@ export class SageChatService {
 
   listSessions() {
     return this.http.get<ChatSessionDto[]>(`${this.apiUrl}/sessions`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  getSessionMessages(sessionId: string) {
+    return this.http.get<ChatMessageDto[]>(`${this.apiUrl}/sessions/${sessionId}/messages`, {
       headers: this.buildHeaders(),
     });
   }

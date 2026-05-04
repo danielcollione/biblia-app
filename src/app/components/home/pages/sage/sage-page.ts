@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
@@ -35,6 +35,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly messages = signal<ChatBubble[]>([]);
   readonly inputMessage = signal('');
   readonly isLoadingSessions = signal(true);
+  readonly isLoadingMessages = signal(false);
   readonly isSending = signal(false);
   readonly errorMessage = signal<string | null>(null);
 
@@ -52,6 +53,15 @@ export class SagePage implements AfterViewInit, OnDestroy {
   private scrollAnimationFrameId: number | null = null;
 
   constructor() {
+    effect(() => {
+      const sessionId = this.activeSessionId();
+      if (sessionId) {
+        void this.loadSessionMessages(sessionId);
+      } else {
+        this.messages.set([]);
+      }
+    });
+
     this.bootstrap();
   }
 
@@ -217,6 +227,35 @@ export class SagePage implements AfterViewInit, OnDestroy {
       this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionLoadError));
     } finally {
       this.isLoadingSessions.set(false);
+    }
+  }
+
+  private async loadSessionMessages(sessionId: string): Promise<void> {
+    this.messages.set([]);
+    this.isLoadingMessages.set(true);
+
+    try {
+      const msgs = await firstValueFrom(this.sageChatService.getSessionMessages(sessionId));
+      if (this.activeSessionId() !== sessionId) {
+        return; // stale — user switched session while loading
+      }
+
+      this.messages.set(
+        (msgs ?? []).map((m) => ({
+          role: m.role as ChatRole,
+          content: m.content,
+          timestamp: new Date(m.createdAt),
+        })),
+      );
+      this.scrollToBottom();
+    } catch {
+      if (this.activeSessionId() === sessionId) {
+        this.messages.set([]);
+      }
+    } finally {
+      if (this.activeSessionId() === sessionId) {
+        this.isLoadingMessages.set(false);
+      }
     }
   }
 

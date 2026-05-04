@@ -55,7 +55,11 @@
     }
 
     <div class="messages-viewport" #messagesViewport>
-      @if (!hasMessages()) {
+      @if (isLoadingMessages()) {
+        <div class="empty-chat-state">
+          <span class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      } @else if (!hasMessages()) {
         <div class="empty-chat-state">
           <h3>{{ versionService.ui().sageChatEmptyTitle }}</h3>
           <p>{{ versionService.ui().sageChatEmptySubtitle }}</p>
