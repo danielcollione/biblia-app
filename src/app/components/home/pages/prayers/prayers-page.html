@@ -1,134 +1,140 @@
 <div class="prayers-shell">
-  <header class="prayers-hero">
-    <div>
-      <p class="eyebrow">{{ versionService.ui().prayersEyebrow }}</p>
-      <h1>{{ versionService.ui().prayersTitle }}</h1>
-      <p class="subtitle">{{ versionService.ui().prayersSubtitle }}</p>
-    </div>
-
-    <button class="refresh-button" type="button" (click)="refreshPrayers()" [disabled]="isLoading()">
-      @if (isLoading()) {
-        <span class="mini-spinner"></span>
-      }
-      {{ versionService.ui().prayersRefresh }}
-    </button>
-  </header>
-
-  @if (flashMessage()) {
-    <button class="flash" [class.flash-error]="flashIsError()" type="button" (click)="clearFlash()">
-      {{ flashMessage() }}
-    </button>
-  }
-
-  @if (!hasActiveSubscription()) {
-    <div class="access-banner">
-      <strong>{{ versionService.ui().prayersPremiumBadge }}</strong>
-      <span>{{ versionService.ui().prayersPremiumRequired }}</span>
-    </div>
-  }
-
-  @if (isLoading()) {
-    <div class="prayers-loading">
-      <span class="big-spinner"></span>
-      <p>{{ versionService.ui().prayersLoading }}</p>
-    </div>
-  } @else {
-    <section class="prayers-board">
-      @if (!prayers().length) {
-        <div class="empty-state">
-          <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
-          <h2>{{ versionService.ui().prayersEmptyTitle }}</h2>
-          <p>{{ versionService.ui().prayersEmptySubtitle }}</p>
+    <header class="prayers-hero">
+        <div>
+            <p class="eyebrow">{{ versionService.ui().prayersEyebrow }}</p>
+            <h1>{{ versionService.ui().prayersTitle }}</h1>
+            <p class="subtitle">{{ versionService.ui().prayersSubtitle }}</p>
         </div>
-      }
 
-      @for (prayer of prayers(); track prayer.id) {
-        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser">
-          <div class="balloon-topline">
-            <div>
-              <strong>{{ prayer.authorName }}</strong>
-              <span>{{ prayer.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
-            </div>
-          </div>
-
-          <p class="balloon-content">{{ prayer.content }}</p>
-
-          <div class="balloon-footer">
-            <button class="like-button" type="button" [disabled]="!hasActiveSubscription()" (click)="toggleLike(prayer, $event)">
-              <svg viewBox="0 0 24 24" [class.liked]="prayer.likedByCurrentUser" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9.3 3.8c.8 0 1.5.7 1.5 1.5v5.1l-1.2 2.1-1.8-2V5.3c0-.8.7-1.5 1.5-1.5z"></path>
-                <path d="M14.7 3.8c-.8 0-1.5.7-1.5 1.5v5.1l1.2 2.1 1.8-2V5.3c0-.8-.7-1.5-1.5-1.5z"></path>
-                <path d="M7.8 10.4l-2.1 2.1c-.8.8-.8 2.2 0 3l4.2 4.2c1.2 1.2 3.1 1.2 4.2 0l4.2-4.2c.8-.8.8-2.2 0-3l-2.1-2.1"></path>
-                <path d="M10.8 12.5L12 14.3l1.2-1.8"></path>
-              </svg>
-            </button>
-
-            <div class="likes-copy">
-              <span>{{ versionService.ui().prayersLikesLabel }}</span>
-              <strong>{{ prayer.likesCount }}</strong>
-            </div>
-          </div>
-        </article>
-      }
-
-      @if (hasMorePages()) {
-        <div class="load-more-container">
-          <button class="load-more-button" type="button" (click)="loadMorePrayers()" [disabled]="isLoadingMore()">
-            @if (isLoadingMore()) {
-              <span class="mini-spinner"></span>
+        <button class="refresh-button" type="button" (click)="refreshPrayers()" [disabled]="isLoading()">
+            @if (isLoading()) {
+            <span class="mini-spinner"></span>
             }
-            {{ isLoadingMore() ? 'Carregando...' : 'Carregar Mais Orações' }}
-          </button>
+            {{ versionService.ui().prayersRefresh }}
+        </button>
+    </header>
+
+    @if (flashMessage()) {
+    <button class="flash" [class.flash-error]="flashIsError()" type="button" (click)="clearFlash()">
+        {{ flashMessage() }}
+    </button>
+    }
+
+    @if (!hasActiveSubscription()) {
+    <div class="access-banner">
+        <strong>{{ versionService.ui().prayersPremiumBadge }}</strong>
+        <span>{{ versionService.ui().prayersPremiumRequired }}</span>
+    </div>
+    }
+
+    @if (isLoading()) {
+    <div class="prayers-loading">
+        <span class="big-spinner"></span>
+        <p>{{ versionService.ui().prayersLoading }}</p>
+    </div>
+    } @else {
+    <section class="prayers-board">
+        @if (!prayers().length) {
+        <div class="empty-state">
+            <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
+            <h2>{{ versionService.ui().prayersEmptyTitle }}</h2>
+            <p>{{ versionService.ui().prayersEmptySubtitle }}</p>
         </div>
-      }
-    </section>
-  }
-
-  <button class="floating-create-button" type="button" (click)="openCreateModal()" [class.locked]="!hasActiveSubscription()">
-    <span>+</span>
-    <small>{{ versionService.ui().prayersCreateButton }}</small>
-  </button>
-
-  @if (isModalOpen()) {
-    <div class="modal-backdrop" (click)="closeCreateModal()">
-      <div class="prayer-modal" (click)="$event.stopPropagation()">
-        <div class="modal-header">
-          <div>
-            <p class="eyebrow">{{ versionService.ui().prayersModalEyebrow }}</p>
-            <h2>{{ versionService.ui().prayersModalTitle }}</h2>
-          </div>
-
-          <button class="close-modal" type="button" (click)="closeCreateModal()">×</button>
-        </div>
-
-        <p class="modal-copy">{{ versionService.ui().prayersModalSubtitle }}</p>
-
-        <textarea
-          class="prayer-textarea"
-          [ngModel]="newPrayerContent()"
-          (ngModelChange)="updatePrayerContent($event)"
-          [placeholder]="versionService.ui().prayersTextareaPlaceholder"
-          rows="6"></textarea>
-
-        <div class="modal-meta">
-          <span>{{ versionService.ui().prayersCharactersLabel }} {{ remainingCharacters() }}</span>
-          <span>{{ newPrayerContent().length }}/280</span>
-        </div>
-
-        @if (modalError()) {
-          <p class="modal-error">{{ modalError() }}</p>
         }
 
-        <div class="modal-actions">
-          <button class="secondary-action" type="button" (click)="closeCreateModal()">{{ versionService.ui().prayersCancel }}</button>
-          <button class="primary-action" type="button" [disabled]="!canSubmitPrayer() || isSubmitting()" (click)="submitPrayer()">
-            @if (isSubmitting()) {
-              <span class="mini-spinner"></span>
-            }
-            {{ versionService.ui().prayersPublish }}
-          </button>
+        @for (prayer of prayers(); track prayer.id) {
+        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser">
+            <div class="balloon-topline">
+                <div>
+                    <strong>{{ prayer.authorName }}</strong>
+                    <span>{{ prayer.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                </div>
+            </div>
+
+            <p class="balloon-content">{{ prayer.content }}</p>
+
+            <div class="balloon-footer">
+                <button class="like-button" type="button" [disabled]="!hasActiveSubscription()"
+                    (click)="toggleLike(prayer, $event)">
+                    <!-- Ícone Minimalista de Mãos em Oração -->
+                    <svg viewBox="0 0 24 24" [class.liked]="prayer.likedByCurrentUser" fill="none" stroke="currentColor"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <!-- Ponta dos dedos -->
+                        <path d="M14.5 10c-.5-1.5-1.5-4-2.5-4s-2 2.5-2.5 4"></path>
+                        <!-- Linha central das mãos juntas -->
+                        <path d="M12 14v7"></path>
+                        <!-- Base das mãos e polegares -->
+                        <path d="M9 18l-2.5-2.5C5 14 5 12 6.5 10.5s3.5-1.5 5.5 1.5c2-3 4-3 5.5-1.5s1.5 3.5 0 5L15 18">
+                        </path>
+                    </svg>
+                </button>
+
+                <div class="likes-copy">
+                    <span>{{ versionService.ui().prayersLikesLabel }}</span>
+                    <strong>{{ prayer.likesCount }}</strong>
+                </div>
+            </div>
+        </article>
+        }
+
+        @if (hasMorePages()) {
+        <div class="load-more-container">
+            <button class="load-more-button" type="button" (click)="loadMorePrayers()" [disabled]="isLoadingMore()">
+                @if (isLoadingMore()) {
+                <span class="mini-spinner"></span>
+                }
+                {{ isLoadingMore() ? 'Carregando...' : 'Carregar Mais Orações' }}
+            </button>
         </div>
-      </div>
+        }
+    </section>
+    }
+
+    <button class="floating-create-button" type="button" (click)="openCreateModal()"
+        [class.locked]="!hasActiveSubscription()">
+        <span>+</span>
+        <small>{{ versionService.ui().prayersCreateButton }}</small>
+    </button>
+
+    @if (isModalOpen()) {
+    <div class="modal-backdrop" (click)="closeCreateModal()">
+        <div class="prayer-modal" (click)="$event.stopPropagation()">
+            <div class="modal-header">
+                <div>
+                    <p class="eyebrow">{{ versionService.ui().prayersModalEyebrow }}</p>
+                    <h2>{{ versionService.ui().prayersModalTitle }}</h2>
+                </div>
+
+                <button class="close-modal" type="button" (click)="closeCreateModal()">×</button>
+            </div>
+
+            <p class="modal-copy">{{ versionService.ui().prayersModalSubtitle }}</p>
+
+            <textarea class="prayer-textarea" [ngModel]="newPrayerContent()"
+                (ngModelChange)="updatePrayerContent($event)"
+                [placeholder]="versionService.ui().prayersTextareaPlaceholder" rows="6"></textarea>
+
+            <div class="modal-meta">
+                <span>{{ versionService.ui().prayersCharactersLabel }} {{ remainingCharacters() }}</span>
+                <span>{{ newPrayerContent().length }}/280</span>
+            </div>
+
+            @if (modalError()) {
+            <p class="modal-error">{{ modalError() }}</p>
+            }
+
+            <div class="modal-actions">
+                <button class="secondary-action" type="button" (click)="closeCreateModal()">{{
+                    versionService.ui().prayersCancel }}</button>
+                <button class="primary-action" type="button" [disabled]="!canSubmitPrayer() || isSubmitting()"
+                    (click)="submitPrayer()">
+                    @if (isSubmitting()) {
+                    <span class="mini-spinner"></span>
+                    }
+                    {{ versionService.ui().prayersPublish }}
+                </button>
+            </div>
+        </div>
     </div>
-  }
+    }
 </div>
