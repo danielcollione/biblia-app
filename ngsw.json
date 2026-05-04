@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1777924824674,
+  "timestamp": 1777925611789,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -12,9 +12,9 @@
       },
       "urls": [
         "/chunk-2KWWM3YH.js",
+        "/chunk-2Z62S6BQ.js",
         "/chunk-5UZWDTKH.js",
         "/chunk-66Q5RJVS.js",
-        "/chunk-6J7M33XB.js",
         "/chunk-6YBNXVXL.js",
         "/chunk-KAHZRZJ6.js",
         "/chunk-L6ODYTSK.js",
@@ -25,9 +25,9 @@
         "/chunk-Z5ASJVD3.js",
         "/index.csr.html",
         "/index.html",
-        "/main-MCMAT2EK.js",
+        "/main-KDHIYPUM.js",
         "/manifest.webmanifest",
-        "/styles-IHPUF5IZ.css"
+        "/styles-OC36USJP.css"
       ],
       "patterns": []
     },
@@ -130,9 +130,9 @@
     "/articles/images/dead-sea-scrolls.webp": "75971e705ad023d1c3f39858823eb8decef889b7",
     "/articles/images/noli-me-tangere.webp": "494e4f2e5fe887ed6f1d356e04d98f4434ba6ccd",
     "/chunk-2KWWM3YH.js": "6f026d749d2d9d71615f9a5a2105230cf9517562",
+    "/chunk-2Z62S6BQ.js": "3dc7c2bd611b51405f1ebfb64f70e62f8b2b207d",
     "/chunk-5UZWDTKH.js": "2ccd76c2e328f4d4a209c9fd24e43bdead99d3f6",
     "/chunk-66Q5RJVS.js": "4dad94e516bc1154f5c3266ece7ee7c379540dcf",
-    "/chunk-6J7M33XB.js": "0d7e6f8b7e0ed3d00ae107e0f8a9463dc255ca78",
     "/chunk-6YBNXVXL.js": "53d844f0ad6ca826a3dc2adb955ef48e366e30aa",
     "/chunk-KAHZRZJ6.js": "18d6403ee0936e84619807c6066f60422034f258",
     "/chunk-L6ODYTSK.js": "bb5a02bdc6bfb78f48d9b8a1c25363ae4ded71cf",
@@ -220,12 +220,12 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "5036ee2c24ad32d087928bd340174898d69526a2",
-    "/index.html": "30bb9a477a23c72d598a1506a6acf96c2df9d0e2",
+    "/index.csr.html": "88d0f7100cf87005178a91ee9c4de2441e4fefaa",
+    "/index.html": "9190aa4b0ed4c4d2f7d907717d4d6f3c29fa03fe",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-MCMAT2EK.js": "5ffc433a40bf8d2c3d93ffb64d299dbb7124ff76",
+    "/main-KDHIYPUM.js": "0ece650d66d1e9e33750dc982b7eb888e184e96a",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
-    "/styles-IHPUF5IZ.css": "79f931e7fac87ef14822c7b81e7ff62ee2b5bc7c"
+    "/styles-OC36USJP.css": "e4592ee299150203da6d0a284ea8275865749370"
   },
   "navigationUrls": [
     {
