@@ -1,0 +1,1 @@
+import{Ta as o,pb as n}from"./chunk-5ANEDWAG.js";var s=class t{static \u0275fac=function(e){return new(e||t)};static \u0275cmp=o({type:t,selectors:[["app-quiz-page"]],decls:1,vars:0,consts:[[1,"home-page-stub"]],template:function(e,i){e&1&&n(0,"div",0)},styles:[".home-page-stub[_ngcontent-%COMP%]{flex:1}"]})};export{s as QuizPage};
