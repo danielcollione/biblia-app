@@ -163,8 +163,8 @@
     </div>
   </aside>
 
-  <main class="home-main" [class.subpage-fade-in]="isRouteFading()">
-    <router-outlet (activate)="onSubpageActivated()"></router-outlet>
+  <main class="home-main">
+    <router-outlet></router-outlet>
   </main>
 
   @if (isMobileMenuOpen()) {
