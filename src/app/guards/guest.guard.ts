@@ -10,6 +10,6 @@ export const guestGuard: CanActivateFn = () => {
     return true; // Se NÃO estiver logado, pode ver a tela de login
   }
 
-  router.navigate(['/profile']); // Se já estiver logado, vai pro perfil
+  router.navigate(['/home']); // Se já estiver logado, vai para a home
   return false;
 };

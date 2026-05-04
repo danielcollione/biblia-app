@@ -3,106 +3,20 @@
 
         <div class="brand-header">
             <div class="icon-book">📖</div>
-            <h2>{{ isLoginMode ? versionService.ui().loginAccessCollection : versionService.ui().loginJoinCollection }}
-            </h2>
-            <p>{{ isLoginMode ? versionService.ui().loginContinueJourney :
-                versionService.ui().loginCreateAccountStartDiscoveries }}</p>
+            <h2>{{ versionService.ui().loginAccessCollection }}</h2>
+            <p>{{ versionService.ui().loginContinueJourney }}</p>
+        </div>
+
+        <div class="error-alert" *ngIf="erroMensagem()">
+            {{ erroMensagem() }}
         </div>
 
         <div class="google-btn-container" [class.disabled]="carregando()">
             <div id="google-btn-wrapper"></div>
         </div>
 
-        <div class="divider">
-            <span>{{ versionService.ui().loginOrUseEmail }}</span>
-        </div>
-
-        <form class="luxury-form" #authForm="ngForm" (ngSubmit)="onSubmitTradicional()">
-
-            <div class="error-alert" *ngIf="erroMensagem()">
-                {{ erroMensagem() }}
-            </div>
-
-            <div class="input-group" *ngIf="!isLoginMode">
-                <label>{{ versionService.ui().loginFullName }}</label>
-                <input type="text" name="nome" [(ngModel)]="nome" required minlength="3" [disabled]="carregando()"
-                    [placeholder]="versionService.ui().loginHowShouldWeCallYou">
-            </div>
-
-            <div class="input-group">
-                <label>{{ versionService.ui().loginEmail }}</label>
-                <input type="email" name="email" [(ngModel)]="email" required email [disabled]="carregando()"
-                    [placeholder]="versionService.ui().loginEmailPlaceholder">
-            </div>
-
-            <div class="input-group">
-                <label>{{ versionService.ui().loginPassword }}</label>
-                <div class="input-wrapper">
-                    <input [type]="verSenha ? 'text' : 'password'" name="senha" [(ngModel)]="senha" required
-                        minlength="6" [disabled]="carregando()" [placeholder]="versionService.ui().loginPasswordPlaceholder">
-                    <button type="button" class="eye-btn" [disabled]="carregando()" (click)="toggleVerSenha()">
-                        <!-- Ícone Olho Aberto (Visível) -->
-                        <svg *ngIf="verSenha" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon-svg">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        <!-- Ícone Olho Fechado/Riscado (Oculto) -->
-                        <svg *ngIf="!verSenha" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                            class="icon-svg">
-                            <path
-                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
-                            </path>
-                            <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <div class="forgot-password" *ngIf="isLoginMode" [class.disabled]="carregando()">
-                <a routerLink="/forgot-password">{{ versionService.ui().loginForgotPasswordLink }}</a>
-            </div>
-
-            <div class="input-group" *ngIf="!isLoginMode">
-                <label>{{ versionService.ui().loginConfirmPassword }}</label>
-                <div class="input-wrapper">
-                    <input [type]="verConfirmarSenha ? 'text' : 'password'" name="confirmarSenha"
-                        [(ngModel)]="confirmarSenha" required minlength="6" [disabled]="carregando()"
-                        [placeholder]="versionService.ui().loginPasswordPlaceholder">
-                    <button type="button" class="eye-btn" [disabled]="carregando()" (click)="toggleVerConfirmarSenha()">
-                        <svg *ngIf="verConfirmarSenha" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="icon-svg">
-                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                            <circle cx="12" cy="12" r="3"></circle>
-                        </svg>
-                        <svg *ngIf="!verConfirmarSenha" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" class="icon-svg">
-                            <path
-                                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
-                            </path>
-                            <line x1="1" y1="1" x2="23" y2="23"></line>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-
-            <button type="submit" class="btn-gold" [disabled]="authForm.invalid || carregando()">
-                <span class="btn-content" [class.is-loading]="carregando()">
-                    <span class="btn-spinner" *ngIf="carregando()"></span>
-                    <span>{{ isLoginMode ? versionService.ui().loginEnterCollection : versionService.ui().loginCreateMyAccount }}</span>
-                </span>
-            </button>
-        </form>
-
-        <div class="toggle-mode" [class.disabled]="carregando()">
-            <p *ngIf="isLoginMode">{{ versionService.ui().loginDontHaveAccount }} <a (click)="!carregando() && toggleMode()">{{
-                    versionService.ui().loginSignUp }}</a></p>
-            <p *ngIf="!isLoginMode">{{ versionService.ui().loginAlreadyHaveAccount }} <a (click)="!carregando() && toggleMode()">{{
-                    versionService.ui().loginDoLogin }}</a></p>
+        <div class="google-only-note">
+            <span>{{ versionService.ui().loginGoogleButtonText }}</span>
         </div>
 
     </div>

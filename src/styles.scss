@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 html, body {
   height: auto !important;
   min-height: 100%;
@@ -5,6 +7,7 @@ html, body {
   overflow-y: auto !important; // Força a rolagem vertical
   margin: 0;
   background-color: #050505; // Cor de fundo para não aparecer o cinza
+  font-family: 'Inter', sans-serif;
 }
 
 /* Força o root do Angular a ocupar a tela toda também */

@@ -10,6 +10,7 @@ import { ForgotPassword } from './components/forgot-password/forgot-password';
 import { ResetPassword } from './components/reset-password/reset-password';
 import { authGuard } from './guards/auth.guard';
 import { guestGuard } from './guards/guest.guard';
+import { Home } from './components/home/home';
 
 export const routes: Routes = [
   { path: '', component: Landing },
@@ -20,6 +21,22 @@ export const routes: Routes = [
     path: 'profile',
     component: Profile,
     canActivate: [authGuard],
+  },
+  {
+    path: 'home',
+    component: Home,
+    canActivate: [authGuard],
+    children: [
+      { path: '', loadComponent: () => import('./components/home/pages/dashboard/home-dashboard').then(m => m.HomeDashboard) },
+      { path: 'outlines', loadComponent: () => import('./components/home/pages/outlines/outlines-page').then(m => m.OutlinesPage) },
+      { path: 'prayers', loadComponent: () => import('./components/home/pages/prayers/prayers-page').then(m => m.PrayersPage) },
+      { path: 'sage', loadComponent: () => import('./components/home/pages/sage/sage-page').then(m => m.SagePage) },
+      { path: 'library', loadComponent: () => import('./components/home/pages/library/library-page').then(m => m.LibraryPage) },
+      { path: 'quiz', loadComponent: () => import('./components/home/pages/quiz/quiz-page').then(m => m.QuizPage) },
+      { path: 'recommendations', loadComponent: () => import('./components/home/pages/recommendations/recommendations-page').then(m => m.RecommendationsPage) },
+      { path: 'blog', loadComponent: () => import('./components/home/pages/blog/home-blog-page').then(m => m.HomeBlogPage) },
+      { path: 'ranking', loadComponent: () => import('./components/home/pages/ranking/ranking-page').then(m => m.RankingPage) },
+    ],
   },
   { path: 'login', component: Login, canActivate: [guestGuard] },
   { path: 'forgot-password', component: ForgotPassword, canActivate: [guestGuard] },

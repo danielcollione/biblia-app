@@ -29,6 +29,13 @@ export class AuthService {
   readonly isLoading = computed(() => this._isLoading());
   readonly estaAutenticado = computed(() => !!this._usuario());
 
+  getToken(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      return localStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
+  }
+
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.carregarSessaoDoStorage();
@@ -85,7 +92,7 @@ export class AuthService {
       localStorage.setItem(this.TOKEN_KEY, token);
       this.carregarSessaoDoStorage();
     }
-    this.router.navigate(['/profile']);
+    this.router.navigate(['/home']);
   }
 
 // auth.service.ts

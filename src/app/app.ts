@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
 import { BibleService } from './services/bible';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
@@ -14,6 +14,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class App implements OnInit {
   public bibleService = inject(BibleService);
+  private readonly router = inject(Router);
   protected readonly title = signal('biblia-interativa');
   private readonly platformId = inject(PLATFORM_ID);
 
@@ -51,5 +52,10 @@ export class App implements OnInit {
           });
         });
     }
+  }
+
+  showHeader(): boolean {
+    const currentUrl = this.router.url || '';
+    return !this.bibleService.isReadingMode() && !currentUrl.startsWith('/home');
   }
 }
