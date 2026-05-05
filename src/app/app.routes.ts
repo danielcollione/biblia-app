@@ -33,6 +33,7 @@ export const routes: Routes = [
       { path: 'sage', loadComponent: () => import('./components/home/pages/sage/sage-page').then(m => m.SagePage) },
       { path: 'library', loadComponent: () => import('./components/home/pages/library/library-page').then(m => m.LibraryPage) },
       { path: 'library/bible-selector', loadComponent: () => import('./components/home/pages/library/library-bible-selector-page').then(m => m.LibraryBibleSelectorPage) },
+      { path: 'library/:slug/read/:chapterSlug', loadComponent: () => import('./components/home/pages/library/library-book-reader-page').then(m => m.LibraryBookReaderPage) },
       { path: 'library/:slug', loadComponent: () => import('./components/home/pages/library/library-book-chapters-page').then(m => m.LibraryBookChaptersPage) },
       { path: 'quiz', loadComponent: () => import('./components/home/pages/quiz/quiz-page').then(m => m.QuizPage) },
       { path: 'recommendations', loadComponent: () => import('./components/home/pages/recommendations/recommendations-page').then(m => m.RecommendationsPage) },

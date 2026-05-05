@@ -1,0 +1,389 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,400&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+}
+
+.biblioteca-aberta {
+  background: radial-gradient(circle, #2c2c2c 0%, #1a1a1a 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 0 60px;
+  min-height: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+.livro-prime {
+  width: 92%;
+  max-width: 1300px;
+  height: calc(100dvh - 140px);
+  max-height: 82vh;
+  background-color: #f4eee1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.5),
+    inset 0 0 100px rgba(161, 142, 118, 0.1);
+  border-radius: 2px;
+  z-index: 5;
+  overflow: hidden;
+  pointer-events: auto;
+  margin: auto;
+  margin-bottom: 40px;
+
+  &.chapter-transitioning {
+    .biblia-header-prime,
+    .corpo-paginas-prime {
+      opacity: 0.08;
+      transform: scale(0.985);
+      filter: blur(10px);
+    }
+  }
+
+  .cantoneira {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #a18e7633;
+    z-index: 10;
+
+    &.topo-esq {
+      top: 20px;
+      left: 20px;
+      border-right: none;
+      border-bottom: none;
+    }
+
+    &.topo-dir {
+      top: 20px;
+      right: 20px;
+      border-left: none;
+      border-bottom: none;
+    }
+
+    &.baixo-esq {
+      bottom: 20px;
+      left: 20px;
+      border-right: none;
+      border-top: none;
+    }
+
+    &.baixo-dir {
+      bottom: 20px;
+      right: 20px;
+      border-left: none;
+      border-top: none;
+    }
+  }
+}
+
+.biblia-header-prime {
+  padding: 40px 0 20px;
+  text-align: center;
+  flex-shrink: 0;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
+
+  .titulo-livro {
+    font-family: 'Cinzel', serif;
+    font-size: 2.8rem;
+    letter-spacing: 8px;
+    color: #3e2723;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .capitulo-sub {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #a18e76;
+    letter-spacing: 4px;
+    margin-top: 10px;
+  }
+
+  .linha-luxo {
+    height: 1px;
+    width: 150px;
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    margin: 15px auto 0;
+  }
+}
+
+.corpo-paginas-prime {
+  display: flex;
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+  mask-image: linear-gradient(to bottom, transparent, black 5%, black 95%, transparent);
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease,
+    filter 0.5s ease;
+}
+
+.pagina-viva {
+  flex: 1;
+  padding: 20px 60px 60px;
+
+  .texto-manuscrito {
+    font-family: 'Merriweather', serif;
+    font-size: 1.15rem;
+    line-height: 2.1;
+    color: #2c2825;
+    text-align: justify;
+
+    .v-prime {
+      display: inline;
+      margin-right: 6px;
+      opacity: 0;
+      filter: blur(5px);
+      animation: tintaPrime 1s ease-out forwards;
+
+      &:last-child {
+        display: inline-block;
+        margin-bottom: 50px;
+        width: 100%;
+      }
+    }
+
+    .n-prime {
+      font-weight: 700;
+      color: #a18e76;
+      font-size: 0.85rem;
+      margin-right: 4px;
+      user-select: none;
+    }
+  }
+}
+
+.btn-prime-sumario {
+  background: #1a1a1a;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 24px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.8rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  height: 45px;
+  box-sizing: border-box;
+
+  &:hover {
+    background: #a18e76;
+    color: #1a1a1a;
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.navegacao-flutuante {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 20;
+}
+
+.zona-clique-prime {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 90px;
+  z-index: 15;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.25s ease;
+
+  &.esquerda {
+    left: 0;
+
+    &:hover {
+      background: linear-gradient(to right, rgba(0, 0, 0, 0.45), transparent 80%);
+    }
+  }
+
+  &.direita {
+    right: 0;
+
+    &:hover {
+      background: linear-gradient(to left, rgba(0, 0, 0, 0.45), transparent 80%);
+    }
+  }
+
+  .seta-luxo {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    line-height: 1;
+    color: rgba(253, 251, 247, 0.88);
+    text-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+    user-select: none;
+  }
+}
+
+.reader-state {
+  min-height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 16px;
+  color: #a18e76;
+  font-family: 'Cinzel', serif;
+  letter-spacing: 0.1em;
+}
+
+.chapter-transition-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  background: radial-gradient(circle, rgba(244, 238, 225, 0.28), rgba(244, 238, 225, 0.08) 52%, transparent 74%);
+  z-index: 25;
+
+  .big-spinner {
+    width: 34px;
+    height: 34px;
+    border-width: 2px;
+    box-shadow: 0 0 30px rgba(161, 142, 118, 0.28);
+  }
+}
+
+.reader-error button {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.big-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(161, 142, 118, 0.2);
+  border-top-color: #a18e76;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+.fade-in {
+  animation: fadeIn 0.35s ease both;
+}
+
+.chapter-reveal {
+  animation: chapterReveal 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tintaPrime {
+  to {
+    opacity: 1;
+    filter: blur(0px);
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes chapterReveal {
+  from {
+    opacity: 0.2;
+    transform: translateY(14px) scale(0.992);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .livro-prime {
+    width: calc(100% - 24px);
+    height: auto;
+    min-height: calc(100dvh - 110px);
+    max-height: none;
+    margin-bottom: 20px;
+  }
+
+  .corpo-paginas-prime {
+    flex-direction: column;
+    mask-image: none;
+  }
+
+  .pagina-viva {
+    padding: 16px 24px 32px;
+  }
+
+  .biblia-header-prime {
+    padding-top: 72px;
+
+    .titulo-livro {
+      font-size: 1.8rem;
+      letter-spacing: 3px;
+      padding: 0 56px;
+    }
+
+    .capitulo-sub {
+      font-size: 0.78rem;
+      letter-spacing: 2px;
+    }
+  }
+
+  .navegacao-flutuante {
+    top: 14px;
+    left: 12px;
+  }
+
+  .zona-clique-prime {
+    width: 56px;
+
+    .seta-luxo {
+      font-size: 2.25rem;
+    }
+  }
+}

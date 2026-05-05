@@ -1,41 +1,33 @@
-<div class="chapters-shell">
-
+@if (isLoading()) {
+<div class="chapters-state chapters-loading">
+  <span class="big-spinner"></span>
+  <p>{{ versionService.ui().libraryChaptersLoading }}</p>
+</div>
+} @else if (errorMessage()) {
+<div class="chapters-state chapters-error">
+  <p>{{ errorMessage() }}</p>
+  <button type="button" (click)="goBack()">{{ versionService.ui().back }}</button>
+</div>
+} @else {
+<section class="bible-chapters-page" [attr.aria-label]="versionService.ui().libraryChaptersAriaLabel">
   <button class="btn-back-top-left" type="button" (click)="goBack()">
     ‹ {{ versionService.ui().libraryBackToLibrary }}
   </button>
 
-  @if (isLoading()) {
-  <div class="chapters-loading">
-    <span class="big-spinner"></span>
-    <p>{{ versionService.ui().libraryChaptersLoading }}</p>
-  </div>
-  } @else if (errorMessage()) {
-  <div class="chapters-error">
-    <p>{{ errorMessage() }}</p>
-    <button type="button" (click)="goBack()">{{ versionService.ui().back }}</button>
-  </div>
-  } @else {
-
   <header class="chapters-page-header">
     <h2>{{ book()?.title }}</h2>
-    <p class="chapters-author">{{ book()?.author }}</p>
     <div class="line"></div>
   </header>
 
   <div class="carrossel-caps-wrapper">
-    <div class="zona-navegacao-lateral esquerda" (click)="scrollChapters(-1)"></div>
-    <div class="zona-navegacao-lateral direita" (click)="scrollChapters(1)"></div>
+    <div class="zona-navegacao-lateral biblia-nav esquerda" (click)="scrollChapters(-1)"></div>
+    <div class="zona-navegacao-lateral biblia-nav direita" (click)="scrollChapters(1)"></div>
 
     <div class="estante-capitulos-horizontal" #estanteCaps>
-      @for (chapter of chapters(); track chapter.id; let i = $index) {
-      <button
-        class="card-capitulo-luxo"
-        type="button"
-        [style.--cap-enter-delay]="(i * 55) + 'ms'"
-        (click)="openChapter(chapter)">
-        <span class="cap-label">{{ versionService.ui().libraryChapterLabel }}</span>
+      @for (chapter of chapters(); track chapter.id) {
+      <button class="card-capitulo-luxo" type="button" (click)="openChapter(chapter)">
+        <span class="cap-label">{{ versionService.ui().chapter }}</span>
         <span class="cap-numero">{{ chapter.chapterOrder }}</span>
-        <span class="cap-title">{{ chapter.title }}</span>
       </button>
       } @empty {
       <div class="busca-vazia">
@@ -44,6 +36,5 @@
       }
     </div>
   </div>
-  }
-
-</div>
+</section>
+}

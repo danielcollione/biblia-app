@@ -1,0 +1,74 @@
+@if (isLoading()) {
+<div class="reader-state reader-loading">
+  <span class="big-spinner"></span>
+  <p>{{ versionService.ui().libraryChapterLoading }}</p>
+</div>
+} @else if (errorMessage()) {
+<div class="reader-state reader-error">
+  <p>{{ errorMessage() }}</p>
+  <button type="button" (click)="goToSummary()">{{ versionService.ui().back }}</button>
+</div>
+} @else {
+<div class="biblioteca-aberta fade-in">
+  <div class="zona-clique-prime esquerda" (click)="goPrevChapter()">
+    <span class="seta-luxo">‹</span>
+  </div>
+
+  <div class="zona-clique-prime direita" (click)="goNextChapter()">
+    <span class="seta-luxo">›</span>
+  </div>
+
+  <nav class="navegacao-flutuante">
+    <button class="btn-prime-sumario" type="button" (click)="goToSummary()">
+      <span class="icon">📜</span> {{ versionService.ui().summary }}
+    </button>
+  </nav>
+
+  <main class="livro-prime" [class.chapter-transitioning]="isChapterTransitioning()">
+    <div class="cantoneira topo-esq"></div>
+    <div class="cantoneira topo-dir"></div>
+    <div class="cantoneira baixo-esq"></div>
+    <div class="cantoneira baixo-dir"></div>
+
+    <header class="biblia-header-prime" [class.chapter-reveal]="!isChapterTransitioning()" [attr.data-reveal-key]="chapterRevealKey()">
+      <div class="ornamento-superior"></div>
+      <h1 class="titulo-livro">{{ currentChapter()?.bookTitle || book()?.title }}</h1>
+      <p class="capitulo-sub">{{ versionService.ui().chapter }} {{ currentChapter()?.chapterNumber }}</p>
+      <div class="linha-luxo"></div>
+    </header>
+
+    <div
+      class="corpo-paginas-prime"
+      #scrollContainer
+      [class.chapter-reveal]="!isChapterTransitioning()"
+      [attr.data-reveal-key]="chapterRevealKey()"
+    >
+      <article class="pagina-viva esq">
+        <div class="texto-manuscrito">
+          @for (verse of currentChapterHalf1(); track verse.verseNumber; let i = $index) {
+          <span class="v-prime" [style.animation-delay]="(i * 0.05) + 's'">
+            <sup class="n-prime">{{ verse.verseNumber }}</sup>{{ verse.text }}
+          </span>
+          }
+        </div>
+      </article>
+
+      <article class="pagina-viva dir">
+        <div class="texto-manuscrito">
+          @for (verse of currentChapterHalf2(); track verse.verseNumber; let i = $index) {
+          <span class="v-prime" [style.animation-delay]="((currentChapterHalf1().length + i) * 0.05) + 's'">
+            <sup class="n-prime">{{ verse.verseNumber }}</sup>{{ verse.text }}
+          </span>
+          }
+        </div>
+      </article>
+    </div>
+
+    @if (isChapterTransitioning()) {
+    <div class="chapter-transition-overlay" aria-hidden="true">
+      <span class="big-spinner"></span>
+    </div>
+    }
+  </main>
+</div>
+}

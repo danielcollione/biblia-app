@@ -3,31 +3,24 @@
 :host {
   display: block;
   width: 100%;
-  min-height: 100vh;
+  min-height: 100%;
 }
 
-.chapters-shell {
-  width: 100%;
-  min-height: 100vh;
-  background-color: #1a1a1a;
+.bible-chapters-page {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 0 60px;
+  width: 100%;
+  min-height: 100%;
+  padding: 120px 0 32px;
   box-sizing: border-box;
-  position: relative;
-  animation: pageFadeIn 0.4s ease both;
+  animation: chapterPageEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-@keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ===== BACK BUTTON ===== */
 .btn-back-top-left {
-  position: fixed;
+  position: absolute;
   top: 28px;
   left: 28px;
   z-index: 70;
@@ -48,11 +41,10 @@
   }
 }
 
-/* ===== HEADER ===== */
 .chapters-page-header {
   text-align: center;
-  margin-bottom: 48px;
-  z-index: 2;
+  margin-bottom: 42px;
+  z-index: 66;
 
   h2 {
     margin: 0;
@@ -63,45 +55,98 @@
     text-transform: uppercase;
   }
 
-  .chapters-author {
-    margin: 8px 0 0;
-    font-size: 0.85rem;
-    color: #a18e76;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
   .line {
     height: 1px;
     width: 110px;
-    margin: 16px auto 0;
+    margin: 18px auto 0;
     background: #a18e76;
     opacity: 0.65;
   }
 }
 
-/* ===== CAROUSEL ===== */
 .carrossel-caps-wrapper {
   position: relative;
   width: 100%;
+
+  .zona-navegacao-lateral.biblia-nav {
+    top: 0;
+    bottom: 0;
+    z-index: 65;
+  }
 }
 
 .zona-navegacao-lateral {
   position: absolute;
   top: 0;
   bottom: 0;
-  width: 80px;
+  width: 60px;
   z-index: 10;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  transition: background 0.3s ease;
+  background: transparent;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    padding: 10px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
 
   &.esquerda {
     left: 0;
-    background: linear-gradient(to right, rgba(26, 26, 26, 0.85), transparent);
+
+    &::after {
+      transform: rotate(135deg);
+      margin-left: 15px;
+    }
+
+    &:hover {
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(135deg) scale(1.1);
+      }
+    }
   }
 
   &.direita {
     right: 0;
-    background: linear-gradient(to left, rgba(26, 26, 26, 0.85), transparent);
+
+    &::after {
+      transform: rotate(-45deg);
+      margin-right: 15px;
+    }
+
+    &:hover {
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(-45deg) scale(1.1);
+      }
+    }
   }
 }
 
@@ -110,10 +155,10 @@
   flex-direction: row;
   align-items: center;
   width: 100%;
-  padding: 20px 80px 80px;
+  padding: 20px 0 40px;
   overflow-x: auto;
   overflow-y: hidden;
-  gap: 20px;
+  gap: 24px;
   scroll-behavior: smooth;
   box-sizing: border-box;
 
@@ -136,60 +181,36 @@
   }
 }
 
-/* ===== CHAPTER CARDS ===== */
 .card-capitulo-luxo {
-  flex-shrink: 0;
-  min-width: 130px;
-  max-width: 170px;
-  height: 170px;
+  min-width: 120px;
+  height: 160px;
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(161, 142, 118, 0.2);
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   border-radius: 2px;
-  padding: 12px 10px;
-  box-sizing: border-box;
-  opacity: 0;
-  animation: cardReveal 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-delay: var(--cap-enter-delay, 0ms);
 
   &:first-child { margin-left: 50px; }
   &:last-child  { margin-right: 50px; }
 
   .cap-label {
     font-family: 'Cinzel', serif;
-    font-size: 0.55rem;
+    font-size: 0.6rem;
     color: #a18e76;
     letter-spacing: 3px;
     text-transform: uppercase;
+    margin-bottom: 10px;
   }
 
   .cap-numero {
     font-family: 'Cinzel', serif;
-    font-size: 2.2rem;
+    font-size: 2.5rem;
     color: #fdfbf7;
     font-weight: 700;
-    line-height: 1;
-  }
-
-  .cap-title {
-    font-size: 0.65rem;
-    color: rgba(161, 142, 118, 0.75);
-    text-align: center;
-    letter-spacing: 0.04em;
-    margin-top: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    word-break: break-word;
-    max-width: 100%;
   }
 
   &:hover {
@@ -199,21 +220,17 @@
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
 
     .cap-numero { color: #a18e76; }
-    .cap-title  { color: #cfab6a; }
   }
 }
 
-@keyframes cardReveal {
-  from { opacity: 0; transform: translateY(20px) scale(0.96); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-
-/* ===== LOADING / ERROR ===== */
+.chapters-state,
 .chapters-loading,
 .chapters-error {
+  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 16px;
   color: #a18e76;
   font-family: 'Cinzel', serif;
@@ -252,6 +269,17 @@
   to { transform: rotate(360deg); }
 }
 
+@keyframes chapterPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
 .busca-vazia {
   font-family: 'Cinzel', serif;
   color: #a18e76;
@@ -259,4 +287,32 @@
   padding: 50px;
   opacity: 0.7;
   letter-spacing: 2px;
+}
+
+@media (max-width: 780px) {
+  .bible-chapters-page {
+    padding-top: 110px;
+  }
+
+  .btn-back-top-left {
+    top: 16px;
+    left: 12px;
+  }
+
+  .chapters-page-header {
+    margin-bottom: 20px;
+
+    h2 {
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .estante-capitulos-horizontal {
+    width: 100%;
+    padding: 18px 0 34px;
+  }
+
+  .zona-navegacao-lateral {
+    display: none !important;
+  }
 }

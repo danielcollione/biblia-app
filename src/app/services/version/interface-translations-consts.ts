@@ -219,6 +219,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryPremiumBadge: 'Premium',
     libraryChaptersLoadError: 'Não foi possível carregar os capítulos agora.',
     libraryChaptersLoading: 'Carregando capítulos...',
+    libraryChapterLoading: 'Carregando capítulo...',
     libraryChapterLabel: 'Capítulo',
   },
   en: {
@@ -441,6 +442,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryPremiumBadge: 'Premium',
     libraryChaptersLoadError: 'Unable to load chapters right now.',
     libraryChaptersLoading: 'Loading chapters...',
+    libraryChapterLoading: 'Loading chapter...',
     libraryChapterLabel: 'Chapter',
   },
   es: {
@@ -663,6 +665,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryPremiumBadge: 'Premium',
     libraryChaptersLoadError: 'No fue posible cargar los capítulos ahora.',
     libraryChaptersLoading: 'Cargando capítulos...',
+    libraryChapterLoading: 'Cargando capítulo...',
     libraryChapterLabel: 'Capítulo',
   },
 };

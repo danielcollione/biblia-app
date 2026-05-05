@@ -2,7 +2,7 @@ import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, Subscription, finalize, interval, tap } from 'rxjs';
+import { Observable, finalize, tap } from 'rxjs';
 
 export interface Usuario {
   name: string;
@@ -24,11 +24,9 @@ export class AuthService {
   
   private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
-  private readonly PROFILE_REFRESH_INTERVAL_MS = 60000;
 
   private _usuario = signal<Usuario | null>(null);
   private _isLoading = signal<boolean>(false); // Sinal para o Loading
-  private profileRefreshSubscription: Subscription | null = null;
 
   readonly usuario = computed(() => this._usuario());
   readonly isLoading = computed(() => this._isLoading());
@@ -44,8 +42,6 @@ export class AuthService {
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
       this.carregarSessaoDoStorage();
-      this.startProfileAutoRefresh();
-      this.refreshUserProfileFromServer();
     }
   }
 
@@ -87,8 +83,6 @@ export class AuthService {
   }
 
   logout(reason?: 'session_expired'): void {
-    this.stopProfileAutoRefresh();
-
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.TOKEN_KEY);
     }
@@ -105,10 +99,24 @@ export class AuthService {
     if (isPlatformBrowser(this.platformId)) {
       localStorage.setItem(this.TOKEN_KEY, token);
       this.carregarSessaoDoStorage();
-      this.startProfileAutoRefresh();
       this.refreshUserProfileFromServer();
     }
     this.router.navigate(['/home']);
+  }
+
+  ensureProfileFreshForHome(): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    const token = this.getToken();
+    if (!token) {
+      this.logout();
+      return;
+    }
+
+    this.carregarSessaoDoStorage();
+    this.refreshUserProfileFromServer();
   }
 
   refreshUserProfileFromServer(): void {
@@ -129,59 +137,30 @@ export class AuthService {
           return;
         }
 
-        this._usuario.set({
-          name: profile.name,
-          email: profile.email,
-          pictureUrl: profile.pictureUrl,
-          level: profile.level ?? 1,
-          experiencia: profile.experiencia ?? 0,
-          cargo: profile.cargo || 'Apprentice',
-          subscriptionType: profile.subscriptionType ?? null,
-          subscriptionActive: profile.subscriptionActive ?? false,
-          subscriptionExpiresAt: profile.subscriptionExpiresAt ?? null
-        });
+        this.setUsuario(profile);
       },
       error: () => {
-        // Silently ignore refresh failures to avoid UI interruptions.
+        this.logout();
       }
     });
   }
 
-  private startProfileAutoRefresh(): void {
+  private carregarSessaoDoStorage(): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
 
-    this.stopProfileAutoRefresh();
-
-    if (!this.getToken()) {
+    const token = localStorage.getItem(this.TOKEN_KEY);
+    if (!token) {
       return;
     }
 
-    this.profileRefreshSubscription = interval(this.PROFILE_REFRESH_INTERVAL_MS).subscribe(() => {
-      this.refreshUserProfileFromServer();
-    });
-  }
-
-  private stopProfileAutoRefresh(): void {
-    this.profileRefreshSubscription?.unsubscribe();
-    this.profileRefreshSubscription = null;
-  }
-
-// auth.service.ts
-private carregarSessaoDoStorage(): void {
-  if (!isPlatformBrowser(this.platformId)) return;
-
-  const token = localStorage.getItem(this.TOKEN_KEY);
-  if (token) {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log(payload);
-      // CRÍTICO: Mapear 'picture_url' (do banco) para o objeto do Front
-      this._usuario.set({
+      this.setUsuario({
         name: payload.name,
         email: payload.sub,
-        pictureUrl: payload.picture, // Pegando exatamente do token
+        pictureUrl: payload.picture,
         level: payload.level || 1,
         experiencia: payload.experiencia || 0,
         cargo: payload.cargo || 'Apprentice',
@@ -194,5 +173,20 @@ private carregarSessaoDoStorage(): void {
       this.logout();
     }
   }
-}
+
+  private setUsuario(profile: Usuario): void {
+    const normalizedProfile: Usuario = {
+      name: profile.name,
+      email: profile.email,
+      pictureUrl: profile.pictureUrl,
+      level: profile.level ?? 1,
+      experiencia: profile.experiencia ?? 0,
+      cargo: profile.cargo || 'Apprentice',
+      subscriptionType: profile.subscriptionType ?? null,
+      subscriptionActive: profile.subscriptionActive ?? false,
+      subscriptionExpiresAt: profile.subscriptionExpiresAt ?? null
+    };
+
+    this._usuario.set(normalizedProfile);
+  }
 }

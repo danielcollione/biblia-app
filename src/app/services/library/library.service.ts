@@ -23,6 +23,20 @@ export interface LibraryChapterDto {
   chapterOrder: number;
 }
 
+export interface LibraryVerseDto {
+  verseNumber: number;
+  text: string;
+}
+
+export interface LibraryChapterResponseDto {
+  bookId: string;
+  bookTitle: string;
+  chapterId: string;
+  chapterNumber: number;
+  chapterTitle: string;
+  verses: LibraryVerseDto[];
+}
+
 @Injectable({ providedIn: 'root' })
 export class LibraryService {
   private readonly http = inject(HttpClient);
@@ -41,6 +55,10 @@ export class LibraryService {
 
   getBookChapters(bookSlug: string): Observable<LibraryChapterDto[]> {
     return this.getWithOptionalAuthRetry<LibraryChapterDto[]>(`${this.apiUrl}/${bookSlug}/chapters`);
+  }
+
+  getChapter(bookId: string, chapterNumber: number): Observable<LibraryChapterResponseDto> {
+    return this.getWithOptionalAuthRetry<LibraryChapterResponseDto>(`${this.apiUrl}/${bookId}/chapters/${chapterNumber}`);
   }
 
   resolveCoverUrl(coverImage: string | null): string {

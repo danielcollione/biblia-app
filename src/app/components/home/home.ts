@@ -1,4 +1,4 @@
-import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
 import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
@@ -28,7 +28,7 @@ type HomeMenuItem = {
   templateUrl: './home.html',
   styleUrls: ['./home.scss']
 })
-export class Home {
+export class Home implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
   public readonly versionService = inject(VersionService);
@@ -63,6 +63,10 @@ export class Home {
   );
   readonly isLibraryRoute = computed(() => this.currentRoute().startsWith('/home/library'));
   readonly isSageRoute = computed(() => this.currentRoute().startsWith('/home/sage'));
+
+  ngOnInit(): void {
+    this.authService.ensureProfileFreshForHome();
+  }
 
   toggleSidebar(): void {
     this.isSidebarOpen.update(v => !v);
