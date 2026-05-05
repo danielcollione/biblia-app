@@ -86,13 +86,18 @@ export class AuthService {
     );
   }
 
-  logout(): void {
+  logout(reason?: 'session_expired'): void {
     this.stopProfileAutoRefresh();
 
     if (isPlatformBrowser(this.platformId)) {
       localStorage.removeItem(this.TOKEN_KEY);
     }
     this._usuario.set(null);
+    if (reason === 'session_expired') {
+      this.router.navigate(['/login'], { queryParams: { reason: 'session_expired' } });
+      return;
+    }
+
     this.router.navigate(['/login']);
   }
 

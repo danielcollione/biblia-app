@@ -146,9 +146,6 @@
   background: linear-gradient(145deg, rgba(34, 26, 18, 0.95), rgba(15, 11, 8, 0.98));
   border: 1px solid rgba(211, 171, 99, 0.15);
   color: #f4ead4;
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
@@ -169,9 +166,6 @@
 
   &:hover {
     transform: translateY(-4px);
-    box-shadow:
-      0 20px 45px rgba(0, 0, 0, 0.6),
-      0 0 20px rgba(211, 171, 99, 0.05);
     border-color: rgba(211, 171, 99, 0.35);
 
     &::after {
@@ -183,9 +177,6 @@
 .prayer-balloon-liked {
   background: linear-gradient(145deg, rgba(46, 36, 23, 0.95), rgba(20, 15, 10, 0.98));
   border-color: rgba(211, 171, 99, 0.4);
-  box-shadow:
-    0 15px 35px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(211, 171, 99, 0.1);
 
   &::after {
     background: #120d09;

@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -18,6 +18,7 @@ declare var google: any;
 export class Login implements OnInit, AfterViewInit {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
   public readonly versionService = inject(VersionService);
 
   private clientId = '774261062071-pkncaa6t7bli08qg27dmhfgi802v5m0p.apps.googleusercontent.com';
@@ -36,7 +37,12 @@ export class Login implements OnInit, AfterViewInit {
   verSenha = false;
   verConfirmarSenha = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    const reason = this.route.snapshot.queryParamMap.get('reason');
+    if (reason === 'session_expired') {
+      this.erroMensagem.set(this.versionService.ui().loginSessionExpiredMessage);
+    }
+  }
 
   ngAfterViewInit(): void {
     this.iniciarBotaoGoogleSeguro();
