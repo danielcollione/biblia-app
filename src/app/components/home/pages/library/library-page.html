@@ -1,55 +1,85 @@
 <section class="library-shell">
-  <header class="library-headline">
-    <p class="library-kicker">Colecao curada</p>
-    <h1>Biblioteca de Estudos</h1>
-    <p class="library-subtitle">
-      Explore o acervo em formato de catalogo e continue sua jornada no ritmo da Palavra.
-    </p>
+  
+  <!-- HERO BANNER TIPO HBO MAX -->
+  <header class="hero-banner">
+    <div class="hero-bg">
+      <!-- Usando a imagem de capa sugerida para o grande destaque -->
+      <img src="public/images/poster.jpeg" alt="Livro Destaque" />
+      <div class="hero-vignette"></div>
+    </div>
+    
+    <div class="hero-content">
+      <p class="hero-kicker">Destaque da Curadoria</p>
+      <h1 class="hero-title">A Biblioteca de Estudos</h1>
+      
+      <div class="hero-meta">
+        <span class="meta-tag">Acesso Premium</span>
+        <span class="meta-dot">•</span>
+        <span class="meta-tag">Teologia</span>
+        <span class="meta-dot">•</span>
+        <span class="meta-tag">História</span>
+      </div>
+      
+      <p class="hero-subtitle">
+        Explore o acervo em formato de catálogo cinematográfico. Obras clássicas e estudos profundos para continuar sua jornada no ritmo da Palavra.
+      </p>
+
+      <div class="hero-actions">
+        <button class="btn-primary"><i class="ri-play-fill"></i> Explorar Acervo</button>
+        <button class="btn-icon"><i class="ri-bookmark-line"></i></button>
+      </div>
+    </div>
   </header>
 
   @if (isLoading()) {
     <div class="library-loading">
       <span class="big-spinner"></span>
-      <p>Preparando catalogo...</p>
+      <p>Preparando catálogo...</p>
     </div>
   } @else if (errorMessage()) {
     <div class="library-error">
-      <strong>Falha ao carregar catalogo</strong>
+      <strong>Falha ao carregar catálogo</strong>
       <p>{{ errorMessage() }}</p>
       <button type="button" (click)="loadBooks()">Tentar novamente</button>
     </div>
   } @else {
-    <div class="catalog-header">
-      <div>
-        <h2>Disponiveis agora</h2>
-        <p>{{ books().length }} titulos encontrados</p>
+    
+    <!-- TRILHO DE CARDS (CATÁLOGO) -->
+    <div class="catalog-section">
+      <div class="catalog-header">
+        <div>
+          <h2>Adicionados Recentemente</h2>
+        </div>
+        <div class="catalog-actions">
+          <button type="button" (click)="scrollCatalog(-1)" aria-label="Rolar para esquerda"><i class="ri-arrow-left-s-line"></i></button>
+          <button type="button" (click)="scrollCatalog(1)" aria-label="Rolar para direita"><i class="ri-arrow-right-s-line"></i></button>
+        </div>
       </div>
 
-      <div class="catalog-actions">
-        <button type="button" (click)="scrollCatalog(-1)" aria-label="Rolar para esquerda">‹</button>
-        <button type="button" (click)="scrollCatalog(1)" aria-label="Rolar para direita">›</button>
-      </div>
-    </div>
-
-    <div #catalogRail class="catalog-rail">
-      @for (book of books(); track book.id) {
-        <article class="catalog-card" [style.animation-delay.ms]="book.enterDelayMs">
-          <div class="cover-wrap">
-            <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" (error)="onCoverError($event)" />
-            <div class="cover-badges">
-              <span class="badge badge-access" [class.badge-premium]="book.premium">{{ book.accessBadge }}</span>
-              <span class="badge badge-level">{{ book.levelBadge }}</span>
+      <div #catalogRail class="catalog-rail">
+        @for (book of books(); track book.id) {
+          <article class="catalog-card" [style.animation-delay.ms]="book.enterDelayMs">
+            <div class="cover-wrap">
+              <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" (error)="onCoverError($event)" />
+              
+              <!-- Badges flutuantes no topo -->
+              <div class="cover-badges">
+                <span class="badge badge-access" [class.badge-premium]="book.premium">{{ book.accessBadge }}</span>
+              </div>
+              
+              <!-- Gradiente escuro que resolve o problema do título -->
+              <div class="card-overlay"></div>
+              
+              <!-- Meta-dados agora ficam DENTRO da imagem, na parte inferior -->
+              <div class="card-meta">
+                <h3>{{ book.title }}</h3>
+                <p class="author">{{ book.authorLabel }}</p>
+                <span class="category">{{ book.categoryLabel }}</span>
+              </div>
             </div>
-            <div class="card-overlay"></div>
-          </div>
-
-          <div class="card-meta">
-            <h3>{{ book.title }}</h3>
-            <p class="author">{{ book.authorLabel }}</p>
-            <span class="category">{{ book.categoryLabel }}</span>
-          </div>
-        </article>
-      }
+          </article>
+        }
+      </div>
     </div>
   }
 </section>

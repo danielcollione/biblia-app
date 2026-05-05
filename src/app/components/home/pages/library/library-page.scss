@@ -1,84 +1,182 @@
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
 @keyframes cardReveal {
-  from {
-    opacity: 0;
-    transform: translateY(12px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
 }
 
 :host {
   display: block;
   height: 100%;
   min-height: 0;
-  padding: 14px;
   box-sizing: border-box;
-  animation: pageFadeIn 480ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  background-color: #050505; /* Fundo mais escuro para estilo streaming */
+  animation: pageFadeIn 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .library-shell {
-  display: grid;
-  gap: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
   min-height: 100%;
-  padding: 24px;
-  border-radius: 24px;
-  border: 1px solid rgba(197, 160, 89, 0.2);
-  background:
-    radial-gradient(circle at 8% -2%, rgba(197, 160, 89, 0.14), transparent 42%),
-    radial-gradient(circle at 90% 4%, rgba(124, 89, 39, 0.2), transparent 38%),
-    linear-gradient(165deg, #130f0a 0%, #0b0b0b 58%, #090909 100%);
+  padding-bottom: 40px;
 }
 
-.library-headline {
-  .library-kicker {
-    margin: 0;
-    color: #cfab6a;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.64rem;
-    font-family: 'Cinzel', serif;
+/* =========================================
+   HERO BANNER (O Destaque Estilo HBO)
+========================================= */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 60vh;
+  min-height: 400px;
+  max-height: 600px;
+  display: flex;
+  align-items: flex-end;
+  padding: 40px;
+  border-radius: 0 0 24px 24px;
+  overflow: hidden;
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+
+    .hero-vignette {
+      position: absolute;
+      inset: 0;
+      /* Gradiente que escurece a lateral esquerda e a base para o texto brilhar */
+      background: linear-gradient(90deg, #050505 0%, rgba(5,5,5,0.6) 40%, transparent 100%),
+                  linear-gradient(0deg, #050505 0%, transparent 50%);
+    }
   }
 
-  h1 {
-    margin: 8px 0 0;
-    color: #f2eee3;
-    font-family: 'Cinzel', serif;
-    font-size: clamp(1.3rem, 2.4vw, 2rem);
-  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 600px;
+    animation: pageFadeIn 1s ease-out 200ms both;
 
-  .library-subtitle {
-    margin: 10px 0 0;
-    color: #b8afa0;
-    line-height: 1.55;
-    max-width: 64ch;
+    .hero-kicker {
+      margin: 0 0 8px;
+      color: #cfab6a;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .hero-title {
+      margin: 0;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      color: #b8afa0;
+      font-size: 0.85rem;
+      font-weight: 500;
+
+      .meta-tag {
+        background: rgba(255,255,255,0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255,255,255,0.2);
+      }
+    }
+
+    .hero-subtitle {
+      margin: 16px 0 24px;
+      color: #dcd4c6;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: #cfab6a;
+        color: #050505;
+        padding: 0 24px;
+        font-size: 1rem;
+        gap: 8px;
+
+        &:hover {
+          background: #e6c587;
+          transform: scale(1.05);
+        }
+      }
+
+      .btn-icon {
+        width: 44px;
+        background: rgba(255,255,255,0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255,255,255,0.2);
+        font-size: 1.2rem;
+        backdrop-filter: blur(4px);
+
+        &:hover {
+          background: rgba(255,255,255,0.2);
+          border-color: #ffffff;
+        }
+      }
+    }
   }
+}
+
+/* =========================================
+   CATÁLOGO E RAIL
+========================================= */
+.catalog-section {
+  padding: 0 40px;
 }
 
 .catalog-header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 16px;
 
   h2 {
     margin: 0;
-    color: #f2eee3;
-    font-family: 'Cinzel', serif;
-    font-size: 1rem;
-  }
-
-  p {
-    margin: 4px 0 0;
-    color: #9f947f;
-    font-size: 0.78rem;
+    color: #e0d7c8;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
   }
 }
 
@@ -89,15 +187,18 @@
   button {
     width: 36px;
     height: 36px;
-    border-radius: 10px;
-    border: 1px solid rgba(197, 160, 89, 0.35);
-    background: rgba(255, 255, 255, 0.04);
+    border-radius: 50%;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    background: transparent;
     color: #cfab6a;
     font-size: 1.2rem;
     cursor: pointer;
+    transition: all 0.2s ease;
 
     &:hover {
-      background: rgba(197, 160, 89, 0.14);
+      background: rgba(197, 160, 89, 0.1);
+      border-color: #cfab6a;
+      transform: scale(1.1);
     }
   }
 }
@@ -105,169 +206,145 @@
 .catalog-rail {
   display: grid;
   grid-auto-flow: column;
-  grid-auto-columns: minmax(220px, 260px);
-  gap: 16px;
+  /* Proporção vertical ajustada para livros/pôsteres */
+  grid-auto-columns: minmax(180px, 220px);
+  gap: 20px;
   overflow-x: auto;
   overflow-y: hidden;
-  padding: 4px 2px 10px;
+  padding: 10px 4px 20px;
+  scroll-behavior: smooth;
   scroll-snap-type: x proximity;
+  
+  /* Ocultar barra de rolagem */
+  &::-webkit-scrollbar { display: none; }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
+/* =========================================
+   CARDS LUXUOSOS (POSTER SEM TÍTULO)
+========================================= */
 .catalog-card {
   scroll-snap-align: start;
-  border-radius: 18px;
-  border: 1px solid rgba(197, 160, 89, 0.2);
-  background: linear-gradient(155deg, rgba(24, 20, 14, 0.96), rgba(10, 10, 10, 0.98));
+  border-radius: 12px;
   overflow: hidden;
-  transition: transform 0.24s ease, border-color 0.24s ease;
+  background: #111;
+  cursor: pointer;
   opacity: 0;
-  animation: cardReveal 520ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation: cardReveal 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Borda sutil inicial */
+  border: 1px solid transparent;
 
   &:hover {
-    transform: translateY(-4px);
-    border-color: rgba(208, 171, 96, 0.54);
+    transform: translateY(-8px) scale(1.03);
+    border-color: #cfab6a; /* Borda dourada acende no hover */
+    box-shadow: 0 12px 24px rgba(0,0,0,0.8), 0 0 15px rgba(207, 171, 106, 0.2);
+
+    .cover-wrap img {
+      transform: scale(1.05); /* Efeito zoom sutil na arte */
+    }
   }
 }
 
 .cover-wrap {
   position: relative;
-  aspect-ratio: 16 / 10;
+  /* Proporção 2:3 padrão de capa de livro/filme */
+  aspect-ratio: 2 / 3; 
+  width: 100%;
   overflow: hidden;
-
-  .cover-badges {
-    position: absolute;
-    z-index: 2;
-    top: 8px;
-    left: 8px;
-    display: flex;
-    gap: 6px;
-    pointer-events: none;
-  }
-
-  .badge {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    padding: 4px 8px;
-    border: 1px solid rgba(242, 238, 227, 0.2);
-    background: rgba(0, 0, 0, 0.62);
-    color: #f2eee3;
-    font-size: 0.62rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    backdrop-filter: blur(2px);
-  }
-
-  .badge-premium {
-    border-color: rgba(207, 171, 106, 0.7);
-    color: #cfab6a;
-    background: rgba(36, 27, 10, 0.78);
-  }
-
-  .badge-level {
-    border-color: rgba(159, 148, 127, 0.5);
-    color: #e0d7c8;
-  }
 
   img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    filter: saturate(1.04) contrast(1.04);
+    transition: transform 0.4s ease;
   }
 
+  .cover-badges {
+    position: absolute;
+    z-index: 4;
+    top: 12px;
+    left: 12px;
+  }
+
+  .badge {
+    display: inline-flex;
+    border-radius: 4px;
+    padding: 4px 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+  }
+
+  .badge-premium {
+    color: #cfab6a;
+    border: 1px solid rgba(207, 171, 106, 0.5);
+  }
+
+  /* O SEGREDO DO TÍTULO: Gradiente escuro agressivo na base */
   .card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, transparent 46%, rgba(0, 0, 0, 0.44) 100%);
+    background: linear-gradient(to top, #050505 0%, rgba(5,5,5,0.8) 25%, transparent 60%);
     pointer-events: none;
+    z-index: 2;
+  }
+
+  .card-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 16px 16px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    h3 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      font-family: 'Cinzel', serif;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .author {
+      margin: 4px 0 0;
+      color: #b8afa0;
+      font-size: 0.75rem;
+    }
+
+    .category {
+      display: inline-block;
+      margin-top: 8px;
+      color: #cfab6a;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
   }
 }
 
-.card-meta {
-  padding: 12px 12px 14px;
-
-  h3 {
-    margin: 0;
-    color: #f2eee3;
-    font-size: 0.95rem;
-    line-height: 1.35;
-    font-family: 'Cinzel', serif;
-  }
-
-  .author {
-    margin: 7px 0 0;
-    color: #c8bba3;
-    font-size: 0.78rem;
-  }
-
-  .category {
-    display: inline-flex;
-    margin-top: 10px;
-    border-radius: 999px;
-    border: 1px solid rgba(197, 160, 89, 0.3);
-    padding: 4px 10px;
-    color: #cfab6a;
-    font-size: 0.66rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    font-weight: 600;
-  }
-}
-
-.library-loading,
-.library-error {
-  min-height: 220px;
-  border: 1px dashed rgba(197, 160, 89, 0.24);
-  border-radius: 16px;
-  display: grid;
-  place-items: center;
-  text-align: center;
-  color: #d2c8b4;
-  padding: 20px;
-}
-
-.library-error {
-  button {
-    margin-top: 10px;
-    border: 1px solid rgba(197, 160, 89, 0.4);
-    border-radius: 999px;
-    padding: 9px 14px;
-    background: rgba(255, 255, 255, 0.04);
-    color: #f2eee3;
-    cursor: pointer;
-  }
-}
-
-.big-spinner {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  border: 2px solid rgba(197, 160, 89, 0.26);
-  border-top-color: #cfab6a;
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
+/* Ajustes de Responsividade */
 @media (max-width: 780px) {
-  :host {
-    padding: 8px;
+  .hero-banner {
+    padding: 24px;
+    height: 50vh;
+    border-radius: 0 0 16px 16px;
+
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { display: none; /* Esconde texto longo no mobile */ }
   }
 
-  .library-shell {
-    padding: 16px;
-  }
-
-  .catalog-rail {
-    grid-auto-columns: minmax(180px, 210px);
-  }
-
-  .catalog-actions {
-    display: none;
-  }
+  .catalog-section { padding: 0 16px; }
+  .catalog-actions { display: none; }
+  .catalog-rail { grid-auto-columns: minmax(140px, 160px); }
 }
