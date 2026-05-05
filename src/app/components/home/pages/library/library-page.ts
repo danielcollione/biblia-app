@@ -34,6 +34,7 @@ export class LibraryPage implements AfterViewInit {
             ...book,
             coverUrl: this.libraryService.resolveCoverUrl(book.coverImage),
             categoryLabel: this.prettyCategory(book.category),
+            authorLabel: this.prettyAuthor(book.author),
             accessBadge: book.premium ? 'Premium' : 'Acesso Livre',
             levelBadge: `Nivel ${Math.max(1, book.requiredLevel ?? 1)}`,
             enterDelayMs: Math.min(index * 70, 560),
@@ -58,6 +59,18 @@ export class LibraryPage implements AfterViewInit {
     rail.scrollBy({ left: direction * distance, behavior: 'smooth' });
   }
 
+  onCoverError(event: Event): void {
+    const imageElement = event.target as HTMLImageElement | null;
+    if (!imageElement) {
+      return;
+    }
+
+    const fallback = this.libraryService.resolveCoverUrl('covers/enoch.webp');
+    if (imageElement.src !== fallback) {
+      imageElement.src = fallback;
+    }
+  }
+
   private prettyCategory(category: string | null | undefined): string {
     if (!category?.trim()) {
       return 'General';
@@ -68,6 +81,18 @@ export class LibraryPage implements AfterViewInit {
       .filter(Boolean)
       .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
       .join(' ');
+  }
+
+  private prettyAuthor(author: string | null | undefined): string {
+    if (!author?.trim()) {
+      return 'Autor desconhecido';
+    }
+
+    if (author.trim().toLowerCase() === 'unknown') {
+      return 'Autor desconhecido';
+    }
+
+    return author.trim();
   }
 
   private resolveError(error: { status?: number; error?: { message?: string } | string }): string {
@@ -99,6 +124,7 @@ type LibraryBookCard = {
   chaptersCount: number;
   coverUrl: string;
   categoryLabel: string;
+  authorLabel: string;
   accessBadge: string;
   levelBadge: string;
   enterDelayMs: number;

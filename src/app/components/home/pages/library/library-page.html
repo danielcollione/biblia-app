@@ -35,7 +35,7 @@
       @for (book of books(); track book.id) {
         <article class="catalog-card" [style.animation-delay.ms]="book.enterDelayMs">
           <div class="cover-wrap">
-            <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" />
+            <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" (error)="onCoverError($event)" />
             <div class="cover-badges">
               <span class="badge badge-access" [class.badge-premium]="book.premium">{{ book.accessBadge }}</span>
               <span class="badge badge-level">{{ book.levelBadge }}</span>
@@ -45,7 +45,7 @@
 
           <div class="card-meta">
             <h3>{{ book.title }}</h3>
-            <p class="author">{{ book.author }}</p>
+            <p class="author">{{ book.authorLabel }}</p>
             <span class="category">{{ book.categoryLabel }}</span>
           </div>
         </article>
