@@ -72,9 +72,10 @@ $error-red: #8b0000;
 .loading-ring {
   width: 52px;
   height: 52px;
-  margin: 0 auto 14px;
+  margin: 2px auto 14px;
   position: relative;
-  animation: ringSpin 1.7s linear infinite;
+  animation: ringSpin 3s linear infinite;
+  opacity: 0.72;
 
   span {
     position: absolute;
@@ -86,6 +87,18 @@ $error-red: #8b0000;
     &:nth-child(2) { transform: scale(0.74); opacity: 0.82; }
     &:nth-child(3) { transform: scale(0.48); opacity: 0.68; }
   }
+}
+
+.loading-spinner {
+  width: 38px;
+  height: 38px;
+  margin: 0 auto;
+  border-radius: 50%;
+  border: 3px solid rgba(197, 160, 89, 0.2);
+  border-top-color: #f1ddbb;
+  border-right-color: $gold-primary;
+  filter: drop-shadow(0 0 10px rgba(197, 160, 89, 0.35));
+  animation: spin-lux 0.8s linear infinite, spinnerPulse 1.1s ease-in-out infinite;
 }
 
 .loading-kicker {
@@ -442,5 +455,15 @@ $error-red: #8b0000;
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes spinnerPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(0.93);
   }
 }

@@ -1,6 +1,11 @@
-$gold: #c5a059;
-$text-light: #f2eee3;
-$text-muted: #b8afa0;
+$gold: #e5c07b;
+$gold-strong: #d4af37;
+$text-light: #f4f4f5;
+$text-muted: #a1a1aa;
+$bg-page: #18181b;
+$bg-surface: #202024;
+$bg-input: #27272a;
+$border-subtle: #3f3f46;
 
 @keyframes pageFadeIn {
   from {
@@ -59,6 +64,10 @@ $text-muted: #b8afa0;
   overflow: hidden;
   padding: 16px;
   box-sizing: border-box;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(212, 175, 55, 0.08), transparent 36%),
+    radial-gradient(circle at 90% 0%, rgba(229, 192, 123, 0.06), transparent 34%),
+    $bg-page;
   animation: pageFadeIn 480ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 
@@ -81,9 +90,10 @@ $text-muted: #b8afa0;
 
 .sessions-panel,
 .chat-panel {
-  border: 1px solid rgba(197, 160, 89, 0.2);
+  border: 1px solid rgba(229, 192, 123, 0.2);
   border-radius: 20px;
-  background: linear-gradient(160deg, rgba(17, 17, 17, 0.95), rgba(9, 9, 9, 0.98));
+  background: linear-gradient(160deg, rgba(32, 32, 36, 0.94), rgba(24, 24, 27, 0.97));
+  box-shadow: 0 18px 34px rgba(0, 0, 0, 0.32);
 }
 
 .sessions-panel {
@@ -116,15 +126,31 @@ $text-muted: #b8afa0;
 
 .new-session-btn {
   width: 100%;
-  border: 1px solid rgba(197, 160, 89, 0.44);
-  background: linear-gradient(135deg, rgba(197, 160, 89, 0.18), rgba(197, 160, 89, 0.05));
-  color: $gold;
+  border: 1px solid rgba(229, 192, 123, 0.95);
+  background: linear-gradient(140deg, $gold, $gold-strong);
+  color: #171717;
   border-radius: 12px;
   height: 40px;
   font-family: 'Cinzel', serif;
   font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 0.08em;
   cursor: pointer;
+  transition: all 0.22s ease;
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 18px rgba(212, 175, 55, 0.3);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(229, 192, 123, 0.42);
+    outline-offset: 2px;
+  }
+
+  &:disabled {
+    opacity: 0.62;
+  }
 }
 
 .sessions-list {
@@ -170,10 +196,10 @@ $text-muted: #b8afa0;
 
 .session-item {
   --session-enter-delay: 0ms;
-  border: 1px solid rgba(197, 160, 89, 0.14);
+  border: 1px solid $border-subtle;
   border-radius: 12px;
   padding: 11px;
-  background: rgba(255, 255, 255, 0.02);
+  background: #222228;
   color: $text-light;
   text-align: left;
   cursor: pointer;
@@ -199,12 +225,24 @@ $text-muted: #b8afa0;
   }
 
   &.active {
-    border-color: rgba(197, 160, 89, 0.45);
-    background: linear-gradient(135deg, rgba(197, 160, 89, 0.14), rgba(255, 255, 255, 0.03));
+    border-color: rgba(229, 192, 123, 0.96);
+    background: linear-gradient(145deg, $gold, $gold-strong);
+    box-shadow: 0 8px 18px rgba(212, 175, 55, 0.24);
+
+    strong,
+    span {
+      color: #1a1a1a;
+    }
   }
 
   &:hover {
     transform: translateY(-2px);
+    border-color: rgba(229, 192, 123, 0.45);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(229, 192, 123, 0.4);
+    outline-offset: 2px;
   }
 }
 
@@ -251,8 +289,8 @@ $text-muted: #b8afa0;
   padding: 0 12px;
   height: 36px;
   border-radius: 10px;
-  border: 1px solid rgba(197, 160, 89, 0.24);
-  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid $border-subtle;
+  background: #242429;
   color: $gold;
   font-family: 'Cinzel', serif;
   font-size: 0.68rem;
@@ -266,6 +304,11 @@ $text-muted: #b8afa0;
 
   .sessions-toggle-expand {
     display: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(229, 192, 123, 0.42);
+    outline-offset: 2px;
   }
 }
 
@@ -296,8 +339,8 @@ $text-muted: #b8afa0;
 }
 
 .insight-chip {
-  border: 1px solid rgba(197, 160, 89, 0.28);
-  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid $border-subtle;
+  background: #26262c;
   color: $text-light;
   border-radius: 999px;
   padding: 6px 10px;
@@ -310,8 +353,13 @@ $text-muted: #b8afa0;
 
   &:hover:not(:disabled) {
     transform: translateY(-1px);
-    border-color: rgba(197, 160, 89, 0.48);
-    background: rgba(197, 160, 89, 0.1);
+    border-color: rgba(229, 192, 123, 0.5);
+    background: rgba(229, 192, 123, 0.14);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(229, 192, 123, 0.42);
+    outline-offset: 2px;
   }
 
   &:disabled {
@@ -333,9 +381,10 @@ $text-muted: #b8afa0;
 .messages-viewport {
   flex: 1;
   overflow-y: auto;
-  border: 1px solid rgba(197, 160, 89, 0.14);
+  border: 1px solid rgba(229, 192, 123, 0.18);
   border-radius: 16px;
   padding: 12px;
+  background: rgba(39, 39, 42, 0.44);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -457,10 +506,10 @@ $text-muted: #b8afa0;
 .composer {
   display: grid;
   gap: 6px;
-  border: 1px solid rgba(197, 160, 89, 0.16);
+  border: 1px solid rgba(229, 192, 123, 0.22);
   border-radius: 14px;
   padding: 8px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.015), rgba(255, 255, 255, 0.03));
+  background: linear-gradient(180deg, rgba(39, 39, 42, 0.5), rgba(39, 39, 42, 0.26));
   flex: 0 0 auto;
 
   .composer-insights {
@@ -483,41 +532,68 @@ $text-muted: #b8afa0;
     min-height: 52px;
     max-height: 104px;
     border-radius: 12px;
-    border: 1px solid rgba(197, 160, 89, 0.2);
-    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid $border-subtle;
+    background: $bg-input;
     color: $text-light;
     padding: 10px 12px;
     font-family: 'Inter', sans-serif;
     font-size: 0.78rem;
+    font-weight: 400;
     line-height: 1.4;
     outline: none;
 
+    &::placeholder {
+      color: #a1a1aa;
+      opacity: 1;
+    }
+
     &:focus {
-      border-color: rgba(197, 160, 89, 0.52);
-      box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.08);
+      border-color: $gold;
+      background: #2c2c31;
+      box-shadow: 0 0 0 3px rgba(229, 192, 123, 0.14);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(229, 192, 123, 0.35);
+      outline-offset: 1px;
     }
   }
 
   .send-btn {
     justify-self: end;
-    border: 1px solid rgba(197, 160, 89, 0.42);
-    background: linear-gradient(135deg, rgba(197, 160, 89, 0.2), rgba(197, 160, 89, 0.08));
-    color: $gold;
+    border: 1px solid rgba(229, 192, 123, 0.95);
+    background: linear-gradient(140deg, $gold, $gold-strong);
+    color: #171717;
     border-radius: 10px;
     min-width: 108px;
     height: 38px;
     padding: 0 14px;
     font-family: 'Cinzel', serif;
     font-size: 0.72rem;
+    font-weight: 700;
     letter-spacing: 0.08em;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    transition: all 0.22s ease;
+
+    &:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+      filter: brightness(1.04);
+    }
+
+    &:focus-visible {
+      outline: 2px solid rgba(229, 192, 123, 0.42);
+      outline-offset: 2px;
+    }
 
     &:disabled {
-      opacity: 0.45;
+      opacity: 0.62;
       cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
     }
   }
 }
@@ -540,8 +616,8 @@ $text-muted: #b8afa0;
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  border: 2px solid rgba(197, 160, 89, 0.3);
-  border-top-color: $gold;
+  border: 2px solid rgba(23, 23, 23, 0.3);
+  border-top-color: #171717;
   animation: spin 0.8s linear infinite;
 }
 
