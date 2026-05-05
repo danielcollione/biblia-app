@@ -45,13 +45,6 @@
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: linear-gradient(
-    180deg,
-    rgba(5, 5, 5, 0.02) 0%,
-    rgba(5, 5, 5, 0.05) 55%,
-    rgba(5, 5, 5, 0.22) 78%,
-    rgba(5, 5, 5, 0.36) 100%
-  );
   pointer-events: none;
 }
 
@@ -64,6 +57,192 @@
   margin-bottom: 100px;
 }
 
+.bible-chapters-page {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0 32px;
+  box-sizing: border-box;
+  animation: chapterPageEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.floating-search {
+  position: fixed;
+  right: 5%;
+  top: 7%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  pointer-events: auto;
+
+  &.search-active .search-toggle {
+    border-color: #cfab6a;
+    color: #cfab6a;
+    box-shadow: 0 0 18px rgba(207, 171, 106, 0.35);
+  }
+}
+
+.search-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(161, 142, 118, 0.45);
+  color: #a18e76;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+
+  &:hover,
+  &.open {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: #cfab6a;
+    color: #cfab6a;
+    box-shadow: 0 0 20px rgba(207, 171, 106, 0.3);
+  }
+}
+
+.search-panel {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  order: -1;
+  animation: searchSlideIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+}
+
+@keyframes searchSlideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.search-input {
+  width: 220px;
+  height: 46px;
+  background: rgba(8, 8, 8, 0.92);
+  border: 1px solid rgba(207, 171, 106, 0.5);
+  border-right: none;
+  color: #fdfbf7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 0 36px 0 16px;
+  outline: none;
+  box-sizing: border-box;
+  backdrop-filter: blur(12px);
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(207, 171, 106, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba(161, 142, 118, 0.45);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  &:focus {
+    border-color: #cfab6a;
+    box-shadow: -6px 0 28px rgba(207, 171, 106, 0.2), inset 0 1px 0 rgba(207, 171, 106, 0.12);
+  }
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(161, 142, 118, 0.6);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #cfab6a;
+  }
+}
+
+@media (max-width: 780px) {
+  .floating-search {
+    right: 12px;
+    top: auto;
+    bottom: 100px;
+    transform: none;
+  }
+
+  .search-input {
+    width: 160px;
+    font-size: 0.72rem;
+  }
+}
+
+.carrossel-caps-wrapper {
+  position: relative;
+  width: 100%;
+
+  .zona-navegacao-lateral.biblia-nav {
+    top: 0;
+    bottom: 0;
+    z-index: 65;
+  }
+}
+
+.btn-back-top-left {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 70;
+  background: #0f0f0f;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.chapters-page-header {
+  text-align: center;
+  margin-bottom: 42px;
+  z-index: 66;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #fdfbf7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .line {
+    height: 1px;
+    width: 110px;
+    margin: 18px auto 0;
+    background: #a18e76;
+    opacity: 0.65;
+  }
+}
+
 /* =========================================
    HERO BANNER (O Destaque Estilo HBO)
 ========================================= */
@@ -72,7 +251,6 @@
   width: 100%;
   display: flex;
   align-items: flex-end;
-  min-height: 58vh;
   padding: 48px 40px;
 
   img {
@@ -89,13 +267,6 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      rgba(5, 5, 5, 0.72) 0%,
-      rgba(5, 5, 5, 0.35) 35%,
-      rgba(5, 5, 5, 0.15) 60%,
-      rgba(5, 5, 5, 0.28) 100%
-    );
   }
 
   &::after {
@@ -105,7 +276,6 @@
     right: 0;
     bottom: -180px;
     height: clamp(120px, 24vh, 220px);
-    background: linear-gradient(180deg, #05050500, #0505058c 55%, #050505);
     pointer-events: none;
   }
 
@@ -217,6 +387,10 @@
   .biblia-header {
     padding: 0 40px;
     margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
 
     h2 {
       font-family: 'Cinzel', serif;
@@ -274,12 +448,105 @@
   }
 }
 
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0 70px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 20px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  z-index: 66;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+
+    &:hover {
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+  }
+}
+
+.card-capitulo-luxo {
+  min-width: 120px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #fdfbf7;
+    font-weight: 700;
+  }
+
+  &:first-child {
+    margin-left: 50px;
+  }
+
+  &:last-child {
+    margin-right: 50px;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero {
+      color: #a18e76;
+    }
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes chapterPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
   }
 }
 
@@ -378,6 +645,45 @@
     .cover-wrap img {
       transform: scale(1.05); /* Efeito zoom sutil na arte */
     }
+  }
+
+  &.locked {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      border-color: transparent;
+
+      .cover-wrap img {
+        transform: none;
+      }
+    }
+  }
+}
+
+.card-lock-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cobrimos só a área central, deixando o título (bottom) visível */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.35) 60%,
+    transparent 100%
+  );
+
+  svg {
+    position: absolute;
+    top: 38%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    color: rgba(207, 171, 106, 0.9);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
   }
 }
 
@@ -504,6 +810,28 @@
     .zona-navegacao-lateral {
       display: none !important;
     }
+  }
+
+  .bible-chapters-page {
+    padding-top: 110px;
+  }
+
+  .btn-back-top-left {
+    top: 16px;
+    left: 12px;
+  }
+
+  .chapters-page-header {
+    margin-bottom: 20px;
+
+    h2 {
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .estante-capitulos-horizontal {
+    width: 100%;
+    padding: 18px 0 34px;
   }
 
   .catalog-header {

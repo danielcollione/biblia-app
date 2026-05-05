@@ -80,7 +80,7 @@
                 @if (isLoadingMore()) {
                 <span class="mini-spinner"></span>
                 }
-                {{ isLoadingMore() ? 'Carregando...' : 'Carregar Mais Orações' }}
+                {{ isLoadingMore() ? versionService.ui().prayersLoadingMore : versionService.ui().prayersLoadMore }}
             </button>
         </div>
         }

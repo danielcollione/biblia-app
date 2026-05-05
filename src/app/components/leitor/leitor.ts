@@ -1,4 +1,5 @@
 import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { BibleService } from '../../services/bible';
 import { LombadaLivro } from './lombada-livro/lombada-livro';
 import { VersionService } from '../../services/version/version-service';
@@ -15,6 +16,7 @@ export class Leitor implements OnInit {
   titleService = inject(Title);
   metaService = inject(Meta);
   bibleService = inject(BibleService);
+  readonly location = inject(Location);
   @ViewChild('estanteLivros') estanteLivros!: ElementRef;
 
   constructor(public versionService: VersionService) {}

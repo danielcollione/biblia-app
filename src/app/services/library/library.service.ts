@@ -16,6 +16,13 @@ export interface LibraryBookDto {
   chaptersCount: number;
 }
 
+export interface LibraryChapterDto {
+  id: string;
+  slug: string;
+  title: string;
+  chapterOrder: number;
+}
+
 @Injectable({ providedIn: 'root' })
 export class LibraryService {
   private readonly http = inject(HttpClient);
@@ -26,6 +33,18 @@ export class LibraryService {
 
   listBooks(): Observable<LibraryBookDto[]> {
     return this.http.get<LibraryBookDto[]>(this.apiUrl, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  getBookBySlug(bookSlug: string): Observable<LibraryBookDto> {
+    return this.http.get<LibraryBookDto>(`${this.apiUrl}/${bookSlug}`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  getBookChapters(bookSlug: string): Observable<LibraryChapterDto[]> {
+    return this.http.get<LibraryChapterDto[]>(`${this.apiUrl}/${bookSlug}/chapters`, {
       headers: this.buildHeaders(),
     });
   }

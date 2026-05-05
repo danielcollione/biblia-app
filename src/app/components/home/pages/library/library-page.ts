@@ -1,9 +1,11 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild, computed, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { LibraryService } from '../../../../services/library/library.service';
 import { BibleService } from '../../../../services/bible';
 import { VersionService } from '../../../../services/version/version-service';
+import { AuthService } from '../../../../services/auth/auth';
 
 @Component({
   selector: 'app-library-page',
@@ -15,14 +17,33 @@ import { VersionService } from '../../../../services/version/version-service';
 export class LibraryPage implements AfterViewInit {
   @ViewChild('catalogRail') private catalogRailRef?: ElementRef<HTMLDivElement>;
   @ViewChild('estanteLivros') private estanteLivrosRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('estanteCaps') private estanteCapsRef?: ElementRef<HTMLDivElement>;
 
   private readonly libraryService = inject(LibraryService);
+  private readonly router = inject(Router);
+  private readonly authService = inject(AuthService);
   readonly bibleService = inject(BibleService);
   readonly versionService = inject(VersionService);
 
   readonly books = signal<LibraryBookCard[]>([]);
   readonly isLoading = signal(true);
   readonly errorMessage = signal<string | null>(null);
+  readonly searchTerm = signal('');
+  searchExpanded = false;
+
+  readonly filteredBibleBooks = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const all = this.bibleService.filteredBooks();
+    if (!term) return all;
+    return all.filter(b => b.name.toLowerCase().includes(term));
+  });
+
+  readonly filteredLibraryBooks = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const all = this.books();
+    if (!term) return all;
+    return all.filter(b => b.title.toLowerCase().includes(term));
+  });
 
   ngAfterViewInit(): void {
     this.loadBooks();
@@ -40,7 +61,7 @@ export class LibraryPage implements AfterViewInit {
             coverUrl: this.libraryService.resolveCoverUrl(book.coverImage),
             categoryLabel: this.prettyCategory(book.category),
             authorLabel: this.prettyAuthor(book.author),
-            accessBadge: book.premium ? 'Premium' : 'Acesso Livre',
+            accessBadge: this.versionService.ui().libraryPremiumBadge,
             levelBadge: `Nivel ${Math.max(1, book.requiredLevel ?? 1)}`,
             enterDelayMs: Math.min(index * 70, 560),
           }))
@@ -72,6 +93,37 @@ export class LibraryPage implements AfterViewInit {
 
     const distance = Math.max(220, Math.floor(estante.clientWidth * 0.78));
     estante.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  }
+
+  scrollBibleChapters(direction: -1 | 1): void {
+    const estante = this.estanteCapsRef?.nativeElement;
+    if (!estante) {
+      return;
+    }
+
+    const distance = Math.max(220, Math.floor(estante.clientWidth * 0.78));
+    estante.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  }
+
+  hasActiveSubscription(): boolean {
+    const user = this.authService.usuario();
+    if (!user?.subscriptionActive || !user.subscriptionExpiresAt) {
+      return false;
+    }
+    const expiresAt = new Date(user.subscriptionExpiresAt).getTime();
+    return Number.isFinite(expiresAt) && expiresAt > Date.now();
+  }
+
+  openBook(book: LibraryBookCard): void {
+    if (!this.hasActiveSubscription()) {
+      return;
+    }
+    this.router.navigate(['/home/library', book.slug]);
+  }
+
+  openBibleChapter(index: number): void {
+    this.bibleService.selectChapter(index);
+    this.router.navigate(['/read']);
   }
 
   isBibleNewTestament(bookName: string): boolean {

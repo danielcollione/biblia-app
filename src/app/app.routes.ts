@@ -32,6 +32,8 @@ export const routes: Routes = [
       { path: 'prayers', loadComponent: () => import('./components/home/pages/prayers/prayers-page').then(m => m.PrayersPage) },
       { path: 'sage', loadComponent: () => import('./components/home/pages/sage/sage-page').then(m => m.SagePage) },
       { path: 'library', loadComponent: () => import('./components/home/pages/library/library-page').then(m => m.LibraryPage) },
+      { path: 'library/bible-selector', loadComponent: () => import('./components/home/pages/library/library-bible-selector-page').then(m => m.LibraryBibleSelectorPage) },
+      { path: 'library/:slug', loadComponent: () => import('./components/home/pages/library/library-book-chapters-page').then(m => m.LibraryBookChaptersPage) },
       { path: 'quiz', loadComponent: () => import('./components/home/pages/quiz/quiz-page').then(m => m.QuizPage) },
       { path: 'recommendations', loadComponent: () => import('./components/home/pages/recommendations/recommendations-page').then(m => m.RecommendationsPage) },
       { path: 'blog', loadComponent: () => import('./components/home/pages/blog/home-blog-page').then(m => m.HomeBlogPage) },

@@ -1,0 +1,262 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.chapters-shell {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0 60px;
+  box-sizing: border-box;
+  position: relative;
+  animation: pageFadeIn 0.4s ease both;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ===== BACK BUTTON ===== */
+.btn-back-top-left {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 70;
+  background: #0f0f0f;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+/* ===== HEADER ===== */
+.chapters-page-header {
+  text-align: center;
+  margin-bottom: 48px;
+  z-index: 2;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #fdfbf7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .chapters-author {
+    margin: 8px 0 0;
+    font-size: 0.85rem;
+    color: #a18e76;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .line {
+    height: 1px;
+    width: 110px;
+    margin: 16px auto 0;
+    background: #a18e76;
+    opacity: 0.65;
+  }
+}
+
+/* ===== CAROUSEL ===== */
+.carrossel-caps-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 80px;
+  z-index: 10;
+  cursor: pointer;
+
+  &.esquerda {
+    left: 0;
+    background: linear-gradient(to right, rgba(26, 26, 26, 0.85), transparent);
+  }
+
+  &.direita {
+    right: 0;
+    background: linear-gradient(to left, rgba(26, 26, 26, 0.85), transparent);
+  }
+}
+
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 80px 80px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 20px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar { height: 10px; }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+
+    &:hover {
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+  }
+}
+
+/* ===== CHAPTER CARDS ===== */
+.card-capitulo-luxo {
+  flex-shrink: 0;
+  min-width: 130px;
+  max-width: 170px;
+  height: 170px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+  padding: 12px 10px;
+  box-sizing: border-box;
+  opacity: 0;
+  animation: cardReveal 480ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-delay: var(--cap-enter-delay, 0ms);
+
+  &:first-child { margin-left: 50px; }
+  &:last-child  { margin-right: 50px; }
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.2rem;
+    color: #fdfbf7;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .cap-title {
+    font-size: 0.65rem;
+    color: rgba(161, 142, 118, 0.75);
+    text-align: center;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    word-break: break-word;
+    max-width: 100%;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero { color: #a18e76; }
+    .cap-title  { color: #cfab6a; }
+  }
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ===== LOADING / ERROR ===== */
+.chapters-loading,
+.chapters-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  color: #a18e76;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.chapters-error button {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.big-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(161, 142, 118, 0.2);
+  border-top-color: #a18e76;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.busca-vazia {
+  font-family: 'Cinzel', serif;
+  color: #a18e76;
+  text-align: center;
+  padding: 50px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+}

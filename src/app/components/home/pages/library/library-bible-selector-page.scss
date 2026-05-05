@@ -1,0 +1,472 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:host {
+  display: block;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.container-biblia {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: #1a1a1a;
+  position: relative;
+}
+
+.biblioteca-master {
+  width: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  padding: 96px 0 32px;
+  box-sizing: border-box;
+}
+
+.navegacao-topo-esquerda {
+  position: absolute;
+  top: 36px;
+  left: 40px;
+  z-index: 1500;
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  .btn-voltar-estante {
+    background: #1a1a1a;
+    border: 1px solid #a18e76;
+    color: #fdfbf7;
+    padding: 12px 24px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 45px;
+    box-sizing: border-box;
+
+    &:hover {
+      background: #a18e76;
+      color: #1a1a1a;
+      transform: scale(1.05);
+    }
+  }
+}
+
+.header-selecao-capitulo {
+  text-align: center;
+  margin-bottom: 48px;
+
+  .titulo-livro-grande {
+    font-family: 'Cinzel', serif;
+    font-size: 3rem;
+    color: #fdfbf7;
+    text-transform: uppercase;
+    letter-spacing: 10px;
+    margin: 0;
+  }
+
+  .linha-separadora {
+    height: 1px;
+    width: 100px;
+    background: #a18e76;
+    margin: 20px auto;
+    opacity: 0.5;
+  }
+}
+
+.estante-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  width: 100%;
+  padding: 50px 150px 80px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 5px;
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+    &:hover {
+      background: #d4af37;
+    }
+  }
+}
+
+.livro-lombada {
+  min-width: 130px;
+  height: 400px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 3px 5px 5px 3px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 10px;
+  box-sizing: border-box;
+  border-left: 5px solid rgba(0, 0, 0, 0.3);
+
+  &:nth-child(4n + 1) {
+    background-color: #5c1a1a;
+  }
+  &:nth-child(4n + 2) {
+    background-color: #1a2a3a;
+  }
+  &:nth-child(4n + 3) {
+    background-color: #2d3a1a;
+  }
+  &:nth-child(4n + 4) {
+    background-color: #4a3728;
+  }
+
+  .conteudo-lombada {
+    text-align: center;
+    .titulo-lombada {
+      font-family: 'Cinzel', serif;
+      color: #e0d5c1;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      word-wrap: break-word;
+    }
+    .detalhe-lombada {
+      width: 30px;
+      height: 2px;
+      background: rgba(224, 213, 193, 0.2);
+      margin: 15px auto;
+    }
+  }
+
+  &:hover {
+    transform: translateY(-40px);
+    z-index: 10;
+    filter: brightness(1.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+  }
+}
+
+.selo-luxo {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.7;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  .sigla-latim {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: #a18e76;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .divisor-selo {
+    width: 20px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #a18e76, transparent);
+    margin: 6px 0;
+  }
+
+  .icone-testamento {
+    width: 32px;
+    height: 32px;
+
+    svg {
+      fill: #a18e76;
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+    }
+  }
+}
+
+.livro-lombada:hover {
+  .selo-luxo {
+    opacity: 1;
+    transform: translateY(-5px) scale(1.1);
+
+    .sigla-latim {
+      color: #d4c3ab;
+    }
+
+    svg {
+      fill: #d4c3ab;
+    }
+  }
+}
+
+.carrossel-caps-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0 100px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 25px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  z-index: 100;
+
+  &::-webkit-scrollbar {
+    height: 12px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+
+    &:hover {
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+  }
+}
+
+.card-capitulo-luxo {
+  min-width: 120px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #fdfbf7;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero {
+      color: #a18e76;
+    }
+  }
+}
+
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 10%;
+  z-index: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &::after {
+    font-size: 5rem;
+    color: #a18e76;
+    opacity: 0.4;
+    transition: all 0.3s ease;
+    user-select: none;
+    text-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+      transform: scale(1.2);
+      color: #d4af37;
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+    &::after {
+      content: '‹';
+      margin-right: 20px;
+    }
+    &:hover {
+      background: linear-gradient(to right, rgba(161, 142, 118, 0.1), transparent);
+    }
+  }
+
+  &.direita {
+    right: 0;
+    &::after {
+      content: '›';
+      margin-left: 20px;
+    }
+    &:hover {
+      background: linear-gradient(to left, rgba(161, 142, 118, 0.1), transparent);
+    }
+  }
+}
+
+.busca-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-busca {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(161, 142, 118, 0.3);
+  color: #a18e76;
+  font-family: 'Cinzel', serif;
+  padding: 8px 30px 8px 10px;
+  font-size: 1.1rem;
+  outline: none;
+  width: 250px;
+  transition: all 0.3s ease;
+
+  &:focus {
+    width: 300px;
+    border-bottom-color: #a18e76;
+    background: rgba(161, 142, 118, 0.05);
+  }
+
+  &::placeholder {
+    color: rgba(161, 142, 118, 0.4);
+    font-style: italic;
+  }
+}
+
+.icone-busca {
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+
+  svg path {
+    fill: #a18e76 !important;
+  }
+}
+
+.busca-vazia {
+  font-family: 'Cinzel', serif;
+  color: #a18e76;
+  width: 100%;
+  text-align: center;
+  padding: 50px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+}
+
+.fade-in {
+  animation: fadeIn 0.6s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 900px) {
+  .zona-navegacao-lateral {
+    display: none !important;
+  }
+
+  .biblioteca-master {
+    margin-top: 30px;
+    justify-content: flex-start;
+    padding-top: 92px;
+  }
+
+  .navegacao-topo-esquerda {
+    position: absolute;
+    top: 20px;
+    left: 12px;
+    right: 12px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .header-selecao-capitulo {
+    margin-bottom: 20px;
+    .titulo-livro-grande {
+      font-size: 1.8rem;
+      letter-spacing: 5px;
+    }
+  }
+
+  .estante-horizontal {
+    padding: 20px 5vw 30px;
+  }
+
+  .estante-capitulos-horizontal {
+    padding: 20px 0 30px;
+  }
+
+  .livro-lombada {
+    height: 320px;
+    min-width: 110px;
+  }
+
+  .input-busca {
+    width: 100%;
+    max-width: none;
+
+    &:focus {
+      width: 100%;
+    }
+  }
+}
