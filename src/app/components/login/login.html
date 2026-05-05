@@ -19,5 +19,19 @@
             <span>{{ versionService.ui().loginGoogleButtonText }}</span>
         </div>
 
+        @if (googleRedirectLoading()) {
+        <div class="google-loading-overlay" aria-live="polite" role="status">
+            <div class="google-loading-core">
+                <div class="loading-halo"></div>
+                <div class="loading-ring">
+                    <span></span><span></span><span></span>
+                </div>
+                <p class="loading-kicker">{{ versionService.ui().loginGoogleLoadingKicker }}</p>
+                <strong class="loading-title">{{ versionService.ui().loginGoogleLoadingTitle }}</strong>
+                <small class="loading-copy">{{ versionService.ui().loginGoogleLoadingSubtitle }}</small>
+            </div>
+        </div>
+        }
+
     </div>
 </div>

@@ -19,6 +19,7 @@ $error-red: #8b0000;
 }
 
 .login-card {
+  position: relative;
   background-color: $card-dark;
   width: 100%;
   max-width: 420px;
@@ -30,6 +31,88 @@ $error-red: #8b0000;
   border: 1px solid $gold-muted;
 
   text-align: center;
+}
+
+.google-loading-overlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(197, 160, 89, 0.14), transparent 44%),
+    radial-gradient(circle at 80% 80%, rgba(197, 160, 89, 0.1), transparent 48%),
+    rgba(5, 5, 5, 0.9);
+  backdrop-filter: blur(6px);
+  z-index: 12;
+  display: grid;
+  place-items: center;
+  animation: overlayIn 220ms ease-out both;
+}
+
+.google-loading-core {
+  width: min(290px, calc(100% - 48px));
+  padding: 24px 20px;
+  border: 1px solid rgba(197, 160, 89, 0.35);
+  background: linear-gradient(150deg, rgba(12, 12, 12, 0.92), rgba(6, 6, 6, 0.92));
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.loading-halo {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  width: 220px;
+  height: 220px;
+  transform: translateX(-50%);
+  background: radial-gradient(circle, rgba(197, 160, 89, 0.24), transparent 62%);
+  pointer-events: none;
+}
+
+.loading-ring {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  position: relative;
+  animation: ringSpin 1.7s linear infinite;
+
+  span {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 1px solid rgba(197, 160, 89, 0.28);
+
+    &:nth-child(1) { transform: scale(1); }
+    &:nth-child(2) { transform: scale(0.74); opacity: 0.82; }
+    &:nth-child(3) { transform: scale(0.48); opacity: 0.68; }
+  }
+}
+
+.loading-kicker {
+  margin: 0;
+  font-family: 'Cinzel', serif;
+  color: rgba(197, 160, 89, 0.8);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.loading-title {
+  display: block;
+  margin-top: 8px;
+  font-family: 'Cinzel', serif;
+  color: #f1ddbb;
+  letter-spacing: 0.08em;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.loading-copy {
+  display: block;
+  margin-top: 8px;
+  color: #9f9f9f;
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
 }
 
 .google-only-note {
@@ -339,6 +422,24 @@ $error-red: #8b0000;
 }
 
 @keyframes spin-lux {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes overlayIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ringSpin {
+  from {
+    transform: rotate(0deg);
+  }
   to {
     transform: rotate(360deg);
   }

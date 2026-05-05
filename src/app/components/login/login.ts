@@ -25,6 +25,7 @@ export class Login implements OnInit, AfterViewInit {
 
   isLoginMode = true;
   carregando = signal(false);
+  googleRedirectLoading = signal(false);
   erroMensagem = signal<string | null>(null);
 
   // Dados do Formulário
@@ -91,11 +92,15 @@ export class Login implements OnInit, AfterViewInit {
   }
 
   handleGoogleResponse(response: any) {
+    this.erroMensagem.set(null);
     this.carregando.set(true);
+    this.googleRedirectLoading.set(true);
     this.authService.loginComGoogle(response.credential).subscribe({
-      next: () => this.carregando.set(false),
+      // Keep loading overlay active here; successful flow immediately navigates to /home.
+      next: () => {},
       error: (err: HttpErrorResponse) => {
         this.carregando.set(false);
+        this.googleRedirectLoading.set(false);
         this.erroMensagem.set(this.versionService.ui().loginErrorGoogle);
       }
     });
