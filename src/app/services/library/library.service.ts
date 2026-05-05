@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
+import { Observable, catchError, throwError } from 'rxjs';
 
 import { AuthService } from '../auth/auth';
 
@@ -32,21 +32,15 @@ export class LibraryService {
   private readonly apiBaseUrl = 'https://backendtub.onrender.com';
 
   listBooks(): Observable<LibraryBookDto[]> {
-    return this.http.get<LibraryBookDto[]>(this.apiUrl, {
-      headers: this.buildHeaders(),
-    });
+    return this.getWithOptionalAuthRetry<LibraryBookDto[]>(this.apiUrl);
   }
 
   getBookBySlug(bookSlug: string): Observable<LibraryBookDto> {
-    return this.http.get<LibraryBookDto>(`${this.apiUrl}/${bookSlug}`, {
-      headers: this.buildHeaders(),
-    });
+    return this.getWithOptionalAuthRetry<LibraryBookDto>(`${this.apiUrl}/${bookSlug}`);
   }
 
   getBookChapters(bookSlug: string): Observable<LibraryChapterDto[]> {
-    return this.http.get<LibraryChapterDto[]>(`${this.apiUrl}/${bookSlug}/chapters`, {
-      headers: this.buildHeaders(),
-    });
+    return this.getWithOptionalAuthRetry<LibraryChapterDto[]>(`${this.apiUrl}/${bookSlug}/chapters`);
   }
 
   resolveCoverUrl(coverImage: string | null): string {
@@ -69,5 +63,27 @@ export class LibraryService {
       'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
+  }
+
+  private getWithOptionalAuthRetry<T>(url: string): Observable<T> {
+    const headers = this.buildHeaders();
+
+    return this.http.get<T>(url, { headers }).pipe(
+      catchError((error: unknown) => {
+        if (!(error instanceof HttpErrorResponse)) {
+          return throwError(() => error);
+        }
+
+        if (!headers.has('Authorization')) {
+          return throwError(() => error);
+        }
+
+        if (error.status !== 401 && error.status !== 403) {
+          return throwError(() => error);
+        }
+
+        return this.http.get<T>(url);
+      })
+    );
   }
 }
