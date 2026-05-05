@@ -1,4 +1,23 @@
 <div class="login-wrapper">
+    @if (googleRedirectLoading()) {
+    <div class="google-loading-overlay google-loading-overlay--standalone" aria-live="polite" role="status">
+        <div class="google-loading-core">
+            <div class="loading-orbit" aria-hidden="true">
+                <div class="loading-orbit-ring"></div>
+                <div class="loading-orbit-ring loading-orbit-ring--inner"></div>
+                <div class="loading-orbit-core"></div>
+                <span class="loading-orbit-dot loading-orbit-dot--a"></span>
+                <span class="loading-orbit-dot loading-orbit-dot--b"></span>
+            </div>
+            <div class="loading-progress" aria-hidden="true">
+                <span></span>
+            </div>
+            <p class="loading-kicker">{{ versionService.ui().loginGoogleLoadingKicker }}</p>
+            <strong class="loading-title">{{ versionService.ui().loginGoogleLoadingTitle }}</strong>
+            <small class="loading-copy">{{ versionService.ui().loginGoogleLoadingSubtitle }}</small>
+        </div>
+    </div>
+    } @else {
     <div class="login-card" [class.form-loading]="carregando()">
 
         <div class="brand-header">
@@ -19,20 +38,6 @@
             <span>{{ versionService.ui().loginGoogleButtonText }}</span>
         </div>
 
-        @if (googleRedirectLoading()) {
-        <div class="google-loading-overlay" aria-live="polite" role="status">
-            <div class="google-loading-core">
-                <div class="loading-halo"></div>
-                <div class="loading-spinner" aria-hidden="true"></div>
-                <div class="loading-ring">
-                    <span></span><span></span><span></span>
-                </div>
-                <p class="loading-kicker">{{ versionService.ui().loginGoogleLoadingKicker }}</p>
-                <strong class="loading-title">{{ versionService.ui().loginGoogleLoadingTitle }}</strong>
-                <small class="loading-copy">{{ versionService.ui().loginGoogleLoadingSubtitle }}</small>
-            </div>
-        </div>
-        }
-
     </div>
+    }
 </div>

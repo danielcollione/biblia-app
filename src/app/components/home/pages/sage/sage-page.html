@@ -5,9 +5,23 @@
 
   <aside class="sessions-panel" [class.mobile-open]="isSessionsPanelOpen()">
     <div class="sessions-head">
+      <button
+        type="button"
+        class="sessions-close-mobile"
+        (click)="closeSessionsPanel()"
+        [attr.aria-label]="versionService.ui().sageChatCloseSessionsAriaLabel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18"></path>
+          <path d="M6 6l12 12"></path>
+        </svg>
+      </button>
       <p class="kicker">{{ versionService.ui().sagePageTitle }}</p>
       <h2>{{ versionService.ui().sageChatSessionsTitle }}</h2>
       <button type="button" class="new-session-btn" (click)="createNewSession()" [disabled]="!hasActiveSubscription()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path>
+        </svg>
         {{ versionService.ui().sageChatNewSession }}
       </button>
     </div>

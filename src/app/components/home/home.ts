@@ -62,6 +62,7 @@ export class Home {
     { initialValue: this.router.url }
   );
   readonly isLibraryRoute = computed(() => this.currentRoute().startsWith('/home/library'));
+  readonly isSageRoute = computed(() => this.currentRoute().startsWith('/home/sage'));
 
   toggleSidebar(): void {
     this.isSidebarOpen.update(v => !v);
