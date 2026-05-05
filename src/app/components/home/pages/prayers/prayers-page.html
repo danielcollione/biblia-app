@@ -42,8 +42,9 @@
         </div>
         }
 
-        @for (prayer of prayers(); track prayer.id) {
-        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser">
+        @for (prayer of prayers(); track prayer.id; let index = $index) {
+        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser"
+            [style.--prayer-enter-delay]="(index * 80) + 'ms'">
             <div class="balloon-topline">
                 <div>
                     <strong>{{ prayer.authorName }}</strong>

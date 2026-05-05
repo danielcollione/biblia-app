@@ -1,85 +1,122 @@
 <section class="library-shell">
-  
-  <!-- HERO BANNER TIPO HBO MAX -->
-  <header class="hero-banner">
-    <div class="hero-bg">
-      <!-- Usando a imagem de capa sugerida para o grande destaque -->
-      <img src="public/images/poster.jpeg" alt="Livro Destaque" />
-      <div class="hero-vignette"></div>
-    </div>
-    
-    <div class="hero-content">
-      <p class="hero-kicker">Destaque da Curadoria</p>
-      <h1 class="hero-title">A Biblioteca de Estudos</h1>
-      
-      <div class="hero-meta">
-        <span class="meta-tag">Acesso Premium</span>
-        <span class="meta-dot">•</span>
-        <span class="meta-tag">Teologia</span>
-        <span class="meta-dot">•</span>
-        <span class="meta-tag">História</span>
-      </div>
-      
-      <p class="hero-subtitle">
-        Explore o acervo em formato de catálogo cinematográfico. Obras clássicas e estudos profundos para continuar sua jornada no ritmo da Palavra.
-      </p>
+    <!-- HERO BANNER TIPO HBO MAX -->
+    <header class="hero-banner">
+        <img src="images/poster.jpeg" alt="Livro Destaque" />
+        <div class="hero-content">
+            <p class="hero-kicker">Destaque da Curadoria</p>
+            <h1 class="hero-title">A Biblioteca de Estudos</h1>
 
-      <div class="hero-actions">
-        <button class="btn-primary"><i class="ri-play-fill"></i> Explorar Acervo</button>
-        <button class="btn-icon"><i class="ri-bookmark-line"></i></button>
-      </div>
-    </div>
-  </header>
+            <div class="hero-meta">
+                <span class="meta-tag">Acesso Premium</span>
+                <span class="meta-dot">•</span>
+                <span class="meta-tag">Teologia</span>
+                <span class="meta-dot">•</span>
+                <span class="meta-tag">História</span>
+            </div>
 
-  @if (isLoading()) {
+            <!-- <p class="hero-subtitle">
+                Explore o acervo em formato de catálogo cinematográfico. Obras clássicas e estudos profundos para
+                continuar sua jornada no ritmo da Palavra.
+            </p>
+
+            <div class="hero-actions">
+                <button class="btn-primary"><i class="ri-play-fill"></i> Explorar Acervo</button>
+                <button class="btn-icon"><i class="ri-bookmark-line"></i></button>
+            </div> -->
+        </div>
+    </header>
+
+    @if (!bibleService.selectedBook()) {
+    <section class="biblia-sagrada-wrapper" aria-label="Lista de livros da Bíblia Sagrada">
+        <div class="catalog-header biblia-header">
+            <div>
+                <h2>Bíblia Sagrada</h2>
+            </div>
+        </div>
+
+        <div class="zona-navegacao-lateral biblia-nav esquerda" (click)="scrollBibleCatalog(-1)"></div>
+        <div class="zona-navegacao-lateral biblia-nav direita" (click)="scrollBibleCatalog(1)"></div>
+
+        <div class="catalog-rail biblia-catalog-rail" #estanteLivros>
+            @for (livro of bibleService.filteredBooks(); track livro.name) {
+            <article class="catalog-card bible-catalog-card" (click)="bibleService.selectBook(livro)">
+                <div class="cover-wrap">
+                    <img [src]="bibleService.getMetadados(livro.name).imagemUrl" [alt]="livro.name" loading="lazy"
+                        (error)="onBibleCoverError($event)" />
+
+                    <div class="cover-badges">
+                        <span class="badge badge-access" [class.badge-premium]="isBibleNewTestament(livro.name)">
+                            {{ isBibleNewTestament(livro.name) ? 'NT' : 'VT' }}
+                        </span>
+                    </div>
+
+                    <div class="card-overlay"></div>
+
+                    <div class="card-meta">
+                        <h3>{{ livro.name }}</h3>
+                        <p class="author">{{ bibleService.getMetadados(livro.name).resumo || 'Livro bíblico' }}</p>
+                        <span class="category">{{ bibleTestamentLabel(livro.name) }}</span>
+                    </div>
+                </div>
+            </article>
+            } @empty {
+            <div class="busca-vazia fade-in">
+                <p>{{versionService.ui().noResult}} "{{bibleService.searchTerm()}}"</p>
+            </div>
+            }
+        </div>
+    </section>
+    }
+
+    @if (isLoading()) {
     <div class="library-loading">
-      <span class="big-spinner"></span>
-      <p>Preparando catálogo...</p>
+        <span class="big-spinner"></span>
+        <p>Preparando catálogo...</p>
     </div>
-  } @else if (errorMessage()) {
+    } @else if (errorMessage()) {
     <div class="library-error">
-      <strong>Falha ao carregar catálogo</strong>
-      <p>{{ errorMessage() }}</p>
-      <button type="button" (click)="loadBooks()">Tentar novamente</button>
+        <strong>Falha ao carregar catálogo</strong>
+        <p>{{ errorMessage() }}</p>
+        <button type="button" (click)="loadBooks()">Tentar novamente</button>
     </div>
-  } @else {
-    
+    } @else {
+
     <!-- TRILHO DE CARDS (CATÁLOGO) -->
     <div class="catalog-section">
-      <div class="catalog-header">
-        <div>
-          <h2>Adicionados Recentemente</h2>
-        </div>
-        <div class="catalog-actions">
-          <button type="button" (click)="scrollCatalog(-1)" aria-label="Rolar para esquerda"><i class="ri-arrow-left-s-line"></i></button>
-          <button type="button" (click)="scrollCatalog(1)" aria-label="Rolar para direita"><i class="ri-arrow-right-s-line"></i></button>
-        </div>
-      </div>
-
-      <div #catalogRail class="catalog-rail">
-        @for (book of books(); track book.id) {
-          <article class="catalog-card" [style.animation-delay.ms]="book.enterDelayMs">
-            <div class="cover-wrap">
-              <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" (error)="onCoverError($event)" />
-              
-              <!-- Badges flutuantes no topo -->
-              <div class="cover-badges">
-                <span class="badge badge-access" [class.badge-premium]="book.premium">{{ book.accessBadge }}</span>
-              </div>
-              
-              <!-- Gradiente escuro que resolve o problema do título -->
-              <div class="card-overlay"></div>
-              
-              <!-- Meta-dados agora ficam DENTRO da imagem, na parte inferior -->
-              <div class="card-meta">
-                <h3>{{ book.title }}</h3>
-                <p class="author">{{ book.authorLabel }}</p>
-                <span class="category">{{ book.categoryLabel }}</span>
-              </div>
+        <div class="catalog-header">
+            <div>
+                <h2>Adicionados Recentemente</h2>
             </div>
-          </article>
-        }
-      </div>
+        </div>
+
+        <div class="zona-navegacao-lateral esquerda" (click)="scrollCatalog(-1)"></div>
+        <div class="zona-navegacao-lateral direita" (click)="scrollCatalog(1)"></div>
+
+        <div #catalogRail class="catalog-rail">
+            @for (book of books(); track book.id) {
+            <article class="catalog-card" [style.animation-delay.ms]="book.enterDelayMs">
+                <div class="cover-wrap">
+                    <img [src]="book.coverUrl" [alt]="book.title" loading="lazy" (error)="onCoverError($event)" />
+
+                    <!-- Badges flutuantes no topo -->
+                    <div class="cover-badges">
+                        <span class="badge badge-access" [class.badge-premium]="book.premium">{{ book.accessBadge
+                            }}</span>
+                    </div>
+
+                    <!-- Gradiente escuro que resolve o problema do título -->
+                    <div class="card-overlay"></div>
+
+                    <!-- Meta-dados agora ficam DENTRO da imagem, na parte inferior -->
+                    <div class="card-meta">
+                        <h3>{{ book.title }}</h3>
+                        <p class="author">{{ book.authorLabel }}</p>
+                        <span class="category">{{ book.categoryLabel }}</span>
+                    </div>
+                </div>
+            </article>
+            }
+        </div>
     </div>
-  }
+    }
 </section>

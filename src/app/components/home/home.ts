@@ -1,7 +1,8 @@
 import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { RouterModule, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { filter, map, startWith } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth';
 import { BibleVersion, VersionService } from '../../services/version/version-service';
 
@@ -29,6 +30,7 @@ type HomeMenuItem = {
 })
 export class Home {
   private readonly authService = inject(AuthService);
+  private readonly router = inject(Router);
   public readonly versionService = inject(VersionService);
   // Must match backend UserRank.requiredXp thresholds.
   private readonly levelXpThresholds = [
@@ -51,6 +53,15 @@ export class Home {
 
   readonly availableLangs: BibleVersion[] = this.versionService.getAvailableVersions();
   readonly currentVersion = toSignal(this.versionService.activeVersion$);
+  readonly currentRoute = toSignal(
+    this.router.events.pipe(
+      filter((event): event is NavigationEnd => event instanceof NavigationEnd),
+      startWith(null),
+      map(() => this.router.url)
+    ),
+    { initialValue: this.router.url }
+  );
+  readonly isLibraryRoute = computed(() => this.currentRoute().startsWith('/home/library'));
 
   toggleSidebar(): void {
     this.isSidebarOpen.update(v => !v);

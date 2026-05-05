@@ -2,6 +2,8 @@ import { AfterViewInit, Component, ElementRef, ViewChild, inject, signal } from 
 import { CommonModule } from '@angular/common';
 
 import { LibraryService } from '../../../../services/library/library.service';
+import { BibleService } from '../../../../services/bible';
+import { VersionService } from '../../../../services/version/version-service';
 
 @Component({
   selector: 'app-library-page',
@@ -12,8 +14,11 @@ import { LibraryService } from '../../../../services/library/library.service';
 })
 export class LibraryPage implements AfterViewInit {
   @ViewChild('catalogRail') private catalogRailRef?: ElementRef<HTMLDivElement>;
+  @ViewChild('estanteLivros') private estanteLivrosRef?: ElementRef<HTMLDivElement>;
 
   private readonly libraryService = inject(LibraryService);
+  readonly bibleService = inject(BibleService);
+  readonly versionService = inject(VersionService);
 
   readonly books = signal<LibraryBookCard[]>([]);
   readonly isLoading = signal(true);
@@ -57,6 +62,35 @@ export class LibraryPage implements AfterViewInit {
 
     const distance = Math.max(240, Math.floor(rail.clientWidth * 0.78));
     rail.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  }
+
+  scrollBibleCatalog(direction: -1 | 1): void {
+    const estante = this.estanteLivrosRef?.nativeElement;
+    if (!estante) {
+      return;
+    }
+
+    const distance = Math.max(220, Math.floor(estante.clientWidth * 0.78));
+    estante.scrollBy({ left: direction * distance, behavior: 'smooth' });
+  }
+
+  isBibleNewTestament(bookName: string): boolean {
+    return this.bibleService.isNovoTestamento(bookName);
+  }
+
+  bibleTestamentLabel(bookName: string): string {
+    return this.isBibleNewTestament(bookName) ? 'Novo Testamento' : 'Velho Testamento';
+  }
+
+  onBibleCoverError(event: Event): void {
+    const imageElement = event.target as HTMLImageElement | null;
+    if (!imageElement) {
+      return;
+    }
+
+    if (!imageElement.src.endsWith('/images/default-book.webp')) {
+      imageElement.src = 'images/default-book.webp';
+    }
   }
 
   onCoverError(event: Event): void {

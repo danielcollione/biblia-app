@@ -1,6 +1,10 @@
 $bg-dark: #050505;
 $bg-card: #111111;
 $bg-panel: #0d0d0d;
+$bg-shell-top: #050505;
+$bg-shell-mid: #050505;
+$bg-shell-bottom: #050505;
+$bg-main-surface: #050505;
 $gold-primary: #c5a059;
 $gold-soft: rgba(197, 160, 89, 0.2);
 $text-light: #f2eee3;
@@ -11,7 +15,7 @@ $text-muted: #b8afa0;
   max-height: 100dvh;
   display: grid;
   grid-template-columns: 320px 1fr;
-  background: radial-gradient(circle at top left, #1b1711 0%, #080808 55%, #050505 100%);
+  background: #050505;
   overflow: hidden;
   transition: grid-template-columns 0.3s cubic-bezier(0.25, 1, 0.33, 1);
 
@@ -441,11 +445,18 @@ $text-muted: #b8afa0;
   overflow-x: hidden;
   overflow-y: auto;
   min-height: 0;
+  background: #050505;
+  border-left: 1px solid #111111;
   -webkit-overflow-scrolling: touch;
 
   > * {
     flex: 1 1 auto;
     min-height: 0;
+  }
+
+  &.library-active {
+    padding: 0;
+    gap: 0;
   }
 }
 

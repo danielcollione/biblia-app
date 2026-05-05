@@ -13,6 +13,45 @@ $text-muted: #b8afa0;
   }
 }
 
+@keyframes sessionCardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes messageBubbleEntranceLeft {
+  from {
+    opacity: 0;
+    transform: translate3d(-12px, 18px, 0) scale(0.985);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes messageBubbleEntranceRight {
+  from {
+    opacity: 0;
+    transform: translate3d(12px, 18px, 0) scale(0.985);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    filter: blur(0);
+  }
+}
+
 :host {
   display: flex;
   height: 100%;
@@ -130,6 +169,7 @@ $text-muted: #b8afa0;
 }
 
 .session-item {
+  --session-enter-delay: 0ms;
   border: 1px solid rgba(197, 160, 89, 0.14);
   border-radius: 12px;
   padding: 11px;
@@ -139,6 +179,14 @@ $text-muted: #b8afa0;
   cursor: pointer;
   display: grid;
   gap: 4px;
+  opacity: 0;
+  animation: sessionCardEntrance 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--session-enter-delay);
+  will-change: transform, opacity, filter;
+  transition:
+    border-color 0.22s ease,
+    background-color 0.22s ease,
+    transform 0.22s ease;
 
   strong {
     font-size: 0.76rem;
@@ -153,6 +201,10 @@ $text-muted: #b8afa0;
   &.active {
     border-color: rgba(197, 160, 89, 0.45);
     background: linear-gradient(135deg, rgba(197, 160, 89, 0.14), rgba(255, 255, 255, 0.03));
+  }
+
+  &:hover {
+    transform: translateY(-2px);
   }
 }
 
@@ -311,13 +363,17 @@ $text-muted: #b8afa0;
 }
 
 .message-bubble {
+  --message-enter-delay: 0ms;
   max-width: min(90%, 760px);
   border-radius: 14px;
   padding: 10px 11px;
   border: 1px solid rgba(197, 160, 89, 0.16);
   background: rgba(255, 255, 255, 0.02);
-  animation: bubbleInLeft 0.26s ease-out both;
+  opacity: 0;
+  animation: messageBubbleEntranceLeft 700ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--message-enter-delay);
   transform-origin: left bottom;
+  will-change: transform, opacity, filter;
 
   header {
     display: flex;
@@ -353,7 +409,7 @@ $text-muted: #b8afa0;
     margin-left: auto;
     background: linear-gradient(145deg, rgba(197, 160, 89, 0.16), rgba(197, 160, 89, 0.06));
     border-color: rgba(197, 160, 89, 0.32);
-    animation: bubbleInRight 0.24s ease-out both;
+    animation-name: messageBubbleEntranceRight;
     transform-origin: right bottom;
   }
 
@@ -463,30 +519,6 @@ $text-muted: #b8afa0;
       opacity: 0.45;
       cursor: not-allowed;
     }
-  }
-}
-
-@keyframes bubbleInLeft {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.985);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@keyframes bubbleInRight {
-  from {
-    opacity: 0;
-    transform: translateY(8px) scale(0.985);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
   }
 }
 

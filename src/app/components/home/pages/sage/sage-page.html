@@ -18,11 +18,12 @@
       } @else if (!sessions().length) {
         <p class="sessions-empty">{{ versionService.ui().sageChatNoSessions }}</p>
       } @else {
-        @for (session of sessions(); track trackSession($index, session)) {
+        @for (session of sessions(); track trackSession($index, session); let index = $index) {
           <button
             type="button"
             class="session-item"
             [class.active]="session.id === activeSessionId()"
+            [style.--session-enter-delay]="(index * 70) + 'ms'"
             (click)="selectSession(session.id)">
             <strong>{{ session.title }}</strong>
             <span>{{ session.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
@@ -84,8 +85,9 @@
         </div>
       }
 
-      @for (message of messages(); track $index) {
-        <article class="message-bubble" [class.user]="message.role === 'USER'" [class.sage]="message.role === 'SAGE'" [class.stream-active]="message.streaming">
+      @for (message of messages(); track $index; let index = $index) {
+        <article class="message-bubble" [class.user]="message.role === 'USER'" [class.sage]="message.role === 'SAGE'" [class.stream-active]="message.streaming"
+          [style.--message-enter-delay]="(index * 55) + 'ms'">
           <header>
             <span>{{ message.role === 'USER' ? versionService.ui().sageChatYouLabel : versionService.ui().sageChatSageLabel }}</span>
             <small>{{ message.timestamp | date:'HH:mm' }}</small>

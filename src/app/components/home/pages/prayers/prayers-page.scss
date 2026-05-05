@@ -3,6 +3,19 @@
   to   { opacity: 1; }
 }
 
+@keyframes prayerEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
 :host {
   display: block;
   min-height: 100%;
@@ -138,6 +151,7 @@
 
 .prayer-balloon {
   box-sizing: border-box; /* ISSO RESOLVE OS CARDS UM EM CIMA DO OUTRO */
+  --prayer-enter-delay: 0ms;
   width: 100%;
   min-width: 0;
   max-width: 100%;
@@ -147,6 +161,10 @@
   border: 1px solid rgba(211, 171, 99, 0.15);
   color: #f4ead4;
   position: relative;
+  opacity: 0;
+  animation: prayerEntrance 720ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--prayer-enter-delay);
+  will-change: transform, opacity, filter;
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 
   &::after {

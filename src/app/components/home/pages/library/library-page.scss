@@ -1,22 +1,58 @@
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes cardReveal {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 :host {
   display: block;
   height: 100%;
   min-height: 0;
+  position: relative;
+  isolation: isolate;
   box-sizing: border-box;
-  background-color: #050505; /* Fundo mais escuro para estilo streaming */
+  background-color: transparent;
   animation: pageFadeIn 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+:host::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+:host::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 5, 5, 0.02) 0%,
+    rgba(5, 5, 5, 0.05) 55%,
+    rgba(5, 5, 5, 0.22) 78%,
+    rgba(5, 5, 5, 0.36) 100%
+  );
+  pointer-events: none;
 }
 
 .library-shell {
@@ -25,6 +61,7 @@
   gap: 32px;
   min-height: 100%;
   padding-bottom: 40px;
+  margin-bottom: 100px;
 }
 
 /* =========================================
@@ -33,39 +70,48 @@
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 60vh;
-  min-height: 400px;
-  max-height: 600px;
   display: flex;
   align-items: flex-end;
-  padding: 40px;
-  border-radius: 0 0 24px 24px;
-  overflow: hidden;
+  min-height: 58vh;
+  padding: 48px 40px;
 
-  .hero-bg {
+  img {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    width: 100%;
+    height: 800px;
+    object-fit: cover;
+    object-position: center 22%;
+    z-index: 0;
+  }
 
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-    }
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(5, 5, 5, 0.72) 0%,
+      rgba(5, 5, 5, 0.35) 35%,
+      rgba(5, 5, 5, 0.15) 60%,
+      rgba(5, 5, 5, 0.28) 100%
+    );
+  }
 
-    .hero-vignette {
-      position: absolute;
-      inset: 0;
-      /* Gradiente que escurece a lateral esquerda e a base para o texto brilhar */
-      background: linear-gradient(90deg, #050505 0%, rgba(5,5,5,0.6) 40%, transparent 100%),
-                  linear-gradient(0deg, #050505 0%, transparent 50%);
-    }
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -180px;
+    height: clamp(120px, 24vh, 220px);
+    background: linear-gradient(180deg, #05050500, #0505058c 55%, #050505);
+    pointer-events: none;
   }
 
   .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 3;
     max-width: 600px;
     animation: pageFadeIn 1s ease-out 200ms both;
 
@@ -84,7 +130,7 @@
       font-family: 'Cinzel', serif;
       font-size: clamp(2.5rem, 5vw, 4rem);
       line-height: 1.1;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
     }
 
     .hero-meta {
@@ -97,10 +143,10 @@
       font-weight: 500;
 
       .meta-tag {
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
         padding: 2px 6px;
         border-radius: 4px;
-        border: 1px solid rgba(255,255,255,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
 
@@ -109,7 +155,7 @@
       color: #dcd4c6;
       line-height: 1.6;
       font-size: 1.05rem;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .hero-actions {
@@ -143,14 +189,14 @@
 
       .btn-icon {
         width: 44px;
-        background: rgba(255,255,255,0.1);
+        background: rgba(255, 255, 255, 0.1);
         color: #ffffff;
-        border: 1px solid rgba(255,255,255,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         font-size: 1.2rem;
         backdrop-filter: blur(4px);
 
         &:hover {
-          background: rgba(255,255,255,0.2);
+          background: rgba(255, 255, 255, 0.2);
           border-color: #ffffff;
         }
       }
@@ -158,11 +204,93 @@
   }
 }
 
+.biblia-sagrada-wrapper {
+  position: relative;
+  padding: 0;
+
+  .zona-navegacao-lateral.biblia-nav {
+    height: 400px;
+    top: 20px;
+    bottom: 44px;
+  }
+
+  .biblia-header {
+    padding: 0 40px;
+    margin-bottom: 0;
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f4ead4;
+    }
+  }
+
+  .biblia-catalog-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 300px);
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 40px 20px 40px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 40px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .bible-catalog-card {
+    cursor: pointer;
+  }
+
+  .bible-catalog-card .badge-access {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .bible-catalog-card .badge-premium {
+    color: #6fcf97;
+    border-color: rgba(111, 207, 151, 0.55);
+  }
+
+  .busca-vazia {
+    font-family: 'Cinzel', serif;
+    color: #a18e76;
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-in;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* =========================================
    CATÁLOGO E RAIL
 ========================================= */
 .catalog-section {
-  padding: 0 40px;
+  position: relative;
+  /* 1. Removemos o padding daqui. É isso que impedia os livros 
+        de "esconderem atrás da tela" nas laterais. */
+  padding: 0;
 }
 
 .catalog-header {
@@ -170,6 +298,9 @@
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 16px;
+  /* 2. Devolvemos o padding apenas para o cabeçalho, 
+        para que o título "Adicionados Recentemente" continue alinhado. */
+  padding: 0 40px;
 
   h2 {
     margin: 0;
@@ -178,6 +309,28 @@
     font-weight: 600;
     letter-spacing: 0.5px;
   }
+}
+
+.catalog-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 300px);
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 3. A MÁGICA ACONTECE AQUI: 
+        O padding de 40px na esquerda alinha o primeiro card com o título.
+        O padding de 40px na direita FORÇA a margem existir após o último card! */
+  padding: 10px 40px 20px 40px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-padding-left: 40px;
 }
 
 .catalog-actions {
@@ -203,24 +356,6 @@
   }
 }
 
-.catalog-rail {
-  display: grid;
-  grid-auto-flow: column;
-  /* Proporção vertical ajustada para livros/pôsteres */
-  grid-auto-columns: minmax(180px, 220px);
-  gap: 20px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  padding: 10px 4px 20px;
-  scroll-behavior: smooth;
-  scroll-snap-type: x proximity;
-  
-  /* Ocultar barra de rolagem */
-  &::-webkit-scrollbar { display: none; }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
 /* =========================================
    CARDS LUXUOSOS (POSTER SEM TÍTULO)
 ========================================= */
@@ -239,7 +374,6 @@
   &:hover {
     transform: translateY(-8px) scale(1.03);
     border-color: #cfab6a; /* Borda dourada acende no hover */
-    box-shadow: 0 12px 24px rgba(0,0,0,0.8), 0 0 15px rgba(207, 171, 106, 0.2);
 
     .cover-wrap img {
       transform: scale(1.05); /* Efeito zoom sutil na arte */
@@ -250,7 +384,7 @@
 .cover-wrap {
   position: relative;
   /* Proporção 2:3 padrão de capa de livro/filme */
-  aspect-ratio: 2 / 3; 
+  aspect-ratio: 2 / 3;
   width: 100%;
   overflow: hidden;
 
@@ -290,7 +424,7 @@
   .card-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, #050505 0%, rgba(5,5,5,0.8) 25%, transparent 60%);
+    background: linear-gradient(to top, #050505 0%, rgba(5, 5, 5, 0.8) 25%, transparent 60%);
     pointer-events: none;
     z-index: 2;
   }
@@ -312,7 +446,7 @@
       font-size: 1.1rem;
       line-height: 1.2;
       font-family: 'Cinzel', serif;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
     }
 
     .author {
@@ -336,15 +470,135 @@
 /* Ajustes de Responsividade */
 @media (max-width: 780px) {
   .hero-banner {
-    padding: 24px;
-    height: 50vh;
-    border-radius: 0 0 16px 16px;
+    padding: 24px 16px;
+    min-height: 48vh;
 
-    .hero-title { font-size: 2rem; }
-    .hero-subtitle { display: none; /* Esconde texto longo no mobile */ }
+    img {
+      object-position: center 18%;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+    .hero-subtitle {
+      display: none;
+    }
   }
 
-  .catalog-section { padding: 0 16px; }
-  .catalog-actions { display: none; }
-  .catalog-rail { grid-auto-columns: minmax(140px, 160px); }
+  .catalog-section {
+    padding: 0; /* Zera o padding no mobile também */
+  }
+
+  .biblia-sagrada-wrapper {
+    .biblia-header {
+      padding: 0 16px;
+      margin-bottom: 12px;
+    }
+
+    .biblia-catalog-rail {
+      grid-auto-columns: minmax(185px, 210px);
+      padding: 10px 16px 20px 16px;
+      scroll-padding-left: 16px;
+    }
+
+    .zona-navegacao-lateral {
+      display: none !important;
+    }
+  }
+
+  .catalog-header {
+    padding: 0 16px; /* Mantém o título alinhado no mobile */
+  }
+
+  .catalog-actions {
+    display: none;
+  }
+
+  .catalog-rail {
+    grid-auto-columns: minmax(185px, 210px);
+    /* 16px na direita garantem a margem após o último livro no celular */
+    padding: 10px 16px 20px 16px;
+  }
+}
+
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px; // Largura fixa para não espalhar a sombra pela tela toda
+  z-index: 10; // Reduzido para não sobrepor outros elementos da página
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+
+  // Transição suave para o fundo preto
+  transition: background 0.3s ease;
+  background: transparent;
+
+  // Desenhando o Chevron (Seta) estilo HBO Max com bordas
+  &::after {
+    content: '';
+    display: inline-block;
+    padding: 10px; // Seta menor e mais delicada
+    border: solid #ffffff; // Branco puro
+    border-width: 0 2px 2px 0; // Mais fina (2px) para ficar idêntica à da foto
+    opacity: 0; // Começa invisível
+    transition: all 0.2s ease;
+  }
+
+  /* Quando o mouse entra na zona lateral */
+  &:hover {
+    &::after {
+      opacity: 1; // Revela a seta
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+
+    &::after {
+      transform: rotate(135deg); // Aponta para a esquerda
+      margin-left: 15px; // Ajuste fino de posição
+    }
+
+    &:hover {
+      // Gradiente escuro muito mais denso na ponta e curto, idêntico à HBO
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        // Leve aumento de escala mantendo a rotação
+        transform: rotate(135deg) scale(1.1);
+      }
+    }
+  }
+
+  &.direita {
+    right: 0;
+
+    &::after {
+      transform: rotate(-45deg); // Aponta para a direita
+      margin-right: 15px; // Ajuste fino de posição
+    }
+
+    &:hover {
+      // Gradiente escuro muito mais denso na ponta e curto, idêntico à HBO
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(-45deg) scale(1.1);
+      }
+    }
+  }
 }

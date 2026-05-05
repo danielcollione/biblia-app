@@ -9,6 +9,7 @@ export interface LivroInfo {
 
 @Component({
   selector: 'app-lombada-livro',
+  standalone: true,
   imports: [],
   templateUrl: './lombada-livro.html',
   styleUrl: './lombada-livro.scss',
