@@ -63,6 +63,8 @@ export class Home implements OnInit, OnDestroy {
   );
   readonly isLibraryRoute = computed(() => this.currentRoute().startsWith('/home/library'));
   readonly isSageRoute = computed(() => this.currentRoute().startsWith('/home/sage'));
+  readonly isRecommendationsRoute = computed(() => this.currentRoute().startsWith('/home/recommendations'));
+  readonly isBlogRoute = computed(() => this.currentRoute().startsWith('/home/blog'));
 
   ngOnInit(): void {
     this.authService.ensureProfileFreshForHome();
@@ -198,5 +200,6 @@ export class Home implements OnInit, OnDestroy {
     }
   }
 
+  
 
 }

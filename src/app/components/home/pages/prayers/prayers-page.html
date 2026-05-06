@@ -1,4 +1,6 @@
-<div class="prayers-shell">
+<div class="prayers-shell" #prayersShell>
+    <canvas class="prayers-embers-canvas" #embersCanvas></canvas>
+
     <header class="prayers-hero">
         <div>
             <p class="eyebrow">{{ versionService.ui().prayersEyebrow }}</p>
@@ -33,105 +35,73 @@
         <p>{{ versionService.ui().prayersLoading }}</p>
     </div>
     } @else {
-    <section class="prayers-board">
-        @if (!prayers().length) {
-        <div class="empty-state">
-            <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
-            <h2>{{ versionService.ui().prayersEmptyTitle }}</h2>
-            <p>{{ versionService.ui().prayersEmptySubtitle }}</p>
-        </div>
-        }
+    <div class="carousel-wrapper">
+        <button class="nav-button prev" (click)="scrollBoard(-1)" [class.hidden]="!canScrollLeft()" type="button">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
 
-        @for (prayer of prayers(); track prayer.id; let index = $index) {
-        <article class="prayer-balloon" [class.prayer-balloon-liked]="prayer.likedByCurrentUser"
-            [style.--prayer-enter-delay]="(index * 80) + 'ms'">
-            <div class="balloon-topline">
-                <div>
-                    <strong>{{ prayer.authorName }}</strong>
+        <section class="prayers-board" #prayersBoard (scroll)="onScroll()">
+            @if (!prayers().length) {
+            <div class="empty-state">
+                <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
+                <h2>{{ versionService.ui().prayersEmptyTitle }}</h2>
+                <p>{{ versionService.ui().prayersEmptySubtitle }}</p>
+            </div>
+            }
+
+            @for (prayer of prayers(); track prayer.id; let index = $index) {
+            <article class="prayer-card" [style.--prayer-enter-delay]="(index * 80) + 'ms'">
+                <div class="card-topline">
                     <span>{{ prayer.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
                 </div>
 
-                <!-- @if (canDeletePrayer()) {
-                <button class="delete-prayer-button" type="button" (click)="deletePrayer(prayer, $event)">
-                    Excluir
-                </button>
-                } -->
-            </div>
+                <p class="card-content">"{{ prayer.content }}"</p>
 
-            <p class="balloon-content">{{ prayer.content }}</p>
+                <div class="card-footer">
+                    <div class="author-info">
+                        <strong>{{ prayer.authorName }}</strong>
+                    </div>
 
-            <div class="balloon-footer">
-                <button class="like-button" [class.liked]="prayer.likedByCurrentUser" type="button"
-                    [disabled]="!hasActiveSubscription()" (click)="toggleLike(prayer, $event)">
-                    🙏
-                </button>
+                    <div class="like-wrapper">
+                        <div class="likes-copy">
+                            <span>{{ versionService.ui().prayersLikesLabel }}</span>
+                            <strong>{{ prayer.likesCount }}</strong>
+                        </div>
 
-                <div class="likes-copy">
-                    <span>{{ versionService.ui().prayersLikesLabel }}</span>
-                    <strong>{{ prayer.likesCount }}</strong>
+                        <button class="like-button" [class.liked]="prayer.likedByCurrentUser" type="button"
+                            [disabled]="!hasActiveSubscription()" (click)="toggleLike(prayer, $event)">
+                            🙏
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </article>
-        }
-
-        @if (hasMorePages()) {
-        <div class="load-more-container">
-            <button class="load-more-button" type="button" (click)="loadMorePrayers()" [disabled]="isLoadingMore()">
-                @if (isLoadingMore()) {
-                <span class="mini-spinner"></span>
-                }
-                {{ isLoadingMore() ? versionService.ui().prayersLoadingMore : versionService.ui().prayersLoadMore }}
-            </button>
-        </div>
-        }
-    </section>
-    }
-
-    <button class="floating-create-button" type="button" (click)="openCreateModal()"
-        [class.locked]="!hasActiveSubscription()">
-        <span>+</span>
-        <small>{{ versionService.ui().prayersCreateButton }}</small>
-    </button>
-
-    @if (isModalOpen()) {
-    <div class="modal-backdrop" (click)="closeCreateModal()">
-        <div class="prayer-modal" (click)="$event.stopPropagation()">
-            <div class="modal-header">
-                <div>
-                    <p class="eyebrow">{{ versionService.ui().prayersModalEyebrow }}</p>
-                    <h2>{{ versionService.ui().prayersModalTitle }}</h2>
-                </div>
-
-                <button class="close-modal" type="button" (click)="closeCreateModal()">×</button>
-            </div>
-
-            <p class="modal-copy">{{ versionService.ui().prayersModalSubtitle }}</p>
-
-            <textarea class="prayer-textarea" [ngModel]="newPrayerContent()"
-                (ngModelChange)="updatePrayerContent($event)"
-                [placeholder]="versionService.ui().prayersTextareaPlaceholder" rows="6" [maxlength]="maxPrayerLength"></textarea>
-
-            <div class="modal-meta">
-                <span>{{ versionService.ui().prayersCharactersLabel }} {{ remainingCharacters() }}</span>
-                <span>{{ newPrayerContent().length }}/{{ maxPrayerLength }}</span>
-            </div>
-
-            @if (modalError()) {
-            <p class="modal-error">{{ modalError() }}</p>
+            </article>
             }
 
-            <div class="modal-actions">
-                <button class="secondary-action" type="button" (click)="closeCreateModal()">{{
-                    versionService.ui().prayersCancel }}</button>
-                <button class="primary-action" type="button" [disabled]="!canSubmitPrayer() || isSubmitting()"
-                    (click)="submitPrayer()">
-                    @if (isSubmitting()) {
+            @if (hasMorePages()) {
+            <div class="load-more-container">
+                <button class="load-more-button" type="button" (click)="loadMorePrayers()" [disabled]="isLoadingMore()">
+                    @if (isLoadingMore()) {
                     <span class="mini-spinner"></span>
                     }
-                    {{ versionService.ui().prayersPublish }}
+                    {{ isLoadingMore() ? versionService.ui().prayersLoadingMore : versionService.ui().prayersLoadMore }}
                 </button>
             </div>
-        </div>
+            }
+        </section>
+
+        <button class="nav-button next" (click)="scrollBoard(1)" [class.hidden]="!canScrollRight() && !hasMorePages()" type="button">
+            <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
     </div>
     }
+
 </div>
+
+@if (isModalOpen()) {
+<app-create-prayer-modal (closed)="closeCreateModal()" (created)="onPrayerCreated()"></app-create-prayer-modal>
+}
+
+<button class="floating-create-button" type="button" (click)="openCreateModal()" [class.locked]="!hasActiveSubscription()">
+    <span>+</span>
+    <small>{{ versionService.ui().prayersCreateButton }}</small>
+</button>

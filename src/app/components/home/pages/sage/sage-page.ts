@@ -38,6 +38,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly isLoadingMessages = signal(false);
   readonly isSending = signal(false);
   readonly isSessionsPanelOpen = signal(false);
+  readonly isAvatarModalOpen = signal(false);
   readonly errorMessage = signal<string | null>(null);
 
   readonly hasMessages = computed(() => this.messages().length > 0);
@@ -77,6 +78,14 @@ export class SagePage implements AfterViewInit, OnDestroy {
       cancelAnimationFrame(this.scrollAnimationFrameId);
       this.scrollAnimationFrameId = null;
     }
+  }
+
+  openAvatarModal(): void {
+    this.isAvatarModalOpen.set(true);
+  }
+
+  closeAvatarModal(): void {
+    this.isAvatarModalOpen.set(false);
   }
 
   async createNewSession(): Promise<void> {

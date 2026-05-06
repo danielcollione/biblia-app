@@ -1,9 +1,16 @@
-import { Component, OnDestroy, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { VersionService } from '../../../../services/version/version-service';
 import { StudyService, StudyResponseDto } from '../../../../services/study/study.service';
-import { DOCUMENT } from '@angular/common';
+
+type EmberParticle = {
+  x: number; y: number;
+  vx: number; vy: number;
+  life: number; maxLife: number;
+  size: number; alpha: number;
+  hueShift: number;
+};
 
 @Component({
   selector: 'app-outlines-page',
@@ -12,11 +19,45 @@ import { DOCUMENT } from '@angular/common';
   templateUrl: './outlines-page.html',
   styleUrls: ['./outlines-page.scss'],
 })
-export class OutlinesPage {
+export class OutlinesPage implements AfterViewInit, OnDestroy {
   readonly versionService = inject(VersionService);
   private readonly studyService = inject(StudyService);
   private readonly document = inject(DOCUMENT);
+  private readonly isBrowser: boolean;
+  private readonly embers: EmberParticle[] = [];
+  private canvasContext: CanvasRenderingContext2D | null = null;
+  private animationFrameId: number | null = null;
+  private lastFrameTime = 0;
+  private emberSpawnAccumulator = 0;
+  private cleanupCallbacks: Array<() => void> = [];
+
+  @ViewChild('embersCanvas') embersCanvasRef!: ElementRef<HTMLCanvasElement>;
+
+  constructor(
+    private readonly ngZone: NgZone,
+    @Inject(PLATFORM_ID) platformId: object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
   private loadingMessageIntervalId: ReturnType<typeof setInterval> | null = null;
+
+  ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      this.ngZone.runOutsideAngular(() => {
+        this.setupCanvas();
+        this.startAnimationLoop();
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+    this.cleanupCallbacks.forEach(cb => cb());
+    this.cleanupCallbacks = [];
+    this.stopLoadingMessageRotation();
+  }
 
   themeOrVerse = '';
   contentType = 'Study';
@@ -151,6 +192,104 @@ export class OutlinesPage {
     });
   }
 
+  private setupCanvas(): void {
+    const canvas = this.embersCanvasRef.nativeElement;
+    const context = canvas.getContext('2d');
+    if (!context) return;
+    this.canvasContext = context;
+    this.resizeCanvas();
+    const resizeHandler = () => this.resizeCanvas();
+    window.addEventListener('resize', resizeHandler, { passive: true });
+    this.cleanupCallbacks.push(() => window.removeEventListener('resize', resizeHandler));
+  }
+
+  private resizeCanvas(): void {
+    const canvas = this.embersCanvasRef.nativeElement;
+    const host = canvas.parentElement!;
+    const dpr = window.devicePixelRatio || 1;
+    const width = host.clientWidth;
+    const height = host.clientHeight;
+    canvas.width = Math.max(1, Math.floor(width * dpr));
+    canvas.height = Math.max(1, Math.floor(height * dpr));
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+    if (this.canvasContext) this.canvasContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+
+  private startAnimationLoop(): void {
+    const frame = () => {
+      this.renderFrame();
+      this.animationFrameId = requestAnimationFrame(frame);
+    };
+    frame();
+  }
+
+  private renderFrame(): void {
+    if (!this.canvasContext) return;
+    const canvas = this.embersCanvasRef.nativeElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const context = this.canvasContext;
+    const now = performance.now();
+    const deltaSeconds = this.lastFrameTime > 0 ? Math.min(0.05, (now - this.lastFrameTime) / 1000) : 0.016;
+    this.lastFrameTime = now;
+    context.clearRect(0, 0, width, height);
+    this.spawnAmbientEmbers(width, height, deltaSeconds);
+    for (let i = this.embers.length - 1; i >= 0; i--) {
+      const ember = this.embers[i];
+      ember.life += 1;
+      if (ember.life >= ember.maxLife) { this.embers.splice(i, 1); continue; }
+      ember.x += ember.vx;
+      ember.y += ember.vy;
+      ember.vx = ember.vx * 0.996 + Math.sin((ember.life + ember.hueShift) * 0.035) * 0.003;
+      ember.vy = ember.vy * 0.995 + 0.0018;
+      const lifeProgress = ember.life / ember.maxLife;
+      const fade = 1 - lifeProgress;
+      const twinkle = 0.94 + Math.sin(ember.life * 0.18 + ember.hueShift) * 0.06;
+      const alpha = ember.alpha * fade * twinkle;
+      const radius = ember.size * (0.82 + fade * 0.35);
+      this.drawEmber(ember.x, ember.y, radius, alpha);
+    }
+  }
+
+  private spawnAmbientEmbers(width: number, height: number, deltaSeconds: number): void {
+    const spawnPerSecond = Math.max(10, width / 90);
+    this.emberSpawnAccumulator += spawnPerSecond * deltaSeconds;
+    const spawnCount = Math.floor(this.emberSpawnAccumulator);
+    if (spawnCount <= 0) return;
+    this.emberSpawnAccumulator -= spawnCount;
+    for (let i = 0; i < spawnCount; i++) {
+      const spawnFromBottom = Math.random() < 0.35;
+      this.embers.push({
+        x: Math.random() * width,
+        y: spawnFromBottom ? height + Math.random() * 20 : Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: -(0.42 + Math.random() * 0.85),
+        life: 0,
+        maxLife: 78 + Math.random() * 92,
+        size: 0.45 + Math.random() * 1.05,
+        alpha: 0.08 + Math.random() * 0.17,
+        hueShift: Math.random() * 14,
+      });
+    }
+    if (this.embers.length > 260) this.embers.splice(0, this.embers.length - 260);
+  }
+
+  private drawEmber(x: number, y: number, radius: number, alpha: number): void {
+    if (!this.canvasContext) return;
+    const context = this.canvasContext;
+    const finalAlpha = Math.min(0.65, alpha);
+    const glowRadius = radius * 2.4;
+    context.beginPath();
+    context.fillStyle = `rgba(255, 136, 46, ${finalAlpha * 0.26})`;
+    context.arc(x, y, glowRadius, 0, Math.PI * 2);
+    context.fill();
+    context.beginPath();
+    context.fillStyle = `rgba(255, 200, 120, ${finalAlpha})`;
+    context.arc(x, y, radius, 0, Math.PI * 2);
+    context.fill();
+  }
+
   exportToPdf(): void {
     const study = this.result();
     if (!study) return;
@@ -201,10 +340,6 @@ ${study.conclusion ? `<div class="section"><h2>${ui.sagePageConclusion}</h2><p>$
       win.document.write(html);
       win.document.close();
     }
-  }
-
-  ngOnDestroy(): void {
-    this.stopLoadingMessageRotation();
   }
 
   private startLoadingMessageRotation(): void {

@@ -27,7 +27,7 @@
 
   <aside class="home-sidebar" [class.mobile-open]="isMobileMenuOpen()" [class.collapsed]="!isSidebarOpen()">
     <div class="sidebar-top">
-      <div class="brand-block">
+      <a class="brand-block brand-link" routerLink="/home" (click)="onMenuNavigate()" [attr.aria-label]="versionService.ui().homeBrandName">
         <div class="brand-glyph">
           <img src="logo-sem-fundo.png" alt="Logo" class="brand-logo-img" />
         </div>
@@ -35,7 +35,7 @@
           <span class="brand-kicker">{{ versionService.ui().unveiledBible }}</span>
           <strong>{{ versionService.ui().homeBrandName }}</strong>
         </div>
-      </div>
+      </a>
 
       <button class="sidebar-toggle-btn" (click)="toggleSidebar()" type="button" [attr.aria-label]="versionService.ui().headerOpenMenuAriaLabel">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
@@ -151,10 +151,10 @@
       </div>
 
       <div class="footer-actions">
-        <a class="footer-action" routerLink="/home" (click)="onMenuNavigate()">
+        <!-- <a class="footer-action" routerLink="/home" (click)="onMenuNavigate()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"></circle><path d="M4 20c1.8-3.3 5-5 8-5s6.2 1.7 8 5"></path></svg>
           <span>{{ versionService.ui().homeProfileButton }}</span>
-        </a>
+        </a> -->
         <button class="footer-action logout" (click)="logout()" type="button">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><path d="M16 17l5-5-5-5"></path><path d="M21 12H9"></path></svg>
           <span>{{ versionService.ui().homeLogoutButton }}</span>
@@ -163,7 +163,12 @@
     </div>
   </aside>
 
-  <main class="home-main" [class.library-active]="isLibraryRoute()" [class.sage-active]="isSageRoute()">
+  <main
+    class="home-main"
+    [class.library-active]="isLibraryRoute()"
+    [class.sage-active]="isSageRoute()"
+    [class.recommendations-active]="isRecommendationsRoute()"
+    [class.blog-active]="isBlogRoute()">
     <router-outlet></router-outlet>
   </main>
 

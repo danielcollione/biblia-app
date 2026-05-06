@@ -1,13 +1,24 @@
 import { Component } from '@angular/core';
+import { MaterialsComponent } from '../../../../components/materials/materials';
 
 @Component({
   selector: 'app-recommendations-page',
   standalone: true,
-  template: `<div class="home-page-stub"></div>`,
-  styles: [`
-    @keyframes pageFadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
-    :host { display: block; animation: pageFadeIn 480ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both; }
-    .home-page-stub { flex: 1; }
-  `]
+  imports: [MaterialsComponent],
+  template: `<app-materials></app-materials>`,
+  styles: [
+    `
+      :host {
+        display: block;
+        height: 100%;
+        min-height: 0;
+        margin-top: 50px !important;
+      }
+
+      :host ::ng-deep .material-container {
+        margin-top: 0;
+      }
+    `,
+  ],
 })
 export class RecommendationsPage {}

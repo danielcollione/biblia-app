@@ -1,46 +1,106 @@
-import { AfterViewInit, Component, computed, inject, signal } from '@angular/core';
-import { CommonModule, DatePipe } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
+import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 
 import { AuthService } from '../../../../services/auth/auth';
 import { PrayerItemDto, PrayersService } from '../../../../services/prayers/prayers.service';
 import { VersionService } from '../../../../services/version/version-service';
+import { CreatePrayerModal } from './modal/create-prayer-modal';
+
+type EmberParticle = {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  life: number;
+  maxLife: number;
+  size: number;
+  alpha: number;
+  hueShift: number;
+};
 
 @Component({
   selector: 'app-prayers-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe],
+  imports: [CommonModule, FormsModule, DatePipe, CreatePrayerModal],
   templateUrl: './prayers-page.html',
   styleUrl: './prayers-page.scss'
 })
-export class PrayersPage implements AfterViewInit {
-  readonly maxPrayerLength = 280;
-
+export class PrayersPage implements AfterViewInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly prayersService = inject(PrayersService);
   readonly versionService = inject(VersionService);
+  private readonly isBrowser: boolean;
+  private readonly embers: EmberParticle[] = [];
+  private canvasContext: CanvasRenderingContext2D | null = null;
+  private animationFrameId: number | null = null;
+  private lastFrameTime = 0;
+  private emberSpawnAccumulator = 0;
+  private cleanupCallbacks: Array<() => void> = [];
+  private lockedScrollContainer: HTMLElement | null = null;
 
   readonly prayers = signal<PrayerItemDto[]>([]);
   readonly isLoading = signal(true);
   readonly isLoadingMore = signal(false);
-  readonly isSubmitting = signal(false);
   readonly isModalOpen = signal(false);
-  readonly newPrayerContent = signal('');
-  readonly modalError = signal<string | null>(null);
   readonly flashMessage = signal<string | null>(null);
   readonly flashIsError = signal(false);
   readonly currentPage = signal(0);
   readonly hasMorePages = signal(true);
 
-  readonly remainingCharacters = computed(() => Math.max(0, this.maxPrayerLength - this.newPrayerContent().length));
-  readonly canSubmitPrayer = computed(() => {
-    const contentLength = this.newPrayerContent().trim().length;
-    return this.hasActiveSubscription() && contentLength > 0 && contentLength <= this.maxPrayerLength;
-  });
+  // Sinais de controle para as setas
+  readonly canScrollLeft = signal(false);
+  readonly canScrollRight = signal(true);
+
+  @ViewChild('prayersShell') prayersShellRef!: ElementRef<HTMLElement>;
+  @ViewChild('embersCanvas') embersCanvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('prayersBoard') prayersBoardRef?: ElementRef<HTMLElement>;
+
+  constructor(
+    private readonly ngZone: NgZone,
+    @Inject(PLATFORM_ID) platformId: object,
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngAfterViewInit(): void {
+    if (this.isBrowser) {
+      this.ngZone.runOutsideAngular(() => {
+        this.setupCanvas();
+        this.startAnimationLoop();
+        
+        // Lógica para transformar o Scroll Vertical do Mouse em Horizontal
+        setTimeout(() => {
+          if (this.prayersBoardRef?.nativeElement) {
+            const board = this.prayersBoardRef.nativeElement;
+            const wheelHandler = (event: WheelEvent) => {
+              // Verifica se a rolagem foi vertical (rodinha do mouse comum)
+              if (event.deltaY !== 0) {
+                event.preventDefault(); // Previne a tela inteira de descer
+                board.scrollLeft += event.deltaY; // Rola lateralmente
+              }
+            };
+            
+            // Registramos o evento como 'passive: false' para podermos usar o preventDefault
+            board.addEventListener('wheel', wheelHandler, { passive: false });
+            this.cleanupCallbacks.push(() => board.removeEventListener('wheel', wheelHandler));
+          }
+        }, 100);
+      });
+    }
+
     this.loadPrayers();
+  }
+
+  ngOnDestroy(): void {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
+
+    this.cleanupCallbacks.forEach((callback) => callback());
+    this.cleanupCallbacks = [];
+    this.unlockBackgroundScroll();
   }
 
   hasActiveSubscription(): boolean {
@@ -59,52 +119,20 @@ export class PrayersPage implements AfterViewInit {
       return;
     }
 
-    this.newPrayerContent.set('');
-    this.modalError.set(null);
     this.isModalOpen.set(true);
+    this.lockBackgroundScroll();
   }
 
   closeCreateModal(): void {
     this.isModalOpen.set(false);
-    this.newPrayerContent.set('');
-    this.modalError.set(null);
+    this.unlockBackgroundScroll();
   }
 
-  updatePrayerContent(content: string): void {
-    this.newPrayerContent.set(this.sanitizePrayerContent(content));
-  }
-
-  submitPrayer(): void {
-    if (!this.canSubmitPrayer()) {
-      if (!this.hasActiveSubscription()) {
-        this.modalError.set(this.versionService.ui().prayersPremiumRequired);
-      }
-      return;
-    }
-
-    const contentToSend = this.sanitizePrayerContent(this.newPrayerContent()).trim();
-    this.newPrayerContent.set(contentToSend);
-
-    if (!contentToSend.length) {
-      return;
-    }
-
-    this.isSubmitting.set(true);
-    this.modalError.set(null);
-
-    this.prayersService.create(contentToSend)
-      .pipe(finalize(() => this.isSubmitting.set(false)))
-      .subscribe({
-        next: () => {
-          this.closeCreateModal();
-          this.showFlash(this.versionService.ui().prayersCreateSuccess, false);
-          this.currentPage.set(0);
-          this.loadPrayers();
-        },
-        error: (error) => {
-          this.modalError.set(this.resolveHttpError(error, this.versionService.ui().prayersCreateError));
-        }
-      });
+  onPrayerCreated(): void {
+    this.closeCreateModal();
+    this.showFlash(this.versionService.ui().prayersCreateSuccess, false);
+    this.currentPage.set(0);
+    this.loadPrayers();
   }
 
   refreshPrayers(): void {
@@ -132,6 +160,31 @@ export class PrayersPage implements AfterViewInit {
           this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersLoadError), true);
         }
       });
+  }
+
+  onScroll(): void {
+    if (!this.prayersBoardRef?.nativeElement) return;
+    const el = this.prayersBoardRef.nativeElement;
+
+    // Atualiza a visibilidade das setas laterais
+    this.canScrollLeft.set(el.scrollLeft > 0);
+    
+    // Calcula se está perto do fim para buscar mais (infinity scroll e botão next)
+    const isNearEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 150;
+    this.canScrollRight.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 5);
+
+    if (isNearEnd && this.hasMorePages() && !this.isLoadingMore()) {
+      this.loadMorePrayers();
+    }
+  }
+
+  scrollBoard(direction: number): void {
+    if (!this.prayersBoardRef?.nativeElement) return;
+    const el = this.prayersBoardRef.nativeElement;
+    
+    // Pula 60% da largura da tela suavemente com o clique do botão
+    const scrollAmount = el.clientWidth * 0.6 * direction;
+    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
   }
 
   toggleLike(prayer: PrayerItemDto, event?: Event): void {
@@ -225,7 +278,170 @@ export class PrayersPage implements AfterViewInit {
     this.flashIsError.set(isError);
   }
 
-  private sanitizePrayerContent(content: string): string {
-    return (content ?? '').slice(0, this.maxPrayerLength);
+  private lockBackgroundScroll(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    const host = this.prayersShellRef?.nativeElement;
+    const mainContainer = host?.closest('.home-main') as HTMLElement | null;
+
+    if (mainContainer) {
+      this.lockedScrollContainer = mainContainer;
+      this.lockedScrollContainer.style.overflow = 'hidden';
+      this.lockedScrollContainer.style.touchAction = 'none';
+    }
+
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+  }
+
+  private unlockBackgroundScroll(): void {
+    if (!this.isBrowser) {
+      return;
+    }
+
+    if (this.lockedScrollContainer) {
+      this.lockedScrollContainer.style.overflow = '';
+      this.lockedScrollContainer.style.touchAction = '';
+      this.lockedScrollContainer = null;
+    }
+
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+  }
+
+  private setupCanvas(): void {
+    const canvas = this.embersCanvasRef.nativeElement;
+    const context = canvas.getContext('2d');
+
+    if (!context) {
+      return;
+    }
+
+    this.canvasContext = context;
+    this.resizeCanvas();
+
+    const resizeHandler = () => this.resizeCanvas();
+    window.addEventListener('resize', resizeHandler, { passive: true });
+    this.cleanupCallbacks.push(() => window.removeEventListener('resize', resizeHandler));
+  }
+
+  private resizeCanvas(): void {
+    const canvas = this.embersCanvasRef.nativeElement;
+    const shell = this.prayersShellRef.nativeElement;
+    const dpr = window.devicePixelRatio || 1;
+    const width = shell.clientWidth;
+    const height = shell.clientHeight;
+
+    canvas.width = Math.max(1, Math.floor(width * dpr));
+    canvas.height = Math.max(1, Math.floor(height * dpr));
+    canvas.style.width = `${width}px`;
+    canvas.style.height = `${height}px`;
+
+    if (this.canvasContext) {
+      this.canvasContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  }
+
+  private startAnimationLoop(): void {
+    const frame = () => {
+      this.renderFrame();
+      this.animationFrameId = requestAnimationFrame(frame);
+    };
+
+    frame();
+  }
+
+  private renderFrame(): void {
+    if (!this.canvasContext) {
+      return;
+    }
+
+    const canvas = this.embersCanvasRef.nativeElement;
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    const context = this.canvasContext;
+    const now = performance.now();
+    const deltaSeconds = this.lastFrameTime > 0 ? Math.min(0.05, (now - this.lastFrameTime) / 1000) : 0.016;
+    this.lastFrameTime = now;
+
+    context.clearRect(0, 0, width, height);
+    this.spawnAmbientEmbers(width, height, deltaSeconds);
+
+    for (let index = this.embers.length - 1; index >= 0; index -= 1) {
+      const ember = this.embers[index];
+      ember.life += 1;
+
+      if (ember.life >= ember.maxLife) {
+        this.embers.splice(index, 1);
+        continue;
+      }
+
+      ember.x += ember.vx;
+      ember.y += ember.vy;
+      ember.vx = ember.vx * 0.996 + Math.sin((ember.life + ember.hueShift) * 0.035) * 0.003;
+      ember.vy = ember.vy * 0.995 + 0.0018;
+
+      const lifeProgress = ember.life / ember.maxLife;
+      const fade = 1 - lifeProgress;
+      const twinkle = 0.94 + Math.sin(ember.life * 0.18 + ember.hueShift) * 0.06;
+      const alpha = ember.alpha * fade * twinkle;
+      const radius = ember.size * (0.82 + fade * 0.35);
+
+      this.drawEmber(ember.x, ember.y, radius, alpha);
+    }
+  }
+
+  private spawnAmbientEmbers(width: number, height: number, deltaSeconds: number): void {
+    const spawnPerSecond = Math.max(10, width / 90);
+    this.emberSpawnAccumulator += spawnPerSecond * deltaSeconds;
+    const spawnCount = Math.floor(this.emberSpawnAccumulator);
+
+    if (spawnCount <= 0) {
+      return;
+    }
+
+    this.emberSpawnAccumulator -= spawnCount;
+
+    for (let index = 0; index < spawnCount; index += 1) {
+      const spawnFromBottom = Math.random() < 0.35;
+
+      this.embers.push({
+        x: Math.random() * width,
+        y: spawnFromBottom ? height + Math.random() * 20 : Math.random() * height,
+        vx: (Math.random() - 0.5) * 0.22,
+        vy: -(0.42 + Math.random() * 0.85),
+        life: 0,
+        maxLife: 78 + Math.random() * 92,
+        size: 0.45 + Math.random() * 1.05,
+        alpha: 0.08 + Math.random() * 0.17,
+        hueShift: Math.random() * 14,
+      });
+    }
+
+    if (this.embers.length > 260) {
+      this.embers.splice(0, this.embers.length - 260);
+    }
+  }
+
+  private drawEmber(x: number, y: number, radius: number, alpha: number): void {
+    if (!this.canvasContext) {
+      return;
+    }
+
+    const context = this.canvasContext;
+    const finalAlpha = Math.min(0.65, alpha);
+    const glowRadius = radius * 2.4;
+
+    context.beginPath();
+    context.fillStyle = `rgba(255, 136, 46, ${finalAlpha * 0.26})`;
+    context.arc(x, y, glowRadius, 0, Math.PI * 2);
+    context.fill();
+
+    context.beginPath();
+    context.fillStyle = `rgba(255, 200, 120, ${finalAlpha})`;
+    context.arc(x, y, radius, 0, Math.PI * 2);
+    context.fill();
   }
 }

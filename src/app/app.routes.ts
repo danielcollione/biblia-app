@@ -27,7 +27,7 @@ export const routes: Routes = [
     component: Home,
     canActivate: [authGuard],
     children: [
-      { path: '', loadComponent: () => import('./components/home/pages/dashboard/home-dashboard').then(m => m.HomeDashboard) },
+      { path: '', loadComponent: () => import('./components/home/pages/initial/home-initial-page').then(m => m.HomeInitialPage) },
       { path: 'outlines', loadComponent: () => import('./components/home/pages/outlines/outlines-page').then(m => m.OutlinesPage) },
       { path: 'prayers', loadComponent: () => import('./components/home/pages/prayers/prayers-page').then(m => m.PrayersPage) },
       { path: 'sage', loadComponent: () => import('./components/home/pages/sage/sage-page').then(m => m.SagePage) },

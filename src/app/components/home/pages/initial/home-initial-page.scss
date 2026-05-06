@@ -1,0 +1,173 @@
+/* Contêiner principal */
+.sanctuary-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: none;
+  overflow: hidden;
+}
+
+/* Canvas de particulas celestiais */
+.celestial-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Sobreposição invisível */
+.sanctuary-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none; 
+}
+
+/* =========================================
+   NOVO LAYOUT: LOGO + LINHA + TEXTO
+   ========================================= */
+
+.content-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem; /* Espaço entre a logo, a linha e o texto */
+  pointer-events: auto; /* Devolve o clique para essa área */
+}
+
+/* Logo à esquerda */
+.sanctuary-logo {
+  height: 170px; /* Ajuste o tamanho da sua logo aqui */
+  width: auto;
+//   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2)); /* Brilho sutil na logo */
+  transform-origin: center center;
+  will-change: transform;
+}
+
+/* O risco dourado no meio */
+.vertical-divider {
+  width: 2px;
+  height: 200px;
+  /* Cria o efeito de fade nas pontas e forte no meio */
+  background: linear-gradient(to bottom, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0));
+}
+
+/* Alinhamento dos textos à direita da linha */
+.text-content {
+  text-align: left;
+  padding: 18px 22px;
+  border-radius: 16px;
+  border: none;
+  background: transparent;
+  backdrop-filter: none;
+}
+
+@media (max-width: 900px) {
+  .content-row {
+    flex-direction: column;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .vertical-divider {
+    width: 160px;
+    height: 2px;
+    background: linear-gradient(to right, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0));
+  }
+
+  .text-content {
+    text-align: center;
+  }
+
+  .title-kicker {
+    font-size: 0.95rem;
+    letter-spacing: 2.2px;
+  }
+
+  .title-main {
+    font-size: 2.7rem;
+  }
+
+  .sanctuary-logo {
+    height: 160px;
+  }
+
+  .home-contact-footer {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    font-size: 0.76rem;
+  }
+}
+
+.monumental-title {
+  margin: 0 0 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title-kicker {
+  font-family: 'Cormorant Garamond', 'Cinzel', 'Times New Roman', serif;
+  font-size: 1.15rem;
+  font-weight: 500;
+  letter-spacing: 3px;
+  color: rgba(234, 221, 207, 0.88);
+  text-transform: uppercase;
+}
+
+.title-main {
+  font-family: 'Cinzel', 'Times New Roman', serif;
+  font-size: 4.2rem;
+  font-weight: 500;
+  line-height: 0.95;
+  letter-spacing: 2.5px;
+  color: #d4af37;
+  text-transform: uppercase;
+  text-shadow: 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.elegant-subtitle {
+  margin: 0;
+  font-family: 'Cormorant Garamond', 'Cinzel', serif;
+  font-size: 1.15rem;
+  letter-spacing: 1.6px;
+  color: rgba(234, 221, 207, 0.78);
+}
+
+.home-contact-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 14px;
+  z-index: 3;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  padding: 0 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 0.2px;
+  color: rgba(234, 221, 207, 0.68);
+  text-align: center;
+  pointer-events: auto;
+
+  a {
+    color: rgba(212, 175, 55, 0.95);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.45);
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.82;
+    }
+  }
+}
