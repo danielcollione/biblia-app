@@ -93,10 +93,10 @@ export class Home implements OnInit, OnDestroy {
     { key: 'prayers', route: '/home/prayers' },
     { key: 'sage', route: '/home/sage' },
     { key: 'library', route: '/home/library' },
-    { key: 'quiz', route: '/home/quiz' },
+    // { key: 'quiz', route: '/home/quiz' },
     { key: 'recommendations', route: '/home/recommendations' },
     { key: 'blog', route: '/home/blog' },
-    { key: 'ranking', route: '/home/ranking' },
+    // { key: 'ranking', route: '/home/ranking' },
   ]);
 
   readonly menuItems = computed(() => {

@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../../../../services/auth/auth';
 import { SageChatService, ChatSessionDto } from '../../../../services/sage-chat/sage-chat.service';
 import { VersionService } from '../../../../services/version/version-service';
+import { PricingAccessDeniedComponent } from '../../../pricing-access-denied/pricing-access-denied.component';
 
 type ChatRole = 'USER' | 'SAGE';
 
@@ -19,7 +20,7 @@ type ChatBubble = {
 @Component({
   selector: 'app-sage-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PricingAccessDeniedComponent],
   templateUrl: './sage-page.html',
   styleUrl: './sage-page.scss'
 })

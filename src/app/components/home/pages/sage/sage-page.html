@@ -1,3 +1,9 @@
+@if (!hasActiveSubscription()) {
+  <app-pricing-access-denied
+    [deniedResourceTitle]="versionService.ui().sagePremiumDeniedResourceTitle"
+    [deniedResourceDescription]="versionService.ui().sagePremiumDeniedResourceDescription">
+  </app-pricing-access-denied>
+} @else {
 <div class="sage-chat-shell">
   @if (isSessionsPanelOpen()) {
     <button type="button" class="sessions-backdrop" (click)="closeSessionsPanel()" [attr.aria-label]="versionService.ui().sageChatCloseSessionsAriaLabel"></button>
@@ -74,13 +80,6 @@
 
     @if (errorMessage()) {
       <p class="chat-error">{{ errorMessage() }}</p>
-    }
-
-    @if (!hasActiveSubscription()) {
-      <div class="premium-gate">
-        <h3>{{ versionService.ui().sageChatPremiumTitle }}</h3>
-        <p>{{ versionService.ui().sageChatPremiumRequired }}</p>
-      </div>
     }
 
     <div class="messages-viewport" #messagesViewport>
@@ -161,3 +160,4 @@
     </div>
   }
 </div>
+}

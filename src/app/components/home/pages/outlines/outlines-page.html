@@ -1,3 +1,9 @@
+@if (!hasActiveSubscription()) {
+  <app-pricing-access-denied
+    [deniedResourceTitle]="versionService.ui().outlinesPremiumDeniedResourceTitle"
+    [deniedResourceDescription]="versionService.ui().outlinesPremiumDeniedResourceDescription">
+  </app-pricing-access-denied>
+} @else {
 <canvas class="outlines-embers-canvas" #embersCanvas></canvas>
 
 <div class="sage-shell">
@@ -181,3 +187,4 @@
   }
 
 </div>
+}

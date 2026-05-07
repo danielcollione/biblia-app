@@ -1,8 +1,10 @@
 import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
+import { AuthService } from '../../../../services/auth/auth';
 import { VersionService } from '../../../../services/version/version-service';
 import { StudyService, StudyResponseDto } from '../../../../services/study/study.service';
+import { PricingAccessDeniedComponent } from '../../../pricing-access-denied/pricing-access-denied.component';
 
 type EmberParticle = {
   x: number; y: number;
@@ -15,11 +17,12 @@ type EmberParticle = {
 @Component({
   selector: 'app-outlines-page',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, PricingAccessDeniedComponent],
   templateUrl: './outlines-page.html',
   styleUrls: ['./outlines-page.scss'],
 })
 export class OutlinesPage implements AfterViewInit, OnDestroy {
+  private readonly authService = inject(AuthService);
   readonly versionService = inject(VersionService);
   private readonly studyService = inject(StudyService);
   private readonly document = inject(DOCUMENT);
@@ -68,6 +71,7 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
   readonly errorMessage = signal<string | null>(null);
   readonly copied = signal(false);
   readonly activeLoadingMessageIndex = signal(0);
+  readonly hasActiveSubscription = computed(() => this.isSubscriptionActive());
 
   readonly contentTypes = computed(() => {
     const ui = this.versionService.ui();
@@ -360,5 +364,15 @@ ${study.conclusion ? `<div class="section"><h2>${ui.sagePageConclusion}</h2><p>$
       clearInterval(this.loadingMessageIntervalId);
       this.loadingMessageIntervalId = null;
     }
+  }
+
+  private isSubscriptionActive(): boolean {
+    const user = this.authService.usuario();
+    if (!user?.subscriptionActive || !user.subscriptionExpiresAt) {
+      return false;
+    }
+
+    const expiresAt = new Date(user.subscriptionExpiresAt).getTime();
+    return Number.isFinite(expiresAt) && expiresAt > Date.now();
   }
 }
