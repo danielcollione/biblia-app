@@ -1,39 +1,49 @@
 <div class="lp-container">
-    <section class="hero">
-        <div class="hero-content fade-in">
-            <h1 class="gold-text animate-reveal">{{versionService.ui().unveiledBible}}</h1>
-            <p class="subtitle animate-reveal">{{versionService.ui().jornadaAlemdaLetra.toUpperCase()}}</p>
-            <section class="portal-grid">
-                <div class="portal-card glass" (click)="irParaBiblia()">
-                    <div class="card-content">
-                        <div class="icon-wrapper">
-                            <img src="images/open-bible.png" [alt]="versionService.ui().landingLibraryIconAlt" class="lux-icon">
-                        </div>
-                        <h3 class="lux-title">{{versionService.ui().readBible.toUpperCase()}}</h3>
-                        <div class="lux-divider"></div>
-                        <p class="lux-description">{{versionService.ui().libraryPrimeDescription}}</p>
-                    </div>
-                </div>
 
-                <div class="portal-card glass" (click)="irParaMateriais()">
-                    <div class="card-content">
-                        <div class="icon-wrapper">
-                            <img src="images/key.png" [alt]="versionService.ui().landingStudiesIconAlt" class="lux-icon">
-                        </div>
-                        <h3 class="lux-title">{{versionService.ui().materialsCollection.toUpperCase()}}</h3>
-                        <div class="lux-divider"></div>
-                        <p class="lux-description">{{versionService.ui().materialsSubtitle}}</p>
-                    </div>
+    <section class="hero">
+        <div class="video-wrapper">
+            <video autoplay muted loop playsinline class="bg-video">
+                <source src="/video/key_loop_hd.mp4" type="video/mp4">
+            </video>
+            <div class="video-overlay"></div>
+        </div>
+
+        <div class="hero-bottom-container">
+            <div class="bottom-left fade-in">
+                <h1 class="main-title">{{ versionService.ui().unveiledBible }}</h1>
+                <p class="main-subtitle">{{ versionService.ui().jornadaAlemdaLetra.toUpperCase() }}</p>
+            </div>
+
+            <div class="bottom-right fade-in">
+                <p class="tagline">{{ versionService.ui().homeInitialSubtitle.toUpperCase() }}</p>
+                <div class="button-group">
+                    <button class="hero-btn" routerLink="/read">{{ versionService.ui().readBible.toUpperCase() }}</button>
+                    <button class="hero-btn btn-outline" routerLink="/home">{{ versionService.ui().headerBecomeSage.toUpperCase()
+                        }}</button>
                 </div>
-            </section>
-            <span class="scroll-text">{{ versionService.ui().discoverMore }}</span>
-            <div class="scroll-line">
-                <div class="scroll-dot"></div>
             </div>
         </div>
     </section>
 
-    <section class="ebook-intro" id="ebook-section">
+    <section class="engine-section" id="reveal-trigger">
+        <div class="engine-container">
+
+            <div class="engine-header reveal-element">
+                <h2 class="engine-main-phrase" [innerHTML]="versionService.ui().landingEngineMainPhrase"></h2>
+            </div>
+
+            <div class="engine-divider reveal-element"></div>
+
+            <div class="engine-footer reveal-element">
+                <span class="engine-label">{{ versionService.ui().techEcosystem || 'SAGE TECHNOLOGY' }}</span>
+                <div class="engine-description">
+                    <p [innerHTML]="versionService.ui().landingEngineDescription"></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="ebook-intro" id="ebook-section">
         @if (ebookData()) {
         <div class="pre-title-wrapper">
             <span class="pre-title">{{ ebookData().ebookIntro.preTitle }}</span>
@@ -42,7 +52,8 @@
         <div class="intro-container">
             <div class="mockup-column">
                 <div class="book-wrapper">
-                    <img src="e-book/bible-ia-cover.png" [alt]="versionService.ui().landingEbookMockupAlt" class="book-mockup">
+                    <img src="e-book/bible-ia-cover.png" [alt]="versionService.ui().landingEbookMockupAlt"
+                        class="book-mockup">
                     <div class="book-glow"></div>
                 </div>
             </div>
@@ -71,11 +82,12 @@
             </div>
             } @else {
             <div class="copy-column">
-                <p class="intro-text" style="color: #d4af37; opacity: 0.7;">{{ versionService.ui().landingLoadingNewScroll }}</p>
+                <p class="intro-text" style="color: #d4af37; opacity: 0.7;">{{
+                    versionService.ui().landingLoadingNewScroll }}</p>
             </div>
             }
         </div>
-    </section>
+    </section> -->
 
     <footer class="lux-footer">
         <div class="footer-content">
@@ -91,8 +103,7 @@
                 <span class="email-icon">&#x2709;</span> contact.theunveiledbible@gmail.com
             </a>
 
-            <a href="https://www.youtube.com/channel/UCL4BWGQqg-QVg90wndlglEw" target="_blank"
-                 class="footer-email">
+            <a href="https://www.youtube.com/channel/UCL4BWGQqg-QVg90wndlglEw" target="_blank" class="footer-email">
                 <span class="icon">&#x25B6;</span> YouTube
             </a>
 

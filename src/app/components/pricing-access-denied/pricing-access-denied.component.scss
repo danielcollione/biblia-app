@@ -94,6 +94,10 @@
 .btn-premium {
   margin-top: 26px;
   min-width: 220px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   border: 1px solid var(--accent);
   background: linear-gradient(180deg, rgba(199, 168, 90, 0.14), rgba(199, 168, 90, 0.04));
   color: #f0d38f;
@@ -117,6 +121,30 @@
   &:active {
     background-color: rgba(199, 168, 90, 0.26);
     transform: translateY(0);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.85;
+  }
+
+  &.is-loading {
+    transform: none;
+  }
+}
+
+.btn-loading-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid rgba(255, 228, 167, 0.35);
+  border-top-color: #ffe4a7;
+  border-radius: 50%;
+  animation: checkoutSpin 0.8s linear infinite;
+}
+
+@keyframes checkoutSpin {
+  to {
+    transform: rotate(360deg);
   }
 }
 

@@ -345,6 +345,61 @@ $text-muted: #b8afa0;
   background: linear-gradient(90deg, #c5a059, #f2d28b);
 }
 
+.subscribe-now-btn {
+  width: 100%;
+  margin-top: 12px;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid #d8bd7f;
+  background: linear-gradient(135deg, #b78a3f 0%, #d4af63 45%, #f1ddaa 100%);
+  color: #1a1207;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 1.8px;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3), 0 0 18px rgba(212, 175, 99, 0.22);
+
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.88;
+    transform: none;
+  }
+}
+
+.subscribe-spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(26, 18, 7, 0.25);
+  border-top-color: #1a1207;
+  border-radius: 50%;
+  animation: subscribeSpin 0.8s linear infinite;
+}
+
+.subscribe-error {
+  margin: 8px 2px 0;
+  color: #d29c9c;
+  font-size: 0.73rem;
+  line-height: 1.35;
+}
+
+@keyframes subscribeSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 .sidebar-lang-section {
   margin-bottom: 10px;
 }

@@ -16,7 +16,22 @@
     <p class="resource-description">{{ deniedResourceDescription }}</p>
   }
 
-  <button class="btn-premium" type="button" (click)="onSubscribe()">
-    {{ versionService.ui().pricingAccessDeniedButton }}
+  <button
+    class="btn-premium"
+    type="button"
+    (click)="onSubscribe()"
+    [disabled]="isStartingCheckout()"
+    [class.is-loading]="isStartingCheckout()"
+    [attr.aria-busy]="isStartingCheckout()">
+    @if (isStartingCheckout()) {
+      <span class="btn-loading-spinner" aria-hidden="true"></span>
+      <span>{{ versionService.ui().pricingAccessDeniedButtonLoading }}</span>
+    } @else {
+      <span>{{ versionService.ui().pricingAccessDeniedButton }}</span>
+    }
   </button>
+
+  @if (checkoutError()) {
+    <p class="resource-description">{{ checkoutError() }}</p>
+  }
 </section>

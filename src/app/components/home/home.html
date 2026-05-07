@@ -122,6 +122,26 @@
         <div class="xp-track">
           <div class="xp-fill" [style.width.%]="xpPercent()"></div>
         </div>
+
+        @if (!hasActiveSubscription()) {
+          <button
+            class="subscribe-now-btn"
+            type="button"
+            (click)="startCheckoutFromHome()"
+            [disabled]="isStartingCheckout()"
+            [class.is-loading]="isStartingCheckout()">
+            @if (isStartingCheckout()) {
+              <span class="subscribe-spinner" aria-hidden="true"></span>
+              <span>REDIRECTING...</span>
+            } @else {
+              <span>SUBSCRIBE NOW</span>
+            }
+          </button>
+
+          @if (checkoutError()) {
+            <p class="subscribe-error">{{ checkoutError() }}</p>
+          }
+        }
       </div>
 
       <div class="sidebar-lang-section">

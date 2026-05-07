@@ -1,5 +1,8 @@
-import { Component, Input, inject } from '@angular/core';
+import { Component, Input, inject, signal } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { VersionService } from '../../services/version/version-service';
+import { StripeService } from '../../services/stripe/stripe.service';
+import { AuthService } from '../../services/auth/auth';
 
 @Component({
   selector: 'app-pricing-access-denied',
@@ -9,6 +12,10 @@ import { VersionService } from '../../services/version/version-service';
 })
 export class PricingAccessDeniedComponent {
   public readonly versionService = inject(VersionService);
+  private readonly stripeService = inject(StripeService);
+  private readonly authService = inject(AuthService);
+  readonly isStartingCheckout = signal(false);
+  readonly checkoutError = signal<string | null>(null);
 
   @Input() deniedResourceTitle = '';
   @Input() deniedResourceDescription = '';
@@ -22,6 +29,66 @@ export class PricingAccessDeniedComponent {
   }
 
   onSubscribe(): void {
-    console.log('Redirecionando para página de inscrição...');
+    if (this.isStartingCheckout()) {
+      return;
+    }
+
+    const userId = this.resolveCheckoutUserId();
+    if (!userId) {
+      this.checkoutError.set(this.versionService.ui().pricingAccessDeniedCheckoutMissingUser);
+      return;
+    }
+
+    this.checkoutError.set(null);
+    this.isStartingCheckout.set(true);
+
+    this.stripeService.iniciarCheckout(userId).subscribe({
+      next: ({ url }) => {
+        this.isStartingCheckout.set(false);
+
+        if (!url) {
+          this.checkoutError.set(this.versionService.ui().pricingAccessDeniedCheckoutMissingUrl);
+          return;
+        }
+
+        window.location.href = url;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isStartingCheckout.set(false);
+        this.checkoutError.set(
+          error?.error?.error ||
+            error?.error?.message ||
+            this.versionService.ui().pricingAccessDeniedCheckoutStartError
+        );
+      }
+    });
+  }
+
+  private resolveCheckoutUserId(): string | null {
+    const usuario = this.authService.usuario();
+    const possibleUserIdFromProfile =
+      (usuario as { id?: string; userId?: string } | null)?.id ||
+      (usuario as { id?: string; userId?: string } | null)?.userId;
+
+    if (possibleUserIdFromProfile) {
+      return possibleUserIdFromProfile;
+    }
+
+    const token = this.authService.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])) as {
+        id?: string;
+        userId?: string;
+        sub?: string;
+      };
+
+      return payload.userId || payload.id || payload.sub || null;
+    } catch {
+      return null;
+    }
   }
 }

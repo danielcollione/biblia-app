@@ -1,4 +1,6 @@
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { VersionService } from '../../services/version/version-service';
 import { Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
@@ -8,9 +10,12 @@ import { HttpClient } from '@angular/common/http';
   selector: 'app-landing',
   templateUrl: './landing.html',
   styleUrl: './landing.scss',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
 })
 export class Landing implements OnInit {
   public ebookData = signal<any>(null);
+  private readonly platformId = inject(PLATFORM_ID);
 
   constructor(
     public versionService: VersionService,
@@ -38,6 +43,30 @@ export class Landing implements OnInit {
 
   ngOnInit() {
     this.setSeoTags();
+
+    if (!isPlatformBrowser(this.platformId) || typeof IntersectionObserver === 'undefined') {
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Quando a seção entra na tela, ativa os elementos com delay
+            const elements = entry.target.querySelectorAll('.reveal-element');
+            elements.forEach((el, index) => {
+              setTimeout(() => {
+                el.classList.add('active');
+              }, index * 200); // Delay cascata entre os blocos
+            });
+          }
+        });
+      },
+      { threshold: 0.2 },
+    ); // Dispara quando 20% da seção estiver visível
+
+    const target = document.querySelector('#reveal-trigger');
+    if (target) observer.observe(target);
   }
 
   setSeoTags() {

@@ -2,7 +2,9 @@
   <section class="xp-popup" aria-live="polite" role="status">
     <div class="xp-popup-icon" aria-hidden="true">✦</div>
     <div class="xp-popup-copy">
-      <strong>+{{ toast.amount }} XP</strong>
+      @if (toast.amount) {
+        <strong>+{{ toast.amount }} XP</strong>
+      }
       <span>{{ toast.message }}</span>
     </div>
   </section>

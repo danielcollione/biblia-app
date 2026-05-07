@@ -39,9 +39,11 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly isLoadingMessages = signal(false);
   readonly isSending = signal(false);
   readonly deletingSessionId = signal<string | null>(null);
+  readonly pendingDeleteSession = signal<ChatSessionDto | null>(null);
   readonly isSessionsPanelOpen = signal(false);
   readonly isAvatarModalOpen = signal(false);
   readonly errorMessage = signal<string | null>(null);
+  readonly feedbackIsError = signal(true);
 
   readonly hasMessages = computed(() => this.messages().length > 0);
   readonly hasActiveSubscription = computed(() => this.isSubscriptionActive());
@@ -92,12 +94,12 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
   async createNewSession(): Promise<void> {
     if (!this.hasActiveSubscription()) {
-      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      this.showFeedback(this.versionService.ui().sageChatPremiumRequired);
       return;
     }
 
     try {
-      this.errorMessage.set(null);
+      this.clearFeedback();
       const created = await this.sageChatService.createSessionAsync();
 
       this.sessions.update((current) => [created, ...current]);
@@ -106,7 +108,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
       this.inputMessage.set('');
       this.isSessionsPanelOpen.set(false);
     } catch (error) {
-      this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionCreateError));
+      this.showFeedback(this.resolveError(error, this.versionService.ui().sageChatSessionCreateError));
     }
   }
 
@@ -123,11 +125,11 @@ export class SagePage implements AfterViewInit, OnDestroy {
     this.isSessionsPanelOpen.set(false);
   }
 
-  deleteSession(sessionId: string, event?: Event): void {
+  deleteSession(session: ChatSessionDto, event?: Event): void {
     event?.stopPropagation();
 
     if (!this.hasActiveSubscription()) {
-      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      this.showFeedback(this.versionService.ui().sageChatPremiumRequired);
       return;
     }
 
@@ -135,13 +137,29 @@ export class SagePage implements AfterViewInit, OnDestroy {
       return;
     }
 
-    if (typeof window !== 'undefined' && !window.confirm(this.versionService.ui().sageChatSessionDeleteConfirm)) {
+    this.pendingDeleteSession.set(session);
+  }
+
+  closeDeleteSessionModal(): void {
+    if (this.deletingSessionId()) {
       return;
     }
+
+    this.pendingDeleteSession.set(null);
+  }
+
+  confirmDeleteSession(): void {
+    const session = this.pendingDeleteSession();
+    if (!session) {
+      return;
+    }
+
+    const sessionId = session.id;
 
     const currentSessions = this.sessions();
     const deletedIndex = currentSessions.findIndex((session) => session.id === sessionId);
     if (deletedIndex === -1) {
+      this.pendingDeleteSession.set(null);
       return;
     }
 
@@ -157,7 +175,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
     }
 
     this.deletingSessionId.set(sessionId);
-    this.errorMessage.set(null);
+    this.clearFeedback();
 
     this.sageChatService.deleteSession(sessionId)
       .pipe(finalize(() => this.deletingSessionId.set(null)))
@@ -173,10 +191,11 @@ export class SagePage implements AfterViewInit, OnDestroy {
             }
           }
 
-          this.errorMessage.set(this.versionService.ui().sageChatSessionDeleteSuccess);
+          this.pendingDeleteSession.set(null);
+          this.showFeedback(this.versionService.ui().sageChatSessionDeleteSuccess, false);
         },
         error: (error) => {
-          this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionDeleteError));
+          this.showFeedback(this.resolveError(error, this.versionService.ui().sageChatSessionDeleteError));
         }
       });
   }
@@ -185,9 +204,13 @@ export class SagePage implements AfterViewInit, OnDestroy {
     return this.deletingSessionId() === sessionId;
   }
 
+  clearFeedback(): void {
+    this.errorMessage.set(null);
+  }
+
   async sendCurrentMessage(): Promise<void> {
     if (!this.hasActiveSubscription()) {
-      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      this.showFeedback(this.versionService.ui().sageChatPremiumRequired);
       return;
     }
 
@@ -203,7 +226,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
       }
     }
 
-    this.errorMessage.set(null);
+    this.clearFeedback();
     this.isSending.set(true);
 
     const userBubble: ChatBubble = { role: 'USER', content: trimmed, timestamp: new Date() };
@@ -266,7 +289,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
         }
         return next;
       });
-      this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatStreamError));
+      this.showFeedback(this.resolveError(error, this.versionService.ui().sageChatStreamError));
     } finally {
       this.isSending.set(false);
       this.streamAbortController = null;
@@ -275,7 +298,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
   useInsightPrompt(prompt: string): void {
     if (!this.hasActiveSubscription()) {
-      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      this.showFeedback(this.versionService.ui().sageChatPremiumRequired);
       return;
     }
 
@@ -295,11 +318,11 @@ export class SagePage implements AfterViewInit, OnDestroy {
 
   private async bootstrap(): Promise<void> {
     this.isLoadingSessions.set(true);
-    this.errorMessage.set(null);
+    this.clearFeedback();
 
     if (!this.hasActiveSubscription()) {
       this.isLoadingSessions.set(false);
-      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      this.showFeedback(this.versionService.ui().sageChatPremiumRequired);
       return;
     }
 
@@ -312,10 +335,15 @@ export class SagePage implements AfterViewInit, OnDestroy {
         this.activeSessionId.set(this.sessions()[0].id);
       }
     } catch (error) {
-      this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionLoadError));
+      this.showFeedback(this.resolveError(error, this.versionService.ui().sageChatSessionLoadError));
     } finally {
       this.isLoadingSessions.set(false);
     }
+  }
+
+  private showFeedback(message: string, isError = true): void {
+    this.feedbackIsError.set(isError);
+    this.errorMessage.set(message);
   }
 
   private async loadSessionMessages(sessionId: string): Promise<void> {

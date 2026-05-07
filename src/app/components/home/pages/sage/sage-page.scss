@@ -439,16 +439,6 @@ $text-muted: #b8afa0;
   }
 }
 
-.chat-error {
-  margin: 0;
-  color: #ffcccc;
-  border: 1px solid rgba(255, 132, 132, 0.22);
-  background: rgba(255, 132, 132, 0.08);
-  border-radius: 12px;
-  padding: 8px 10px;
-  font-size: 0.74rem;
-}
-
 .messages-viewport {
   flex: 1;
   overflow-y: auto;
@@ -594,6 +584,54 @@ $text-muted: #b8afa0;
   border-top: 1px solid rgba(197, 160, 89, 0.14);
   flex: 0 0 auto;
   margin-bottom: 60px;
+
+  .composer-feedback {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: 10px;
+    border-radius: 14px;
+    padding: 10px 12px;
+    font-size: 0.76rem;
+
+    p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    &.is-error {
+      color: #ffcccc;
+      border: 1px solid rgba(255, 132, 132, 0.22);
+      background: rgba(255, 132, 132, 0.08);
+    }
+
+    &.is-success {
+      color: #e7dec9;
+      border: 1px solid rgba(197, 160, 89, 0.24);
+      background: linear-gradient(135deg, rgba(197, 160, 89, 0.14), rgba(255, 255, 255, 0.04));
+    }
+  }
+
+  .composer-feedback-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.04);
+    color: inherit;
+    cursor: pointer;
+    font-size: 0.95rem;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-1px);
+    }
+  }
 
   .composer-insights {
     display: grid;
@@ -872,5 +910,153 @@ $text-muted: #b8afa0;
   &:hover {
     background: rgba(197, 160, 89, 0.2);
     border-color: rgba(197, 160, 89, 0.7);
+  }
+}
+
+.delete-session-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: rgba(6, 6, 6, 0.74);
+  backdrop-filter: blur(8px);
+}
+
+.delete-session-modal {
+  width: min(520px, 100%);
+  border-radius: 26px;
+  padding: 24px;
+  background: linear-gradient(180deg, rgba(22, 18, 13, 0.98), rgba(10, 10, 10, 0.98));
+  border: 1px solid rgba(197, 160, 89, 0.26);
+}
+
+.delete-session-modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+    color: $text-light;
+    font-family: 'Cinzel', serif;
+    font-size: 1.18rem;
+  }
+}
+
+.delete-session-modal-eyebrow {
+  margin: 0 0 6px;
+  color: $gold;
+  font-family: 'Cinzel', serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.delete-session-modal-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: $text-light;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.delete-session-modal-copy {
+  margin: 16px 0 0;
+  color: $text-muted;
+  line-height: 1.6;
+  font-size: 0.88rem;
+}
+
+.delete-session-preview {
+  margin-top: 18px;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1px solid rgba(197, 160, 89, 0.16);
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  gap: 6px;
+
+  strong {
+    color: $text-light;
+    font-size: 0.86rem;
+    font-weight: 600;
+  }
+
+  span {
+    color: $text-muted;
+    font-size: 0.72rem;
+  }
+}
+
+.delete-session-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.delete-session-cancel-btn,
+.delete-session-confirm-btn {
+  border-radius: 999px;
+  height: 42px;
+  padding: 0 18px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.24s ease;
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.delete-session-cancel-btn {
+  border: 1px solid rgba(197, 160, 89, 0.24);
+  background: rgba(255, 255, 255, 0.04);
+  color: $text-light;
+}
+
+.delete-session-confirm-btn {
+  border: 1px solid rgba(201, 110, 110, 0.34);
+  background: linear-gradient(135deg, rgba(171, 78, 78, 0.26), rgba(113, 34, 34, 0.2));
+  color: #ffe0e0;
+}
+
+@media (max-width: 640px) {
+  .delete-session-modal-backdrop {
+    padding: 14px;
+  }
+
+  .delete-session-modal {
+    padding: 18px;
+  }
+
+  .delete-session-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .delete-session-cancel-btn,
+  .delete-session-confirm-btn {
+    width: 100%;
   }
 }

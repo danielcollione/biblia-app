@@ -116,10 +116,10 @@ export class AuthService {
     }
 
     this.carregarSessaoDoStorage();
-    this.refreshUserProfileFromServer();
+    this.refreshUserProfileFromServer(true);
   }
 
-  refreshUserProfileFromServer(): void {
+  refreshUserProfileFromServer(forceRefresh = false): void {
     const token = this.getToken();
 
     if (!token || !isPlatformBrowser(this.platformId)) {
@@ -131,7 +131,9 @@ export class AuthService {
       'Content-Type': 'application/json'
     });
 
-    this.http.get<Usuario>(`${this.apiUrl}/me`, { headers }).subscribe({
+    const refreshQuery = forceRefresh ? '?forceRefresh=true' : '';
+
+    this.http.get<Usuario>(`${this.apiUrl}/me${refreshQuery}`, { headers }).subscribe({
       next: (profile) => {
         if (!profile) {
           return;

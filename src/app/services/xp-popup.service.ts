@@ -2,7 +2,7 @@ import { Injectable, signal } from '@angular/core';
 
 type XpToast = {
   id: number;
-  amount: number;
+  amount?: number;
   message: string;
 };
 
@@ -23,6 +23,25 @@ export class XpPopupService {
       id: this.nextId++,
       amount: Math.round(amount),
       message,
+    };
+
+    if (!this.activeToast()) {
+      this.displayToast(toast);
+      return;
+    }
+
+    this.queue.push(toast);
+  }
+
+  showMessage(message: string): void {
+    const normalizedMessage = message.trim();
+    if (!normalizedMessage) {
+      return;
+    }
+
+    const toast: XpToast = {
+      id: this.nextId++,
+      message: normalizedMessage,
     };
 
     if (!this.activeToast()) {

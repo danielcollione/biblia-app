@@ -1,10 +1,13 @@
 import { Component, OnDestroy, OnInit, computed, inject, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { CommonModule } from '@angular/common';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth';
 import { BibleVersion, VersionService } from '../../services/version/version-service';
+import { XpPopupService } from '../../services/xp-popup.service';
+import { StripeService } from '../../services/stripe/stripe.service';
 
 type HomeMenuKey =
   | 'outlines'
@@ -31,6 +34,9 @@ type HomeMenuItem = {
 export class Home implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
   private readonly router = inject(Router);
+  private readonly route = inject(ActivatedRoute);
+  private readonly xpPopupService = inject(XpPopupService);
+  private readonly stripeService = inject(StripeService);
   public readonly versionService = inject(VersionService);
   // Must match backend UserRank.requiredXp thresholds.
   private readonly levelXpThresholds = [
@@ -49,6 +55,8 @@ export class Home implements OnInit, OnDestroy {
   isMobileMenuOpen = signal(false);
   isSidebarOpen = signal(true);
   isLangMenuOpen = signal(false);
+  readonly isStartingCheckout = signal(false);
+  readonly checkoutError = signal<string | null>(null);
 
 
   readonly availableLangs: BibleVersion[] = this.versionService.getAvailableVersions();
@@ -65,9 +73,38 @@ export class Home implements OnInit, OnDestroy {
   readonly isSageRoute = computed(() => this.currentRoute().startsWith('/home/sage'));
   readonly isRecommendationsRoute = computed(() => this.currentRoute().startsWith('/home/recommendations'));
   readonly isBlogRoute = computed(() => this.currentRoute().startsWith('/home/blog'));
+  readonly hasActiveSubscription = computed(() => !!this.authService.usuario()?.subscriptionActive);
 
   ngOnInit(): void {
     this.authService.ensureProfileFreshForHome();
+    this.handlePaymentRedirectFeedback();
+  }
+
+  private handlePaymentRedirectFeedback(): void {
+    const paymentStatus =
+      this.route.snapshot.queryParamMap.get('payment') ||
+      this.router.parseUrl(this.router.url).queryParams['payment'] ||
+      null;
+
+    if (paymentStatus === 'success') {
+      this.xpPopupService.showMessage(this.versionService.ui().paymentStatusSuccessPopup);
+      this.clearPaymentQueryParam();
+      return;
+    }
+
+    if (paymentStatus === 'canceled') {
+      this.xpPopupService.showMessage(this.versionService.ui().paymentStatusCanceledPopup);
+      this.clearPaymentQueryParam();
+    }
+  }
+
+  private clearPaymentQueryParam(): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { payment: null },
+      queryParamsHandling: 'merge',
+      replaceUrl: true,
+    });
   }
 
   toggleSidebar(): void {
@@ -166,6 +203,42 @@ export class Home implements OnInit, OnDestroy {
     this.closeMobileMenu();
   }
 
+  startCheckoutFromHome(): void {
+    if (this.isStartingCheckout()) {
+      return;
+    }
+
+    const userId = this.resolveCheckoutUserId();
+    if (!userId) {
+      this.checkoutError.set(this.versionService.ui().pricingAccessDeniedCheckoutMissingUser);
+      return;
+    }
+
+    this.checkoutError.set(null);
+    this.isStartingCheckout.set(true);
+
+    this.stripeService.iniciarCheckout(userId).subscribe({
+      next: ({ url }) => {
+        this.isStartingCheckout.set(false);
+
+        if (!url) {
+          this.checkoutError.set(this.versionService.ui().pricingAccessDeniedCheckoutMissingUrl);
+          return;
+        }
+
+        window.location.href = url;
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isStartingCheckout.set(false);
+        this.checkoutError.set(
+          error?.error?.error ||
+            error?.error?.message ||
+            this.versionService.ui().pricingAccessDeniedCheckoutStartError
+        );
+      }
+    });
+  }
+
   private resolveMenuLabel(key: HomeMenuKey, ui: any): string {
     switch (key) {
       case 'outlines':
@@ -185,6 +258,34 @@ export class Home implements OnInit, OnDestroy {
       case 'blog':
       default:
         return ui.homeMenuBlog;
+    }
+  }
+
+  private resolveCheckoutUserId(): string | null {
+    const usuario = this.authService.usuario();
+    const possibleUserIdFromProfile =
+      (usuario as { id?: string; userId?: string } | null)?.id ||
+      (usuario as { id?: string; userId?: string } | null)?.userId;
+
+    if (possibleUserIdFromProfile) {
+      return possibleUserIdFromProfile;
+    }
+
+    const token = this.authService.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1])) as {
+        id?: string;
+        userId?: string;
+        sub?: string;
+      };
+
+      return payload.userId || payload.id || payload.sub || null;
+    } catch {
+      return null;
     }
   }
 
