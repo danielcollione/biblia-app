@@ -66,14 +66,17 @@ export class PricingAccessDeniedComponent {
 
   private resolveCheckoutUserId(): string | null {
     const usuario = this.authService.usuario();
-    const possibleUserIdFromProfile =
+    
+    // Tenta primeiro obter do objeto do usuário (pode ter 'id' ou 'userId')
+    const userIdFromObject = 
       (usuario as { id?: string; userId?: string } | null)?.id ||
       (usuario as { id?: string; userId?: string } | null)?.userId;
 
-    if (possibleUserIdFromProfile) {
-      return possibleUserIdFromProfile;
+    if (userIdFromObject && this.isValidUUID(userIdFromObject)) {
+      return userIdFromObject;
     }
 
+    // Se não conseguir do objeto, tenta extrair do token JWT
     const token = this.authService.getToken();
     if (!token) {
       return null;
@@ -84,11 +87,19 @@ export class PricingAccessDeniedComponent {
         id?: string;
         userId?: string;
         sub?: string;
+        email?: string;
       };
 
-      return payload.userId || payload.id || payload.sub || null;
+      // Prioriza id ou userId (que são UUIDs)
+      // Ignora sub e email que podem ser strings simples
+      return payload.id || payload.userId || payload.sub || null;
     } catch {
       return null;
     }
+  }
+
+  private isValidUUID(value: string): boolean {
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return uuidRegex.test(value);
   }
 }
