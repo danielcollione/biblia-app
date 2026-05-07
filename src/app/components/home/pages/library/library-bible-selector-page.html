@@ -97,9 +97,12 @@
 
       <div class="estante-capitulos-horizontal" #estanteCaps>
         @for (cap of bibleService.selectedBook().chapters; track $index) {
-        <button type="button" class="card-capitulo-luxo" (click)="selectChapter($index)">
+        <button type="button" class="card-capitulo-luxo" [class.chapter-read]="bibleService.isChapterRead($index)" (click)="selectChapter($index)">
           <span class="cap-label">{{ versionService.ui().chapter }}</span>
           <span class="cap-numero">{{ $index + 1 }}</span>
+          @if (bibleService.isChapterRead($index)) {
+          <span class="chapter-read-icon" aria-hidden="true">✓</span>
+          }
         </button>
         }
       </div>

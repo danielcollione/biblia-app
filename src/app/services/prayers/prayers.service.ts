@@ -1,8 +1,9 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 import { AuthService } from '../auth/auth';
+import { XpPopupService } from '../xp-popup.service';
 
 export interface PrayerItemDto {
   id: string;
@@ -28,6 +29,7 @@ export interface PrayerPageDto {
 export class PrayersService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly xpPopupService = inject(XpPopupService);
 
   private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/prayers';
 
@@ -43,7 +45,12 @@ export class PrayersService {
   create(content: string): Observable<PrayerItemDto> {
     return this.http.post<PrayerItemDto>(this.apiUrl, { content }, {
       headers: this.buildHeaders(),
-    });
+    }).pipe(
+      tap(() => {
+        this.xpPopupService.showXp(250, 'Oracao publicada');
+        this.authService.refreshUserProfileFromServer();
+      })
+    );
   }
 
   toggleLike(prayerId: string): Observable<PrayerItemDto> {

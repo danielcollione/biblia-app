@@ -47,6 +47,12 @@ export class SageChatService {
     });
   }
 
+  deleteSession(sessionId: string) {
+    return this.http.delete<void>(`${this.apiUrl}/sessions/${sessionId}`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
   async streamReply(
     sessionId: string,
     message: string,

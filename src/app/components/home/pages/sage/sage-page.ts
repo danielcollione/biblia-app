@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, computed, effect, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { firstValueFrom } from 'rxjs';
+import { finalize, firstValueFrom } from 'rxjs';
 
 import { AuthService } from '../../../../services/auth/auth';
 import { SageChatService, ChatSessionDto } from '../../../../services/sage-chat/sage-chat.service';
@@ -38,6 +38,7 @@ export class SagePage implements AfterViewInit, OnDestroy {
   readonly isLoadingSessions = signal(true);
   readonly isLoadingMessages = signal(false);
   readonly isSending = signal(false);
+  readonly deletingSessionId = signal<string | null>(null);
   readonly isSessionsPanelOpen = signal(false);
   readonly isAvatarModalOpen = signal(false);
   readonly errorMessage = signal<string | null>(null);
@@ -120,6 +121,68 @@ export class SagePage implements AfterViewInit, OnDestroy {
   selectSession(sessionId: string): void {
     this.activeSessionId.set(sessionId);
     this.isSessionsPanelOpen.set(false);
+  }
+
+  deleteSession(sessionId: string, event?: Event): void {
+    event?.stopPropagation();
+
+    if (!this.hasActiveSubscription()) {
+      this.errorMessage.set(this.versionService.ui().sageChatPremiumRequired);
+      return;
+    }
+
+    if (this.deletingSessionId() || this.isSending()) {
+      return;
+    }
+
+    if (typeof window !== 'undefined' && !window.confirm(this.versionService.ui().sageChatSessionDeleteConfirm)) {
+      return;
+    }
+
+    const currentSessions = this.sessions();
+    const deletedIndex = currentSessions.findIndex((session) => session.id === sessionId);
+    if (deletedIndex === -1) {
+      return;
+    }
+
+    const fallbackSessionId = currentSessions[deletedIndex + 1]?.id
+      ?? currentSessions[deletedIndex - 1]?.id
+      ?? null;
+    const isDeletingActiveSession = this.activeSessionId() === sessionId;
+
+    if (isDeletingActiveSession) {
+      this.streamAbortController?.abort();
+      this.streamAbortController = null;
+      this.isSending.set(false);
+    }
+
+    this.deletingSessionId.set(sessionId);
+    this.errorMessage.set(null);
+
+    this.sageChatService.deleteSession(sessionId)
+      .pipe(finalize(() => this.deletingSessionId.set(null)))
+      .subscribe({
+        next: () => {
+          this.sessions.update((items) => items.filter((session) => session.id !== sessionId));
+
+          if (isDeletingActiveSession) {
+            this.activeSessionId.set(fallbackSessionId);
+            if (!fallbackSessionId) {
+              this.messages.set([]);
+              this.inputMessage.set('');
+            }
+          }
+
+          this.errorMessage.set(this.versionService.ui().sageChatSessionDeleteSuccess);
+        },
+        error: (error) => {
+          this.errorMessage.set(this.resolveError(error, this.versionService.ui().sageChatSessionDeleteError));
+        }
+      });
+  }
+
+  isDeletingSession(sessionId: string): boolean {
+    return this.deletingSessionId() === sessionId;
   }
 
   async sendCurrentMessage(): Promise<void> {

@@ -174,12 +174,6 @@
 }
 
 @media (max-width: 780px) {
-  .floating-search {
-    right: 12px;
-    top: auto;
-    bottom: 100px;
-    transform: none;
-  }
 
   .search-input {
     width: 160px;
@@ -483,6 +477,7 @@
 }
 
 .card-capitulo-luxo {
+  position: relative;
   min-width: 120px;
   height: 160px;
   background: rgba(255, 255, 255, 0.03);
@@ -528,6 +523,31 @@
       color: #a18e76;
     }
   }
+
+  &.chapter-read {
+    border-color: rgba(212, 175, 55, 0.55);
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.16), rgba(255, 255, 255, 0.03));
+
+    .cap-numero {
+      color: #d6b87a;
+    }
+  }
+}
+
+.chapter-read-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: #d6b87a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @keyframes fadeIn {
@@ -777,7 +797,6 @@
 @media (max-width: 780px) {
   .hero-banner {
     padding: 24px 16px;
-    min-height: 48vh;
 
     img {
       object-position: center 18%;

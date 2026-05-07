@@ -102,6 +102,5 @@
 }
 
 <button class="floating-create-button" type="button" (click)="openCreateModal()" [class.locked]="!hasActiveSubscription()">
-    <span>+</span>
-    <small>{{ versionService.ui().prayersCreateButton }}</small>
+    {{ versionService.ui().prayersCreateButton }}
 </button>

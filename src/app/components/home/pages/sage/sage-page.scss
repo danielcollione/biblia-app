@@ -217,13 +217,12 @@ $text-muted: #b8afa0;
   border-right: none;
   border-bottom: none;
   border-radius: 0;
-  padding: 14px 10px;
   background: transparent;
   color: $text-light;
-  text-align: left;
-  cursor: pointer;
   display: grid;
-  gap: 4px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 8px;
   opacity: 0;
   animation: sessionCardEntrance 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: var(--session-enter-delay);
@@ -268,6 +267,54 @@ $text-muted: #b8afa0;
     &:last-child {
       border-bottom-color: rgba(197, 160, 89, 0.28);
     }
+  }
+}
+
+.session-select-btn {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+  min-width: 0;
+  padding: 14px 0 14px 10px;
+}
+
+.session-item-copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.session-delete-btn {
+  width: 34px;
+  height: 34px;
+  margin-right: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 160, 89, 0.22);
+  background: rgba(255, 255, 255, 0.02);
+  color: rgba(242, 238, 227, 0.72);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.22s ease;
+
+  svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  &:hover:not(:disabled) {
+    color: #f3d8d8;
+    border-color: rgba(216, 111, 111, 0.5);
+    background: rgba(216, 111, 111, 0.08);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
   }
 }
 

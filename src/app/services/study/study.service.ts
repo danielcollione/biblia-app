@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { AuthService } from '../auth/auth';
+import { XpPopupService } from '../xp-popup.service';
 
 export interface StudyRequestDto {
   themeOrVerse: string;
@@ -28,6 +29,7 @@ export interface StudyResponseDto {
 export class StudyService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly xpPopupService = inject(XpPopupService);
 
   private readonly apiUrl = 'https://backendtub.onrender.com/api/studies/generate';
 
@@ -38,7 +40,10 @@ export class StudyService {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
     return this.http.post<StudyResponseDto>(this.apiUrl, request, { headers }).pipe(
-      tap(() => this.authService.refreshUserProfileFromServer())
+      tap(() => {
+        this.xpPopupService.showXp(1000, 'Estudo gerado');
+        this.authService.refreshUserProfileFromServer();
+      })
     );
   }
 }
