@@ -1,5 +1,6 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    entrar: 'Entrar',
     jornadaAlemdaLetra: 'Jornada Além da Escrita',
     unveiledBible: 'A BÍBLIA REVELADA',
     title: 'Bíblia',
@@ -105,11 +106,14 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingEngineKey: 'chave',
     landingEnginePt2: ' que revela o mistério das ',
     landingEngineScriptures: 'escrituras.',
-    landingEngineMainPhrase: 'Nós forjamos a <span class="gold-gradient">chave</span> que revela o mistério das <span class="white-text">escrituras.</span>',
-    landingEngineDescription: 'Não apenas lemos a Escritura; nós a decodificamos. Desenvolvemos tecnologia proprietária para substituir a dúvida pela precisão teológica, construindo a infraestrutura que escala a sua compreensão espiritual através de IA de última geração.',
+    landingEngineMainPhrase:
+      'Nós forjamos a <span class="gold-gradient">chave</span> que revela o mistério das <span class="white-text">escrituras.</span>',
+    landingEngineDescription:
+      'Não apenas lemos a Escritura; nós a decodificamos. Desenvolvemos tecnologia proprietária para substituir a dúvida pela precisão teológica, construindo a infraestrutura que escala a sua compreensão espiritual através de IA de última geração.',
     homeBrandName: 'Santuario',
     homeWelcomeTitle: 'Painel do Sabio',
-    homeWelcomeSubtitle: 'Acompanhe sua jornada, acesse estudos e evolua no acervo com foco e profundidade.',
+    homeWelcomeSubtitle:
+      'Acompanhe sua jornada, acesse estudos e evolua no acervo com foco e profundidade.',
     homeInitialLogoAlt: 'Logo Santuario',
     homeInitialTitleKicker: 'Bem vindo ao',
     homeInitialTitleMain: 'Santuario',
@@ -121,18 +125,22 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeMenuPrayerForum: 'Forum de Oracoes',
     prayersEyebrow: 'Intercessao Coletiva',
     prayersTitle: 'Forum de Oracoes',
-    prayersSubtitle: 'Pedidos publicados em baloes vivos para a comunidade acompanhar e sustentar em oracao.',
+    prayersSubtitle:
+      'Pedidos publicados em baloes vivos para a comunidade acompanhar e sustentar em oracao.',
     prayersRefresh: 'Atualizar',
     prayersPremiumBadge: 'Acesso para publicar e curtir',
-    prayersPremiumRequired: 'Somente assinantes com acesso vigente podem publicar novas oracoes e enviar curtidas.',
+    prayersPremiumRequired:
+      'Somente assinantes com acesso vigente podem publicar novas oracoes e enviar curtidas.',
     prayersLoading: 'Reunindo as oracoes mais recentes...',
     prayersEmptyIcon: '🙏',
     prayersEmptyTitle: 'Ainda nao ha oracoes publicadas',
-    prayersEmptySubtitle: 'Quando a primeira oracao for enviada, ela aparecera aqui para toda a comunidade visualizar.',
+    prayersEmptySubtitle:
+      'Quando a primeira oracao for enviada, ela aparecera aqui para toda a comunidade visualizar.',
     prayersCreateButton: 'Nova Oracao',
     prayersModalEyebrow: 'Nova Publicacao',
     prayersModalTitle: 'Compartilhe sua oracao',
-    prayersModalSubtitle: 'Escreva em ate 280 caracteres um pedido, clamor ou agradecimento para a comunidade interceder com voce.',
+    prayersModalSubtitle:
+      'Escreva em ate 280 caracteres um pedido, clamor ou agradecimento para a comunidade interceder com voce.',
     prayersTextareaPlaceholder: 'Escreva sua oracao aqui...',
     prayersCharactersLabel: 'Caracteres restantes:',
     prayersCancel: 'Cancelar',
@@ -152,7 +160,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeProfileButton: 'Meu Perfil',
     homeLogoutButton: 'Sair',
     homeProfileSectionTitle: 'Centro de Comando Espiritual',
-    homeMainPlaceholderText: 'Sua area exclusiva esta pronta. Em breve, novas funcionalidades serao ativadas com estudos, comunidade e progresso personalizado.',
+    homeMainPlaceholderText:
+      'Sua area exclusiva esta pronta. Em breve, novas funcionalidades serao ativadas com estudos, comunidade e progresso personalizado.',
     homeProfileLevel: 'Nivel',
     homeProfileExperience: 'Experiencia',
     homeProfileRole: 'Cargo',
@@ -185,7 +194,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePageExportPdf: 'Exportar PDF',
     sagePageCopied: 'Copiado!',
     sageChatTitle: 'Sábio Online',
-    sageChatSubtitle: 'Converse em tempo real com o Sabio, com respostas progressivas e memoria de contexto.',
+    sageChatSubtitle:
+      'Converse em tempo real com o Sabio, com respostas progressivas e memoria de contexto.',
     sageChatSessionsTitle: 'Conversas',
     sageChatNewSession: 'Nova Conversa',
     sageChatLoadingSessions: 'Carregando conversas...',
@@ -196,7 +206,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatInsightThree: 'Quais passagens ajudam em momentos de luto e dor?',
     sageChatInsightFour: 'Como lidar com culpa e recomecar com base nas Escrituras?',
     sageChatEmptyTitle: 'Inicie uma conversa com o Sábio',
-    sageChatEmptySubtitle: 'Escolha um insight acima ou escreva sua pergunta teologica no campo abaixo.',
+    sageChatEmptySubtitle:
+      'Escolha um insight acima ou escreva sua pergunta teologica no campo abaixo.',
     sageChatYouLabel: 'Voce',
     sageChatSageLabel: 'Sábio',
     sageChatStreaming: 'Resposta em andamento...',
@@ -210,7 +221,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteConfirm: 'Deseja realmente excluir esta conversa?',
     sageChatDeleteModalEyebrow: 'Confirmacao',
     sageChatDeleteModalTitle: 'Excluir esta conversa?',
-    sageChatDeleteModalSubtitle: 'Ao confirmar, todo o historico desta conversa sera removido do seu painel do Sabio Online.',
+    sageChatDeleteModalSubtitle:
+      'Ao confirmar, todo o historico desta conversa sera removido do seu painel do Sabio Online.',
     sageChatDeleteModalCancel: 'Cancelar',
     sageChatDeleteModalConfirm: 'Excluir agora',
     sageChatDeleteModalCloseAriaLabel: 'Fechar confirmacao de exclusao',
@@ -218,9 +230,11 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteError: 'Nao foi possivel excluir esta conversa agora.',
     sageChatFeedbackCloseAriaLabel: 'Fechar mensagem',
     sageChatStreamError: 'Nao foi possivel obter resposta do Sabio agora.',
-    sageChatEmptyAnswerFallback: 'Estou aqui com voce. Pode reformular sua pergunta para eu te ajudar melhor.',
+    sageChatEmptyAnswerFallback:
+      'Estou aqui com voce. Pode reformular sua pergunta para eu te ajudar melhor.',
     sageChatPremiumTitle: 'Recurso Premium',
-    sageChatPremiumRequired: 'Apenas usuarios com inscricao ativa podem interagir com o Sabio Online.',
+    sageChatPremiumRequired:
+      'Apenas usuarios com inscricao ativa podem interagir com o Sabio Online.',
     librarySearchAriaLabel: 'Buscar',
     libraryClearAriaLabel: 'Limpar',
     libraryChaptersAriaLabel: 'Seleção de capítulos do livro',
@@ -252,15 +266,21 @@ export const INTERFACE_TRANSLATIONS: any = {
     pricingAccessDeniedDefaultResourceTitle: 'Recurso premium',
     pricingAccessDeniedButton: 'Assinar Agora',
     pricingAccessDeniedButtonLoading: 'Redirecionando...',
-    pricingAccessDeniedCheckoutMissingUser: 'Nao foi possivel identificar seu usuario para iniciar o pagamento.',
+    pricingAccessDeniedCheckoutMissingUser:
+      'Nao foi possivel identificar seu usuario para iniciar o pagamento.',
     pricingAccessDeniedCheckoutMissingUrl: 'Nao foi possivel obter o link de pagamento.',
-    pricingAccessDeniedCheckoutStartError: 'Erro ao iniciar pagamento. Tente novamente em instantes.',
+    pricingAccessDeniedCheckoutStartError:
+      'Erro ao iniciar pagamento. Tente novamente em instantes.',
     paymentStatusSuccessPopup: 'Parabéns! Começe sua Jornada para se tornar um Sábio',
-    paymentStatusCanceledPopup: 'O pagamento não foi concluído. Você ainda pode assinar quando desejar!',
-    outlinesPremiumDeniedResourceTitle: 'O Gerador de Conteudo esta disponivel apenas no plano sabio',
-    outlinesPremiumDeniedResourceDescription: 'Crie estudos biblicos estruturados em segundos com IA teologica: introducao, topicos centrais, aplicacao pratica e conclusao, prontos para compartilhar e transformar em mensagem.',
+    paymentStatusCanceledPopup:
+      'O pagamento não foi concluído. Você ainda pode assinar quando desejar!',
+    outlinesPremiumDeniedResourceTitle:
+      'O Gerador de Conteudo esta disponivel apenas no plano sabio',
+    outlinesPremiumDeniedResourceDescription:
+      'Crie estudos biblicos estruturados em segundos com IA teologica: introducao, topicos centrais, aplicacao pratica e conclusao, prontos para compartilhar e transformar em mensagem.',
     sagePremiumDeniedResourceTitle: 'O Sabio Online esta disponivel apenas no plano sabio',
-    sagePremiumDeniedResourceDescription: 'Converse em tempo real com uma IA teologica com memoria de contexto, respostas progressivas e orientacao biblica personalizada para seus estudos e devocionais.',
+    sagePremiumDeniedResourceDescription:
+      'Converse em tempo real com uma IA teologica com memoria de contexto, respostas progressivas e orientacao biblica personalizada para seus estudos e devocionais.',
   },
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
@@ -331,6 +351,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     forgotPasswordSubtitle: 'Enter your email to receive a reset link.',
     forgotPasswordSubmit: 'Send Reset Link',
     forgotPasswordBackToLogin: 'Back to login',
+    entrar: 'Enter',
     forgotPasswordSuccess: 'If this email is registered, you will receive the reset link shortly.',
     forgotPasswordErrorGeneric: 'We could not process your request right now.',
     resetPasswordTitle: 'Reset Password',
@@ -368,11 +389,14 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingEngineKey: 'key',
     landingEnginePt2: ' that reveals the mystery of ',
     landingEngineScriptures: 'scriptures.',
-    landingEngineMainPhrase: 'We forged the <span class="gold-gradient">key</span> that reveals the mystery of <span class="white-text">scriptures.</span>',
-    landingEngineDescription: 'We do not just read Scripture; we decode it. We developed proprietary technology to replace doubt with theological precision, building the infrastructure that scales your spiritual understanding through cutting-edge AI.',
+    landingEngineMainPhrase:
+      'We forged the <span class="gold-gradient">key</span> that reveals the mystery of <span class="white-text">scriptures.</span>',
+    landingEngineDescription:
+      'We do not just read Scripture; we decode it. We developed proprietary technology to replace doubt with theological precision, building the infrastructure that scales your spiritual understanding through cutting-edge AI.',
     homeBrandName: 'Sanctuary',
     homeWelcomeTitle: 'Sage Dashboard',
-    homeWelcomeSubtitle: 'Track your journey, access studies, and evolve in the collection with focus and depth.',
+    homeWelcomeSubtitle:
+      'Track your journey, access studies, and evolve in the collection with focus and depth.',
     homeInitialLogoAlt: 'Sanctuary logo',
     homeInitialTitleKicker: 'Welcome to',
     homeInitialTitleMain: 'Sanctuary',
@@ -384,18 +408,22 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeMenuPrayerForum: 'Prayer Forum',
     prayersEyebrow: 'Collective Intercession',
     prayersTitle: 'Prayer Forum',
-    prayersSubtitle: 'Published requests float across the board so the community can follow and support them in prayer.',
+    prayersSubtitle:
+      'Published requests float across the board so the community can follow and support them in prayer.',
     prayersRefresh: 'Refresh',
     prayersPremiumBadge: 'Access to publish and like',
-    prayersPremiumRequired: 'Only users with an active subscription can publish new prayers and send likes.',
+    prayersPremiumRequired:
+      'Only users with an active subscription can publish new prayers and send likes.',
     prayersLoading: 'Gathering the latest prayers...',
     prayersEmptyIcon: '🙏',
     prayersEmptyTitle: 'No prayers have been published yet',
-    prayersEmptySubtitle: 'When the first prayer is shared, it will appear here for the whole community to see.',
+    prayersEmptySubtitle:
+      'When the first prayer is shared, it will appear here for the whole community to see.',
     prayersCreateButton: 'New Prayer',
     prayersModalEyebrow: 'New Publication',
     prayersModalTitle: 'Share your prayer',
-    prayersModalSubtitle: 'Write a request, cry, or thanksgiving in up to 280 characters so the community can intercede with you.',
+    prayersModalSubtitle:
+      'Write a request, cry, or thanksgiving in up to 280 characters so the community can intercede with you.',
     prayersTextareaPlaceholder: 'Write your prayer here...',
     prayersCharactersLabel: 'Characters left:',
     prayersCancel: 'Cancel',
@@ -415,7 +443,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeProfileButton: 'My Profile',
     homeLogoutButton: 'Log out',
     homeProfileSectionTitle: 'Spiritual Command Center',
-    homeMainPlaceholderText: 'Your exclusive area is ready. Soon, new features will be activated with studies, community, and personalized progress.',
+    homeMainPlaceholderText:
+      'Your exclusive area is ready. Soon, new features will be activated with studies, community, and personalized progress.',
     homeProfileLevel: 'Level',
     homeProfileExperience: 'Experience',
     homeProfileRole: 'Role',
@@ -448,7 +477,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePageExportPdf: 'Export PDF',
     sagePageCopied: 'Copied!',
     sageChatTitle: 'Sage Online',
-    sageChatSubtitle: 'Chat in real time with the Sage, receiving progressive responses with conversation memory.',
+    sageChatSubtitle:
+      'Chat in real time with the Sage, receiving progressive responses with conversation memory.',
     sageChatSessionsTitle: 'Conversations',
     sageChatNewSession: 'New Conversation',
     sageChatLoadingSessions: 'Loading conversations...',
@@ -473,7 +503,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteConfirm: 'Do you really want to delete this conversation?',
     sageChatDeleteModalEyebrow: 'Confirmation',
     sageChatDeleteModalTitle: 'Delete this conversation?',
-    sageChatDeleteModalSubtitle: 'Once confirmed, the full history of this conversation will be removed from your Sage Online panel.',
+    sageChatDeleteModalSubtitle:
+      'Once confirmed, the full history of this conversation will be removed from your Sage Online panel.',
     sageChatDeleteModalCancel: 'Cancel',
     sageChatDeleteModalConfirm: 'Delete now',
     sageChatDeleteModalCloseAriaLabel: 'Close delete confirmation',
@@ -481,9 +512,11 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteError: 'Unable to delete this conversation right now.',
     sageChatFeedbackCloseAriaLabel: 'Close message',
     sageChatStreamError: 'Unable to get a response from Sage right now.',
-    sageChatEmptyAnswerFallback: 'I am here with you. Please rephrase your question so I can help better.',
+    sageChatEmptyAnswerFallback:
+      'I am here with you. Please rephrase your question so I can help better.',
     sageChatPremiumTitle: 'Premium Feature',
-    sageChatPremiumRequired: 'Only users with an active subscription can interact with Sage Online.',
+    sageChatPremiumRequired:
+      'Only users with an active subscription can interact with Sage Online.',
     librarySearchAriaLabel: 'Search',
     libraryClearAriaLabel: 'Clear',
     libraryChaptersAriaLabel: 'Chapter selection for the book',
@@ -519,11 +552,14 @@ export const INTERFACE_TRANSLATIONS: any = {
     pricingAccessDeniedCheckoutMissingUrl: 'We could not get the payment link.',
     pricingAccessDeniedCheckoutStartError: 'Error starting payment. Please try again shortly.',
     paymentStatusSuccessPopup: 'Congratulations! Start your Journey to become a Sage',
-    paymentStatusCanceledPopup: 'The payment was not completed. You can still subscribe whenever you want!',
+    paymentStatusCanceledPopup:
+      'The payment was not completed. You can still subscribe whenever you want!',
     outlinesPremiumDeniedResourceTitle: 'The Content Generator is available only on the Wise Plan',
-    outlinesPremiumDeniedResourceDescription: 'Create structured biblical studies in seconds with theological AI: introduction, core topics, practical application, and conclusion, ready to share and turn into a message.',
+    outlinesPremiumDeniedResourceDescription:
+      'Create structured biblical studies in seconds with theological AI: introduction, core topics, practical application, and conclusion, ready to share and turn into a message.',
     sagePremiumDeniedResourceTitle: 'Sage Online is available only on the Wise Plan',
-    sagePremiumDeniedResourceDescription: 'Chat in real time with theological AI featuring contextual memory, progressive answers, and personalized biblical guidance for your studies and devotionals.',
+    sagePremiumDeniedResourceDescription:
+      'Chat in real time with theological AI featuring contextual memory, progressive answers, and personalized biblical guidance for your studies and devotionals.',
   },
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
@@ -631,11 +667,14 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingEngineKey: 'clave',
     landingEnginePt2: ' que revela el misterio de las ',
     landingEngineScriptures: 'escrituras.',
-    landingEngineMainPhrase: 'Forjamos la <span class="gold-gradient">clave</span> que revela el misterio de las <span class="white-text">escrituras.</span>',
-    landingEngineDescription: 'No solo leemos la Escritura; la descodificamos. Desarrollamos tecnología propietaria para reemplazar la duda con precisión teológica, construyendo la infraestructura que escala tu comprensión espiritual a través de IA de última generación.',
+    landingEngineMainPhrase:
+      'Forjamos la <span class="gold-gradient">clave</span> que revela el misterio de las <span class="white-text">escrituras.</span>',
+    landingEngineDescription:
+      'No solo leemos la Escritura; la descodificamos. Desarrollamos tecnología propietaria para reemplazar la duda con precisión teológica, construyendo la infraestructura que escala tu comprensión espiritual a través de IA de última generación.',
     homeBrandName: 'Santuario',
     homeWelcomeTitle: 'Panel del Sabio',
-    homeWelcomeSubtitle: 'Sigue tu jornada, accede a estudios y evoluciona en la coleccion con enfoque y profundidad.',
+    homeWelcomeSubtitle:
+      'Sigue tu jornada, accede a estudios y evoluciona en la coleccion con enfoque y profundidad.',
     homeInitialLogoAlt: 'Logo Santuario',
     homeInitialTitleKicker: 'Bienvenido al',
     homeInitialTitleMain: 'Santuario',
@@ -647,18 +686,22 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeMenuPrayerForum: 'Foro de Oraciones',
     prayersEyebrow: 'Intercesion Colectiva',
     prayersTitle: 'Foro de Oraciones',
-    prayersSubtitle: 'Las peticiones publicadas flotan en la pantalla para que la comunidad pueda verlas y sostenerlas en oracion.',
+    prayersSubtitle:
+      'Las peticiones publicadas flotan en la pantalla para que la comunidad pueda verlas y sostenerlas en oracion.',
     prayersRefresh: 'Actualizar',
     prayersPremiumBadge: 'Acceso para publicar y dar me gusta',
-    prayersPremiumRequired: 'Solo los usuarios con suscripcion vigente pueden publicar nuevas oraciones y enviar me gusta.',
+    prayersPremiumRequired:
+      'Solo los usuarios con suscripcion vigente pueden publicar nuevas oraciones y enviar me gusta.',
     prayersLoading: 'Reuniendo las oraciones mas recientes...',
     prayersEmptyIcon: '🙏',
     prayersEmptyTitle: 'Aun no hay oraciones publicadas',
-    prayersEmptySubtitle: 'Cuando se comparta la primera oracion, aparecera aqui para que toda la comunidad la vea.',
+    prayersEmptySubtitle:
+      'Cuando se comparta la primera oracion, aparecera aqui para que toda la comunidad la vea.',
     prayersCreateButton: 'Nueva Oracion',
     prayersModalEyebrow: 'Nueva Publicacion',
     prayersModalTitle: 'Comparte tu oracion',
-    prayersModalSubtitle: 'Escribe en hasta 280 caracteres una peticion, clamor o agradecimiento para que la comunidad interceda contigo.',
+    prayersModalSubtitle:
+      'Escribe en hasta 280 caracteres una peticion, clamor o agradecimiento para que la comunidad interceda contigo.',
     prayersTextareaPlaceholder: 'Escribe tu oracion aqui...',
     prayersCharactersLabel: 'Caracteres restantes:',
     prayersCancel: 'Cancelar',
@@ -672,13 +715,15 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeMenuLibrary: 'Biblioteca',
     homeMenuDailyQuiz: 'Quiz Diario',
     homeMenuRecommendations: 'Recomendaciones',
+    entrar: 'Entrar',
     homeMenuBlog: 'Blog',
     homeMenuRanking: 'Ranking',
     homeLanguageLabel: 'Idioma',
     homeProfileButton: 'Mi Perfil',
     homeLogoutButton: 'Salir',
     homeProfileSectionTitle: 'Centro de Mando Espiritual',
-    homeMainPlaceholderText: 'Tu area exclusiva esta lista. Pronto se activaran nuevas funciones con estudios, comunidad y progreso personalizado.',
+    homeMainPlaceholderText:
+      'Tu area exclusiva esta lista. Pronto se activaran nuevas funciones con estudios, comunidad y progreso personalizado.',
     homeProfileLevel: 'Nivel',
     homeProfileExperience: 'Experiencia',
     homeProfileRole: 'Cargo',
@@ -711,7 +756,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePageExportPdf: 'Exportar PDF',
     sagePageCopied: '¡Copiado!',
     sageChatTitle: 'Sabio Online',
-    sageChatSubtitle: 'Conversa en tiempo real con el Sabio, con respuestas progresivas y memoria de contexto.',
+    sageChatSubtitle:
+      'Conversa en tiempo real con el Sabio, con respuestas progresivas y memoria de contexto.',
     sageChatSessionsTitle: 'Conversaciones',
     sageChatNewSession: 'Nueva Conversacion',
     sageChatLoadingSessions: 'Cargando conversaciones...',
@@ -736,7 +782,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteConfirm: '¿Deseas eliminar realmente esta conversacion?',
     sageChatDeleteModalEyebrow: 'Confirmacion',
     sageChatDeleteModalTitle: '¿Eliminar esta conversacion?',
-    sageChatDeleteModalSubtitle: 'Al confirmar, todo el historial de esta conversacion sera removido de tu panel de Sabio Online.',
+    sageChatDeleteModalSubtitle:
+      'Al confirmar, todo el historial de esta conversacion sera removido de tu panel de Sabio Online.',
     sageChatDeleteModalCancel: 'Cancelar',
     sageChatDeleteModalConfirm: 'Eliminar ahora',
     sageChatDeleteModalCloseAriaLabel: 'Cerrar confirmacion de eliminacion',
@@ -744,9 +791,11 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteError: 'No fue posible eliminar esta conversacion ahora.',
     sageChatFeedbackCloseAriaLabel: 'Cerrar mensaje',
     sageChatStreamError: 'No fue posible obtener respuesta del Sabio ahora.',
-    sageChatEmptyAnswerFallback: 'Estoy aqui contigo. Puedes reformular tu pregunta para ayudarte mejor.',
+    sageChatEmptyAnswerFallback:
+      'Estoy aqui contigo. Puedes reformular tu pregunta para ayudarte mejor.',
     sageChatPremiumTitle: 'Funcion Premium',
-    sageChatPremiumRequired: 'Solo usuarios con suscripcion activa pueden interactuar con Sabio Online.',
+    sageChatPremiumRequired:
+      'Solo usuarios con suscripcion activa pueden interactuar con Sabio Online.',
     librarySearchAriaLabel: 'Buscar',
     libraryClearAriaLabel: 'Limpiar',
     libraryChaptersAriaLabel: 'Selección de capítulos del libro',
@@ -778,14 +827,19 @@ export const INTERFACE_TRANSLATIONS: any = {
     pricingAccessDeniedDefaultResourceTitle: 'Recurso premium',
     pricingAccessDeniedButton: 'Suscribirse Ahora',
     pricingAccessDeniedButtonLoading: 'Redirigiendo...',
-    pricingAccessDeniedCheckoutMissingUser: 'No fue posible identificar tu usuario para iniciar el pago.',
+    pricingAccessDeniedCheckoutMissingUser:
+      'No fue posible identificar tu usuario para iniciar el pago.',
     pricingAccessDeniedCheckoutMissingUrl: 'No fue posible obtener el enlace de pago.',
-    pricingAccessDeniedCheckoutStartError: 'Error al iniciar el pago. Inténtalo nuevamente en unos instantes.',
+    pricingAccessDeniedCheckoutStartError:
+      'Error al iniciar el pago. Inténtalo nuevamente en unos instantes.',
     paymentStatusSuccessPopup: '¡Felicitaciones! Comienza tu viaje para convertirte en un Sabio',
     paymentStatusCanceledPopup: 'El pago no se completó. ¡Aún puedes suscribirte cuando quieras!',
-    outlinesPremiumDeniedResourceTitle: 'El Generador de Contenido esta disponible solo en el Plan Sabio',
-    outlinesPremiumDeniedResourceDescription: 'Crea estudios biblicos estructurados en segundos con IA teologica: introduccion, temas centrales, aplicacion practica y conclusion, listos para compartir y convertir en mensaje.',
+    outlinesPremiumDeniedResourceTitle:
+      'El Generador de Contenido esta disponible solo en el Plan Sabio',
+    outlinesPremiumDeniedResourceDescription:
+      'Crea estudios biblicos estructurados en segundos con IA teologica: introduccion, temas centrales, aplicacion practica y conclusion, listos para compartir y convertir en mensaje.',
     sagePremiumDeniedResourceTitle: 'Sabio Online esta disponible solo en el Plan Sabio',
-    sagePremiumDeniedResourceDescription: 'Conversa en tiempo real con una IA teologica con memoria de contexto, respuestas progresivas y orientacion biblica personalizada para tus estudios y devocionales.',
+    sagePremiumDeniedResourceDescription:
+      'Conversa en tiempo real con una IA teologica con memoria de contexto, respuestas progresivas y orientacion biblica personalizada para tus estudios y devocionales.',
   },
 };

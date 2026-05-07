@@ -21,19 +21,16 @@
                 <li><a routerLink="/" routerLinkActive="active-link"
                         [routerLinkActiveOptions]="{ exact: true }">{{versionService.ui().start}}</a></li>
                 <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
-                <li><a routerLink="/materials" routerLinkActive="active-link">{{versionService.ui().materials}}</a></li>
-                <li><a routerLink="/blog" routerLinkActive="active-link">{{versionService.ui().blog}}</a></li>
+                <li><a routerLink="/login">{{ versionService.ui().entrar }}</a></li>
+
             </ul>
+
         </nav>
 
         <div class="header-actions">
             <div class="lang-selector">
                 <app-version-selector></app-version-selector>
             </div>
-            @if (false) {
-            <a routerLink="/login" class="sage-button">{{ versionService.ui().headerBecomeSage }}</a>
-
-            }
         </div>
 
         <nav class="nav-mobile" [class.open]="isMenuOpen()">
@@ -42,16 +39,10 @@
                         (click)="closeMenu()">{{versionService.ui().start}}</a></li>
                 <li><a routerLink="/read" routerLinkActive="active-link"
                         (click)="closeMenu()">{{versionService.ui().title}}</a></li>
-                <li><a routerLink="/materials" routerLinkActive="active-link"
-                        (click)="closeMenu()">{{versionService.ui().materials}}</a></li>
-                <li><a routerLink="/blog" routerLinkActive="active-link"
-                        (click)="closeMenu()">{{versionService.ui().blog}}</a></li>
                 <li class="mobile-lang-selector"><app-version-selector></app-version-selector></li>
-                @if (false) {
-                <li><a routerLink="/login" class="sage-button mobile-sage-button" (click)="closeMenu()">{{
-                        versionService.ui().headerBecomeSage }}</a></li>
+                <li><a routerLink="/login" (click)="closeMenu()">{{
+                        versionService.ui().entrar }}</a></li>
 
-                }
             </ul>
         </nav>
 
