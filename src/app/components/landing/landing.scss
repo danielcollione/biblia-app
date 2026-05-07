@@ -51,8 +51,9 @@ body {
   z-index: 2;
   /* Gradiente radial para suavizar as bordas e focar no centro */
   background:
-    linear-gradient(to bottom, transparent 70%, #000 100%),
-    radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 60%, #000 100%);
+    linear-gradient(to top, transparent 70%, #000 100%),
+    linear-gradient(to bottom, transparent 80%, #000 100%);
+    // radial-gradient(circle at center, transparent 0%, rgba(0, 0, 0, 0.4) 60%, #000 100%);
   pointer-events: none;
 }
 
