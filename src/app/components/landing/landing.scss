@@ -174,21 +174,46 @@ body {
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .hero {
-    height: 100vh;
+    margin-top: 150px;
+    height: auto;
     display: flex;
     flex-direction: column;
-    /* Altera para flex-end para empurrar tudo para baixo */
-    justify-content: flex-end;
-    /* Padding inferior para os botões não colarem no fim da tela */
-    padding: 20px 20px 60px;
+    justify-content: flex-start;
+    padding: 0;
     box-sizing: border-box;
   }
 
-  /* Bloco Superior (Título e Subtítulo) agora descendo junto com o resto */
+  .video-wrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    height: 300px;
+    z-index: 1;
+  }
+
+  .bg-video {
+    transform: scale(1.1);
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  /* Bloco de conteúdo agora vem DEPOIS do vídeo */
+  .hero-bottom-container {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0;
+    padding: 40px 20px;
+    box-sizing: border-box;
+    position: relative;
+    z-index: 3;
+    background: #000;
+  }
+
   .bottom-left {
     text-align: center;
     width: 100%;
-    /* Margem para separar do desenho central e aproximar do bloco de botões */
     margin-bottom: 20px;
   }
 
@@ -196,21 +221,13 @@ body {
     font-size: 1.6rem;
     letter-spacing: 3px;
     line-height: 1.2;
+    margin-bottom: 10px;
   }
 
   .main-subtitle {
     font-size: 0.65rem;
     letter-spacing: 2px;
     margin-top: 5px;
-  }
-
-  /* Container que engloba tudo na parte de baixo */
-  .hero-bottom-container {
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 0;
-    padding: 0;
   }
 
   .bottom-right {
@@ -237,15 +254,6 @@ body {
     padding: 12px 0;
     font-size: 0.8rem;
     letter-spacing: 2px;
-  }
-
-  /* Ajuste do Vídeo para garantir que ele fique no centro/topo enquanto o texto desce */
-  .bg-video {
-    /* Mantemos o zoom para impacto, mas garantimos que o foco seja central */
-    transform: scale(1.1);
-    object-fit: cover;
-    /* Se necessário, ajuste o ponto focal para cima para liberar mais espaço embaixo */
-    object-position: center 40%;
   }
 }
 

@@ -29,7 +29,9 @@
         <div class="engine-container">
 
             <div class="engine-header reveal-element">
-                <h2 class="engine-main-phrase" [innerHTML]="versionService.ui().landingEngineMainPhrase"></h2>
+                <h2 class="engine-main-phrase">
+                    {{ versionService.ui().landingEnginePt1 }}<span class="gold-gradient">{{ versionService.ui().landingEngineKey }}</span>{{ versionService.ui().landingEnginePt2 }}<span class="white-text">{{ versionService.ui().landingEngineScriptures }}</span>
+                </h2>
             </div>
 
             <div class="engine-divider reveal-element"></div>
