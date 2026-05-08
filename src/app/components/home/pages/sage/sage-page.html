@@ -1,0 +1,252 @@
+@if (!hasActiveSubscription()) {
+  <app-pricing-access-denied
+    [deniedResourceTitle]="versionService.ui().sagePremiumDeniedResourceTitle"
+    [deniedResourceDescription]="versionService.ui().sagePremiumDeniedResourceDescription">
+  </app-pricing-access-denied>
+} @else {
+<div class="sage-chat-shell">
+  @if (isSessionsPanelOpen()) {
+    <button type="button" class="sessions-backdrop" (click)="closeSessionsPanel()" [attr.aria-label]="versionService.ui().sageChatCloseSessionsAriaLabel"></button>
+  }
+
+  <aside class="sessions-panel" [class.mobile-open]="isSessionsPanelOpen()">
+    <div class="sessions-head">
+      <button
+        type="button"
+        class="sessions-close-mobile"
+        (click)="closeSessionsPanel()"
+        [attr.aria-label]="versionService.ui().sageChatCloseSessionsAriaLabel">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18"></path>
+          <path d="M6 6l12 12"></path>
+        </svg>
+      </button>
+      <p class="kicker">{{ versionService.ui().sagePageTitle }}</p>
+      <h2>{{ versionService.ui().sageChatSessionsTitle }}</h2>
+      <button type="button" class="new-session-btn" (click)="createNewSession()" [disabled]="!hasActiveSubscription()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.12 2.12 0 1 1 3 3L7 19l-4 1 1-4 12.5-12.5z"></path>
+        </svg>
+        {{ versionService.ui().sageChatNewSession }}
+      </button>
+    </div>
+
+    <div class="sessions-list">
+      @if (isLoadingSessions()) {
+        <p class="sessions-loading">{{ versionService.ui().sageChatLoadingSessions }}</p>
+      } @else if (!sessions().length) {
+        <p class="sessions-empty">{{ versionService.ui().sageChatNoSessions }}</p>
+      } @else {
+        @for (session of sessions(); track trackSession($index, session); let index = $index) {
+          <div
+            class="session-item"
+            [class.active]="session.id === activeSessionId()"
+            [style.--session-enter-delay]="(index * 70) + 'ms'">
+            <button
+              type="button"
+              class="session-select-btn"
+              (click)="selectSession(session.id)">
+            <div class="session-item-copy">
+              <strong>{{ session.title }}</strong>
+              <span>{{ session.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+            </div>
+
+            </button>
+
+            <button
+              type="button"
+              class="session-delete-btn"
+              [disabled]="isDeletingSession(session.id) || isSending()"
+              (click)="deleteSession(session, $event)"
+              [attr.aria-label]="versionService.ui().sageChatSessionDeleteAriaLabel">
+              @if (isDeletingSession(session.id)) {
+                <span class="spinner"></span>
+              } @else {
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M3 6h18"></path>
+                  <path d="M8 6V4h8v2"></path>
+                  <path d="M19 6l-1 14H6L5 6"></path>
+                  <path d="M10 11v6"></path>
+                  <path d="M14 11v6"></path>
+                </svg>
+              }
+            </button>
+          </div>
+        }
+      }
+    </div>
+  </aside>
+
+  <section class="chat-panel">
+    <header class="chat-header">
+      <div class="chat-header-main">
+        <button type="button" class="sessions-toggle" (click)="toggleSessionsPanel()" [attr.aria-label]="versionService.ui().sageChatOpenSessionsAriaLabel">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 5h16v10a3 3 0 0 1-3 3H9l-5 4V5z"></path>
+            <path d="M9 9h6"></path>
+            <path d="M9 13h4"></path>
+          </svg>
+          <span class="sessions-toggle-label">{{ versionService.ui().sageChatSessionsTitle }}</span>
+          <svg class="sessions-toggle-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M7 10l5 5 5-5"></path>
+          </svg>
+        </button>
+
+        <div class="chat-header-icon" (click)="openAvatarModal()" role="button" tabindex="0" [attr.aria-label]="'Abrir avatar do Sábio'">
+          <img src="avatar/sage.jpeg" alt="Avatar do Sabio" loading="lazy" decoding="async" />
+        </div>
+      </div>
+      <div class="chat-header-copy">
+        <h1>{{ versionService.ui().sageChatTitle }}</h1>
+        <p>{{ versionService.ui().sageChatSubtitle }}</p>
+      </div>
+    </header>
+
+    <div class="messages-viewport" #messagesViewport>
+      @if (isLoadingMessages()) {
+        <div class="empty-chat-state">
+          <span class="typing-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        </div>
+      } @else if (!hasMessages()) {
+        <div class="empty-chat-state">
+          <h3>{{ versionService.ui().sageChatEmptyTitle }}</h3>
+          <p>{{ versionService.ui().sageChatEmptySubtitle }}</p>
+        </div>
+      }
+
+      @for (message of messages(); track $index; let index = $index) {
+        <article class="message-bubble" [class.user]="message.role === 'USER'" [class.sage]="message.role === 'SAGE'" [class.stream-active]="message.streaming"
+          [style.--message-enter-delay]="(index * 55) + 'ms'">
+          <header>
+            <span>{{ message.role === 'USER' ? versionService.ui().sageChatYouLabel : versionService.ui().sageChatSageLabel }}</span>
+            <small>{{ message.timestamp | date:'HH:mm' }}</small>
+          </header>
+          <p>{{ message.content }}</p>
+          @if (message.streaming) {
+            <span class="streaming-indicator">
+              {{ versionService.ui().sageChatStreaming }}
+              <span class="typing-dots" aria-hidden="true">
+                <i></i><i></i><i></i>
+              </span>
+            </span>
+          }
+        </article>
+      }
+    </div>
+
+    <form class="composer" (ngSubmit)="sendCurrentMessage()">
+      @if (errorMessage()) {
+        <div class="composer-feedback" [class.is-error]="feedbackIsError()" [class.is-success]="!feedbackIsError()">
+          <p>{{ errorMessage() }}</p>
+          <button
+            type="button"
+            class="composer-feedback-close"
+            (click)="clearFeedback()"
+            [attr.aria-label]="versionService.ui().sageChatFeedbackCloseAriaLabel">
+            x
+          </button>
+        </div>
+      }
+
+      @if (!hasMessages()) {
+        <div class="composer-insights">
+          <span>{{ versionService.ui().sageChatInsightsLabel }}</span>
+          <div class="insight-chips">
+            @for (prompt of insightPrompts(); track prompt) {
+              <button type="button" class="insight-chip" [disabled]="!hasActiveSubscription()" (click)="useInsightPrompt(prompt)">{{ prompt }}</button>
+            }
+          </div>
+        </div>
+      }
+
+      <textarea
+        [ngModel]="inputMessage()"
+        (ngModelChange)="inputMessage.set($event)"
+        (keydown)="onComposerEnter($event)"
+        name="message"
+        rows="2"
+        [disabled]="!hasActiveSubscription()"
+        [placeholder]="versionService.ui().sageChatInputPlaceholder"></textarea>
+
+      <button type="submit" class="send-btn" [disabled]="!canSend()">
+        @if (isSending()) {
+          <span class="spinner"></span>
+          {{ versionService.ui().sageChatSending }}
+        } @else {
+          {{ versionService.ui().sageChatSend }}
+        }
+      </button>
+    </form>
+  </section>
+
+  @if (isAvatarModalOpen()) {
+    <div class="avatar-modal-overlay" (click)="closeAvatarModal()" role="button" tabindex="0" [attr.aria-label]="'Fechar modal de avatar'">
+      <div class="avatar-modal-content" (click)="$event.stopPropagation()">
+        <button type="button" class="avatar-modal-close" (click)="closeAvatarModal()" [attr.aria-label]="'Fechar modal'">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18"></path>
+            <path d="M6 6l12 12"></path>
+          </svg>
+        </button>
+        <img src="avatar/sage.jpeg" alt="Avatar do Sabio" class="avatar-modal-image" />
+      </div>
+    </div>
+  }
+
+  @if (pendingDeleteSession(); as session) {
+    <div class="delete-session-modal-backdrop" (click)="closeDeleteSessionModal()">
+      <div
+        class="delete-session-modal"
+        role="dialog"
+        aria-modal="true"
+        [attr.aria-label]="versionService.ui().sageChatDeleteModalTitle"
+        (click)="$event.stopPropagation()">
+        <div class="delete-session-modal-header">
+          <div>
+            <p class="delete-session-modal-eyebrow">{{ versionService.ui().sageChatDeleteModalEyebrow }}</p>
+            <h2>{{ versionService.ui().sageChatDeleteModalTitle }}</h2>
+          </div>
+
+          <button
+            type="button"
+            class="delete-session-modal-close"
+            (click)="closeDeleteSessionModal()"
+            [disabled]="!!deletingSessionId()"
+            [attr.aria-label]="versionService.ui().sageChatDeleteModalCloseAriaLabel">
+            x
+          </button>
+        </div>
+
+        <p class="delete-session-modal-copy">{{ versionService.ui().sageChatDeleteModalSubtitle }}</p>
+
+        <div class="delete-session-preview">
+          <strong>{{ session.title }}</strong>
+          <span>{{ session.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+        </div>
+
+        <div class="delete-session-modal-actions">
+          <button
+            type="button"
+            class="delete-session-cancel-btn"
+            (click)="closeDeleteSessionModal()"
+            [disabled]="!!deletingSessionId()">
+            {{ versionService.ui().sageChatDeleteModalCancel }}
+          </button>
+
+          <button
+            type="button"
+            class="delete-session-confirm-btn"
+            (click)="confirmDeleteSession()"
+            [disabled]="!!deletingSessionId()">
+            @if (deletingSessionId() === session.id) {
+              <span class="spinner"></span>
+            }
+            {{ versionService.ui().sageChatDeleteModalConfirm }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+}

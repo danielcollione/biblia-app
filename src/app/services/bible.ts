@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
 import { BibleVersion, VersionService } from './version/version-service';
 import { Meta, Title } from '@angular/platform-browser';
+import { AuthService } from './auth/auth';
+import { BibleProgressService } from './bible-progress.service';
+import { XpPopupService } from './xp-popup.service';
 
 export interface LivroMetadados {
   id: number;
@@ -16,6 +19,7 @@ export interface LivroMetadados {
 @Injectable({ providedIn: 'root' })
 export class BibleService {
   private dbPromise: Promise<IDBPDatabase> | null = null;
+  private readonly READ_CHAPTERS_STORAGE_KEY = 'bible_read_chapters_v1';
 
   // SIGNALS DE ESTADO
   currentChapter = signal<any[]>([]);
@@ -25,6 +29,7 @@ export class BibleService {
   currentChapterIndex = signal<number | null>(null);
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
+  readChapterKeys = signal<Set<string>>(new Set());
 
   searchTerm = signal<string>('');
 
@@ -47,11 +52,16 @@ export class BibleService {
   constructor(
     private http: HttpClient,
     private versionService: VersionService,
+    private authService: AuthService,
+    private bibleProgressService: BibleProgressService,
+    private xpPopupService: XpPopupService,
     @Inject(PLATFORM_ID) private platformId: Object,
     private titleService: Title,
     private metaService: Meta,
   ) {
     if (isPlatformBrowser(this.platformId)) {
+      this.readChapterKeys.set(this.readChapterKeysFromStorage());
+
       this.dbPromise = openDB('BibliaDB', 2, {
         upgrade(db) {
           if (db.objectStoreNames.contains('versoes')) {
@@ -178,7 +188,20 @@ export class BibleService {
       const half = Math.ceil(fullChapter.length / 2);
       this.currentChapterHalf1.set(fullChapter.slice(0, half));
       this.currentChapterHalf2.set(fullChapter.slice(half));
+
+      this.registerReadProgress(book.name, index + 1);
     }
+  }
+
+  isChapterRead(index: number): boolean {
+    const book = this.selectedBook();
+    if (!book) {
+      return false;
+    }
+
+    const chapterNumber = index + 1;
+    const chapterKey = this.buildChapterKey(this.resolveBibleCode(), this.normalizeBookKey(book.name), chapterNumber);
+    return this.readChapterKeys().has(chapterKey);
   }
 
   resetNavigation() {
@@ -313,5 +336,84 @@ export class BibleService {
     if (!document.getElementById('bible-jsonld')) {
       document.head.appendChild(script);
     }
+  }
+
+  private registerReadProgress(bookName: string, chapterNumber: number): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (!this.authService.getToken()) {
+      return;
+    }
+
+    const bibleCode = this.resolveBibleCode();
+    const bookKey = this.normalizeBookKey(bookName);
+
+    this.bibleProgressService
+      .registerChapterRead({ bibleCode, bookKey, chapterNumber })
+      .subscribe({
+        next: (response) => {
+          this.markChapterAsRead(response.bibleCode, response.bookKey, response.chapterNumber);
+          if (response.xpGranted > 0) {
+            this.xpPopupService.showXp(response.xpGranted, 'Capitulo concluido');
+            this.authService.refreshUserProfileFromServer();
+          }
+        },
+        error: () => {
+          // Progresso e XP são best-effort no frontend; backend segue como fonte de verdade.
+        },
+      });
+  }
+
+  private resolveBibleCode(): string {
+    const code = this.versionService.languageCode();
+    if (code === 'pt' || code === 'en' || code === 'es') {
+      return code;
+    }
+    return 'pt';
+  }
+
+  private normalizeBookKey(bookName: string): string {
+    return (bookName || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '')
+      .slice(0, 80);
+  }
+
+  private buildChapterKey(bibleCode: string, bookKey: string, chapterNumber: number): string {
+    return `${bibleCode}:${bookKey}:${chapterNumber}`;
+  }
+
+  private markChapterAsRead(bibleCode: string, bookKey: string, chapterNumber: number): void {
+    const next = new Set(this.readChapterKeys());
+    next.add(this.buildChapterKey(bibleCode, bookKey, chapterNumber));
+    this.readChapterKeys.set(next);
+    this.persistReadChapterKeys(next);
+  }
+
+  private readChapterKeysFromStorage(): Set<string> {
+    const raw = localStorage.getItem(this.READ_CHAPTERS_STORAGE_KEY);
+    if (!raw) {
+      return new Set<string>();
+    }
+
+    try {
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) {
+        return new Set<string>();
+      }
+
+      return new Set(parsed.filter((item) => typeof item === 'string'));
+    } catch {
+      return new Set<string>();
+    }
+  }
+
+  private persistReadChapterKeys(keys: Set<string>): void {
+    localStorage.setItem(this.READ_CHAPTERS_STORAGE_KEY, JSON.stringify([...keys]));
   }
 }

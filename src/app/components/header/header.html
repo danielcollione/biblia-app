@@ -1,13 +1,14 @@
-<header class="main-header" [class.menu-active]="isMenuOpen()">
+<header class="main-header" [class.menu-active]="isMenuOpen()" [class.landing-top]="isLandingTop()">
     <div class="header-content">
 
         <div class="logo-left">
             <a routerLink="/" class="logo-link" (click)="closeMenu()">
-                <img src="logo-sem-fundo.png" alt="A Bíblia Revelada" class="header-logo">
+                <img src="logo-sem-fundo.png" [alt]="versionService.ui().headerLogoAlt" class="header-logo">
             </a>
         </div>
 
-        <button class="menu-toggle" (click)="toggleMenu()" aria-label="Abrir Menu">
+        <button class="menu-toggle" (click)="toggleMenu()"
+            [attr.aria-label]="versionService.ui().headerOpenMenuAriaLabel">
             <div class="hamburger">
                 <span></span>
                 <span></span>
@@ -15,16 +16,36 @@
             </div>
         </button>
 
-        <nav class="nav-right" [class.open]="isMenuOpen()">
+        <nav class="nav-center">
             <ul class="nav-links">
-                <li><a routerLink="/" (click)="closeMenu()">{{versionService.ui().start}}</a></li>
-                <li><a routerLink="/read" routerLinkActive="active-link" (click)="closeMenu()">{{versionService.ui().title}}</a></li>
-                <li><a routerLink="/materials" routerLinkActive="active-link" (click)="closeMenu()">{{versionService.ui().materials}}</a></li>
-                <li><a routerLink="/blog" (click)="closeMenu()">{{versionService.ui().blog}}</a></li>
-                
-                <li class="lang-selector">
-                    <app-version-selector></app-version-selector>
-                </li>
+                <li><a routerLink="/" routerLinkActive="active-link"
+                        [routerLinkActiveOptions]="{ exact: true }">{{versionService.ui().start}}</a></li>
+                <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
+                <li><a routerLink="/" fragment="sanctuary-section">{{versionService.ui().ferramentas}}</a></li>
+                <li><a routerLink="/login" class="enter-color">{{ versionService.ui().entrar }}</a></li>
+
+            </ul>
+
+        </nav>
+
+        <div class="header-actions">
+            <div class="lang-selector">
+                <app-version-selector></app-version-selector>
+            </div>
+        </div>
+
+        <nav class="nav-mobile" [class.open]="isMenuOpen()">
+            <ul class="nav-links-mobile">
+                <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"
+                        (click)="closeMenu()">{{versionService.ui().start}}</a></li>
+                <li><a routerLink="/read" routerLinkActive="active-link"
+                        (click)="closeMenu()">{{versionService.ui().title}}</a></li>
+                <li><a routerLink="/" fragment="sanctuary-section" (click)="closeMenu()">{{versionService.ui().ferramentas}}</a></li>
+
+                <li class="mobile-lang-selector"><app-version-selector></app-version-selector></li>
+                <li><a routerLink="/login" (click)="closeMenu()">{{
+                        versionService.ui().entrar }}</a></li>
+
             </ul>
         </nav>
 
@@ -32,5 +53,5 @@
 </header>
 
 @if (isMenuOpen()) {
-    <div class="menu-overlay" (click)="closeMenu()"></div>
+<div class="menu-overlay" (click)="closeMenu()"></div>
 }

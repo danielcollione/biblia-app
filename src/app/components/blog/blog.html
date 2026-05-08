@@ -9,7 +9,7 @@
     <div class="articles-grid" *ngIf="!selectedArticle">
         <div class="article-card" (click)="selectArticle(article)" *ngFor="let article of (articles$ | async)">
             <div class="card-image-wrapper">
-                <img [src]="article.thumbnail" alt="Thumbnail">
+                <img [src]="article.thumbnail" [alt]="versionService.ui().blogThumbnailAlt">
                 <div class="image-overlay"></div>
             </div>
             <div class="card-content">

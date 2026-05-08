@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap');
+
+:host {
+  display: block;
+  width: 100%;
+  min-height: 100%;
+}
+
+.bible-chapters-page {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100%;
+  padding: 120px 0 32px;
+  box-sizing: border-box;
+  animation: chapterPageEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.btn-back-top-left {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 70;
+  background: #0f0f0f;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.chapters-page-header {
+  text-align: center;
+  margin-bottom: 42px;
+  z-index: 66;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #fdfbf7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .line {
+    height: 1px;
+    width: 110px;
+    margin: 18px auto 0;
+    background: #a18e76;
+    opacity: 0.65;
+  }
+}
+
+.carrossel-caps-wrapper {
+  position: relative;
+  width: 100%;
+
+  .zona-navegacao-lateral.biblia-nav {
+    top: 0;
+    bottom: 0;
+    z-index: 65;
+  }
+}
+
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px;
+  z-index: 10;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+  transition: background 0.3s ease;
+  background: transparent;
+
+  &::after {
+    content: '';
+    display: inline-block;
+    padding: 10px;
+    border: solid #ffffff;
+    border-width: 0 2px 2px 0;
+    opacity: 0;
+    transition: all 0.2s ease;
+  }
+
+  &:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+
+    &::after {
+      transform: rotate(135deg);
+      margin-left: 15px;
+    }
+
+    &:hover {
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(135deg) scale(1.1);
+      }
+    }
+  }
+
+  &.direita {
+    right: 0;
+
+    &::after {
+      transform: rotate(-45deg);
+      margin-right: 15px;
+    }
+
+    &:hover {
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(-45deg) scale(1.1);
+      }
+    }
+  }
+}
+
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0 40px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 24px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+
+  &::-webkit-scrollbar { height: 10px; }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+
+    &:hover {
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+  }
+}
+
+.card-capitulo-luxo {
+  min-width: 120px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+
+  &:first-child { margin-left: 50px; }
+  &:last-child  { margin-right: 50px; }
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #fdfbf7;
+    font-weight: 700;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero { color: #a18e76; }
+  }
+}
+
+.chapters-state,
+.chapters-loading,
+.chapters-error {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: #a18e76;
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+}
+
+.chapters-error button {
+  margin-top: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.big-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(161, 142, 118, 0.2);
+  border-top-color: #a18e76;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes chapterPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.busca-vazia {
+  font-family: 'Cinzel', serif;
+  color: #a18e76;
+  text-align: center;
+  padding: 50px;
+  opacity: 0.7;
+  letter-spacing: 2px;
+}
+
+@media (max-width: 780px) {
+  .bible-chapters-page {
+    padding-top: 110px;
+  }
+
+  .btn-back-top-left {
+    top: 16px;
+    left: 12px;
+  }
+
+  .chapters-page-header {
+    margin-bottom: 20px;
+
+    h2 {
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .estante-capitulos-horizontal {
+    width: 100%;
+    padding: 18px 0 34px;
+  }
+
+  .zona-navegacao-lateral {
+    display: none !important;
+  }
+}

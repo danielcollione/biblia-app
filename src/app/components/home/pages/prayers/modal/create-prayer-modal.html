@@ -1,0 +1,47 @@
+<div class="modal-backdrop" (click)="dismiss()">
+  <div class="prayer-modal" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <p class="eyebrow">{{ versionService.ui().prayersModalEyebrow }}</p>
+        <h2>{{ versionService.ui().prayersModalTitle }}</h2>
+      </div>
+
+      <button class="close-modal" type="button" (click)="dismiss()">x</button>
+    </div>
+
+    <p class="modal-copy">{{ versionService.ui().prayersModalSubtitle }}</p>
+
+    <textarea
+      class="prayer-textarea"
+      [ngModel]="newPrayerContent()"
+      (ngModelChange)="updatePrayerContent($event)"
+      [placeholder]="versionService.ui().prayersTextareaPlaceholder"
+      rows="6"
+      [maxlength]="maxPrayerLength"></textarea>
+
+    <div class="modal-meta">
+      <span>{{ versionService.ui().prayersCharactersLabel }} {{ remainingCharacters() }}</span>
+      <span>{{ newPrayerContent().length }}/{{ maxPrayerLength }}</span>
+    </div>
+
+    @if (modalError()) {
+    <p class="modal-error">{{ modalError() }}</p>
+    }
+
+    <div class="modal-actions">
+      <button class="secondary-action" type="button" (click)="dismiss()">
+        {{ versionService.ui().prayersCancel }}
+      </button>
+      <button
+        class="primary-action"
+        type="button"
+        [disabled]="!canSubmitPrayer() || isSubmitting()"
+        (click)="submit()">
+        @if (isSubmitting()) {
+        <span class="mini-spinner"></span>
+        }
+        {{ versionService.ui().prayersPublish }}
+      </button>
+    </div>
+  </div>
+</div>

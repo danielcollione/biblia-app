@@ -1,0 +1,130 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: block;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 4000;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  background: rgba(7, 7, 7, 0.72);
+  backdrop-filter: blur(8px);
+}
+
+.prayer-modal {
+  width: min(560px, 100%);
+  border-radius: 28px;
+  padding: 24px;
+  background: linear-gradient(180deg, #17120d, #0d0d0d);
+  border: 1px solid rgba(211, 171, 99, 0.26);
+  color: #f4ead4;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #d3ab63;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.close-modal {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  background: rgba(255, 255, 255, 0.06);
+  color: #f4ead4;
+  cursor: pointer;
+}
+
+.modal-copy {
+  color: #bdb19d;
+  line-height: 1.6;
+}
+
+.prayer-textarea {
+  width: 100%;
+  max-width: 100%;
+  min-height: 160px;
+  margin-top: 12px;
+  padding: 16px;
+  box-sizing: border-box;
+  resize: none;
+  border-radius: 18px;
+  border: 1px solid rgba(211, 171, 99, 0.26);
+  background: rgba(255, 255, 255, 0.04);
+  color: #f4ead4;
+}
+
+.modal-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+  color: #bdb19d;
+  font-size: 0.82rem;
+}
+
+.modal-error {
+  margin: 14px 0 0;
+  color: #ffd7d7;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.secondary-action,
+.primary-action {
+  cursor: pointer;
+  border: 1px solid rgba(211, 171, 99, 0.34);
+  border-radius: 999px;
+  padding: 12px 18px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #f4ead4;
+  font-weight: 600;
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(211, 171, 99, 0.14);
+  }
+}
+
+.mini-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 6px;
+  vertical-align: middle;
+  border-radius: 50%;
+  border: 2px solid rgba(211, 171, 99, 0.28);
+  border-top-color: #d3ab63;
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

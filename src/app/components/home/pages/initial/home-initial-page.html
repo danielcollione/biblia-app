@@ -1,0 +1,34 @@
+<!-- Adicionado #wrapper para calcular a posição exata ignorando o menu lateral -->
+<div class="sanctuary-wrapper" #wrapper>
+  <canvas class="celestial-canvas" #particleCanvas></canvas>
+
+  <!-- CAMADA 2: Conteúdo -->
+  <div class="sanctuary-overlay">
+    
+    <!-- Novo layout em linha (Flexbox) -->
+    <div class="content-row">
+      
+      <!-- Lado Esquerdo: Logo -->
+      <img src="logo-sem-fundo.png" [alt]="versionService.ui().homeInitialLogoAlt" class="sanctuary-logo" #logoImage>
+      
+      <!-- Centro: Risco Vertical Dourado -->
+      <div class="vertical-divider"></div>
+      
+      <!-- Lado Direito: Textos -->
+      <div class="text-content">
+        <h1 class="monumental-title">
+          <span class="title-kicker">{{ versionService.ui().homeInitialTitleKicker }}</span>
+          <span class="title-main">{{ versionService.ui().homeInitialTitleMain }}</span>
+        </h1>
+        <p class="elegant-subtitle">{{ versionService.ui().homeInitialSubtitle }}</p>
+      </div>
+
+    </div>
+
+  </div>
+
+  <footer class="home-contact-footer">
+    <span>{{ versionService.ui().homeInitialContactUs }}: contact.theunveiledbible@gmail.com</span>
+  </footer>
+
+</div>

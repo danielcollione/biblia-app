@@ -147,7 +147,7 @@ export class MaterialsComponent implements OnInit {
 
   private normalizeMaterial(response: MaterialResponse, coverUrl: string): Material {
     return {
-      title: response.title ?? response['title:'] ?? 'Material sem titulo',
+      title: response.title ?? response['title:'] ?? this.versionService.ui().materialsUntitled,
       ebookIntro: response.ebookIntro,
       coverUrl,
     };

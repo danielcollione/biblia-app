@@ -1,0 +1,55 @@
+<!-- 1. LOADING GLOBAL -->
+<div class="loading-overlay" *ngIf="auth.isLoading()">
+  <div class="luxury-spinner"></div>
+  <p class="loading-text">{{ versionService.ui().profileLoadingCollection }}</p>
+</div>
+
+<!-- 2. CONTEÚDO PRINCIPAL -->
+<div class="profile-page-container" *ngIf="!auth.isLoading() && auth.usuario() as user">
+  <div class="profile-card-luxury">
+    
+    <header class="card-header">
+      <div class="avatar-perspective">
+        <div class="avatar-glow"></div>
+        <img [src]="user.pictureUrl" 
+             [alt]="versionService.ui().profileAvatarOf + ' ' + user.name"
+             class="profile-avatar">
+        <div class="level-badge">
+          <span class="lvl-label">{{ versionService.ui().profileLevelLabel }}</span>
+          <span class="lvl-value">{{ user.level }}</span>
+        </div>
+      </div>
+      
+      <h1 class="user-name cinzel-heading">{{ user.name }}</h1>
+      <!-- Tag de Cargo Estilizada -->
+      <div class="rank-tag-container">
+        <span class="rank-tag">{{ user.cargo }}</span>
+      </div>
+    </header>
+
+    <main class="card-body">
+      <!-- RPG Experience Bar -->
+      <div class="xp-system">
+        <div class="xp-info">
+          <span class="xp-label">{{ versionService.ui().profileSoulProgress }}</span>
+          <span class="xp-value">{{ user.experiencia | number }} XP</span>
+        </div>
+        <div class="rpg-bar-container">
+          <div class="rpg-bar-bg">
+            <div class="rpg-bar-fill" [style.width.%]="(user.experiencia % 100)">
+              <div class="bar-shimmer"></div>
+            </div>
+          </div>
+          <div class="bar-frame"></div>
+        </div>
+      </div>
+    </main>
+
+    <footer class="card-footer">
+      <button class="btn-luxury-exit" (click)="auth.logout()">
+        <span class="btn-text">{{ versionService.ui().profileEndSessionCollection }}</span>
+        <div class="btn-border"></div>
+      </button>
+    </footer>
+  </div>
+</div>

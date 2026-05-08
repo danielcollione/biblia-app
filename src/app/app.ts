@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, PLATFORM_ID, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { Header } from './components/header/header';
+import { XpPopup } from './components/xp-popup/xp-popup';
 import { BibleService } from './services/bible';
 import { SwUpdate, VersionReadyEvent } from '@angular/service-worker';
 import { filter } from 'rxjs';
@@ -8,12 +9,13 @@ import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header],
+  imports: [RouterOutlet, Header, XpPopup],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
   public bibleService = inject(BibleService);
+  private readonly router = inject(Router);
   protected readonly title = signal('biblia-interativa');
   private readonly platformId = inject(PLATFORM_ID);
 
@@ -51,5 +53,10 @@ export class App implements OnInit {
           });
         });
     }
+  }
+
+  showHeader(): boolean {
+    const currentUrl = this.router.url || '';
+    return !this.bibleService.isReadingMode() && !currentUrl.startsWith('/home');
   }
 }

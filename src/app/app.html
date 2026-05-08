@@ -1,5 +1,7 @@
-@if (!bibleService.isReadingMode()) {
-  <app-header class="fade-in"></app-header>
+@if (showHeader()) {
+  <app-header></app-header>
 }
 
 <router-outlet />
+
+<app-xp-popup></app-xp-popup>

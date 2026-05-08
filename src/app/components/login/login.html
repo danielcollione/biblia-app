@@ -1,0 +1,52 @@
+<div class="login-wrapper">
+    @if (googleRedirectLoading()) {
+    <div class="google-loading-overlay google-loading-overlay--standalone" aria-live="polite" role="status">
+        <div class="google-loading-core">
+            <div class="loading-orbit" aria-hidden="true">
+                <div class="loading-orbit-ring"></div>
+                <div class="loading-orbit-ring loading-orbit-ring--inner"></div>
+                <div class="loading-orbit-core"></div>
+                <span class="loading-orbit-dot loading-orbit-dot--a"></span>
+                <span class="loading-orbit-dot loading-orbit-dot--b"></span>
+            </div>
+            <div class="loading-progress" aria-hidden="true">
+                <span></span>
+            </div>
+            <p class="loading-kicker">{{ versionService.ui().loginGoogleLoadingKicker }}</p>
+            <strong class="loading-title">{{ versionService.ui().loginGoogleLoadingTitle }}</strong>
+            <small class="loading-copy">{{ versionService.ui().loginGoogleLoadingSubtitle }}</small>
+        </div>
+    </div>
+    } @else {
+    <div class="login-card" [class.form-loading]="carregando()">
+
+        <div class="brand-header">
+            <div class="icon-book">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-chave" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="90"
+                    height="24">
+                    <circle cx="8" cy="15" r="4"></circle>
+                    <line x1="10.85" y1="12.15" x2="19" y2="4"></line>
+                    <line x1="18" y1="5" x2="20" y2="7"></line>
+                    <line x1="15" y1="8" x2="17" y2="10"></line>
+                </svg>
+            </div>
+            <h2>{{ versionService.ui().loginAccessCollection }}</h2>
+            <p>{{ versionService.ui().loginContinueJourney }}</p>
+        </div>
+
+        <div class="error-alert" *ngIf="erroMensagem()">
+            {{ erroMensagem() }}
+        </div>
+
+        <div class="google-btn-container" [class.disabled]="carregando()">
+            <div id="google-btn-wrapper"></div>
+        </div>
+
+        <div class="google-only-note">
+            <span>{{ versionService.ui().loginGoogleButtonText }}</span>
+        </div>
+
+    </div>
+    }
+</div>

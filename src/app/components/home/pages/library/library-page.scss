@@ -1,0 +1,951 @@
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+:host {
+  display: block;
+  height: 100%;
+  min-height: 0;
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  background-color: transparent;
+  animation: pageFadeIn 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+:host::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+}
+
+:host::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.library-shell {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  min-height: 100%;
+  padding-bottom: 40px;
+  margin-bottom: 100px;
+}
+
+.bible-chapters-page {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 0 32px;
+  box-sizing: border-box;
+  animation: chapterPageEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.floating-search {
+  position: fixed;
+  right: 5%;
+  top: 7%;
+  transform: translateY(-50%);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  pointer-events: auto;
+
+  &.search-active .search-toggle {
+    border-color: #cfab6a;
+    color: #cfab6a;
+    box-shadow: 0 0 18px rgba(207, 171, 106, 0.35);
+  }
+}
+
+.search-toggle {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid rgba(161, 142, 118, 0.45);
+  color: #a18e76;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  flex-shrink: 0;
+
+  &:hover,
+  &.open {
+    background: rgba(20, 20, 20, 0.95);
+    border-color: #cfab6a;
+    color: #cfab6a;
+    box-shadow: 0 0 20px rgba(207, 171, 106, 0.3);
+  }
+}
+
+.search-panel {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  order: -1;
+  animation: searchSlideIn 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+  position: relative;
+}
+
+@keyframes searchSlideIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.search-input {
+  width: 220px;
+  height: 46px;
+  background: rgba(8, 8, 8, 0.92);
+  border: 1px solid rgba(207, 171, 106, 0.5);
+  border-right: none;
+  color: #fdfbf7;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 0 36px 0 16px;
+  outline: none;
+  box-sizing: border-box;
+  backdrop-filter: blur(12px);
+  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(207, 171, 106, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: rgba(161, 142, 118, 0.45);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  &:focus {
+    border-color: #cfab6a;
+    box-shadow: -6px 0 28px rgba(207, 171, 106, 0.2), inset 0 1px 0 rgba(207, 171, 106, 0.12);
+  }
+}
+
+.search-clear {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: rgba(161, 142, 118, 0.6);
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 4px;
+  line-height: 1;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #cfab6a;
+  }
+}
+
+@media (max-width: 780px) {
+
+  .search-input {
+    width: 160px;
+    font-size: 0.72rem;
+  }
+}
+
+.carrossel-caps-wrapper {
+  position: relative;
+  width: 100%;
+
+  .zona-navegacao-lateral.biblia-nav {
+    top: 0;
+    bottom: 0;
+    z-index: 65;
+  }
+}
+
+.btn-back-top-left {
+  position: fixed;
+  top: 28px;
+  left: 28px;
+  z-index: 70;
+  background: #0f0f0f;
+  border: 1px solid #a18e76;
+  color: #fdfbf7;
+  padding: 12px 20px;
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: #a18e76;
+    color: #111;
+  }
+}
+
+.chapters-page-header {
+  text-align: center;
+  margin-bottom: 42px;
+  z-index: 66;
+
+  h2 {
+    margin: 0;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: #fdfbf7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .line {
+    height: 1px;
+    width: 110px;
+    margin: 18px auto 0;
+    background: #a18e76;
+    opacity: 0.65;
+  }
+}
+
+/* =========================================
+   HERO BANNER (O Destaque Estilo HBO)
+========================================= */
+.hero-banner {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  padding: 48px 40px;
+
+  img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 800px;
+    object-fit: cover;
+    object-position: center 22%;
+    z-index: 0;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -180px;
+    height: clamp(120px, 24vh, 220px);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 3;
+    max-width: 600px;
+    animation: pageFadeIn 1s ease-out 200ms both;
+
+    .hero-kicker {
+      margin: 0 0 8px;
+      color: #cfab6a;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .hero-title {
+      margin: 0;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      color: #b8afa0;
+      font-size: 0.85rem;
+      font-weight: 500;
+
+      .meta-tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 2px 6px;
+        border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
+
+    .hero-subtitle {
+      margin: 16px 0 24px;
+      color: #dcd4c6;
+      line-height: 1.6;
+      font-size: 1.05rem;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+
+      button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 44px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        border: none;
+      }
+
+      .btn-primary {
+        background: #cfab6a;
+        color: #050505;
+        padding: 0 24px;
+        font-size: 1rem;
+        gap: 8px;
+
+        &:hover {
+          background: #e6c587;
+          transform: scale(1.05);
+        }
+      }
+
+      .btn-icon {
+        width: 44px;
+        background: rgba(255, 255, 255, 0.1);
+        color: #ffffff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        font-size: 1.2rem;
+        backdrop-filter: blur(4px);
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.2);
+          border-color: #ffffff;
+        }
+      }
+    }
+  }
+}
+
+.biblia-sagrada-wrapper {
+  position: relative;
+  padding: 0;
+
+  .zona-navegacao-lateral.biblia-nav {
+    height: 400px;
+    top: 20px;
+    bottom: 44px;
+  }
+
+  .biblia-header {
+    padding: 0 40px;
+    margin-bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    h2 {
+      font-family: 'Cinzel', serif;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #f4ead4;
+    }
+  }
+
+  .biblia-catalog-rail {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(240px, 300px);
+    gap: 20px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px 40px 20px 40px;
+    scroll-behavior: smooth;
+    scroll-snap-type: x proximity;
+    scroll-padding-left: 40px;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .bible-catalog-card {
+    cursor: pointer;
+  }
+
+  .bible-catalog-card .badge-access {
+    font-weight: 800;
+    letter-spacing: 0.08em;
+  }
+
+  .bible-catalog-card .badge-premium {
+    color: #6fcf97;
+    border-color: rgba(111, 207, 151, 0.55);
+  }
+
+  .busca-vazia {
+    font-family: 'Cinzel', serif;
+    color: #a18e76;
+    width: 100%;
+    text-align: center;
+    padding: 50px;
+    opacity: 0.7;
+    letter-spacing: 2px;
+  }
+
+  .fade-in {
+    animation: fadeIn 0.6s ease-in;
+  }
+}
+
+.estante-capitulos-horizontal {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  padding: 20px 0 70px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 20px;
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+  z-index: 66;
+
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.02);
+    margin: 0 10vw;
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, transparent, #a18e76, transparent);
+    border-radius: 10px;
+    cursor: grab;
+
+    &:hover {
+      background: linear-gradient(to right, transparent, #d4af37, transparent);
+    }
+  }
+}
+
+.card-capitulo-luxo {
+  position: relative;
+  min-width: 120px;
+  height: 160px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(161, 142, 118, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  border-radius: 2px;
+
+  .cap-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    color: #a18e76;
+    letter-spacing: 3px;
+    margin-bottom: 10px;
+  }
+
+  .cap-numero {
+    font-family: 'Cinzel', serif;
+    font-size: 2.5rem;
+    color: #fdfbf7;
+    font-weight: 700;
+  }
+
+  &:first-child {
+    margin-left: 50px;
+  }
+
+  &:last-child {
+    margin-right: 50px;
+  }
+
+  &:hover {
+    background: rgba(161, 142, 118, 0.1);
+    border-color: #a18e76;
+    transform: translateY(-15px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+
+    .cap-numero {
+      color: #a18e76;
+    }
+  }
+
+  &.chapter-read {
+    border-color: rgba(212, 175, 55, 0.55);
+    background: linear-gradient(180deg, rgba(212, 175, 55, 0.16), rgba(255, 255, 255, 0.03));
+
+    .cap-numero {
+      color: #d6b87a;
+    }
+  }
+}
+
+.chapter-read-icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  color: #d6b87a;
+  font-size: 0.72rem;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chapterPageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.985);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* =========================================
+   CATÁLOGO E RAIL
+========================================= */
+.catalog-section {
+  position: relative;
+  /* 1. Removemos o padding daqui. É isso que impedia os livros 
+        de "esconderem atrás da tela" nas laterais. */
+  padding: 0;
+}
+
+.catalog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  /* 2. Devolvemos o padding apenas para o cabeçalho, 
+        para que o título "Adicionados Recentemente" continue alinhado. */
+  padding: 0 40px;
+
+  h2 {
+    margin: 0;
+    color: #e0d7c8;
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+}
+
+.catalog-rail {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(240px, 300px);
+  gap: 20px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  /* 3. A MÁGICA ACONTECE AQUI: 
+        O padding de 40px na esquerda alinha o primeiro card com o título.
+        O padding de 40px na direita FORÇA a margem existir após o último card! */
+  padding: 10px 40px 20px 40px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-padding-left: 40px;
+}
+
+.catalog-actions {
+  display: flex;
+  gap: 8px;
+
+  button {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    background: transparent;
+    color: #cfab6a;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(197, 160, 89, 0.1);
+      border-color: #cfab6a;
+      transform: scale(1.1);
+    }
+  }
+}
+
+/* =========================================
+   CARDS LUXUOSOS (POSTER SEM TÍTULO)
+========================================= */
+.catalog-card {
+  scroll-snap-align: start;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #111;
+  cursor: pointer;
+  opacity: 0;
+  animation: cardReveal 500ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  /* Borda sutil inicial */
+  border: 1px solid transparent;
+
+  &:hover {
+    transform: translateY(-8px) scale(1.03);
+    border-color: #cfab6a; /* Borda dourada acende no hover */
+
+    .cover-wrap img {
+      transform: scale(1.05); /* Efeito zoom sutil na arte */
+    }
+  }
+
+  &.locked {
+    cursor: not-allowed;
+
+    &:hover {
+      transform: none;
+      border-color: transparent;
+
+      .cover-wrap img {
+        transform: none;
+      }
+    }
+  }
+}
+
+.card-lock-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* cobrimos só a área central, deixando o título (bottom) visível */
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0.35) 0%,
+    rgba(0, 0, 0, 0.35) 60%,
+    transparent 100%
+  );
+
+  svg {
+    position: absolute;
+    top: 38%;
+    transform: translateY(-50%);
+    width: 36px;
+    height: 36px;
+    color: rgba(207, 171, 106, 0.9);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.55));
+  }
+}
+
+.cover-wrap {
+  position: relative;
+  /* Proporção 2:3 padrão de capa de livro/filme */
+  aspect-ratio: 2 / 3;
+  width: 100%;
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .cover-badges {
+    position: absolute;
+    z-index: 4;
+    top: 12px;
+    left: 12px;
+  }
+
+  .badge {
+    display: inline-flex;
+    border-radius: 4px;
+    padding: 4px 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+  }
+
+  .badge-premium {
+    color: #cfab6a;
+    border: 1px solid rgba(207, 171, 106, 0.5);
+  }
+
+  /* O SEGREDO DO TÍTULO: Gradiente escuro agressivo na base */
+  .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, #050505 0%, rgba(5, 5, 5, 0.8) 25%, transparent 60%);
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .card-meta {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 16px 16px;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    h3 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1.1rem;
+      line-height: 1.2;
+      font-family: 'Cinzel', serif;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .author {
+      margin: 4px 0 0;
+      color: #b8afa0;
+      font-size: 0.75rem;
+    }
+
+    .category {
+      display: inline-block;
+      margin-top: 8px;
+      color: #cfab6a;
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+    }
+  }
+}
+
+/* Ajustes de Responsividade */
+@media (max-width: 780px) {
+  .hero-banner {
+    padding: 24px 16px;
+
+    img {
+      object-position: center 18%;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+    }
+    .hero-subtitle {
+      display: none;
+    }
+  }
+
+  .catalog-section {
+    padding: 0; /* Zera o padding no mobile também */
+  }
+
+  .biblia-sagrada-wrapper {
+    .biblia-header {
+      padding: 0 16px;
+      margin-bottom: 12px;
+    }
+
+    .biblia-catalog-rail {
+      grid-auto-columns: minmax(185px, 210px);
+      padding: 10px 16px 20px 16px;
+      scroll-padding-left: 16px;
+    }
+
+    .zona-navegacao-lateral {
+      display: none !important;
+    }
+  }
+
+  .bible-chapters-page {
+    padding-top: 110px;
+  }
+
+  .btn-back-top-left {
+    top: 16px;
+    left: 12px;
+  }
+
+  .chapters-page-header {
+    margin-bottom: 20px;
+
+    h2 {
+      letter-spacing: 0.08em;
+    }
+  }
+
+  .estante-capitulos-horizontal {
+    width: 100%;
+    padding: 18px 0 34px;
+  }
+
+  .catalog-header {
+    padding: 0 16px; /* Mantém o título alinhado no mobile */
+  }
+
+  .catalog-actions {
+    display: none;
+  }
+
+  .catalog-rail {
+    grid-auto-columns: minmax(185px, 210px);
+    /* 16px na direita garantem a margem após o último livro no celular */
+    padding: 10px 16px 20px 16px;
+  }
+}
+
+.zona-navegacao-lateral {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 60px; // Largura fixa para não espalhar a sombra pela tela toda
+  z-index: 10; // Reduzido para não sobrepor outros elementos da página
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: auto;
+
+  // Transição suave para o fundo preto
+  transition: background 0.3s ease;
+  background: transparent;
+
+  // Desenhando o Chevron (Seta) estilo HBO Max com bordas
+  &::after {
+    content: '';
+    display: inline-block;
+    padding: 10px; // Seta menor e mais delicada
+    border: solid #ffffff; // Branco puro
+    border-width: 0 2px 2px 0; // Mais fina (2px) para ficar idêntica à da foto
+    opacity: 0; // Começa invisível
+    transition: all 0.2s ease;
+  }
+
+  /* Quando o mouse entra na zona lateral */
+  &:hover {
+    &::after {
+      opacity: 1; // Revela a seta
+    }
+  }
+
+  &.esquerda {
+    left: 0;
+
+    &::after {
+      transform: rotate(135deg); // Aponta para a esquerda
+      margin-left: 15px; // Ajuste fino de posição
+    }
+
+    &:hover {
+      // Gradiente escuro muito mais denso na ponta e curto, idêntico à HBO
+      background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        // Leve aumento de escala mantendo a rotação
+        transform: rotate(135deg) scale(1.1);
+      }
+    }
+  }
+
+  &.direita {
+    right: 0;
+
+    &::after {
+      transform: rotate(-45deg); // Aponta para a direita
+      margin-right: 15px; // Ajuste fino de posição
+    }
+
+    &:hover {
+      // Gradiente escuro muito mais denso na ponta e curto, idêntico à HBO
+      background: linear-gradient(
+        to left,
+        rgba(0, 0, 0, 0.95) 0%,
+        rgba(0, 0, 0, 0.5) 40%,
+        transparent 100%
+      );
+
+      &::after {
+        transform: rotate(-45deg) scale(1.1);
+      }
+    }
+  }
+}
