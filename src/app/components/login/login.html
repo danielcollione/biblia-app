@@ -21,7 +21,16 @@
     <div class="login-card" [class.form-loading]="carregando()">
 
         <div class="brand-header">
-            <div class="icon-book">📖</div>
+            <div class="icon-book">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon-chave" fill="none"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" width="90"
+                    height="24">
+                    <circle cx="8" cy="15" r="4"></circle>
+                    <line x1="10.85" y1="12.15" x2="19" y2="4"></line>
+                    <line x1="18" y1="5" x2="20" y2="7"></line>
+                    <line x1="15" y1="8" x2="17" y2="10"></line>
+                </svg>
+            </div>
             <h2>{{ versionService.ui().loginAccessCollection }}</h2>
             <p>{{ versionService.ui().loginContinueJourney }}</p>
         </div>

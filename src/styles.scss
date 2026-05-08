@@ -9,6 +9,7 @@ html, body {
   margin: 0;
   background-color: #050505; // Cor de fundo para não aparecer o cinza
   font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth; // Scroll suave para navegação por fragments
 }
 
 /* Força o root do Angular a ocupar a tela toda também */

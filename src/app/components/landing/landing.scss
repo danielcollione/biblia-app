@@ -125,7 +125,7 @@ body {
   color: #0a0a0a;
   border: 1px solid rgba(197, 160, 89, 0.6);
   /* padding: clamp(12px, 1.5vw, 16px) clamp(30px, 4vw, 48px); */
-  font-family: Cinzel, serif;
+  font-family: Inter, serif;
   font-size: clamp(0.75rem, 1.2vw, 0.95rem);
   letter-spacing: 2px;
   /* font-weight: 600; */
@@ -172,10 +172,332 @@ body {
   box-shadow: 0 2px 10px rgba(197, 160, 89, 0.2);
 }
 
+$bg-color: #0e0e0e; /* Tom exato da sua imagem para não ter quebra */
+$text-main: #ffffff;
+$text-muted: #888888;
+$border-color: rgba(255, 255, 255, 0.1);
+$accent-color: #ffffff;
+
+/* Seção principal englobando todo o fundo */
+:host {
+  display: block;
+  background-color: $bg-color;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.toolbox-section {
+  background-color: $bg-color;
+  color: $text-main;
+  padding: 4rem 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family:
+    'Inter',
+    -apple-system,
+    sans-serif;
+}
+
+.toolbox-header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  .title {
+    font-family: 'Cinzel', serif; /* Fonte Cinzel aplicada ao título principal */
+    font-size: 2.2rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+
+  .subtitle {
+    font-size: 0.75rem;
+    color: $text-muted;
+    letter-spacing: 0.2em;
+    font-family: monospace;
+
+    span {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background-color: $border-color;
+}
+
+.feature-item {
+  display: flex;
+  flex-direction: column;
+
+  // --- ANIMAÇÃO DE SURGIMENTO (SCROLL REVEAL) ---
+  &.reveal-on-scroll {
+    opacity: 0;
+    transform: translateX(-60px); // Começa 60px para a esquerda
+    transition:
+      opacity 1s cubic-bezier(0.2, 1, 0.3, 1),
+      transform 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+    will-change: transform, opacity; // Otimização de performance
+  }
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(0); // Volta para a posição original
+  }
+
+  // Adiciona um leve delay cascata para cada item (opcional)
+  // Faz com que o primeiro item surja e o segundo logo atrás
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i}) {
+      transition-delay: #{$i * 0.05}s;
+    }
+  }
+}
+
+.feature-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem 0;
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+  transition: opacity 0.2s ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.feature-left {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+
+  @media (max-width: 600px) {
+    gap: 1.5rem;
+  }
+}
+
+.feature-number {
+  font-size: 0.8rem;
+  color: $text-muted;
+  font-family: monospace;
+  letter-spacing: 0.1em;
+  min-width: 40px;
+}
+
+.feature-title-group {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.feature-icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888888;
+  transition: color 0.3s ease;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.feature-title {
+  font-family: 'Cinzel', serif; /* Fonte Cinzel nas features */
+  font-size: 1.35rem;
+  font-weight: 500;
+  margin: 0;
+  color: #cccccc;
+  transition: color 0.3s ease;
+  letter-spacing: 0.05em;
+}
+
+.feature-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  .action-text {
+    font-size: 0.8rem;
+    border: 1px solid $border-color;
+    padding: 0.4rem 1rem;
+    border-radius: 50px;
+    font-family: 'Inter', sans-serif;
+    transition:
+      background 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      border-color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    @media (max-width: 600px) {
+      display: none;
+    }
+  }
+
+  .chevron {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition:
+      transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+      color 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+    &.rotated {
+      transform: rotate(180deg);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      stroke: $accent-color;
+    }
+  }
+}
+
+.feature-item:hover .action-text {
+  background: $accent-color;
+  color: $bg-color;
+  border-color: $accent-color;
+  transform: translateX(2px);
+}
+
+.feature-item.active .feature-right .action-text {
+  background: $accent-color;
+  color: $bg-color;
+  border-color: $accent-color;
+}
+
+.feature-item.active .feature-right .chevron {
+  color: $accent-color;
+}
+
+/* --- ABERTURA LENTA CONTROLADA POR ALTURA REAL --- */
+.feature-content-wrapper {
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: height 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: height;
+}
+
+.feature-item.active .feature-content-wrapper {
+  pointer-events: auto;
+}
+
+.feature-content-inner {
+  min-height: 0;
+  padding: 0;
+}
+
+.content-layout {
+  display: flex;
+  gap: 3rem;
+  padding-bottom: 2.5rem;
+  padding-top: 1rem; /* Dá um leve respiro quando abre */
+  padding-left: calc(40px + 3rem);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding-left: 0;
+    gap: 1rem;
+  }
+}
+
+.content-label {
+  font-size: 0.7rem;
+  color: $text-muted;
+  letter-spacing: 0.1em;
+  font-weight: 600;
+  min-width: 60px;
+  padding-top: 0.2rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.content-details {
+  flex: 1;
+
+  .content-description {
+    font-family: 'Inter', sans-serif; /* Texto de leitura na Inter */
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #bbbbbb;
+    max-width: 700px;
+    margin: 0 0 1.5rem 0;
+  }
+}
+
+.content-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  .tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.75rem;
+    padding: 0.3rem 0.8rem;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 50px;
+    color: #dddddd;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+}
+
+.cta-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.subscribe-btn {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: transparent;
+  color: $accent-color;
+  border: 1px solid $border-color;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  .btn-icon {
+    width: 18px;
+    height: 18px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background-color: $accent-color;
+    color: $bg-color;
+
+    .btn-icon {
+      transform: translateX(4px);
+    }
+  }
+}
+
 /* Mobile Responsiveness */
 @media (max-width: 768px) {
   .hero {
-    margin-top: 150px;
+    margin-top: 75px;
     height: auto;
     display: flex;
     flex-direction: column;
@@ -524,6 +846,7 @@ p.subtitle.animate-reveal {
 @media (max-width: 768px) {
   .engine-section {
     padding: 80px 30px;
+    min-height: 1vh !important;
   }
   .engine-main-phrase {
     font-size: 2.2rem;
@@ -1016,7 +1339,7 @@ p.subtitle.animate-reveal {
 /* Ajuste Mobile */
 @media (max-width: 768px) {
   .lux-footer {
-    padding: 60px 20px;
+    padding: 60px 0;
 
     .footer-brand {
       font-size: 1rem;

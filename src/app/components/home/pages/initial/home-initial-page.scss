@@ -1,8 +1,17 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
 /* Contêiner principal */
 .sanctuary-wrapper {
   position: relative;
   width: 100%;
-  height: 100vh;
+  height: 100%;
+  min-height: 100%;
   background-image: none;
   overflow: hidden;
 }
@@ -29,7 +38,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  pointer-events: none; 
+  pointer-events: none;
 }
 
 /* =========================================
@@ -48,7 +57,7 @@
 .sanctuary-logo {
   height: 170px; /* Ajuste o tamanho da sua logo aqui */
   width: auto;
-//   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2)); /* Brilho sutil na logo */
+  //   filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2)); /* Brilho sutil na logo */
   transform-origin: center center;
   will-change: transform;
 }
@@ -58,7 +67,12 @@
   width: 2px;
   height: 200px;
   /* Cria o efeito de fade nas pontas e forte no meio */
-  background: linear-gradient(to bottom, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0));
+  background: linear-gradient(
+    to bottom,
+    rgba(212, 175, 55, 0),
+    rgba(212, 175, 55, 0.8),
+    rgba(212, 175, 55, 0)
+  );
 }
 
 /* Alinhamento dos textos à direita da linha */
@@ -81,7 +95,12 @@
   .vertical-divider {
     width: 160px;
     height: 2px;
-    background: linear-gradient(to right, rgba(212, 175, 55, 0), rgba(212, 175, 55, 0.8), rgba(212, 175, 55, 0));
+    background: linear-gradient(
+      to right,
+      rgba(212, 175, 55, 0),
+      rgba(212, 175, 55, 0.8),
+      rgba(212, 175, 55, 0)
+    );
   }
 
   .text-content {
@@ -144,19 +163,21 @@
 }
 
 .home-contact-footer {
+  bottom: 100px;
+  /* bottom: -200px; */
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 14px;
+  /* bottom: 14px; */
   z-index: 3;
   display: flex;
   justify-content: center;
   gap: 6px;
   padding: 0 14px;
-  font-family: 'Inter', sans-serif;
+  font-family: Inter, sans-serif;
   font-size: 0.82rem;
   letter-spacing: 0.2px;
-  color: rgba(234, 221, 207, 0.68);
+  color: #eaddcfad;
   text-align: center;
   pointer-events: auto;
 
