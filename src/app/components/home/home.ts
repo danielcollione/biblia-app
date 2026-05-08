@@ -29,7 +29,7 @@ type HomeMenuItem = {
   standalone: true,
   imports: [CommonModule, RouterModule, RouterOutlet],
   templateUrl: './home.html',
-  styleUrls: ['./home.scss']
+  styleUrls: ['./home.scss'],
 })
 export class Home implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
@@ -40,15 +40,15 @@ export class Home implements OnInit, OnDestroy {
   public readonly versionService = inject(VersionService);
   // Must match backend UserRank.requiredXp thresholds.
   private readonly levelXpThresholds = [
-    0,      // level 1
-    1000,   // level 2
-    2500,   // level 3
-    5000,   // level 4
-    9000,   // level 5
-    15000,  // level 6
-    25000,  // level 7
-    40000,  // level 8
-    60000,  // level 9
+    0, // level 1
+    1000, // level 2
+    2500, // level 3
+    5000, // level 4
+    9000, // level 5
+    15000, // level 6
+    25000, // level 7
+    40000, // level 8
+    60000, // level 9
     100000, // level 10
   ];
 
@@ -58,20 +58,21 @@ export class Home implements OnInit, OnDestroy {
   readonly isStartingCheckout = signal(false);
   readonly checkoutError = signal<string | null>(null);
 
-
   readonly availableLangs: BibleVersion[] = this.versionService.getAvailableVersions();
   readonly currentVersion = toSignal(this.versionService.activeVersion$);
   readonly currentRoute = toSignal(
     this.router.events.pipe(
       filter((event): event is NavigationEnd => event instanceof NavigationEnd),
       startWith(null),
-      map(() => this.router.url)
+      map(() => this.router.url),
     ),
-    { initialValue: this.router.url }
+    { initialValue: this.router.url },
   );
   readonly isLibraryRoute = computed(() => this.currentRoute().startsWith('/home/library'));
   readonly isSageRoute = computed(() => this.currentRoute().startsWith('/home/sage'));
-  readonly isRecommendationsRoute = computed(() => this.currentRoute().startsWith('/home/recommendations'));
+  readonly isRecommendationsRoute = computed(() =>
+    this.currentRoute().startsWith('/home/recommendations'),
+  );
   readonly isBlogRoute = computed(() => this.currentRoute().startsWith('/home/blog'));
   readonly hasActiveSubscription = computed(() => !!this.authService.usuario()?.subscriptionActive);
 
@@ -108,11 +109,11 @@ export class Home implements OnInit, OnDestroy {
   }
 
   toggleSidebar(): void {
-    this.isSidebarOpen.update(v => !v);
+    this.isSidebarOpen.update((v) => !v);
   }
 
   toggleLangMenu(): void {
-    this.isLangMenuOpen.update(v => !v);
+    this.isLangMenuOpen.update((v) => !v);
   }
 
   closeLangMenu(): void {
@@ -130,10 +131,10 @@ export class Home implements OnInit, OnDestroy {
     { key: 'prayers', route: '/home/prayers' },
     { key: 'sage', route: '/home/sage' },
     { key: 'library', route: '/home/library' },
-    // { key: 'quiz', route: '/home/quiz' },
     { key: 'recommendations', route: '/home/recommendations' },
     { key: 'blog', route: '/home/blog' },
-    // { key: 'ranking', route: '/home/ranking' },
+    { key: 'quiz', route: '/home/quiz' },
+    { key: 'ranking', route: '/home/ranking' },
   ]);
 
   readonly menuItems = computed(() => {
@@ -180,7 +181,7 @@ export class Home implements OnInit, OnDestroy {
 
     return Math.min(
       100,
-      Math.max(0, Math.round((data.xpInsideCurrentLevel / data.xpNeededInCurrentLevel) * 100))
+      Math.max(0, Math.round((data.xpInsideCurrentLevel / data.xpNeededInCurrentLevel) * 100)),
     );
   });
 
@@ -233,9 +234,9 @@ export class Home implements OnInit, OnDestroy {
         this.checkoutError.set(
           error?.error?.error ||
             error?.error?.message ||
-            this.versionService.ui().pricingAccessDeniedCheckoutStartError
+            this.versionService.ui().pricingAccessDeniedCheckoutStartError,
         );
-      }
+      },
     });
   }
 
@@ -300,7 +301,4 @@ export class Home implements OnInit, OnDestroy {
       document.body.style.overflow = '';
     }
   }
-
-  
-
 }

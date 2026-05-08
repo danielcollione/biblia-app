@@ -96,6 +96,57 @@ $text-muted: #b8afa0;
   margin-bottom: 18px;
 }
 
+li.is-disabled {
+  position: relative;
+  cursor: not-allowed;
+}
+
+li.is-disabled .nav-item {
+  opacity: 0.3; /* Deixa o item visualmente desativado */
+  pointer-events: none; /* Impede o clique no link */
+  filter: grayscale(100%);
+}
+
+/* --- TOOLTIP ELEGANTE (Estilo Sanctuary) --- */
+li.is-disabled::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  
+  /* Posicionamento flutuante: fica sobre o próprio item, evitando criar scroll na sidebar */
+  top: -15px; 
+  left: 50px; 
+  
+  /* Paleta de cores baseada no seu design */
+  background-color: #080808; 
+  color: #C2A878; 
+  border: 1px solid rgba(194, 168, 120, 0.25);
+  
+  /* Tipografia e espaçamento Premium */
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  
+  /* CRUCIAL: Garante que o tooltip não gera scroll, não ocupa espaço real e não trava o mouse */
+  pointer-events: none;
+  z-index: 9999;
+  
+  /* Estado inicial (Oculto) */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(8px);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+/* --- EFEITO HOVER --- */
+li.is-disabled:hover::after {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0); /* Flutua suavemente para cima */
+}
+
 .brand-block {
   display: flex;
   align-items: center;
