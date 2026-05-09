@@ -46,6 +46,7 @@ export class LibraryPage implements AfterViewInit {
   });
 
   ngAfterViewInit(): void {
+    this.bibleService.preloadReadStateForCurrentVersion(false);
     this.loadBooks();
   }
 

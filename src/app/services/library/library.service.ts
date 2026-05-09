@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http
 import { Observable, catchError, throwError } from 'rxjs';
 
 import { AuthService } from '../auth/auth';
+import { VersionService } from '../version/version-service';
 
 export interface LibraryBookDto {
   id: string;
@@ -41,6 +42,7 @@ export interface LibraryChapterResponseDto {
 export class LibraryService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
+  private readonly versionService = inject(VersionService);
 
   private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/library/books';
   private readonly apiBaseUrl = 'https://backendtub.onrender.com';
@@ -58,7 +60,10 @@ export class LibraryService {
   }
 
   getChapter(bookId: string, chapterNumber: number): Observable<LibraryChapterResponseDto> {
-    return this.getWithOptionalAuthRetry<LibraryChapterResponseDto>(`${this.apiUrl}/${bookId}/chapters/${chapterNumber}`);
+    const lang = this.versionService.languageCode();
+    return this.getWithOptionalAuthRetry<LibraryChapterResponseDto>(
+      `${this.apiUrl}/${bookId}/chapters/${chapterNumber}?lang=${lang}`
+    );
   }
 
   resolveCoverUrl(coverImage: string | null): string {

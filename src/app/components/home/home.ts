@@ -5,6 +5,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 import { filter, map, startWith } from 'rxjs/operators';
 import { AuthService } from '../../services/auth/auth';
+import { BibleService } from '../../services/bible';
 import { BibleVersion, VersionService } from '../../services/version/version-service';
 import { XpPopupService } from '../../services/xp-popup.service';
 import { StripeService } from '../../services/stripe/stripe.service';
@@ -33,6 +34,7 @@ type HomeMenuItem = {
 })
 export class Home implements OnInit, OnDestroy {
   private readonly authService = inject(AuthService);
+  private readonly bibleService = inject(BibleService);
   private readonly router = inject(Router);
   private readonly route = inject(ActivatedRoute);
   private readonly xpPopupService = inject(XpPopupService);
@@ -55,6 +57,7 @@ export class Home implements OnInit, OnDestroy {
   isMobileMenuOpen = signal(false);
   isSidebarOpen = signal(true);
   isLangMenuOpen = signal(false);
+  readonly failedAvatarUrl = signal<string | null>(null);
   readonly isStartingCheckout = signal(false);
   readonly checkoutError = signal<string | null>(null);
 
@@ -78,6 +81,7 @@ export class Home implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.authService.ensureProfileFreshForHome();
+    this.bibleService.preloadReadStateForCurrentVersion(false);
     this.handlePaymentRedirectFeedback();
   }
 
@@ -151,6 +155,7 @@ export class Home implements OnInit, OnDestroy {
     const level = Math.max(1, Number(usuario?.level ?? 1));
     const xp = Math.max(0, Number(usuario?.experiencia ?? 0));
     const name = usuario?.name?.trim() || ui.profileRoyalCollectionMember;
+    const avatarUrl = usuario?.avatar?.trim() || null;
     const currentLevelIndex = Math.min(level - 1, this.levelXpThresholds.length - 1);
     const currentLevelStartXp = this.levelXpThresholds[currentLevelIndex] ?? 0;
     const hasNextLevel = currentLevelIndex < this.levelXpThresholds.length - 1;
@@ -163,7 +168,8 @@ export class Home implements OnInit, OnDestroy {
 
     return {
       name,
-      avatar: name.charAt(0).toUpperCase() || 'U',
+      avatarUrl,
+      avatarInitial: name.charAt(0).toUpperCase() || 'U',
       level,
       xp,
       xpInsideCurrentLevel,
@@ -202,6 +208,18 @@ export class Home implements OnInit, OnDestroy {
 
   onMenuNavigate() {
     this.closeMobileMenu();
+  }
+
+  shouldShowProfileAvatarImage(): boolean {
+    const avatarUrl = this.userProfile().avatarUrl;
+    return !!avatarUrl && this.failedAvatarUrl() !== avatarUrl;
+  }
+
+  onProfileAvatarError(): void {
+    const avatarUrl = this.userProfile().avatarUrl;
+    if (avatarUrl) {
+      this.failedAvatarUrl.set(avatarUrl);
+    }
   }
 
   startCheckoutFromHome(): void {

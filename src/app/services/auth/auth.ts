@@ -14,6 +14,7 @@ export interface Usuario {
   subscriptionType?: 'FREE' | 'STANDARD' | 'PREMIUM' | 'LIFETIME' | null;
   subscriptionActive?: boolean;
   subscriptionExpiresAt?: string | null;
+  avatar?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -163,6 +164,7 @@ export class AuthService {
         name: payload.name,
         email: payload.sub,
         pictureUrl: payload.picture,
+        avatar: payload.avatar,
         level: payload.level || 1,
         experiencia: payload.experiencia || 0,
         cargo: payload.cargo || 'Apprentice',
@@ -181,6 +183,7 @@ export class AuthService {
       name: profile.name,
       email: profile.email,
       pictureUrl: profile.pictureUrl,
+      avatar: profile.avatar,
       level: profile.level ?? 1,
       experiencia: profile.experiencia ?? 0,
       cargo: profile.cargo || 'Apprentice',

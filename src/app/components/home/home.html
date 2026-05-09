@@ -146,7 +146,14 @@
     <div class="sidebar-footer">
       <div class="profile-panel">
         <div class="profile-head">
-          <div class="avatar">{{ userProfile().avatar }}</div>
+          <div class="avatar">
+            @if (shouldShowProfileAvatarImage()) {
+            <img [src]="userProfile().avatarUrl" [alt]="userProfile().name" loading="lazy" decoding="async"
+              referrerpolicy="no-referrer" (error)="onProfileAvatarError()">
+            } @else {
+            <span>{{ userProfile().avatarInitial }}</span>
+            }
+          </div>
           <div class="profile-meta">
             <strong>{{ userProfile().name }}</strong>
             <span>{{ versionService.ui().homeProfileRole }}: {{ userProfile().role }}</span>
