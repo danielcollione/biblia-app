@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1778365052039,
+  "timestamp": 1778366570283,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -39,7 +39,7 @@
         "/chunk-ZNECMDHW.js",
         "/index.csr.html",
         "/index.html",
-        "/main-IQU4KNSE.js",
+        "/main-BPTWF3AH.js",
         "/manifest.webmanifest",
         "/styles-W3APBTID.css"
       ],
@@ -60,6 +60,7 @@
         "/avatar/chave.png",
         "/avatar/maos.png",
         "/avatar/sage.jpeg",
+        "/dust.jpeg",
         "/e-book/bible-ia-cover.png",
         "/e-book/bible/cover.png",
         "/e-book/path-jesus/cover.png",
@@ -142,7 +143,9 @@
         "/images/tiago.webp",
         "/images/tito.webp",
         "/images/zacarias.webp",
-        "/logo-sem-fundo.png"
+        "/logo-sem-fundo.png",
+        "/smoke.jpeg",
+        "/temple.jpeg"
       ],
       "patterns": []
     }
@@ -182,6 +185,7 @@
     "/chunk-Z7GLJK6X.js": "e49a43c0210c7c749675d6d314a156a1e3731ac0",
     "/chunk-ZFDP5GAR.js": "68444a449d2c5d898360616cfdafe506ed41c07d",
     "/chunk-ZNECMDHW.js": "c87908f1dc8689f6ab0278043b26116315d62d7f",
+    "/dust.jpeg": "4d9f76cd488f667c310a1e2ede09275fe502ccc3",
     "/e-book/bible-ia-cover.png": "33639ca3d46b824c776b62c7b6150234e4548db0",
     "/e-book/bible/cover.png": "998a8d10283d5e89abdf646bb505019266130bca",
     "/e-book/path-jesus/cover.png": "976ac48eefb68f3331cffa48635994949b3b2027",
@@ -264,12 +268,14 @@
     "/images/tiago.webp": "aa0f529617b0ca93416da0dfd524525c1ef00a67",
     "/images/tito.webp": "b330c6e3b784f47ae4ae4345d006f039e5e5b156",
     "/images/zacarias.webp": "30aa8a099b7a34736e87680f1450c28367f2646c",
-    "/index.csr.html": "940387fecee3b3ffb9f0ad9e4fe37350acffc77e",
-    "/index.html": "987bfdb29c508d2b13191f5bc725223f4dc35a24",
+    "/index.csr.html": "06214f9572c7c09c8d56db1a4615c2d30e620dd2",
+    "/index.html": "ab8121650346ea7c83124049e1da379bf3732838",
     "/logo-sem-fundo.png": "3e3670f7c936e2c08e3a0234e442e51548ba82cb",
-    "/main-IQU4KNSE.js": "d5ccb474969281bd160c9944ca5c6ecd04955d8f",
+    "/main-BPTWF3AH.js": "5e17c4d7f08b8b2cc85c35006c81cfc9a5a03744",
     "/manifest.webmanifest": "abdbad4b17822731292275b23c975e27fba80ccb",
-    "/styles-W3APBTID.css": "6628fab59cb90e04bd76a182c68394a39abcfe17"
+    "/smoke.jpeg": "43780a4b911d4a3f072101bf85db31f755995108",
+    "/styles-W3APBTID.css": "6628fab59cb90e04bd76a182c68394a39abcfe17",
+    "/temple.jpeg": "ed67acbefa45ae6f0c65a5d6db8b9136fa641b03"
   },
   "navigationUrls": [
     {
