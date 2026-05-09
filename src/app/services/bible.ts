@@ -31,6 +31,9 @@ export class BibleService {
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
   readChapterKeys = signal<Set<string>>(new Set());
+  readStateFromBackend = signal<Record<string, Record<string, number[]>>>({});
+  backendStateLoading = signal(false);
+  backendStateError = signal<string | null>(null);
 
   searchTerm = signal<string>('');
 
@@ -63,6 +66,7 @@ export class BibleService {
     if (isPlatformBrowser(this.platformId)) {
       this.clearLegacyReadStorage();
       this.setupReadStateSync();
+      this.setupBookSelectionSync();
 
       this.dbPromise = openDB('BibliaDB', 2, {
         upgrade(db) {
@@ -78,6 +82,49 @@ export class BibleService {
         this.initDatabase(version);
       });
     }
+  }
+
+  private setupBookSelectionSync(): void {
+    effect(
+      () => {
+        const book = this.selectedBook();
+        if (!book || !this.authService.getToken()) {
+          this.readStateFromBackend.set({});
+          return;
+        }
+
+        const bookKey = this.normalizeBookKey(book.name);
+        const bibleCode = this.resolveBibleCode();
+
+        this.loadBookProgressFromBackend(bibleCode, bookKey);
+      },
+      { allowSignalWrites: true }
+    );
+  }
+
+  private loadBookProgressFromBackend(bibleCode: string, bookKey: string): void {
+    if (!this.authService.getToken()) {
+      return;
+    }
+
+    this.backendStateLoading.set(true);
+    this.backendStateError.set(null);
+
+    this.bibleProgressService.getReadState(bibleCode).subscribe({
+      next: (response) => {
+        const bookState = response.chaptersReadByBibleAndBook[bibleCode]?.[bookKey] ?? [];
+        this.readStateFromBackend.set({
+          [bibleCode]: {
+            [bookKey]: bookState,
+          },
+        });
+        this.backendStateLoading.set(false);
+      },
+      error: () => {
+        this.backendStateLoading.set(false);
+        this.readStateFromBackend.set({});
+      },
+    });
   }
 
   private setupReadStateSync(): void {
@@ -220,7 +267,15 @@ export class BibleService {
     }
 
     const chapterNumber = index + 1;
-    const chapterKey = this.buildChapterKey(this.resolveBibleCode(), this.normalizeBookKey(book.name), chapterNumber);
+    const bibleCode = this.resolveBibleCode();
+    const bookKey = this.normalizeBookKey(book.name);
+
+    const backendState = this.readStateFromBackend()[bibleCode]?.[bookKey] ?? [];
+    if (backendState.includes(chapterNumber)) {
+      return true;
+    }
+
+    const chapterKey = this.buildChapterKey(bibleCode, bookKey, chapterNumber);
     return this.readChapterKeys().has(chapterKey);
   }
 
