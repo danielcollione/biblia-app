@@ -1,11 +1,11 @@
-import { Injectable, signal, Inject, PLATFORM_ID, computed } from '@angular/core';
+import { Injectable, signal, Inject, PLATFORM_ID, computed, effect } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
 import { BibleVersion, VersionService } from './version/version-service';
 import { Meta, Title } from '@angular/platform-browser';
 import { AuthService } from './auth/auth';
-import { BibleProgressService } from './bible-progress.service';
+import { BibleProgressService, BibleReadStateResponseDto } from './bible-progress.service';
 import { XpPopupService } from './xp-popup.service';
 
 export interface LivroMetadados {
@@ -19,7 +19,8 @@ export interface LivroMetadados {
 @Injectable({ providedIn: 'root' })
 export class BibleService {
   private dbPromise: Promise<IDBPDatabase> | null = null;
-  private readonly READ_CHAPTERS_STORAGE_KEY = 'bible_read_chapters_v1';
+  private readonly READ_CHAPTERS_STORAGE_PREFIX = 'bible_read_chapters_v2';
+  private readonly LEGACY_READ_CHAPTERS_STORAGE_KEY = 'bible_read_chapters_v1';
 
   // SIGNALS DE ESTADO
   currentChapter = signal<any[]>([]);
@@ -60,7 +61,8 @@ export class BibleService {
     private metaService: Meta,
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      this.readChapterKeys.set(this.readChapterKeysFromStorage());
+      this.clearLegacyReadStorage();
+      this.setupReadStateSync();
 
       this.dbPromise = openDB('BibliaDB', 2, {
         upgrade(db) {
@@ -76,6 +78,24 @@ export class BibleService {
         this.initDatabase(version);
       });
     }
+  }
+
+  private setupReadStateSync(): void {
+    effect(
+      () => {
+        const userEmail = this.authService.usuario()?.email ?? null;
+        const storageKey = this.resolveReadStorageKey(userEmail);
+
+        this.readChapterKeys.set(this.readChapterKeysFromStorage(storageKey));
+
+        if (!userEmail || !this.authService.getToken()) {
+          return;
+        }
+
+        this.hydrateReadStateFromBackend(storageKey);
+      },
+      { allowSignalWrites: true }
+    );
   }
 
   // Busca os metadados traduzidos baseando-se no ID ou Nome
@@ -392,11 +412,11 @@ export class BibleService {
     const next = new Set(this.readChapterKeys());
     next.add(this.buildChapterKey(bibleCode, bookKey, chapterNumber));
     this.readChapterKeys.set(next);
-    this.persistReadChapterKeys(next);
+    this.persistReadChapterKeys(next, this.resolveReadStorageKey(this.authService.usuario()?.email ?? null));
   }
 
-  private readChapterKeysFromStorage(): Set<string> {
-    const raw = localStorage.getItem(this.READ_CHAPTERS_STORAGE_KEY);
+  private readChapterKeysFromStorage(storageKey: string): Set<string> {
+    const raw = localStorage.getItem(storageKey);
     if (!raw) {
       return new Set<string>();
     }
@@ -413,7 +433,48 @@ export class BibleService {
     }
   }
 
-  private persistReadChapterKeys(keys: Set<string>): void {
-    localStorage.setItem(this.READ_CHAPTERS_STORAGE_KEY, JSON.stringify([...keys]));
+  private persistReadChapterKeys(keys: Set<string>, storageKey: string): void {
+    localStorage.setItem(storageKey, JSON.stringify([...keys]));
+  }
+
+  private hydrateReadStateFromBackend(storageKey: string): void {
+    this.bibleProgressService.getReadState().subscribe({
+      next: (response) => {
+        const next = this.flattenReadState(response);
+        this.readChapterKeys.set(next);
+        this.persistReadChapterKeys(next, storageKey);
+      },
+      error: () => {
+        // O estado local continua como fallback quando o backend estiver indisponivel.
+      },
+    });
+  }
+
+  private flattenReadState(response: BibleReadStateResponseDto): Set<string> {
+    const keys = new Set<string>();
+
+    Object.entries(response.chaptersReadByBibleAndBook || {}).forEach(([bibleCode, books]) => {
+      Object.entries(books || {}).forEach(([bookKey, chapters]) => {
+        (chapters || []).forEach((chapterNumber) => {
+          if (typeof chapterNumber === 'number' && Number.isFinite(chapterNumber) && chapterNumber > 0) {
+            keys.add(this.buildChapterKey(bibleCode, bookKey, chapterNumber));
+          }
+        });
+      });
+    });
+
+    return keys;
+  }
+
+  private resolveReadStorageKey(userEmail: string | null): string {
+    if (!userEmail) {
+      return `${this.READ_CHAPTERS_STORAGE_PREFIX}:anonymous`;
+    }
+
+    return `${this.READ_CHAPTERS_STORAGE_PREFIX}:${userEmail.trim().toLowerCase()}`;
+  }
+
+  private clearLegacyReadStorage(): void {
+    localStorage.removeItem(this.LEGACY_READ_CHAPTERS_STORAGE_KEY);
   }
 }

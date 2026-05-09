@@ -1,17 +1,5 @@
 <div class="home-shell" [class.sidebar-collapsed]="!isSidebarOpen()">
   <header class="home-mobile-header">
-    <a class="mobile-brand" routerLink="/home" (click)="closeMobileMenu()">
-      <div class="brand-glyph">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-          stroke-linejoin="round">
-          <path d="M4 19.2V5.7A2.7 2.7 0 0 1 6.7 3H20v13.5H6.7A2.7 2.7 0 0 0 4 19.2Z"></path>
-          <path d="M8 7h8"></path>
-          <path d="M8 11h8"></path>
-        </svg>
-      </div>
-      <strong>{{ versionService.ui().homeBrandName }}</strong>
-    </a>
-
     <button class="mobile-menu-toggle" type="button" (click)="toggleMobileMenu()"
       [attr.aria-label]="versionService.ui().headerOpenMenuAriaLabel">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
@@ -26,6 +14,13 @@
         }
       </svg>
     </button>
+
+    <a class="mobile-brand" routerLink="/home" (click)="closeMobileMenu()">
+      <strong>{{ versionService.ui().homeBrandName }}</strong>
+      <div class="brand-glyph">
+        <img src="logo-sem-fundo.png" alt="Logo" class="brand-logo-img" />
+      </div>
+    </a>
   </header>
 
   <aside class="home-sidebar" [class.mobile-open]="isMobileMenuOpen()" [class.collapsed]="!isSidebarOpen()">
