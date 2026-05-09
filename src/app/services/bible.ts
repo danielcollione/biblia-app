@@ -1,4 +1,4 @@
-import { Injectable, signal, Inject, PLATFORM_ID, computed } from '@angular/core';
+import { Injectable, signal, Inject, PLATFORM_ID, computed, effect } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { openDB, IDBPDatabase } from 'idb';
@@ -19,9 +19,8 @@ export interface LivroMetadados {
 @Injectable({ providedIn: 'root' })
 export class BibleService {
   private dbPromise: Promise<IDBPDatabase> | null = null;
-  private readonly READ_CHAPTERS_STORAGE_KEY = 'bible_read_chapters_v1';
+  private loadedReadStateByBibleCode = new Set<string>();
 
-  // SIGNALS DE ESTADO
   currentChapter = signal<any[]>([]);
   loading = signal<boolean>(false);
   allBooks = signal<any[]>([]);
@@ -29,7 +28,8 @@ export class BibleService {
   currentChapterIndex = signal<number | null>(null);
   currentChapterHalf1 = signal<string[]>([]);
   currentChapterHalf2 = signal<string[]>([]);
-  readChapterKeys = signal<Set<string>>(new Set());
+  readChaptersState = signal<Record<string, Record<string, number[]>>>({});
+  readStateLoading = signal(false);
 
   searchTerm = signal<string>('');
 
@@ -46,7 +46,6 @@ export class BibleService {
     );
   });
 
-  // Agora os metadados também são um Signal reativo
   metadados = signal<LivroMetadados[]>([]);
 
   constructor(
@@ -60,7 +59,7 @@ export class BibleService {
     private metaService: Meta,
   ) {
     if (isPlatformBrowser(this.platformId)) {
-      this.readChapterKeys.set(this.readChapterKeysFromStorage());
+      this.setupReadStateSync();
 
       this.dbPromise = openDB('BibliaDB', 2, {
         upgrade(db) {
@@ -71,14 +70,69 @@ export class BibleService {
         },
       });
 
-      // Escuta a mudança de versão para carregar Bíblia + Metadados
       this.versionService.activeVersion$.subscribe((version) => {
         this.initDatabase(version);
       });
     }
   }
 
-  // Busca os metadados traduzidos baseando-se no ID ou Nome
+  preloadReadStateForCurrentVersion(force = false): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+
+    if (!this.authService.getToken()) {
+      return;
+    }
+
+    this.loadReadStateFromBackend(this.resolveBibleCode(), force);
+  }
+
+  private setupReadStateSync(): void {
+    effect(
+      () => {
+        const userEmail = this.authService.usuario()?.email ?? null;
+        const bibleCode = this.resolveBibleCode();
+
+        if (!userEmail || !this.authService.getToken()) {
+          this.readChaptersState.set({});
+          this.loadedReadStateByBibleCode.clear();
+          return;
+        }
+
+        this.loadReadStateFromBackend(bibleCode, false);
+      },
+      { allowSignalWrites: true }
+    );
+  }
+
+  private loadReadStateFromBackend(bibleCode: string, force: boolean): void {
+    if (!this.authService.getToken()) {
+      return;
+    }
+
+    if (!force && this.loadedReadStateByBibleCode.has(bibleCode)) {
+      return;
+    }
+
+    this.readStateLoading.set(true);
+
+    this.bibleProgressService.getReadState(bibleCode).subscribe({
+      next: (response) => {
+        const currentState = this.readChaptersState();
+        this.readChaptersState.set({
+          ...currentState,
+          ...response.chaptersReadByBibleAndBook,
+        });
+        this.loadedReadStateByBibleCode.add(bibleCode);
+        this.readStateLoading.set(false);
+      },
+      error: () => {
+        this.readStateLoading.set(false);
+      },
+    });
+  }
+
   getMetadados(nomeLivro: string): LivroMetadados {
     const nomeNorm = (nomeLivro || '').toLowerCase().trim();
     if (!nomeNorm) {
@@ -111,21 +165,18 @@ export class BibleService {
 
     this.loading.set(true);
 
-    // 1. CARREGAR METADADOS PRIMEIRO
     const langCode = version.id.split('_')[0];
     const metaFile =
       langCode === 'pt' ? 'livros-metadados.json' : `livros-metadados-${langCode}.json`;
 
     this.http.get<LivroMetadados[]>(`/${metaFile}`).subscribe({
       next: (metaData) => {
-        this.metadados.set(metaData); // Atualiza os metadados traduzidos
-
-        // 2. SÓ DEPOIS CARREGA A BÍBLIA
+        this.metadados.set(metaData);
         this.loadBibleData(db, version);
       },
       error: (err) => {
         console.error(`Erro ao carregar metadados: ${metaFile}`, err);
-        this.loadBibleData(db, version); // Tenta carregar a bíblia mesmo se o meta falhar
+        this.loadBibleData(db, version);
       },
     });
   }
@@ -163,18 +214,17 @@ export class BibleService {
     }
   }
 
-  // --- Funções de Navegação ---
-
   selectBook(book: any) {
     this.selectedBook.set(book);
     this.currentChapterIndex.set(null);
     this.currentChapter.set([]);
     this.searchTerm.set('');
     this.updateSEO(book, 1);
+
+    this.preloadReadStateForCurrentVersion(false);
   }
 
   selectChapter(index: number) {
-    // Limpa os versículos por um milissegundo para resetar as animações
     this.currentChapterHalf1.set([]);
     this.currentChapterHalf2.set([]);
 
@@ -200,8 +250,11 @@ export class BibleService {
     }
 
     const chapterNumber = index + 1;
-    const chapterKey = this.buildChapterKey(this.resolveBibleCode(), this.normalizeBookKey(book.name), chapterNumber);
-    return this.readChapterKeys().has(chapterKey);
+    const bibleCode = this.resolveBibleCode();
+    const bookKey = this.normalizeBookKey(book.name);
+
+    const chaptersRead = this.readChaptersState()[bibleCode]?.[bookKey] ?? [];
+    return chaptersRead.includes(chapterNumber);
   }
 
   resetNavigation() {
@@ -261,18 +314,14 @@ export class BibleService {
 
   private scrollToTop() {
     if (isPlatformBrowser(this.platformId)) {
-      // O delay de 10ms é o "pulo do gato" para o Angular renderizar antes do scroll
       setTimeout(() => {
-        // Buscamos especificamente o container que a imagem mostrou estar com scroll
         const containerLivro = document.querySelector('.corpo-paginas-prime');
 
         if (containerLivro) {
-          // Reseta o scroll interno dele
           containerLivro.scrollTo({ top: 0, behavior: 'instant' });
           containerLivro.scrollTop = 0;
         }
 
-        // Reseta o scroll global por precaução
         window.scrollTo(0, 0);
       }, 10);
     }
@@ -291,26 +340,20 @@ export class BibleService {
   }
 
   isNovoTestamento(nomeLivro: string): boolean {
-    // Procuramos o índice desse livro no array COMPLETO (allBooks)
     const indexOriginal = this.allBooks().findIndex((b) => b.name === nomeLivro);
-
-    // Se o índice for 39 ou maior (Mateus em diante), é NT
     return indexOriginal >= 39;
   }
 
   updateSEO(bookName: string, chapter: number) {
-    const displayTitle = `Holy Bible | The Unveiled Bible`;
+    const displayTitle = `Biblia Sagrada | A Biblia Revelada`;
 
-    // Atualiza o Título da Aba
     this.titleService.setTitle(displayTitle);
 
-    // Meta Tags em Inglês para Indexação Global
     this.metaService.updateTag({
       name: 'description',
-      content: `Read and study ${bookName}, Chapter ${chapter + 1} online. Explore the historical context and deep spiritual insights of the Holy Scriptures on The Unveiled Bible.`,
+      content: `Leia e estude ${bookName}, Capitulo ${chapter + 1} online. Explore o contexto historico e os profundos insights espirituais das Sagradas Escrituras em A Biblia Revelada.`,
     });
 
-    // Open Graph (Redes Sociais)
     this.metaService.updateTag({ property: 'og:title', content: displayTitle });
     this.metaService.updateTag({
       property: 'og:description',
@@ -330,7 +373,7 @@ export class BibleService {
       abstract: `Reading ${book} chapter ${chapter + 1}`,
       publisher: {
         '@type': 'Organization',
-        name: 'The Unveiled Bible',
+        name: 'A Biblia Revelada',
       },
     });
     if (!document.getElementById('bible-jsonld')) {
@@ -354,16 +397,31 @@ export class BibleService {
       .registerChapterRead({ bibleCode, bookKey, chapterNumber })
       .subscribe({
         next: (response) => {
-          this.markChapterAsRead(response.bibleCode, response.bookKey, response.chapterNumber);
+          this.updateLocalReadState(response.bibleCode, response.bookKey, response.chapterNumber);
           if (response.xpGranted > 0) {
             this.xpPopupService.showXp(response.xpGranted, 'Capitulo concluido');
             this.authService.refreshUserProfileFromServer();
           }
         },
         error: () => {
-          // Progresso e XP são best-effort no frontend; backend segue como fonte de verdade.
+          // Backend e a fonte de verdade; este e best-effort.
         },
       });
+  }
+
+  private updateLocalReadState(bibleCode: string, bookKey: string, chapterNumber: number): void {
+    const current = this.readChaptersState();
+    const nextBibleState = { ...(current[bibleCode] ?? {}) };
+    const nextChapters = [...(nextBibleState[bookKey] ?? [])];
+
+    if (!nextChapters.includes(chapterNumber)) {
+      nextChapters.push(chapterNumber);
+      nextBibleState[bookKey] = nextChapters;
+      this.readChaptersState.set({
+        ...current,
+        [bibleCode]: nextBibleState,
+      });
+    }
   }
 
   private resolveBibleCode(): string {
@@ -382,38 +440,5 @@ export class BibleService {
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '')
       .slice(0, 80);
-  }
-
-  private buildChapterKey(bibleCode: string, bookKey: string, chapterNumber: number): string {
-    return `${bibleCode}:${bookKey}:${chapterNumber}`;
-  }
-
-  private markChapterAsRead(bibleCode: string, bookKey: string, chapterNumber: number): void {
-    const next = new Set(this.readChapterKeys());
-    next.add(this.buildChapterKey(bibleCode, bookKey, chapterNumber));
-    this.readChapterKeys.set(next);
-    this.persistReadChapterKeys(next);
-  }
-
-  private readChapterKeysFromStorage(): Set<string> {
-    const raw = localStorage.getItem(this.READ_CHAPTERS_STORAGE_KEY);
-    if (!raw) {
-      return new Set<string>();
-    }
-
-    try {
-      const parsed = JSON.parse(raw);
-      if (!Array.isArray(parsed)) {
-        return new Set<string>();
-      }
-
-      return new Set(parsed.filter((item) => typeof item === 'string'));
-    } catch {
-      return new Set<string>();
-    }
-  }
-
-  private persistReadChapterKeys(keys: Set<string>): void {
-    localStorage.setItem(this.READ_CHAPTERS_STORAGE_KEY, JSON.stringify([...keys]));
   }
 }

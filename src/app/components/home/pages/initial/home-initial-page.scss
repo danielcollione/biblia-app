@@ -85,48 +85,6 @@
   backdrop-filter: none;
 }
 
-@media (max-width: 900px) {
-  .content-row {
-    flex-direction: column;
-    gap: 1.75rem;
-    text-align: center;
-  }
-
-  .vertical-divider {
-    width: 160px;
-    height: 2px;
-    background: linear-gradient(
-      to right,
-      rgba(212, 175, 55, 0),
-      rgba(212, 175, 55, 0.8),
-      rgba(212, 175, 55, 0)
-    );
-  }
-
-  .text-content {
-    text-align: center;
-  }
-
-  .title-kicker {
-    font-size: 0.95rem;
-    letter-spacing: 2.2px;
-  }
-
-  .title-main {
-    font-size: 2.7rem;
-  }
-
-  .sanctuary-logo {
-    height: 160px;
-  }
-
-  .home-contact-footer {
-    flex-wrap: wrap;
-    row-gap: 2px;
-    font-size: 0.76rem;
-  }
-}
-
 .monumental-title {
   margin: 0 0 12px;
   display: flex;
@@ -190,5 +148,47 @@
     &:hover {
       opacity: 0.82;
     }
+  }
+}
+
+@media (max-width: 900px) {
+  .content-row {
+    flex-direction: column;
+    gap: 1.75rem;
+    text-align: center;
+  }
+
+  .vertical-divider {
+    width: 160px;
+    height: 2px;
+    background: linear-gradient(
+      to right,
+      rgba(212, 175, 55, 0),
+      rgba(212, 175, 55, 0.8),
+      rgba(212, 175, 55, 0)
+    );
+  }
+
+  .text-content {
+    text-align: center;
+  }
+
+  .title-kicker {
+    font-size: 0.95rem;
+    letter-spacing: 2.2px;
+  }
+
+  .title-main {
+    font-size: 2.7rem;
+  }
+
+  .sanctuary-logo {
+    height: 160px;
+  }
+
+  .home-contact-footer {
+    flex-wrap: wrap;
+    row-gap: 2px;
+    font-size: 0.76rem;
   }
 }

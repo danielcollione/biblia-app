@@ -121,7 +121,7 @@ body {
 }
 
 .hero-btn {
-  padding: 15px;
+  padding: 20px;
   background: linear-gradient(135deg, #c5a059, #d3ab63);
   color: #0a0a0a;
   border: 1px solid rgba(197, 160, 89, 0.6);
@@ -263,7 +263,7 @@ $accent-color: #ffffff;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  padding: 2rem 0;
+  padding: 2.1rem 0;
   background: transparent;
   border: none;
   color: inherit;
@@ -291,7 +291,7 @@ $accent-color: #ffffff;
   color: $text-muted;
   font-family: monospace;
   letter-spacing: 0.1em;
-  min-width: 40px;
+  min-width: 54px;
 }
 
 .feature-title-group {
@@ -392,7 +392,7 @@ $accent-color: #ffffff;
   height: 0;
   overflow: hidden;
   pointer-events: none;
-  transition: height 0.85s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: height 0.95s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: height;
 }
 
@@ -756,7 +756,6 @@ p.subtitle.animate-reveal {
 }
 
 .engine-container {
-  max-width: 1400px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -909,6 +908,147 @@ p.subtitle.animate-reveal {
     flex-direction: row;
     justify-content: space-between;
     gap: 80px;
+  }
+}
+
+/* Container Principal */
+.premium-features-section {
+  background-color: black;
+  padding: 0px 20px 80px 20px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+}
+
+.features-grid {
+  margin-top: 110px;
+  margin-bottom: 100px;
+  background-color: black;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  /* A borda sutil que envolve todo o grid (opcional, pode remover se preferir sem caixa) */
+  overflow: hidden;
+}
+
+/* Estrutura do Card */
+.feature-card {
+  background-color: black;
+  display: flex;
+  flex-direction: column;
+  padding: 40px 32px;
+  /* Linha divisória sutil entre as colunas */
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background-color 0.3s ease;
+
+  /* A MÁGICA COMEÇA AQUI */
+  opacity: 0;
+  transform: translateY(80px); /* Começa lá embaixo */
+
+  /* Curva de animação bem fluida (estilo Apple) */
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease;
+}
+
+.features-grid.visible .feature-card {
+  opacity: 1;
+  transform: translateY(0); /* Sobe para o lugar certo */
+}
+
+/* 3. O Atraso (Cascata): Faz eles subirem um por um */
+.features-grid.visible .feature-card:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.features-grid.visible .feature-card:nth-child(2) {
+  transition-delay: 0.3s;
+}
+.features-grid.visible .feature-card:nth-child(3) {
+  transition-delay: 0.5s;
+}
+
+/* Remove a borda direita do último elemento */
+.feature-card:last-child {
+  border-right: none;
+}
+
+/* Label 'FIG 0.X' */
+.fig-label {
+  font-family: 'Space Mono', monospace, Consolas; /* Fonte monoespaçada para o ar 'técnico' */
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: #52525b; /* Cinza bem apagado */
+  margin-bottom: 40px;
+}
+
+/* Container da Imagem */
+.image-wrapper {
+  height: 220px; /* Altura fixa para manter todos os cards alinhados */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.image-wrapper img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  opacity: 0.85; /* Deixa a imagem ligeiramente menos brilhante para não ofuscar o texto */
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.feature-card:hover .image-wrapper img {
+  opacity: 1;
+  transform: translateY(-4px); /* Pequeno lift ao passar o mouse */
+}
+
+/* Textos */
+.content-wrapper {
+  margin-top: auto; /* Empurra o texto para a base, mantendo alinhamento perfeito se as descrições tiverem tamanhos diferentes */
+}
+
+.feature-title-features {
+  font-family: Cinzel, Merriweather, serif;
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #ededed;
+  line-height: 1.3;
+  margin-bottom: 15px;
+}
+
+.feature-description {
+  font-family:
+    'Inter',
+    -apple-system,
+    sans-serif;
+  font-size: 0.95rem;
+  color: #a1a1aa; /* Cinza médio da paleta Tailwind (Zinc 400) */
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* =========================================
+   Responsividade (Mobile & Tablet)
+   ========================================= */
+@media (max-width: 992px) {
+  .features-grid {
+    grid-template-columns: 1fr;
+    border: none; /* Remove a borda geral no mobile */
+    background: transparent;
+  }
+
+  .feature-card {
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05); /* Linhas divisórias viram horizontais */
+    padding: 40px 0; /* Remove padding lateral para alinhar com o resto do site mobile */
+  }
+
+  .feature-card:last-child {
+    border-bottom: none;
   }
 }
 
@@ -1350,29 +1490,56 @@ p.subtitle.animate-reveal {
   }
 }
 
-// @media (max-width: 1023px) {
-//   .lp-container {
-//     /* Remove a imagem de fundo do container para usar no pseudo-elemento */
-//     background-image: none;
-//     position: relative;
-//     z-index: 1; /* Cria o contexto de empilhamento correto */
-//   }
+.epic-transition-divider {
+  width: 100%;
+  /* Define a altura da faixa. 300px a 400px costuma ser o ideal para transições */
+  height: 350px; 
+  
+  /* Caminho da sua imagem */
+ background-image: url('/images/poster.jpeg');
+  
+  /* O efeito parallax que trava a imagem no fundo */
+  background-attachment: fixed;
+  
+  /* Faz a imagem cobrir a tela inteira */
+  background-size: cover;
+  
+  /* Ajuste este valor (ex: center 60%, center 40%) se quiser subir ou descer o foco da luz */
+  background-position: center center; 
+  background-repeat: no-repeat;
+}
 
-//   .lp-container::before {
-//     content: '';
-//     position: fixed;
-//     top: 0;
-//     left: 0;
-//     width: 100vw;
-//     height: 100vh;
-//     z-index: -1;
+.epic-transition-divider::before {
+  content: '';
+  position: absolute;
+  top: -1px; /* O -1px evita que sobre uma linhazinha branca do navegador */
+  left: 0;
+  width: 100%;
+  height: 120px; /* A "força" do esfumaçado. Aumente se quiser que invada mais a imagem */
+  
+  /* IMPORTANTE: Se o fundo do seu site não for preto puro (black), 
+     troque a palavra 'black' pelo seu HEX (ex: #0a0a0a) */
+  background: linear-gradient(to bottom, black 0%, transparent 100%);
+  z-index: 1;
+}
 
-//     /* Movemos o background color para cá também */
-//     background-color: #050505;
-//     background-image:
-//       radial-gradient(circle at center, rgba(10, 10, 10, 0.3) 0%, rgba(5, 5, 5, 0.95) 100%),
-//       url('/images/poster.jpeg');
-//     background-size: cover;
-//     background-position: top center; /* Foca no topo da imagem no mobile */
-//   }
-// }
+/* Degrade na BASE da imagem */
+.epic-transition-divider::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 120px; /* A "força" do esfumaçado na parte de baixo */
+  
+  background: linear-gradient(to top, black 0%, transparent 100%);
+  z-index: 1;
+}
+
+/* Ajuste Mobile */
+@media (max-width: 768px) {
+  .epic-transition-divider {
+    height: 250px;
+    background-size: cover; /* No mobile, o cover costuma funcionar melhor pelo formato vertical da tela */
+  }
+}

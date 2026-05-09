@@ -15,7 +15,7 @@
             </div>
 
             <div class="bottom-right fade-in">
-                <p class="tagline">{{ versionService.ui().homeInitialSubtitle.toUpperCase() }}</p>
+                <!-- <p class="tagline">{{ versionService.ui().homeInitialSubtitle.toUpperCase() }}</p> -->
                 <div class="button-group">
                     <button class="hero-btn" routerLink="/read">{{ versionService.ui().readBible.toUpperCase()
                         }}</button>
@@ -38,6 +38,64 @@
                 </h2>
             </div>
 
+            <div class="features-grid" #featuresGrid [class.visible]="isFeaturesVisible">
+
+                <!-- Card 1 -->
+                <article class="feature-card">
+                    <span class="fig-label">{{ versionService.ui().landingHighlightsLabel01 }}</span>
+
+                    <div class="image-wrapper">
+                        <!-- Substitua 'biblia-wireframe.png' pelo nome exato do seu arquivo na pasta public -->
+                        <img src="/features/biblia.png" [alt]="versionService.ui().landingHighlightsImage01Alt"
+                            loading="lazy">
+                    </div>
+
+                    <div class="content-wrapper">
+                        <h3 class="feature-title-features">{{ versionService.ui().landingHighlightsTitle01 }}</h3>
+                        <p class="feature-description">
+                            {{ versionService.ui().landingHighlightsDescription01 }}
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="feature-card">
+                    <span class="fig-label">{{ versionService.ui().landingHighlightsLabel02 }}</span>
+
+                    <div class="image-wrapper">
+                        <!-- Substitua pelo nome exato da chave -->
+                        <img src="/features/chave.png" [alt]="versionService.ui().landingHighlightsImage02Alt"
+                            loading="lazy">
+                    </div>
+
+                    <div class="content-wrapper">
+                        <h3 class="feature-title-features">{{ versionService.ui().landingHighlightsTitle02 }}</h3>
+                        <p class="feature-description">
+                            {{ versionService.ui().landingHighlightsDescription02 }}
+                        </p>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="feature-card">
+                    <span class="fig-label">{{ versionService.ui().landingHighlightsLabel03 }}</span>
+
+                    <div class="image-wrapper">
+                        <!-- Substitua pelo nome exato das mãos -->
+                        <img src="/features/maos.png" [alt]="versionService.ui().landingHighlightsImage03Alt"
+                            loading="lazy">
+                    </div>
+
+                    <div class="content-wrapper">
+                        <h3 class="feature-title-features">{{ versionService.ui().landingHighlightsTitle03 }}</h3>
+                        <p class="feature-description">
+                            {{ versionService.ui().landingHighlightsDescription03 }}
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+
             <div class="engine-divider reveal-element"></div>
 
             <div class="engine-footer reveal-element">
@@ -49,17 +107,22 @@
         </div>
     </section>
 
+    <!-- <section class="epic-transition-divider">
+    </section> -->
+
+
     <section class="toolbox-section" id="sanctuary-section">
         <div class="toolbox-header">
             <h2 class="title">{{ versionService.ui().landingToolboxTitle }}</h2>
-            <p class="subtitle">{{ versionService.ui().landingToolboxEyebrow }} <span>&mdash; {{ versionService.ui().landingToolboxSubtitle }} </span></p>
+            <p class="subtitle">{{ versionService.ui().landingToolboxEyebrow }} <span>&mdash; {{
+                    versionService.ui().landingToolboxSubtitle }} </span></p>
         </div>
 
         <div class="features-list">
             <div class="divider"></div>
 
-            <div *ngFor="let feature of currentFeatures; let i = index; let last = last" #revealItem [attr.data-index]="i"
-                class="feature-item reveal-on-scroll" [class.active]="feature.isOpen"
+            <div *ngFor="let feature of currentFeatures; let i = index; let last = last; trackBy: trackFeature"
+                #revealItem [attr.data-index]="i" class="feature-item reveal-on-scroll" [class.active]="feature.isOpen"
                 [class.visible]="feature.isVisible">
                 <button class="feature-header" (click)="toggleFeature(feature.id)"
                     [attr.aria-expanded]="feature.isOpen">
@@ -103,7 +166,8 @@
                     </div>
 
                     <div class="feature-right">
-                        <span class="action-text">{{ feature.isOpen ? versionService.ui().featureActionClose : versionService.ui().featureActionExplore }}</span>
+                        <span class="action-text">{{ feature.isOpen ? versionService.ui().featureActionClose :
+                            versionService.ui().featureActionExplore }}</span>
                         <span class="chevron" [class.rotated]="feature.isOpen">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
@@ -142,51 +206,6 @@
         </div>
     </section>
 
-    <!-- <section class="ebook-intro" id="ebook-section">
-        @if (ebookData()) {
-        <div class="pre-title-wrapper">
-            <span class="pre-title">{{ ebookData().ebookIntro.preTitle }}</span>
-        </div>
-        }
-        <div class="intro-container">
-            <div class="mockup-column">
-                <div class="book-wrapper">
-                    <img src="e-book/bible-ia-cover.png" [alt]="versionService.ui().landingEbookMockupAlt"
-                        class="book-mockup">
-                    <div class="book-glow"></div>
-                </div>
-            </div>
-
-            @if (ebookData()) {
-            <div class="copy-column">
-
-                <h2 class="section-title">{{ ebookData().ebookIntro.sectionTitle }}</h2>
-
-                <div class="lux-divider-left"></div>
-
-                <p class="intro-text" [innerHTML]="ebookData().ebookIntro.paragraph2"></p>
-
-                <p class="intro-text highlight-text">{{ ebookData().ebookIntro.highlightText }}</p>
-
-                <ul class="luxury-benefits">
-                    @for (benefit of ebookData().ebookIntro.benefits; track benefit.title) {
-                    <li>
-                        <span class="star">✦</span>
-                        <span><strong>{{ benefit.title }}</strong> {{ benefit.description }}</span>
-                    </li>
-                    }
-                </ul>
-
-                <button class="lux-ghost-btn" (click)="abrirLeitor()">{{ ebookData().ebookIntro.buttonText }}</button>
-            </div>
-            } @else {
-            <div class="copy-column">
-                <p class="intro-text" style="color: #d4af37; opacity: 0.7;">{{
-                    versionService.ui().landingLoadingNewScroll }}</p>
-            </div>
-            }
-        </div>
-    </section> -->
 
     <footer class="lux-footer">
         <div class="footer-content">

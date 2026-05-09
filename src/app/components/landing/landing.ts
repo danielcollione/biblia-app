@@ -1,4 +1,19 @@
-import { AfterViewInit, ChangeDetectorRef, Component, computed, effect, ElementRef, inject, OnDestroy, OnInit, PLATFORM_ID, QueryList, signal, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  computed,
+  effect,
+  ElementRef,
+  inject,
+  OnDestroy,
+  OnInit,
+  PLATFORM_ID,
+  QueryList,
+  signal,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { VersionService } from '../../services/version/version-service';
@@ -24,7 +39,9 @@ interface Feature {
 })
 export class Landing implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('revealItem') revealItems!: QueryList<ElementRef>;
-  @ViewChildren('featureContentWrapper') featureContentWrappers!: QueryList<ElementRef<HTMLElement>>;
+  @ViewChildren('featureContentWrapper') featureContentWrappers!: QueryList<
+    ElementRef<HTMLElement>
+  >;
   @ViewChildren('featureContentInner') featureContentInners!: QueryList<ElementRef<HTMLElement>>;
   public ebookData = signal<any>(null);
   private readonly platformId = inject(PLATFORM_ID);
@@ -80,13 +97,20 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     return state.length > 0 ? state : this.features();
   }
 
+  @ViewChild('featuresGrid') featuresGrid!: ElementRef;
+
+  // Variável que o HTML está escutando para aplicar a classe .visible
+  isFeaturesVisible = false;
+
+  private observer: IntersectionObserver | undefined;
+
   constructor(
     public versionService: VersionService,
     private router: Router,
     private titleService: Title,
     private metaService: Meta,
     private httpClient: HttpClient,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
   ) {
     effect(() => {
       const lang = this.versionService.languageCode();
@@ -145,18 +169,18 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     const observerOptions = {
       root: null,
       threshold: 0.15,
-      rootMargin: '0px 0px -50px 0px'
+      rootMargin: '0px 0px -50px 0px',
     };
 
     const observer = new IntersectionObserver((entries) => {
       let hasChanges = false;
 
-      entries.forEach(entry => {
+      entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const target = entry.target as HTMLElement;
           // Pegamos o index que passamos no HTML
-          const indexStr = target.getAttribute('data-index'); 
-          
+          const indexStr = target.getAttribute('data-index');
+
           if (indexStr !== null) {
             const state = this.featuresState();
             state[Number(indexStr)].isVisible = true; // Atualiza o estado via Angular
@@ -173,7 +197,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
       }
     }, observerOptions);
 
-    this.revealItems.forEach(item => observer.observe(item.nativeElement));
+    this.revealItems.forEach((item) => observer.observe(item.nativeElement));
 
     // Prepara o estado inicial fechado e sincroniza os painéis ao renderizar.
     queueMicrotask(() => this.syncFeaturePanelHeights(false));
@@ -181,6 +205,30 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
     if (isPlatformBrowser(this.platformId)) {
       window.addEventListener('resize', this.handleResize);
+    }
+
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            // Quando a seção entra na tela, mudamos para true
+            this.isFeaturesVisible = true;
+
+            // Força o Angular a atualizar a tela imediatamente
+            this.cdr.detectChanges();
+
+            // Opcional: Desconecta o observer para a animação acontecer só 1 vez
+            this.observer?.disconnect();
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Dispara quando 10% da seção aparecer na tela
+      },
+    );
+
+    if (this.featuresGrid) {
+      this.observer.observe(this.featuresGrid.nativeElement);
     }
   }
 
@@ -190,19 +238,37 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   toggleFeature(id: string): void {
     const state = this.featuresState();
-    const updatedState = state.map((feature) => ({
-      ...feature,
-      isOpen: feature.id === id ? !feature.isOpen : false,
-    }));
+    const previousState = state.map((feature) => ({ ...feature }));
+    const featureIndex = state.findIndex((feature) => feature.id === id);
+
+    if (featureIndex < 0) {
+      return;
+    }
+
+    const updatedState = [...state];
+    const targetFeature = state[featureIndex];
+    updatedState[featureIndex] = {
+      ...targetFeature,
+      isOpen: !targetFeature.isOpen,
+    };
+
     this.featuresState.set(updatedState);
 
     // Força uma animação real de altura, respeitando duração longa.
-    queueMicrotask(() => this.syncFeaturePanelHeights(true));
+    queueMicrotask(() => this.syncFeaturePanelHeights(true, previousState));
+  }
+
+  trackFeature(_: number, feature: Feature): string {
+    return feature.id;
   }
 
   ngOnDestroy(): void {
     if (isPlatformBrowser(this.platformId)) {
       window.removeEventListener('resize', this.handleResize);
+    }
+
+    if (this.observer) {
+      this.observer.disconnect();
     }
   }
 
@@ -210,7 +276,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.syncFeaturePanelHeights(false);
   };
 
-  private syncFeaturePanelHeights(animate: boolean): void {
+  private syncFeaturePanelHeights(animate: boolean, previousState: Feature[] = []): void {
     if (!this.featureContentWrappers || !this.featureContentInners) {
       return;
     }
@@ -221,31 +287,41 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
       const wrapper = wrapperRef.nativeElement;
       const inner = this.featureContentInners.get(index)?.nativeElement;
       const feature = features[index];
+      const previousFeature = previousState[index];
 
       if (!feature || !inner) {
         return;
       }
 
       const targetHeight = inner.scrollHeight;
+      const currentHeight = wrapper.getBoundingClientRect().height;
 
       if (!animate) {
         wrapper.style.height = feature.isOpen ? `${targetHeight}px` : '0px';
         return;
       }
 
+      if (previousFeature && previousFeature.isOpen === feature.isOpen) {
+        wrapper.style.height = feature.isOpen ? `${targetHeight}px` : '0px';
+        return;
+      }
+
       if (feature.isOpen) {
         // Reflow garante que o browser capture o estado inicial antes de animar.
-        const startHeight = wrapper.getBoundingClientRect().height;
+        const startHeight = currentHeight;
         wrapper.style.height = `${startHeight}px`;
         void wrapper.offsetHeight;
 
-        wrapper.style.height = `${targetHeight}px`;
+        requestAnimationFrame(() => {
+          wrapper.style.height = `${targetHeight}px`;
+        });
       } else {
-        const currentHeight = wrapper.getBoundingClientRect().height;
-        wrapper.style.height = `${currentHeight}px`;
+        wrapper.style.height = `${currentHeight || targetHeight}px`;
         void wrapper.offsetHeight;
 
-        wrapper.style.height = '0px';
+        requestAnimationFrame(() => {
+          wrapper.style.height = '0px';
+        });
       }
     });
 

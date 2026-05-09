@@ -112,6 +112,21 @@ export const INTERFACE_TRANSLATIONS: any = {
       'Nós forjamos a <span class="gold-gradient">chave</span> que revela o mistério das <span class="white-text">escrituras.</span>',
     landingEngineDescription:
       'Não apenas lemos a Escritura; nós a decodificamos. Desenvolvemos tecnologia proprietária para substituir a dúvida pela precisão teológica, construindo a infraestrutura que escala a sua compreensão espiritual através de IA de última geração.',
+    landingHighlightsLabel01: 'CLARIFICAR',
+    landingHighlightsLabel02: 'DESVENDAR',
+    landingHighlightsLabel03: 'PARTICIPAR',
+    landingHighlightsImage01Alt: 'Ilustração de Bíblia Aberta',
+    landingHighlightsImage02Alt: 'Ilustração de Chave Antiga',
+    landingHighlightsImage03Alt: 'Ilustração de Mãos em Oração',
+    landingHighlightsTitle01: 'Profundidade e Clareza Teológica',
+    landingHighlightsTitle02: 'Desvende os mistérios Bíblicos',
+    landingHighlightsTitle03: 'Jornada e Disciplina Espiritual',
+    landingHighlightsDescription01:
+      'Perca a sensação de ler a bíblia de forma superficial, e mergulhe em uma experiência de estudo profunda, enriquecida por insights teológicos e históricos.',
+    landingHighlightsDescription02:
+      'Potencialize sua compreensão com nossa I.A. que oferece insights históricos, culturais e teológicos, ajudando a desvendar os mistérios e nuances das escrituras.',
+    landingHighlightsDescription03:
+      'Acompanhe sua progressão de Aprendiz a Sábio e faça parte de uma comunidade engajada em crescimento espiritual.',
     homeBrandName: 'Santuario',
     homeWelcomeTitle: 'Painel do Sabio',
     homeWelcomeSubtitle:
@@ -434,6 +449,21 @@ export const INTERFACE_TRANSLATIONS: any = {
       'We forged the <span class="gold-gradient">key</span> that reveals the mystery of <span class="white-text">scriptures.</span>',
     landingEngineDescription:
       'We do not just read Scripture; we decode it. We developed proprietary technology to replace doubt with theological precision, building the infrastructure that scales your spiritual understanding through cutting-edge AI.',
+    landingHighlightsLabel01: 'CLARIFY',
+    landingHighlightsLabel02: 'UNVEIL',
+    landingHighlightsLabel03: 'ENGAGE',
+    landingHighlightsImage01Alt: 'Open Bible illustration',
+    landingHighlightsImage02Alt: 'Ancient key illustration',
+    landingHighlightsImage03Alt: 'Hands in prayer illustration',
+    landingHighlightsTitle01: 'Theological Depth and Clarity',
+    landingHighlightsTitle02: 'Unveil Biblical Mysteries',
+    landingHighlightsTitle03: 'Spiritual Journey and Discipline',
+    landingHighlightsDescription01:
+      'Leave superficial reading behind and enter a deep study experience enriched with theological and historical insights.',
+    landingHighlightsDescription02:
+      'Boost your understanding with our AI that delivers historical, cultural, and theological insights to unveil the mysteries and nuances of Scripture.',
+    landingHighlightsDescription03:
+      'Track your progression from Apprentice to Sage and become part of a community committed to spiritual growth.',
     homeBrandName: 'Sanctuary',
     homeWelcomeTitle: 'Sage Dashboard',
     homeWelcomeSubtitle:
@@ -749,6 +779,21 @@ export const INTERFACE_TRANSLATIONS: any = {
       'Forjamos la <span class="gold-gradient">clave</span> que revela el misterio de las <span class="white-text">escrituras.</span>',
     landingEngineDescription:
       'No solo leemos la Escritura; la descodificamos. Desarrollamos tecnología propietaria para reemplazar la duda con precisión teológica, construyendo la infraestructura que escala tu comprensión espiritual a través de IA de última generación.',
+    landingHighlightsLabel01: 'ACLARAR',
+    landingHighlightsLabel02: 'REVELAR',
+    landingHighlightsLabel03: 'PARTICIPAR',
+    landingHighlightsImage01Alt: 'Ilustración de Biblia abierta',
+    landingHighlightsImage02Alt: 'Ilustración de llave antigua',
+    landingHighlightsImage03Alt: 'Ilustración de manos en oración',
+    landingHighlightsTitle01: 'Profundidad y Claridad Teológica',
+    landingHighlightsTitle02: 'Revela los Misterios Bíblicos',
+    landingHighlightsTitle03: 'Jornada y Disciplina Espiritual',
+    landingHighlightsDescription01:
+      'Deja atrás la lectura superficial de la Biblia y sumérgete en una experiencia de estudio profunda, enriquecida con perspectivas teológicas e históricas.',
+    landingHighlightsDescription02:
+      'Potencia tu comprensión con nuestra IA que ofrece perspectivas históricas, culturales y teológicas para revelar los misterios y matices de las Escrituras.',
+    landingHighlightsDescription03:
+      'Sigue tu progresión de Aprendiz a Sabio y forma parte de una comunidad comprometida con el crecimiento espiritual.',
     homeBrandName: 'Santuario',
     homeWelcomeTitle: 'Panel del Sabio',
     homeWelcomeSubtitle:

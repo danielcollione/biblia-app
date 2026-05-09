@@ -26,6 +26,12 @@ export interface BibleProgressSummaryResponseDto {
   chaptersReadByBible: Record<string, number>;
 }
 
+export interface BibleReadStateResponseDto {
+  bibleCodeFilter: string | null;
+  totalChaptersReadOverall: number;
+  chaptersReadByBibleAndBook: Record<string, Record<string, number[]>>;
+}
+
 @Injectable({ providedIn: 'root' })
 export class BibleProgressService {
   private readonly http = inject(HttpClient);
@@ -43,6 +49,15 @@ export class BibleProgressService {
   getSummary(): Observable<BibleProgressSummaryResponseDto> {
     return this.http.get<BibleProgressSummaryResponseDto>(
       `${this.apiUrl}/summary`,
+      { headers: this.buildHeaders() }
+    );
+  }
+
+  getReadState(bibleCode?: string): Observable<BibleReadStateResponseDto> {
+    const query = bibleCode ? `?bibleCode=${encodeURIComponent(bibleCode)}` : '';
+
+    return this.http.get<BibleReadStateResponseDto>(
+      `${this.apiUrl}/chapters/read/state${query}`,
       { headers: this.buildHeaders() }
     );
   }

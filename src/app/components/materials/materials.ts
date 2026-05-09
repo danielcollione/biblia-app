@@ -98,7 +98,7 @@ export class MaterialsComponent implements OnInit {
               }),
             );
           }),
-        ).pipe(map((materials) => materials.filter((material): material is Material => material !== null)));
+        ).pipe(map((materials) => materials.filter((material): material is Material => material !== null).reverse()));
       }),
       catchError((error) => {
         console.error('Nao foi possivel carregar o indice de materiais', error);
