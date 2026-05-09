@@ -1491,55 +1491,40 @@ p.subtitle.animate-reveal {
 }
 
 .epic-transition-divider {
+  /* Mantém a estrutura que já estava funcionando */
   width: 100%;
-  /* Define a altura da faixa. 300px a 400px costuma ser o ideal para transições */
-  height: 350px; 
-  
-  /* Caminho da sua imagem */
- background-image: url('/images/poster.jpeg');
-  
-  /* O efeito parallax que trava a imagem no fundo */
+  height: 350px; /* Altura da faixa de transição */
+  background-image: url('/temple.jpeg'); /* Sua imagem de poeira cósmica */
   background-attachment: fixed;
-  
-  /* Faz a imagem cobrir a tela inteira */
   background-size: cover;
-  
-  /* Ajuste este valor (ex: center 60%, center 40%) se quiser subir ou descer o foco da luz */
   background-position: center center; 
   background-repeat: no-repeat;
-}
-
-.epic-transition-divider::before {
-  content: '';
-  position: absolute;
-  top: -1px; /* O -1px evita que sobre uma linhazinha branca do navegador */
-  left: 0;
-  width: 100%;
-  height: 120px; /* A "força" do esfumaçado. Aumente se quiser que invada mais a imagem */
   
-  /* IMPORTANTE: Se o fundo do seu site não for preto puro (black), 
-     troque a palavra 'black' pelo seu HEX (ex: #0a0a0a) */
-  background: linear-gradient(to bottom, black 0%, transparent 100%);
+  /* Garante que nada corte o glow da borda */
+  position: relative; 
   z-index: 1;
-}
 
-/* Degrade na BASE da imagem */
-.epic-transition-divider::after {
-  content: '';
-  position: absolute;
-  bottom: -1px;
-  left: 0;
-  width: 100%;
-  height: 120px; /* A "força" do esfumaçado na parte de baixo */
+  /* =========================================
+     A BORDA FINA DOURADA (EFEITO LUXO)
+     ========================================= */
   
-  background: linear-gradient(to top, black 0%, transparent 100%);
-  z-index: 1;
+  /* 1. A Borda Física: Super fina (1px) e com um dourado sofisticado */
+  /* HEX recomendado: #D1A162 (um dourado suave, não muito amarelado) */
+  border-top: 1px solid #D1A162;
+  border-bottom: 1px solid #D1A162;
+
+  /* 2. O Glow (Brilho): Essencial para o Dark Mode Premium */
+  /* Cria uma aura luminosa sutil da mesma cor da borda */
+  box-shadow: 
+    0 0 15px rgba(209, 161, 98, 0.3); /* Glow externo suave */
 }
 
 /* Ajuste Mobile */
 @media (max-width: 768px) {
   .epic-transition-divider {
     height: 250px;
-    background-size: cover; /* No mobile, o cover costuma funcionar melhor pelo formato vertical da tela */
+    background-size: cover; 
+    /* Opcional: Diminuir o glow no mobile para performance */
+    box-shadow: 0 0 8px rgba(209, 161, 98, 0.2);
   }
 }
