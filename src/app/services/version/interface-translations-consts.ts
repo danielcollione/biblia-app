@@ -3,7 +3,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     emDesenvolvimento: 'Em desenvolvimento...',
     ferramentas: 'Ferramentas',
     entrar: 'Entrar',
-    jornadaAlemdaLetra: 'Jornada Além da Escrita',
+    jornadaAlemdaLetra: 'Jornada Além da Palavra',
     unveiledBible: 'A BÍBLIA REVELADA',
     title: 'Bíblia',
     library: 'Biblioteca',
@@ -299,7 +299,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePremiumDeniedResourceDescription:
       'Converse em tempo real com uma IA teologica com memoria de contexto, respostas progressivas e orientacao biblica personalizada para seus estudos e devocionais.',
     landingToolboxTitle: 'ENTRE NO SANTUÁRIO',
-    landingToolboxEyebrow: '( RECURSOS )',
+    landingToolboxEyebrow: '( FUNCIONALIDADES )',
     landingToolboxSubtitle: 'AQUI VOCÊ ENCONTRA:',
     featureActionClose: 'Fechar',
     featureActionExplore: 'Explorar',
@@ -632,7 +632,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePremiumDeniedResourceDescription:
       'Chat in real time with theological AI featuring contextual memory, progressive answers, and personalized biblical guidance for your studies and devotionals.',
     landingToolboxTitle: 'STEP INTO THE SANCTUARY',
-    landingToolboxEyebrow: '( RESOURCES )',
+    landingToolboxEyebrow: '( FEATURES )',
     landingToolboxSubtitle: 'HERE YOU WILL FIND:',
     featureActionClose: 'Close',
     featureActionExplore: 'Explore',
@@ -670,7 +670,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature05Tag3: 'Ranking',
   },
   es: {
-    jornadaAlemdaLetra: 'Viaje Más Allá de la Letra',
+    jornadaAlemdaLetra: 'Viaje Más Allá de la Palabra',
     unveiledBible: 'LA BIBLIA REVELADA',
     title: 'Biblia',
     library: 'Biblioteca',
@@ -967,7 +967,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePremiumDeniedResourceDescription:
       'Conversa en tiempo real con una IA teologica con memoria de contexto, respuestas progresivas y orientacion biblica personalizada para tus estudios y devocionales.',
     landingToolboxTitle: 'ENTRA AL SANTUARIO',
-    landingToolboxEyebrow: '( RECURSOS )',
+    landingToolboxEyebrow: '( FUNCIONES )',
     landingToolboxSubtitle: 'AQUÍ ENCONTRARÁS:',
     featureActionClose: 'Cerrar',
     featureActionExplore: 'Explorar',
