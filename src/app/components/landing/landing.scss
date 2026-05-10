@@ -1491,40 +1491,37 @@ p.subtitle.animate-reveal {
 }
 
 .epic-transition-divider {
-  /* Mantém a estrutura que já estava funcionando */
+  position: relative;
   width: 100%;
-  height: 350px; /* Altura da faixa de transição */
-  background-image: url('/temple.jpeg'); /* Sua imagem de poeira cósmica */
-  background-attachment: fixed;
-  background-size: cover;
-  background-position: center center; 
-  background-repeat: no-repeat;
-  
-  /* Garante que nada corte o glow da borda */
-  position: relative; 
-  z-index: 1;
-
-  /* =========================================
-     A BORDA FINA DOURADA (EFEITO LUXO)
-     ========================================= */
-  
-  /* 1. A Borda Física: Super fina (1px) e com um dourado sofisticado */
-  /* HEX recomendado: #D1A162 (um dourado suave, não muito amarelado) */
+  height: 350px;
+  overflow: hidden; /* Garante que o brilho não vaze */
   border-top: 1px solid #D1A162;
   border-bottom: 1px solid #D1A162;
-
-  /* 2. O Glow (Brilho): Essencial para o Dark Mode Premium */
-  /* Cria uma aura luminosa sutil da mesma cor da borda */
-  box-shadow: 
-    0 0 15px rgba(209, 161, 98, 0.3); /* Glow externo suave */
+  z-index: 1;
 }
 
-/* Ajuste Mobile */
+/* Criamos a imagem como um elemento separado por trás */
+.epic-transition-divider::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/temple.jpeg');
+  background-size: cover;
+  background-position: center;
+  /* No desktop usamos fixed */
+  background-attachment: fixed;
+  z-index: -1;
+}
+
 @media (max-width: 768px) {
   .epic-transition-divider {
     height: 250px;
-    background-size: cover; 
-    /* Opcional: Diminuir o glow no mobile para performance */
-    box-shadow: 0 0 8px rgba(209, 161, 98, 0.2);
+  }
+  .epic-transition-divider::before {
+    /* No mobile, voltamos para scroll para não quebrar */
+    background-attachment: scroll;
   }
 }
