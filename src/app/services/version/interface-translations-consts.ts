@@ -1,5 +1,6 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    chapterFinish: 'Capitulo concluido',
     pricing: 'Preços',
     emDesenvolvimento: 'Em desenvolvimento...',
     ferramentas: 'Ferramentas',
@@ -504,6 +505,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingHighlightsImage03Alt: 'Hands in prayer illustration',
     landingHighlightsTitle01: 'Theological Depth and Clarity',
     landingHighlightsTitle02: 'Unveil Biblical Mysteries',
+    chapterFinish: 'Chapter finished',
     landingHighlightsTitle03: 'Spiritual Journey and Discipline',
     landingHighlightsDescription01:
       'Leave superficial reading behind and enter a deep study experience enriched with theological and historical insights.',
@@ -980,6 +982,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatNewSession: 'Nueva Conversacion',
     sageChatLoadingSessions: 'Cargando conversaciones...',
     sageChatNoSessions: 'Aun no hay conversaciones iniciadas.',
+    chapterFinish: 'Capítulo terminado',
     sageChatInsightsLabel: 'Ideas para comenzar',
     sageChatInsightOne: 'Explica Romanos 8 para alguien que hoy vive ansiedad.',
     sageChatInsightTwo: 'Crea un plan biblico de 7 dias para fortalecer mi fe.',
