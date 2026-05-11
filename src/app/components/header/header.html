@@ -22,6 +22,9 @@
                         [routerLinkActiveOptions]="{ exact: true }">{{versionService.ui().start}}</a></li>
                 <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
                 <li><a routerLink="/" fragment="sanctuary-section">{{versionService.ui().ferramentas}}</a></li>
+                <li><a routerLink="/" fragment="pricing">{{versionService.ui().pricing}}</a></li>
+                <li><a routerLink="/" fragment="faq">FAQ</a></li>
+
                 <li><a routerLink="/login" class="enter-color">{{ versionService.ui().entrar }}</a></li>
 
             </ul>
@@ -40,7 +43,8 @@
                         (click)="closeMenu()">{{versionService.ui().start}}</a></li>
                 <li><a routerLink="/read" routerLinkActive="active-link"
                         (click)="closeMenu()">{{versionService.ui().title}}</a></li>
-                <li><a routerLink="/" fragment="sanctuary-section" (click)="closeMenu()">{{versionService.ui().ferramentas}}</a></li>
+                <li><a routerLink="/" fragment="sanctuary-section"
+                        (click)="closeMenu()">{{versionService.ui().ferramentas}}</a></li>
 
                 <li class="mobile-lang-selector"><app-version-selector></app-version-selector></li>
                 <li><a routerLink="/login" (click)="closeMenu()">{{

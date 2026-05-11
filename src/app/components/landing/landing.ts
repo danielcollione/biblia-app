@@ -30,6 +30,13 @@ interface Feature {
   isVisible?: boolean;
 }
 
+interface FAQ {
+  question: string;
+  answer: string;
+  isOpen: boolean;
+  isVisible?: boolean;
+}
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.html',
@@ -45,6 +52,12 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('featureContentInner') featureContentInners!: QueryList<ElementRef<HTMLElement>>;
   public ebookData = signal<any>(null);
   private readonly platformId = inject(PLATFORM_ID);
+
+  // Signal para controlar quais FAQs estão abertos
+  private faqsOpenState = signal<boolean[]>([false, false, false, false, false, false]);
+
+  // Signal para rastrear visibilidade dos FAQs (para animação de scroll)
+  private faqsVisibilityState = signal<boolean[]>([false, false, false, false, false, false]);
 
   // Computed signal que constrói dinamicamente o array de features a partir das literais
   public features = computed(() => {
@@ -104,6 +117,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   private observer: IntersectionObserver | undefined;
 
+  faqs: FAQ[] = [];
+
   constructor(
     public versionService: VersionService,
     private router: Router,
@@ -127,6 +142,55 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
           console.error(`Erro 404: Não foi possível achar o arquivo no caminho ${url}`, err),
       });
     });
+  }
+
+  toggleFaq(index: number): void {
+    // Fecha todos os outros antes de abrir o atual (opcional, estilo sanfona)
+    // this.faqs.forEach((faq, i) => { if (i !== index) faq.isOpen = false; });
+
+    // Alterna o estado da pergunta clicada
+    this.faqs[index].isOpen = !this.faqs[index].isOpen;
+  }
+
+  getFaqs() {
+    return [
+      {
+        question: this.versionService.ui().landingFaqItem1Question,
+        answer: this.versionService.ui().landingFaqItem1Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+      {
+        question: this.versionService.ui().landingFaqItem2Question,
+        answer: this.versionService.ui().landingFaqItem2Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+      {
+        question: this.versionService.ui().landingFaqItem3Question,
+        answer: this.versionService.ui().landingFaqItem3Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+      {
+        question: this.versionService.ui().landingFaqItem4Question,
+        answer: this.versionService.ui().landingFaqItem4Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+      {
+        question: this.versionService.ui().landingFaqItem5Question,
+        answer: this.versionService.ui().landingFaqItem5Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+      {
+        question: this.versionService.ui().landingFaqItem6Question,
+        answer: this.versionService.ui().landingFaqItem6Answer,
+        isOpen: false,
+        isVisible: false,
+      },
+    ];
   }
 
   ngOnInit() {
@@ -155,6 +219,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
     const target = document.querySelector('#reveal-trigger');
     if (target) observer.observe(target);
+
+    this.faqs = this.getFaqs();
   }
 
   ngAfterViewInit() {
@@ -178,13 +244,21 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           const target = entry.target as HTMLElement;
-          // Pegamos o index que passamos no HTML
           const indexStr = target.getAttribute('data-index');
+          const dataType = target.getAttribute('data-type');
 
           if (indexStr !== null) {
-            const state = this.featuresState();
-            state[Number(indexStr)].isVisible = true; // Atualiza o estado via Angular
-            this.featuresState.set([...state]); // Força atualização do signal
+            if (dataType === 'faq') {
+              // Atualiza visibilidade do FAQ
+              const state = this.faqsVisibilityState();
+              state[Number(indexStr)] = true;
+              this.faqsVisibilityState.set([...state]);
+            } else {
+              // Atualiza visibilidade da feature
+              const state = this.featuresState();
+              state[Number(indexStr)].isVisible = true;
+              this.featuresState.set([...state]);
+            }
             hasChanges = true;
           }
           observer.unobserve(target);

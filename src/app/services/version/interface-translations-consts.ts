@@ -1,5 +1,6 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    pricing: 'Preços',
     emDesenvolvimento: 'Em desenvolvimento...',
     ferramentas: 'Ferramentas',
     entrar: 'Entrar',
@@ -335,6 +336,52 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature05Tag1: 'Níveis',
     landingFeature05Tag2: 'Títulos Inéditos',
     landingFeature05Tag3: 'Ranking',
+    // Pricing Section
+    landingPricingTitle: 'Preços',
+    landingPlanFreeTitle: 'Gratuito',
+    landingPlanFreePrice: '$0',
+    landingPlanFreeSubtitle: 'Para iniciar sua jornada.',
+    landingPlanFreeFeature1: 'Ler a Bíblia online',
+    landingPlanFreeFeature2: 'Acessar Fórum de Oração (leitura)',
+    landingPlanFreeFeature3: 'Gamificação e Recompensas',
+    landingPlanFreeButton: 'Começar grátis',
+    landingPlanSageTitle: 'Modo Sábio',
+    landingPlanSagePrice: 'US$ 5',
+    landingPlanSagePricePeriod: 'por mês',
+    landingPlanSageSubtitle: 'Acesso completo às ferramentas.',
+    landingPlanSageFeature1: 'Tudo do plano Gratuito +',
+    landingPlanSageFeature2: 'Publicar e interagir no Fórum de Orações',
+    landingPlanSageFeature3: 'Gerador de Estudo Bíblico (IA)',
+    landingPlanSageFeature4: 'Sábio Online 24h',
+    landingPlanSageFeature5: 'Acervo Completo (Apócrifos)',
+    landingPlanSageFeature6: 'Acesso ao Quiz Diário',
+    landingPlanSageFeature7: 'Participe do Ranking dos Usuários',
+    landingPlanSageButton: 'Assinar agora',
+    // FAQ Section
+    landingFaqSectionTitle: 'Dúvidas Frequentes',
+    landingFaqSectionSubtitle:
+      'Entenda como o The Unveiled Bible pode transformar sua jornada espiritual e seus estudos.',
+    landingFaqStillQuestion: 'Ainda tem dúvidas?',
+    landingFaqContactLink: 'Fale conosco',
+    // FAQ Items
+    landingFaqItem1Question: 'O que é o Projeto Bíblia Revelada?',
+    landingFaqItem1Answer:
+      'É uma plataforma inovadora (Progressive Web App) que une a sabedoria milenar das escrituras com tecnologia de Inteligência Artificial de ponta. Nosso objetivo é proporcionar um mergulho profundo nas raízes da fé, oferecendo ferramentas de estudo, intercessão e pesquisa teológica em um ambiente cinematográfico e imersivo.',
+    landingFaqItem2Question: 'Quanto custa ter o acesso completo?',
+    landingFaqItem2Answer:
+      'Por apenas US$ 5 mensais, o plano Sábio concede acesso irrestrito a todas as nossas ferramentas de Inteligência Artificial, biblioteca de apócrifos e recursos de publicação no fórum. Também oferecemos um plano Gratuito que permite a leitura da Bíblia online, acompanhamento do fórum e participação em nosso sistema de gamificação.',
+    landingFaqItem3Question: 'Como funciona a geração de estudos?',
+    landingFaqItem3Answer:
+      'Através do nosso Content Studio impulsionado por IA Teológica, você pode gerar três tipos de conteúdos: Devocionais, Sermões ou Estudos Bíblicos completos. Basta inserir um tema ou versículo (ex: João 3:16, Graça, A Fé de Abraão) e, se desejar, adicionar notas específicas sobre os aspectos que deseja explorar. A IA formulará um material rico e contextualizado em segundos.',
+    landingFaqItem4Question: 'Como funciona o fórum de oração?',
+    landingFaqItem4Answer:
+      'O Fórum é um espaço de intercessão coletiva e prova social profunda. Trata-se de uma comunidade global onde os pedidos são publicados como "balões vivos". Os membros podem acompanhar, se juntar em oração e sustentar os pedidos de irmãos ao redor do mundo em um ambiente seguro, acolhedor e com identidade visual serena.',
+    landingFaqItem5Question: 'Como funciona o Sábio Online?',
+    landingFaqItem5Answer:
+      'O Sábio Online é o seu assistente teológico 24 horas. Ele permite conversas em tempo real com respostas progressivas e possui memória de contexto. Isso significa que ele lembra do que vocês estavam conversando anteriormente, guiando você através de dúvidas complexas, contextos históricos e debates teológicos como um verdadeiro mentor.',
+    landingFaqItem6Question: 'Quantos livros vocês possuem nos acervos?',
+    landingFaqItem6Answer:
+      'Nosso Acervo Completo conta com a Bíblia Sagrada na íntegra, além de uma biblioteca premium com livros complementares e apócrifos de imenso valor histórico e cultural. Atualmente, incluímos obras como o Livro de Enoque, o Livro dos Jubileus, o Livro de Jasher, Confissões de Agostinho e os Livros dos Macabeus.',
   },
   en: {
     jornadaAlemdaLetra: 'Journey Beyond the Letter',
@@ -466,6 +513,7 @@ export const INTERFACE_TRANSLATIONS: any = {
       'Track your progression from Apprentice to Sage and become part of a community committed to spiritual growth.',
     homeBrandName: 'Sanctuary',
     homeWelcomeTitle: 'Sage Dashboard',
+    pricing: 'Pricing',
     homeWelcomeSubtitle:
       'Track your journey, access studies, and evolve in the collection with focus and depth.',
     homeInitialLogoAlt: 'Sanctuary logo',
@@ -668,6 +716,52 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature05Tag1: 'Levels',
     landingFeature05Tag2: 'Unique Titles',
     landingFeature05Tag3: 'Ranking',
+    // Pricing Section
+    landingPricingTitle: 'Prices',
+    landingPlanFreeTitle: 'Free',
+    landingPlanFreePrice: '$0',
+    landingPlanFreeSubtitle: 'To start your journey.',
+    landingPlanFreeFeature1: 'Read the Bible online',
+    landingPlanFreeFeature2: 'Access Prayer Forum (reading)',
+    landingPlanFreeFeature3: 'Gamification and Rewards',
+    landingPlanFreeButton: 'Get started free',
+    landingPlanSageTitle: 'Wise Mode',
+    landingPlanSagePrice: 'US$ 5',
+    landingPlanSagePricePeriod: 'per month',
+    landingPlanSageSubtitle: 'Complete access to all tools.',
+    landingPlanSageFeature1: 'Everything in the Free plan +',
+    landingPlanSageFeature2: 'Publish and interact in the Prayer Forum',
+    landingPlanSageFeature3: 'Biblical Study Generator (AI)',
+    landingPlanSageFeature4: 'Sage Online 24h',
+    landingPlanSageFeature5: 'Complete Collection (Apocrypha)',
+    landingPlanSageFeature6: 'Access to Daily Quiz',
+    landingPlanSageFeature7: 'Participate in User Rankings',
+    landingPlanSageButton: 'Subscribe now',
+    // FAQ Section
+    landingFaqSectionTitle: 'Frequently Asked Questions',
+    landingFaqSectionSubtitle:
+      'Understand how The Unveiled Bible can transform your spiritual journey and studies.',
+    landingFaqStillQuestion: 'Still have questions?',
+    landingFaqContactLink: 'Contact us',
+    // FAQ Items
+    landingFaqItem1Question: 'What is The Unveiled Bible Project?',
+    landingFaqItem1Answer:
+      'It is an innovative platform (Progressive Web App) that combines ancient wisdom from the scriptures with cutting-edge Artificial Intelligence technology. Our goal is to provide a deep dive into the roots of faith, offering study tools, intercession, and theological research in a cinematic and immersive environment.',
+    landingFaqItem2Question: 'How much does complete access cost?',
+    landingFaqItem2Answer:
+      'For just US$ 5 per month, the Wise plan grants unrestricted access to all our AI-powered tools, apocryphal library, and forum publishing resources. We also offer a Free plan that allows reading the Bible online, forum participation, and access to our gamification system.',
+    landingFaqItem3Question: 'How does the study generator work?',
+    landingFaqItem3Answer:
+      'Through our AI-powered Content Studio, you can generate three types of content: Devotionals, Sermons, or complete Biblical Studies. Simply enter a topic or verse (e.g., John 3:16, Grace, The Faith of Abraham) and, if desired, add specific notes about aspects you wish to explore. The AI will craft rich, contextual material in seconds.',
+    landingFaqItem4Question: 'How does the prayer forum work?',
+    landingFaqItem4Answer:
+      'The Forum is a space for collective intercession and deep social proof. It is a global community where requests are published as "live balloons". Members can follow, join in prayer, and sustain the petitions of brothers and sisters around the world in a safe, welcoming environment with serene visual identity.',
+    landingFaqItem5Question: 'How does Sage Online work?',
+    landingFaqItem5Answer:
+      'Sage Online is your 24-hour theological assistant. It allows real-time conversations with progressive responses and has contextual memory. This means it remembers what you were discussing previously, guiding you through complex questions, historical contexts, and theological debates like a true mentor.',
+    landingFaqItem6Question: 'How many books do you have in your collections?',
+    landingFaqItem6Answer:
+      'Our Complete Collection includes the full Holy Bible plus a premium library with complementary books and apocrypha of immense historical and cultural value. We currently include works such as the Book of Enoch, Book of Jubilees, Book of Jasher, Confessions of Augustine, and the Books of the Maccabees.',
   },
   es: {
     jornadaAlemdaLetra: 'Viaje Más Allá de la Palabra',
@@ -954,6 +1048,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     pricingAccessDeniedCheckoutMissingUser:
       'No fue posible identificar tu usuario para iniciar el pago.',
     pricingAccessDeniedCheckoutMissingUrl: 'No fue posible obtener el enlace de pago.',
+    pricing: 'Precios',
     pricingAccessDeniedCheckoutStartError:
       'Error al iniciar el pago. Inténtalo nuevamente en unos instantes.',
     paymentStatusSuccessPopup: '¡Felicitaciones! Comienza tu viaje para convertirte en un Sabio',
@@ -1003,5 +1098,51 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature05Tag1: 'Niveles',
     landingFeature05Tag2: 'Títulos Únicos',
     landingFeature05Tag3: 'Ranking',
+    // Pricing Section
+    landingPricingTitle: 'Precios',
+    landingPlanFreeTitle: 'Gratuito',
+    landingPlanFreePrice: '$0',
+    landingPlanFreeSubtitle: 'Para iniciar tu viaje.',
+    landingPlanFreeFeature1: 'Leer la Biblia en línea',
+    landingPlanFreeFeature2: 'Acceso al Foro de Oración (lectura)',
+    landingPlanFreeFeature3: 'Gamificación y Recompensas',
+    landingPlanFreeButton: 'Comenzar gratis',
+    landingPlanSageTitle: 'Modo Sabio',
+    landingPlanSagePrice: 'US$ 5',
+    landingPlanSagePricePeriod: 'por mes',
+    landingPlanSageSubtitle: 'Acceso completo a todas las herramientas.',
+    landingPlanSageFeature1: 'Todo del plan Gratuito +',
+    landingPlanSageFeature2: 'Publicar e interactuar en el Foro de Oraciones',
+    landingPlanSageFeature3: 'Generador de Estudio Bíblico (IA)',
+    landingPlanSageFeature4: 'Sabio En Línea 24h',
+    landingPlanSageFeature5: 'Colección Completa (Apócrifos)',
+    landingPlanSageFeature6: 'Acceso a Quiz Diario',
+    landingPlanSageFeature7: 'Participa en Ranking de Usuarios',
+    landingPlanSageButton: 'Suscribirse ahora',
+    // FAQ Section
+    landingFaqSectionTitle: 'Preguntas Frecuentes',
+    landingFaqSectionSubtitle:
+      'Comprende cómo La Biblia Revelada puede transformar tu viaje espiritual y estudios.',
+    landingFaqStillQuestion: '¿Aún tienes dudas?',
+    landingFaqContactLink: 'Contáctanos',
+    // FAQ Items
+    landingFaqItem1Question: '¿Qué es El Proyecto Bíblia Revelada?',
+    landingFaqItem1Answer:
+      'Es una plataforma innovadora (Progressive Web App) que combina la sabiduría ancestral de las escrituras con tecnología de Inteligencia Artificial de última generación. Nuestro objetivo es proporcionar una inmersión profunda en las raíces de la fe, ofreciendo herramientas de estudio, intercesión e investigación teológica en un ambiente cinematográfico e inmersivo.',
+    landingFaqItem2Question: '¿Cuánto cuesta el acceso completo?',
+    landingFaqItem2Answer:
+      'Por solo US$ 5 mensuales, el plan Sabio otorga acceso sin restricciones a todas nuestras herramientas impulsadas por IA, biblioteca de apócrifos y recursos de publicación en el foro. También ofrecemos un plan Gratuito que permite leer la Biblia en línea, participación en el foro y acceso a nuestro sistema de gamificación.',
+    landingFaqItem3Question: '¿Cómo funciona el generador de estudios?',
+    landingFaqItem3Answer:
+      'A través de nuestro Content Studio impulsado por IA, puedes generar tres tipos de contenido: Devocionales, Sermones o Estudios Bíblicos completos. Simplemente ingresa un tema o versículo (ej: Juan 3:16, Gracia, La Fe de Abraham) y, si lo deseas, añade notas específicas sobre aspectos que desees explorar. La IA elaborará material rico y contextualizado en segundos.',
+    landingFaqItem4Question: '¿Cómo funciona el foro de oración?',
+    landingFaqItem4Answer:
+      'El Foro es un espacio de intercesión colectiva y prueba social profunda. Es una comunidad global donde las peticiones se publican como "globos vivos". Los miembros pueden seguir, unirse en oración y sostener los pedidos de hermanos y hermanas alrededor del mundo en un ambiente seguro, acogedor y con identidad visual serena.',
+    landingFaqItem5Question: '¿Cómo funciona Sabio En Línea?',
+    landingFaqItem5Answer:
+      'Sabio En Línea es tu asistente teológico 24 horas. Permite conversaciones en tiempo real con respuestas progresivas y tiene memoria de contexto. Esto significa que recuerda lo que estaban discutiendo anteriormente, guiándote a través de preguntas complejas, contextos históricos y debates teológicos como un verdadero mentor.',
+    landingFaqItem6Question: '¿Cuántos libros tienes en tus colecciones?',
+    landingFaqItem6Answer:
+      'Nuestra Colección Completa incluye la Biblia Sagrada íntegra más una biblioteca premium con libros complementarios y apócrifos de inmensamente valor histórico y cultural. Actualmente incluimos obras como el Libro de Enoc, Libro de Jubileos, Libro de Jasher, Confesiones de Agustín y los Libros de los Macabeos.',
   },
 };
