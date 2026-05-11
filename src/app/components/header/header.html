@@ -46,10 +46,13 @@
                 <li><a routerLink="/" fragment="sanctuary-section"
                         (click)="closeMenu()">{{versionService.ui().ferramentas}}</a></li>
 
-                <li class="mobile-lang-selector"><app-version-selector></app-version-selector></li>
+                <li><a routerLink="/" fragment="pricing" (click)="closeMenu()">{{versionService.ui().pricing}}</a></li>
+                <li><a routerLink="/" fragment="faq" (click)="closeMenu()">FAQ</a></li>
                 <li><a routerLink="/login" (click)="closeMenu()">{{
                         versionService.ui().entrar }}</a></li>
-
+                <li class="mobile-lang-selector">
+                    <app-version-selector></app-version-selector>
+                </li>
             </ul>
         </nav>
 

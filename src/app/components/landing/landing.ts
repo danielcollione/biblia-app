@@ -404,7 +404,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
   setSeoTags() {
     // Título focado em Keywords Internacionais
-    this.titleService.setTitle('The Unveiled Bible | Immersive Biblical Studies');
+    this.titleService.setTitle('A Bíblia Revelada | Estudos Bíblicos Imersivos');
 
     // Descrição em inglês para o Google Global
     this.metaService.updateTag({
@@ -416,11 +416,11 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     // Open Graph (Facebook, LinkedIn, WhatsApp)
     this.metaService.updateTag({
       property: 'og:title',
-      content: 'The Unveiled Bible - Journey Beyond the Writing',
+      content: 'A Bíblia Revelada - Jornada Além da Palavra',
     });
     this.metaService.updateTag({
       property: 'og:description',
-      content: 'Unveil the mysteries of ancient manuscripts and historical exegesis.',
+      content: 'Desvende os mistérios de manuscritos antigos e exegese histórica.',
     });
     this.metaService.updateTag({
       property: 'og:image',
@@ -430,7 +430,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
 
     // Twitter Cards
     this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
-    this.metaService.updateTag({ name: 'twitter:title', content: 'The Unveiled Bible' });
+    this.metaService.updateTag({ name: 'twitter:title', content: 'A Bíblia Revelada' });
   }
 
   irParaBiblia() {
