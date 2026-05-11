@@ -725,7 +725,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingPlanFreeFeature2: 'Access Prayer Forum (reading)',
     landingPlanFreeFeature3: 'Gamification and Rewards',
     landingPlanFreeButton: 'Get started free',
-    landingPlanSageTitle: 'Wise Mode',
+    landingPlanSageTitle: 'Sage Mode',
     landingPlanSagePrice: 'US$ 5',
     landingPlanSagePricePeriod: 'per month',
     landingPlanSageSubtitle: 'Complete access to all tools.',
