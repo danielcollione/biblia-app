@@ -1,5 +1,8 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    revisarResposta: 'REVISAR RESPOSTAS',
+    concluirRevisao: 'CONCLUIR REVISÃO',
+    next: 'PRÓXIMA',
     libraryDescription:
       'Sua fonte completa de estudos bíblicos e teológicos. Reunião de livros canônicos, textos intertestamentários e contextos históricos em um só lugar, projetada para quem busca ir além da superfície no conhecimento da Palavra.',
     rewardMsg: 'Iluminação concluída com sucesso.',
@@ -649,6 +652,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteSuccess: 'Conversation deleted successfully.',
     sageChatSessionDeleteError: 'Unable to delete this conversation right now.',
     sageChatFeedbackCloseAriaLabel: 'Close message',
+    next: 'NEXT',
     sageChatStreamError: 'Unable to get a response from Sage right now.',
     sageChatEmptyAnswerFallback:
       'Unfortunately, I had to consult the ancient scrolls and have not returned yet. Please try sending your question again later.',
@@ -727,6 +731,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature03Tag2: 'Chat',
     landingFeature03Tag3: 'History',
     landingFeature04Title: 'Complete Collection',
+    concluirRevisao: 'FINISH REVIEW',
     landingFeature04Description:
       'Dive into the roots of faith. Full access to the Holy Bible and fundamental historical and apocryphal texts, such as the Book of Enoch, Book of Jasher, Confessions of Augustine and the Book of Jubilees.',
     landingFeature04Tag1: 'Bible',
@@ -765,6 +770,7 @@ export const INTERFACE_TRANSLATIONS: any = {
       'Understand how The Unveiled Bible can transform your spiritual journey and studies.',
     landingFaqStillQuestion: 'Still have questions?',
     landingFaqContactLink: 'Contact us',
+    revisarResposta: 'REVIEW ANSWER',
     // FAQ Items
     landingFaqItem1Question: 'What is The Unveiled Bible Project?',
     landingFaqItem1Answer:
@@ -1025,11 +1031,13 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionLoadError: 'No fue posible cargar tus conversaciones ahora.',
     sageChatSessionCreateError: 'No fue posible crear una nueva conversacion.',
     sageChatSessionDelete: 'Eliminar conversacion',
+    concluirRevisao: 'FINALIZAR REVISIÓN',
     sageChatSessionDeleteAriaLabel: 'Eliminar conversacion',
     sageChatSessionDeleteConfirm: '¿Deseas eliminar realmente esta conversacion?',
     sageChatDeleteModalEyebrow: 'Confirmacion',
     sageChatDeleteModalTitle: '¿Eliminar esta conversacion?',
     returnMsg: 'VOLVER AL AMANECER',
+    next: 'SIGUIENTE',
     sageChatDeleteModalSubtitle:
       'Al confirmar, todo el historial de esta conversacion sera removido de tu panel de Sabio Online.',
     sageChatDeleteModalCancel: 'Cancelar',
@@ -1072,6 +1080,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryPremiumBadge: 'Premium',
     libraryChaptersLoadError: 'No fue posible cargar los capítulos ahora.',
     libraryChaptersLoading: 'Cargando capítulos...',
+    revisarResposta: 'REVISAR RESPUESTA',
     libraryChapterLoading: 'Cargando capítulo...',
     libraryChapterLabel: 'Capítulo',
     pricingAccessDeniedTitle: 'Recurso Exclusivo Plan Sabio',
