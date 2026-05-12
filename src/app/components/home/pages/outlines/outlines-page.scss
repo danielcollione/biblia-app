@@ -7,15 +7,20 @@ $bg-card: #111111;
 $bg-panel: #0d0d0d;
 
 @keyframes pageFadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 :host {
   display: block;
   height: 100%;
-  overflow-y: auto;
-  padding: 28px;
+  padding: 32px;
   box-sizing: border-box;
   scrollbar-width: thin;
   scrollbar-color: rgba(197, 160, 89, 0.3) transparent;
@@ -50,10 +55,11 @@ $bg-panel: #0d0d0d;
   display: flex;
   align-items: flex-start;
   gap: 16px;
-
+  font-family: 'Inter', sans-serif;
+  padding-top: 4rem;
   h1 {
     margin: 0 0 6px;
-    font-family: 'Cinzel', serif;
+    font-family: 'Inter', serif;
     font-size: 1.6rem;
     font-weight: 700;
     color: $text-light;

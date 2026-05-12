@@ -27,7 +27,7 @@
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
-  background-color: transparent;
+  background-color: black;
   animation: pageFadeIn 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
   overflow-y: auto;
   overflow-x: hidden;
@@ -51,7 +51,6 @@
 .library-shell {
   display: flex;
   flex-direction: column;
-  gap: 32px;
   min-height: 100%;
   padding-bottom: 40px;
   margin-bottom: 100px;
@@ -69,22 +68,56 @@
   box-sizing: border-box;
   animation: chapterPageEnter 420ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+.library-header {
+  position: sticky; // Mantém o elemento preso ao scroll do pai
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  z-index: 1000;
+  
+  /* O PULO DO GATO: 
+     A margem negativa faz com que o próximo elemento (o banner) 
+     comece no topo da tela, ignorando a altura do header. */
+  margin-bottom: -80px; 
+
+  display: flex;
+  align-items: center;
+  padding: 0 5%;
+  box-sizing: border-box;
+  
+  background: transparent; // Transparente por padrão
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none; // Não bloqueia cliques no banner
+
+  &.scrolled {
+    /* Quando scrollar, mantemos o overlay mas pintamos o fundo */
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(12px);
+    height: 70px;
+    margin-bottom: -70px; // Ajusta a margem para a nova altura menor
+    border-bottom: 1px solid rgba(207, 171, 106, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    pointer-events: auto; // Reativa cliques em toda a barra se desejar
+  }
+
+  .header-content {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    pointer-events: auto; // Garante que os botões de busca funcionem sempre
+  }
+}
+
+/* Ajuste na sua classe original para não conflitar com o header */
 .floating-search {
-  position: fixed;
-  right: 5%;
-  top: 7%;
-  transform: translateY(-50%);
-  z-index: 200;
+  position: relative; // Mudamos de fixed para relative
   display: flex;
   align-items: center;
   gap: 0;
-  pointer-events: auto;
-
-  &.search-active .search-toggle {
-    border-color: #cfab6a;
-    color: #cfab6a;
-    box-shadow: 0 0 18px rgba(207, 171, 106, 0.35);
-  }
+  
+  // Removemos top e right originais pois o header já controla isso
 }
 
 .search-toggle {
@@ -121,8 +154,14 @@
 }
 
 @keyframes searchSlideIn {
-  from { opacity: 0; transform: translateX(16px); }
-  to   { opacity: 1; transform: translateX(0); }
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .search-input {
@@ -139,8 +178,12 @@
   outline: none;
   box-sizing: border-box;
   backdrop-filter: blur(12px);
-  box-shadow: -6px 0 24px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(207, 171, 106, 0.08);
-  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow:
+    -6px 0 24px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(207, 171, 106, 0.08);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
 
   &::placeholder {
     color: rgba(161, 142, 118, 0.45);
@@ -150,7 +193,9 @@
 
   &:focus {
     border-color: #cfab6a;
-    box-shadow: -6px 0 28px rgba(207, 171, 106, 0.2), inset 0 1px 0 rgba(207, 171, 106, 0.12);
+    box-shadow:
+      -6px 0 28px rgba(207, 171, 106, 0.2),
+      inset 0 1px 0 rgba(207, 171, 106, 0.12);
   }
 }
 
@@ -174,7 +219,6 @@
 }
 
 @media (max-width: 780px) {
-
   .search-input {
     width: 160px;
     font-size: 0.72rem;
@@ -237,140 +281,248 @@
   }
 }
 
-/* =========================================
-   HERO BANNER (O Destaque Estilo HBO)
-========================================= */
+@mixin deep-fade-to-black($height: 80%, $start-opacity: 1) {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px; // Evita qualquer fresta de 1px no final
+  height: $height;
+  pointer-events: none;
+  z-index: 2;
+
+  // Gradiente multi-stop: segura o preto puro no início e suaviza depois
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, $start-opacity) 0%,
+    rgba(0, 0, 0, $start-opacity) 25%,
+    // Segura o preto sólido (Fim do risco)
+    rgba(0, 0, 0, 0.8) 50%,
+    rgba(0, 0, 0, 0.4) 75%,
+    transparent 100%
+  );
+}
+
 .hero-banner {
   position: relative;
   width: 100%;
+  height: 85vh; // Imponência cinematográfica
+  min-height: 600px;
   display: flex;
-  align-items: flex-end;
-  padding: 48px 40px;
+  align-items: flex-end; // Empurra o conteúdo para a base
 
-  img {
+  /* O PADDING É O SEGREDO: 
+     Ele define onde o título para. Deve ser maior que a margem negativa dos cards. */
+  padding: 0 5% 220px 5%;
+
+  box-sizing: border-box;
+  overflow: hidden;
+  background-color: #000; // Fundo de segurança
+
+  .hero-bg-image {
     position: absolute;
     inset: 0;
     width: 100%;
-    height: 800px;
+    height: 100%;
     object-fit: cover;
-    object-position: center 22%;
-    z-index: 0;
+    object-position: center bottom; // Prioriza a base da imagem para o fade
+    z-index: 1;
+    filter: brightness(60%);
   }
 
+  // Camada de Fade Inferior (Agressivo)
+  &::after {
+    @include deep-fade-to-black(15%, 1);
+  }
+
+  // Camada de Sombra Lateral (Contraste para o texto)
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -180px;
-    height: clamp(120px, 24vh, 220px);
-    pointer-events: none;
+    z-index: 2;
   }
 
   .hero-content {
+    margin-top: 30px;
     position: relative;
-    z-index: 3;
-    max-width: 600px;
-    animation: pageFadeIn 1s ease-out 200ms both;
+    z-index: 30; // Garante que o título fique acima do fade e dos cards
+    max-width: 850px;
+    animation: fadeInHero 1.2s ease-out;
+    margin-bottom: 100px;
 
     .hero-kicker {
-      margin: 0 0 8px;
+      margin: 0 0 12px;
       color: #cfab6a;
       text-transform: uppercase;
-      letter-spacing: 0.2em;
-      font-size: 0.75rem;
+      letter-spacing: 0.25em;
+      font-size: 0.8rem;
       font-weight: 700;
+      font-family: 'cinzel', serif;
     }
 
     .hero-title {
       margin: 0;
       color: #ffffff;
-      font-family: 'Cinzel', serif;
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      font-family: 'Inter', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      line-height: 1;
+      text-transform: uppercase;
+      text-shadow: 0 4px 20px rgba(0, 0, 0, 0.9);
     }
 
     .hero-meta {
       display: flex;
       align-items: center;
-      gap: 8px;
-      margin-top: 12px;
+      gap: 12px;
+      margin-top: 20px;
       color: #b8afa0;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.9rem;
 
       .meta-tag {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 2px 6px;
+        background: rgba(255, 255, 255, 0.08);
+        padding: 4px 10px;
         border-radius: 4px;
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        backdrop-filter: blur(4px);
+      }
+
+      .meta-dot {
+        color: #cfab6a;
       }
     }
 
     .hero-subtitle {
-      margin: 16px 0 24px;
+      margin: 24px 0 0;
       color: #dcd4c6;
       line-height: 1.6;
-      font-size: 1.05rem;
-      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+      font-size: 1.1rem;
+      max-width: 600px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    /* REDUÇÃO DE ALTURA: O segredo para a imagem não parecer 'esticada' 
+       (em cover, quanto mais alto o container, mais zoom é necessário) */
+    height: 60vh;
+    min-height: 380px; // Altura mínima de segurança
+
+    /* ALINHAMENTO NO TOPO: Resolve 'o texto deve ficar pra cima' */
+    align-items: flex-start;
+
+    /* PADDING RESPONSIVO: 
+       - Topo (80px): Dá espaço para o Header/Menu.
+       - Base (140px): Garante espaço para o fade e para os cards não encostarem */
+    padding: 80px 6% 140px 6%;
+
+    &::after {
+      /* Fade inferior mais suave para o banner mais curto */
+      height: 30%;
     }
 
-    .hero-actions {
-      display: flex;
-      gap: 16px;
+    .hero-bg-image {
+      /* AJUSTE DE IMAGEM: Focamos no centro da imagem para 
+         mostrar os detalhes principais sem cortes agressivos na base */
+      object-position: center center;
+    }
 
-      button {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        height: 44px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-        transition: all 0.2s ease;
-        border: none;
+    .hero-content {
+      margin-bottom: 0; // Removemos a margem antiga que empurrava pra cima
+      text-align: left;
+      width: 100%;
+
+      .hero-kicker {
+        font-size: 0.75rem;
+        margin-bottom: 6px;
+        letter-spacing: 0.2em;
       }
 
-      .btn-primary {
-        background: #cfab6a;
-        color: #050505;
-        padding: 0 24px;
+      .hero-title {
+        /* Clamp ajustado para mobile: mínimo 2rem, máximo 2.8rem 
+           para a palavra BIBLIOTECA caber na tela */
+        font-size: clamp(2rem, 10vw, 2.8rem);
+        line-height: 1.1;
+      }
+
+      .hero-meta {
+        font-size: 0.8rem;
+        margin-top: 14px;
+        flex-wrap: wrap; // Garante que as tags quebrem linha se necessário
+      }
+
+      .hero-subtitle {
         font-size: 1rem;
-        gap: 8px;
-
-        &:hover {
-          background: #e6c587;
-          transform: scale(1.05);
-        }
-      }
-
-      .btn-icon {
-        width: 44px;
-        background: rgba(255, 255, 255, 0.1);
-        color: #ffffff;
-        border: 1px solid rgba(255, 255, 255, 0.2);
-        font-size: 1.2rem;
-        backdrop-filter: blur(4px);
-
-        &:hover {
-          background: rgba(255, 255, 255, 0.2);
-          border-color: #ffffff;
-        }
+        margin-top: 16px;
+        max-width: 100%; // Usa a largura total no mobile
       }
     }
+  }
+}
+
+/* Container principal do Loading */
+.library-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px; /* Ajuste conforme a altura da sua seção */
+  width: 100%;
+  gap: 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-family: 'Cinzel', serif; /* Use a fonte principal do seu projeto aqui */
+}
+
+/* O Spinner Minimalista */
+.big-spinner {
+  width: 60px;
+  height: 60px;
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-top: 2px solid #d4af37; /* Um tom dourado para a vibe Premium */
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+/* Texto de carregamento */
+.library-loading p {
+  font-size: 0.9rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin: 0;
+  font-weight: 300;
+  /* Animação suave de "pulso" no texto */
+  animation: fadeInOut 2s ease-in-out infinite;
+}
+
+/* Animações */
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes fadeInOut {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
 .biblia-sagrada-wrapper {
   position: relative;
   padding: 0;
+  z-index: 10;
+  margin-top: -200px;
 
   .zona-navegacao-lateral.biblia-nav {
     height: 400px;

@@ -1,4 +1,13 @@
-import { AfterViewInit, Component, ElementRef, ViewChild, computed, inject, signal } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  ViewChild,
+  computed,
+  inject,
+  signal,
+  HostListener,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -12,7 +21,7 @@ import { AuthService } from '../../../../services/auth/auth';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './library-page.html',
-  styleUrl: './library-page.scss'
+  styleUrl: './library-page.scss',
 })
 export class LibraryPage implements AfterViewInit {
   @ViewChild('catalogRail') private catalogRailRef?: ElementRef<HTMLDivElement>;
@@ -29,25 +38,33 @@ export class LibraryPage implements AfterViewInit {
   readonly isLoading = signal(true);
   readonly errorMessage = signal<string | null>(null);
   readonly searchTerm = signal('');
+  isScrolled = signal(false);
   searchExpanded = false;
 
   readonly filteredBibleBooks = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const all = this.bibleService.filteredBooks();
     if (!term) return all;
-    return all.filter(b => b.name.toLowerCase().includes(term));
+    return all.filter((b) => b.name.toLowerCase().includes(term));
   });
 
   readonly filteredLibraryBooks = computed(() => {
     const term = this.searchTerm().toLowerCase().trim();
     const all = this.books();
     if (!term) return all;
-    return all.filter(b => b.title.toLowerCase().includes(term));
+    return all.filter((b) => b.title.toLowerCase().includes(term));
   });
 
   ngAfterViewInit(): void {
     this.bibleService.preloadReadStateForCurrentVersion(false);
     this.loadBooks();
+  }
+
+  @HostListener('scroll', ['$event'])
+  onElementScroll(event: any) {
+    // Se o scroll estiver no próprio componente
+    const threshold = event.target.scrollTop;
+    this.isScrolled.set(threshold > 50);
   }
 
   loadBooks(): void {
@@ -65,14 +82,14 @@ export class LibraryPage implements AfterViewInit {
             accessBadge: this.versionService.ui().libraryPremiumBadge,
             levelBadge: `Nivel ${Math.max(1, book.requiredLevel ?? 1)}`,
             enterDelayMs: Math.min(index * 70, 560),
-          }))
+          })),
         );
         this.isLoading.set(false);
       },
       error: (error) => {
         this.isLoading.set(false);
         this.errorMessage.set(this.resolveError(error));
-      }
+      },
     });
   }
 

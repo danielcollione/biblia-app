@@ -1,0 +1,101 @@
+<div class="quiz-container" #wrapper>
+    <canvas class="celestial-canvas" #particleCanvas></canvas>
+
+    @if (loading) {
+    <div class="loader cinzel-font">{{ versionService.ui().loadingManuscript }}</div>
+    } @else {
+
+    @if (!completed || showReview) {
+    <header class="quiz-header">
+        <h1 class="cinzel-font">
+            {{ showReview ? 'REVISÃO DO RITUAL' : versionService.ui().homeMenuDailyQuiz }}
+        </h1>
+
+        <div class="progress-bar-container">
+            <div class="progress-fill"
+                [style.width.%]="showReview 
+                    ? ((currentReviewIndex + 1) / reviewData.length) * 100 
+                    : (currentIndex / questions.length) * 100">
+            </div>
+        </div>
+
+        <p class="step-indicator cinzel-font">
+            {{ versionService.ui().fragment }} 
+            {{ showReview ? (currentReviewIndex + 1) : (currentIndex + 1) }} 
+            {{ versionService.ui().of }} 
+            {{ showReview ? reviewData.length : questions.length }}
+        </p>
+    </header>
+
+    <main class="quiz-card">
+        @if (showReview) {
+            @if (reviewData[currentReviewIndex]; as item) {
+                <h2 class="question-text cinzel-font">{{ item.statement }}</h2>
+                <div class="options-grid">
+                    @for (opt of item.options; track opt.key) {
+                    <div class="option-button review-mode" 
+                        [class.correct]="opt.isCorrect"
+                        [class.incorrect]="item.selectedOptionKey === opt.key && !opt.isCorrect"
+                        [class.selected]="item.selectedOptionKey === opt.key">
+                        <span class="option-letter">{{ opt.key }}</span>
+                        <span class="option-content">{{ opt.text }}</span>
+                        
+                        @if (opt.isCorrect) { <span class="feedback-icon">✓</span> }
+                        @else if (item.selectedOptionKey === opt.key) { <span class="feedback-icon">✕</span> }
+                    </div>
+                    }
+                </div>
+                
+                <footer class="review-footer">
+                    <button class="action-btn cinzel-font" (click)="nextReviewStep()">
+                        {{ currentReviewIndex < reviewData.length - 1 ? 'PRÓXIMA' : 'CONCLUIR REVISÃO' }}
+                    </button>
+                </footer>
+            }
+        } @else {
+            @if (currentQuestion; as question) {
+                <h2 class="question-text cinzel-font">{{ question.text }}</h2>
+                <div class="options-grid">
+                    @for (option of question.options; track option.text) {
+                    <button class="option-button" [class.selected]="selectedOption === option"
+                        [class.correct]="showFeedback && option.isCorrect"
+                        [class.incorrect]="showFeedback && selectedOption === option && !option.isCorrect"
+                        [disabled]="showFeedback" (click)="handleAnswer(option)">
+                        <span class="option-letter">{{ option.letter }}</span>
+                        <span class="option-content">{{ option.text }}</span>
+                    </button>
+                    }
+                </div>
+            }
+        }
+    </main>
+
+    } @else {
+    <section class="result-card">
+        <div class="seal-wrapper">
+            <div class="seal-ring"></div>
+            <div class="score-data">
+                <span class="score-num">{{ score }}</span>
+                <span class="score-divider">/</span>
+                <span class="score-total">{{ questions.length || 5 }}</span>
+            </div>
+        </div>
+
+        <h2 class="cinzel-font">{{ versionService.ui().conhecimentoSelado }}</h2>
+
+        <div class="status-message">
+            @if (alreadyDoneToday) {
+                <p class="already-done-msg">{{ versionService.ui().quizFinishMsg }}</p>
+                <p class="return-msg cinzel-font">{{ versionService.ui().returnMsg }}</p>
+            } @else {
+                <p class="reward-msg">{{ versionService.ui().rewardMsg }}</p>
+            }
+
+            <button class="review-trigger-btn cinzel-font" (click)="loadReview()">
+                REVISAR RESPOSTAS
+            </button>
+        </div>
+    </section>
+    }
+    }
+</div>

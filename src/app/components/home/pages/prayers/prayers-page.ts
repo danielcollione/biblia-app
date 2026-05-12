@@ -49,10 +49,6 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
   readonly currentPage = signal(0);
   readonly hasMorePages = signal(true);
 
-  // Sinais de controle para as setas
-  readonly canScrollLeft = signal(false);
-  readonly canScrollRight = signal(true);
-
   @ViewChild('prayersShell') prayersShellRef!: ElementRef<HTMLElement>;
   @ViewChild('embersCanvas') embersCanvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('prayersBoard') prayersBoardRef?: ElementRef<HTMLElement>;
@@ -69,24 +65,6 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
       this.ngZone.runOutsideAngular(() => {
         this.setupCanvas();
         this.startAnimationLoop();
-        
-        // Lógica para transformar o Scroll Vertical do Mouse em Horizontal
-        setTimeout(() => {
-          if (this.prayersBoardRef?.nativeElement) {
-            const board = this.prayersBoardRef.nativeElement;
-            const wheelHandler = (event: WheelEvent) => {
-              // Verifica se a rolagem foi vertical (rodinha do mouse comum)
-              if (event.deltaY !== 0) {
-                event.preventDefault(); // Previne a tela inteira de descer
-                board.scrollLeft += event.deltaY; // Rola lateralmente
-              }
-            };
-            
-            // Registramos o evento como 'passive: false' para podermos usar o preventDefault
-            board.addEventListener('wheel', wheelHandler, { passive: false });
-            this.cleanupCallbacks.push(() => board.removeEventListener('wheel', wheelHandler));
-          }
-        }, 100);
       });
     }
 
@@ -162,30 +140,18 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
       });
   }
 
-  onScroll(): void {
-    if (!this.prayersBoardRef?.nativeElement) return;
-    const el = this.prayersBoardRef.nativeElement;
+onScroll(): void {
+  if (!this.prayersBoardRef?.nativeElement) return;
+  const el = this.prayersBoardRef.nativeElement;
 
-    // Atualiza a visibilidade das setas laterais
-    this.canScrollLeft.set(el.scrollLeft > 0);
-    
-    // Calcula se está perto do fim para buscar mais (infinity scroll e botão next)
-    const isNearEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 150;
-    this.canScrollRight.set(el.scrollLeft + el.clientWidth < el.scrollWidth - 5);
+  // Lógica de Scroll Infinito Vertical
+  const threshold = 200; // pixels antes do fim para carregar
+  const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold;
 
-    if (isNearEnd && this.hasMorePages() && !this.isLoadingMore()) {
-      this.loadMorePrayers();
-    }
+  if (isAtBottom && this.hasMorePages() && !this.isLoadingMore() && !this.isLoading()) {
+    this.loadMorePrayers();
   }
-
-  scrollBoard(direction: number): void {
-    if (!this.prayersBoardRef?.nativeElement) return;
-    const el = this.prayersBoardRef.nativeElement;
-    
-    // Pula 60% da largura da tela suavemente com o clique do botão
-    const scrollAmount = el.clientWidth * 0.6 * direction;
-    el.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  }
+}
 
   toggleLike(prayer: PrayerItemDto, event?: Event): void {
     event?.stopPropagation();
@@ -248,6 +214,7 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
       .subscribe({
         next: (page) => {
           this.prayers.set(page.content);
+          
           this.currentPage.set(0);
           this.hasMorePages.set(!page.last);
         },

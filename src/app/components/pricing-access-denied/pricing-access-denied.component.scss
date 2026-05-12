@@ -1,180 +1,123 @@
-:host {
-  --accent: #c7a85a;
-  --accent-soft: #8d7338;
-  --surface: #121212;
-  --border: #2a2a2a;
-  --text-main: #f4f4f4;
-  --text-muted: #aaaaaa;
+// Variáveis do Santuário
+$gold-primary: #c5a059;
+$gold-soft: rgba(197, 160, 89, 0.15);
+$dark-overlay: rgba(0, 0, 0, 0.85);
 
-  display: grid;
-  place-items: center;
-  width: 100%;
-  min-height: calc(100dvh - 220px);
-  padding: 24px 16px;
+:host {
+  // Isso quebra qualquer barreira de container pai e fixa na tela toda
+  position: fixed;
+  inset: 0; // Top, Right, Bottom, Left: 0
+  height: 100vh;
+  z-index: 99999; // Garante que fique acima da sidebar e do header
+  
+  // Centralização absoluta
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  // O "Embaçado" total
+  background: rgba(0, 0, 0, 0.8); // Fundo bem escuro
+  backdrop-filter: blur(15px) saturate(150%);
+  -webkit-backdrop-filter: blur(15px) saturate(150%);
+  
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 .pricing-container {
+  // Agora o card flutua exatamente no meio
   position: relative;
   width: 100%;
-  max-width: 640px;
-  background:
-    linear-gradient(180deg, rgba(199, 168, 90, 0.08), rgba(199, 168, 90, 0) 32%),
-    var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 34px 28px;
+  max-width: 480px;
+  background: #0d0d0d;
+  border: 1px solid rgba($gold-primary, 0.2);
+  padding: 48px 32px;
   text-align: center;
-  font-family: 'Inter', sans-serif;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+  
+  // Evita que o card estique demais em telas muito pequenas
+  max-height: 90vh;
+  overflow-y: auto; 
 
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    border-radius: 14px;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(199, 168, 90, 0.42), rgba(199, 168, 90, 0.08));
-    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30px;
+    height: 2px;
+    background: $gold-primary;
   }
 }
 
 .lock-icon {
-  width: 54px;
-  height: 54px;
-  margin: 0 auto 18px;
-  border: 1px solid rgba(199, 168, 90, 0.42);
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  background: rgba(199, 168, 90, 0.06);
-
+  margin-bottom: 24px;
   svg {
-    width: 24px;
-    height: 24px;
-    fill: none;
-    stroke: var(--accent);
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    width: 40px;
+    height: 40px;
+    stroke: $gold-primary;
+    stroke-width: 1.2;
+    opacity: 0.8;
   }
 }
 
 .access-denied-title {
-  margin: 0;
-  color: var(--accent);
-  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: 0.3px;
   font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  color: $gold-primary;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
 }
 
 .access-denied-subtitle {
-  margin: 12px 0 0;
-  color: var(--text-muted);
-  font-size: 0.98rem;
-  line-height: 1.5;
-}
-
-.resource-highlight {
-  color: var(--text-main);
-  font-weight: 600;
+  color: #888;
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  
+  .resource-highlight {
+    color: #fff;
+    display: block; // Dá destaque à funcionalidade bloqueada
+    margin-top: 4px;
+    font-size: 1.1rem;
+  }
 }
 
 .resource-description {
-  margin: 10px 0 0;
-  color: #8f8f8f;
-  font-size: 0.9rem;
-  line-height: 1.45;
+  color: #666;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 32px;
+  font-style: italic;
 }
 
 .btn-premium {
-  margin-top: 26px;
-  min-width: 220px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  border: 1px solid var(--accent);
-  background: linear-gradient(180deg, rgba(199, 168, 90, 0.14), rgba(199, 168, 90, 0.04));
-  color: #f0d38f;
-  padding: 12px 20px;
-  border-radius: 10px;
-  font-size: 0.92rem;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+  width: 100%;
+  background: transparent;
+  border: 1px solid $gold-primary;
+  color: $gold-primary;
+  padding: 14px;
   font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: rgba(199, 168, 90, 0.2);
-    color: #ffe4a7;
-    border-color: #ffe4a7;
-    transform: translateY(-1px);
+    background: $gold-primary;
+    color: #000;
+    box-shadow: 0 0 20px rgba($gold-primary, 0.4);
   }
 
-  &:active {
-    background-color: rgba(199, 168, 90, 0.26);
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.85;
-  }
-
-  &.is-loading {
-    transform: none;
-  }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
-.btn-loading-spinner {
-  width: 15px;
-  height: 15px;
-  border: 2px solid rgba(255, 228, 167, 0.35);
-  border-top-color: #ffe4a7;
-  border-radius: 50%;
-  animation: checkoutSpin 0.8s linear infinite;
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: scale(0.98); }
+  to { opacity: 1; transform: scale(1); }
 }
 
-@keyframes checkoutSpin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@media (max-width: 768px) {
-  :host {
-    min-height: calc(100dvh - 190px);
-    padding: 16px 12px;
-  }
-
-  .pricing-container {
-    padding: 24px 18px;
-  }
-
-  .lock-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 14px;
-
-    svg {
-      width: 22px;
-      height: 22px;
-    }
-  }
-
-  .access-denied-subtitle {
-    font-size: 0.92rem;
-  }
-
-  .btn-premium {
-    width: 100%;
-    min-width: 0;
-  }
+// Responsividade
+@media (max-width: 600px) {
+  .pricing-container { padding: 40px 24px; }
 }

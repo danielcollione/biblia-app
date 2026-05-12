@@ -1,0 +1,404 @@
+// Variáveis de Estilo - Mantendo sua paleta
+$gold-primary: #c5a059;
+$gold-dark: #8e6d2d;
+$gold-glow: rgba(197, 160, 89, 0.3);
+$dark-bg: #0a0a0a;
+$error-red: #8b0000;
+$success-green: #228b22;
+
+:host {
+  display: block;
+  height: 100%;
+  width: 100%;
+  overflow: hidden; // Mata o scroll de vez
+  color: #e0e0e0;
+  font-family: 'Inter', sans-serif;
+}
+
+.celestial-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+}
+
+.quiz-container {
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; // Centraliza verticalmente na tela
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  position: relative;
+}
+
+// Cabeçalho minimalista
+.quiz-header {
+  text-align: center;
+  animation: fadeIn 1s ease-out;
+
+  h1 {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.progress-bar-container {
+  width: 200px; // Mais curto e elegante
+  height: 1px; // Linha ultra fina
+  background: rgba($gold-primary, 0.1);
+  margin: 1rem auto;
+  overflow: hidden;
+
+  .progress-fill {
+    height: 100%;
+    background: $gold-primary;
+    box-shadow: 0 0 8px $gold-primary;
+    transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+.step-indicator {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  color: $gold-dark;
+  letter-spacing: 2px;
+}
+
+// A Pergunta: Agora flutuando na tela, sem caixa
+.quiz-card {
+  background: none; // Remove o fundo
+  border: none; // Remove a borda
+  box-shadow: none; // Remove a sombra
+  padding: 0;
+  width: 100%;
+  max-width: 900px;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.question-text {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem; // Maior, para ser o centro das atenções
+  margin-bottom: 4rem;
+  text-align: center;
+  line-height: 1.3;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+
+  // Detalhe luxuoso: uma leve vinheta sob o texto
+  &::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, $gold-primary, transparent);
+    margin: 2rem auto 0;
+  }
+}
+
+// Opções: Botões limpos e elegantes
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); // Grid 2x2 para parecer um painel
+  gap: 1.5rem;
+  width: 100%;
+}
+
+@keyframes subtle-shake {
+0% { transform: translateX(0); }
+  25% { transform: translateX(-2px) rotate(-0.5deg); }
+  50% { transform: translateX(2px) rotate(0.5deg); }
+  75% { transform: translateX(-1px) rotate(-0.2deg); }
+  100% { transform: translateX(0); }
+}
+
+.option-button {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba($gold-primary, 0.08);
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 0; // Quadrado minimalista
+  transition: all 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background: rgba($gold-primary, 0.03);
+    border-color: rgba($gold-primary, 0.4);
+    color: $gold-primary;
+    // Sem o movimento de translação para ser mais sóbrio
+    animation: subtle-shake 0.6s linear 3s infinite;
+
+    color: #fff;
+    text-shadow: 0 0 8px rgba(207, 171, 106, 0.6);
+  }
+
+  &.selected {
+    border-color: $gold-primary;
+    background: rgba($gold-primary, 0.02);
+  }
+
+  &.correct {
+    border-color: $success-green !important;
+    color: $success-green !important;
+    background: rgba($success-green, 0.05) !important;
+  }
+
+  &.incorrect {
+    border-color: $error-red !important;
+    color: $error-red !important;
+    background: rgba($error-red, 0.05) !important;
+  }
+}
+
+.option-letter {
+  font-family: 'Cinzel', serif;
+  color: $gold-primary;
+  margin-right: 1.5rem;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
+
+.option-content {
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.result-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: resultReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  text-align: center;
+
+  h2 {
+    font-family: 'Cinzel';
+    font-size: 2.8rem;
+    margin: 2rem 0 1rem;
+    color: $gold-primary;
+    filter: drop-shadow(0 0 10px rgba($gold-primary, 0.3));
+  }
+}
+
+.review-footer {
+  display: flex;
+  justify-content: center; // Centralização horizontal
+  width: 100%;
+  margin-top: 30px;
+}
+
+.action-btn {
+  background: #cfab6a;
+  color: #101010;
+  border: none;
+  padding: 15px 50px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  letter-spacing: 1.5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    background: #e4c99c;
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(207, 171, 106, 0.3);
+  }
+}
+
+// 3. Botão "Revisar Respostas" na tela final
+.status-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center; // Centraliza as mensagens e o botão
+  gap: 20px;
+}
+
+.review-trigger-btn {
+  background: transparent;
+  color: #cfab6a;
+  border: 1px solid #cfab6a;
+  padding: 10px 25px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+
+  &:hover {
+    background: #cfab6a;
+    color: #101010;
+  }
+}
+
+// Ajuste extra para os ícones de check/erro na revisão
+.feedback-icon {
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+// O Selo Circular
+.seal-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+
+  .seal-ring {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba($gold-primary, 0.2);
+    border-radius: 50%;
+
+    // Efeito de brilho pulsante leve
+    &::after {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 1px solid rgba($gold-primary, 0.1);
+      border-radius: 50%;
+      animation: pulse 4s infinite ease-in-out;
+    }
+  }
+
+  .score-data {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    font-family: 'Cinzel', serif;
+    color: #fff;
+
+    .score-num {
+      font-size: 4rem;
+      font-weight: 700;
+      color: $gold-primary;
+    }
+
+    .score-divider {
+      font-size: 1.5rem;
+      opacity: 0.4;
+    }
+
+    .score-total {
+      font-size: 1.8rem;
+      opacity: 0.6;
+    }
+  }
+}
+
+.status-message {
+  margin-bottom: 4rem;
+
+  p {
+    margin: 0.5rem 0;
+    font-size: 1.1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 300;
+    letter-spacing: 0.5px;
+  }
+
+  .return-msg {
+    font-size: 0.8rem;
+    color: $gold-dark;
+    letter-spacing: 3px;
+    margin-top: 1rem;
+  }
+}
+
+// Botão de retorno mais imersivo
+.action-button {
+  background: transparent;
+  border: 1px solid rgba($gold-primary, 0.3);
+  color: $gold-primary;
+  padding: 1.2rem 3.5rem;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: $gold-primary;
+    color: $dark-bg;
+    box-shadow: 0 0 30px rgba($gold-primary, 0.4);
+    border-color: $gold-primary;
+  }
+}
+
+@keyframes resultReveal {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Loader
+.loader {
+  font-family: 'Cinzel', serif;
+  color: $gold-primary;
+  letter-spacing: 5px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+// Responsividade para o Grid
+@media (max-width: 768px) {
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+  .question-text {
+    font-size: 1.6rem;
+  }
+}

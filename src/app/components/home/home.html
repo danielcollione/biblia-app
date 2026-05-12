@@ -64,11 +64,10 @@
     <nav class="sidebar-nav">
       <ul>
         @for (item of menuItems(); track item.key) {
-        <li [class.is-disabled]="item.key === 'quiz' || item.key === 'ranking'"
-          [attr.data-tooltip]="(item.key === 'quiz' || item.key === 'ranking') ? versionService.ui().emDesenvolvimento : null">
-          <a [routerLink]="(item.key === 'quiz' || item.key === 'ranking') ? null : item.route"
-            routerLinkActive="active" class="nav-item"
-            (click)="(item.key === 'quiz' || item.key === 'ranking') ? $event.preventDefault() : onMenuNavigate()">
+        <li [class.is-disabled]="item.key === 'ranking'"
+          [attr.data-tooltip]="(item.key === 'ranking') ? versionService.ui().emDesenvolvimento : null">
+          <a [routerLink]="(item.key === 'ranking') ? null : item.route" routerLinkActive="active" class="nav-item"
+            (click)="(item.key === 'ranking') ? $event.preventDefault() : onMenuNavigate()">
             <span class="item-icon" [attr.data-kind]="item.key">
               @switch (item.key) {
               @case ('outlines') {
@@ -90,10 +89,12 @@
               @case ('sage') {
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                 stroke-linejoin="round">
-                <rect x="4" y="4" width="16" height="12" rx="2"></rect>
-                <path d="M8 20h8"></path>
-                <path d="M10 16v4"></path>
-                <path d="M14 16v4"></path>
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                <path d="M5 3v4" />
+                <path d="M19 17v4" />
+                <path d="M3 5h4" />
+                <path d="M17 19h4" />
               </svg>
               }
               @case ('library') {
