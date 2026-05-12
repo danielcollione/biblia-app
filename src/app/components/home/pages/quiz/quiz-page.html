@@ -12,61 +12,59 @@
         </h1>
 
         <div class="progress-bar-container">
-            <div class="progress-fill"
-                [style.width.%]="showReview 
+            <div class="progress-fill" [style.width.%]="showReview 
                     ? ((currentReviewIndex + 1) / reviewData.length) * 100 
                     : (currentIndex / questions.length) * 100">
             </div>
         </div>
 
         <p class="step-indicator cinzel-font">
-            {{ versionService.ui().fragment }} 
-            {{ showReview ? (currentReviewIndex + 1) : (currentIndex + 1) }} 
-            {{ versionService.ui().of }} 
+            {{ versionService.ui().fragment }}
+            {{ showReview ? (currentReviewIndex + 1) : (currentIndex + 1) }}
+            {{ versionService.ui().of }}
             {{ showReview ? reviewData.length : questions.length }}
         </p>
     </header>
 
     <main class="quiz-card">
         @if (showReview) {
-            @if (reviewData[currentReviewIndex]; as item) {
-                <h2 class="question-text cinzel-font">{{ item.statement }}</h2>
-                <div class="options-grid">
-                    @for (opt of item.options; track opt.key) {
-                    <div class="option-button review-mode" 
-                        [class.correct]="opt.isCorrect"
-                        [class.incorrect]="item.selectedOptionKey === opt.key && !opt.isCorrect"
-                        [class.selected]="item.selectedOptionKey === opt.key">
-                        <span class="option-letter">{{ opt.key }}</span>
-                        <span class="option-content">{{ opt.text }}</span>
-                        
-                        @if (opt.isCorrect) { <span class="feedback-icon">✓</span> }
-                        @else if (item.selectedOptionKey === opt.key) { <span class="feedback-icon">✕</span> }
-                    </div>
-                    }
-                </div>
-                
-                <footer class="review-footer">
-                    <button class="action-btn cinzel-font" (click)="nextReviewStep()">
-                        {{ currentReviewIndex < reviewData.length - 1 ? 'PRÓXIMA' : 'CONCLUIR REVISÃO' }}
-                    </button>
-                </footer>
+        @if (reviewData[currentReviewIndex]; as item) {
+        <h2 class="question-text cinzel-font">{{ item.statement }}</h2>
+        <div class="options-grid">
+            @for (opt of item.options; track opt.key) {
+            <div class="option-button review-mode" [class.correct]="opt.isCorrect"
+                [class.incorrect]="item.selectedOptionKey === opt.key && !opt.isCorrect"
+                [class.selected]="item.selectedOptionKey === opt.key">
+                <span class="option-letter">{{ opt.key }}</span>
+                <span class="option-content">{{ opt.text }}</span>
+
+                @if (opt.isCorrect) { <span class="feedback-icon">✓</span> }
+                @else if (item.selectedOptionKey === opt.key) { <span class="feedback-icon">✕</span> }
+            </div>
             }
+        </div>
+
+        <footer class="review-footer">
+            <button class="action-btn cinzel-font" (click)="nextReviewStep()">
+                {{ currentReviewIndex < reviewData.length - 1 ? versionService.ui().next :
+                    versionService.ui().concluirRevisao }} </button>
+        </footer>
+        }
         } @else {
-            @if (currentQuestion; as question) {
-                <h2 class="question-text cinzel-font">{{ question.text }}</h2>
-                <div class="options-grid">
-                    @for (option of question.options; track option.text) {
-                    <button class="option-button" [class.selected]="selectedOption === option"
-                        [class.correct]="showFeedback && option.isCorrect"
-                        [class.incorrect]="showFeedback && selectedOption === option && !option.isCorrect"
-                        [disabled]="showFeedback" (click)="handleAnswer(option)">
-                        <span class="option-letter">{{ option.letter }}</span>
-                        <span class="option-content">{{ option.text }}</span>
-                    </button>
-                    }
-                </div>
+        @if (currentQuestion; as question) {
+        <h2 class="question-text cinzel-font">{{ question.text }}</h2>
+        <div class="options-grid">
+            @for (option of question.options; track option.text) {
+            <button class="option-button" [class.selected]="selectedOption === option"
+                [class.correct]="showFeedback && option.isCorrect"
+                [class.incorrect]="showFeedback && selectedOption === option && !option.isCorrect"
+                [disabled]="showFeedback" (click)="handleAnswer(option)">
+                <span class="option-letter">{{ option.letter }}</span>
+                <span class="option-content">{{ option.text }}</span>
+            </button>
             }
+        </div>
+        }
         }
     </main>
 
@@ -85,14 +83,14 @@
 
         <div class="status-message">
             @if (alreadyDoneToday) {
-                <p class="already-done-msg">{{ versionService.ui().quizFinishMsg }}</p>
-                <p class="return-msg cinzel-font">{{ versionService.ui().returnMsg }}</p>
+            <p class="already-done-msg">{{ versionService.ui().quizFinishMsg }}</p>
+            <p class="return-msg cinzel-font">{{ versionService.ui().returnMsg }}</p>
             } @else {
-                <p class="reward-msg">{{ versionService.ui().rewardMsg }}</p>
+            <p class="reward-msg">{{ versionService.ui().rewardMsg }}</p>
             }
 
             <button class="review-trigger-btn cinzel-font" (click)="loadReview()">
-                REVISAR RESPOSTAS
+                {{ versionService.ui().revisarResposta }}
             </button>
         </div>
     </section>
