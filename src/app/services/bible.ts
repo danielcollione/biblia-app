@@ -102,7 +102,7 @@ export class BibleService {
 
         this.loadReadStateFromBackend(bibleCode, false);
       },
-      { allowSignalWrites: true }
+      { allowSignalWrites: true },
     );
   }
 
@@ -136,15 +136,19 @@ export class BibleService {
   getMetadados(nomeLivro: string): LivroMetadados {
     const nomeNorm = (nomeLivro || '').toLowerCase().trim();
     if (!nomeNorm) {
-      return { id: 0, nome: nomeLivro || '', cor: '#4a3728', resumo: '', imagemUrl: 'images/default-book.webp' };
+      return {
+        id: 0,
+        nome: nomeLivro || '',
+        cor: '#4a3728',
+        resumo: '',
+        imagemUrl: 'images/default-book.webp',
+      };
     }
     const lista = this.metadados();
     return (
       lista.find(
         (m) =>
-          m?.nome &&
-          (m.nome.toLowerCase() === nomeNorm ||
-            m.nome.toLowerCase().includes(nomeNorm)),
+          m?.nome && (m.nome.toLowerCase() === nomeNorm || m.nome.toLowerCase().includes(nomeNorm)),
       ) || {
         id: 0,
         nome: nomeLivro,
@@ -393,20 +397,18 @@ export class BibleService {
     const bibleCode = this.resolveBibleCode();
     const bookKey = this.normalizeBookKey(bookName);
 
-    this.bibleProgressService
-      .registerChapterRead({ bibleCode, bookKey, chapterNumber })
-      .subscribe({
-        next: (response) => {
-          this.updateLocalReadState(response.bibleCode, response.bookKey, response.chapterNumber);
-          if (response.xpGranted > 0) {
-            this.xpPopupService.showXp(response.xpGranted, 'Capitulo concluido');
-            this.authService.refreshUserProfileFromServer();
-          }
-        },
-        error: () => {
-          // Backend e a fonte de verdade; este e best-effort.
-        },
-      });
+    this.bibleProgressService.registerChapterRead({ bibleCode, bookKey, chapterNumber }).subscribe({
+      next: (response) => {
+        this.updateLocalReadState(response.bibleCode, response.bookKey, response.chapterNumber);
+        if (response.xpGranted > 0) {
+          this.xpPopupService.showXp(response.xpGranted, this.versionService.ui().chapterFinish);
+          this.authService.refreshUserProfileFromServer();
+        }
+      },
+      error: () => {
+        // Backend e a fonte de verdade; este e best-effort.
+      },
+    });
   }
 
   private updateLocalReadState(bibleCode: string, bookKey: string, chapterNumber: number): void {
