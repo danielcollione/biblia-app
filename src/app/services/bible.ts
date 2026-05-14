@@ -363,6 +363,7 @@ export class BibleService {
       property: 'og:description',
       content: `Immersive reading of ${bookName} ${chapter + 1}.`,
     });
+    if (!isPlatformBrowser(this.platformId)) return;
     this.injectJSONLD(bookName, chapter);
   }
 
