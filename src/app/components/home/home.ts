@@ -245,7 +245,7 @@ export class Home implements OnInit, OnDestroy {
           return;
         }
 
-        window.location.href = url;
+        window.open(url, '_blank');
       },
       error: (error: HttpErrorResponse) => {
         this.isStartingCheckout.set(false);
