@@ -1,4 +1,8 @@
 /
-/materials
-/blog
 /read
+/blog
+/ebook-page
+/materials
+/login
+/forgot-password
+/reset-password
