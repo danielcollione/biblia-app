@@ -229,18 +229,22 @@
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanFreeFeature1 }}</li>
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanFreeFeature2 }}</li>
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanFreeFeature3 }}</li>
+                        <li><i class="icon-check"></i> {{ versionService.ui().landingPlanFreeFeature8 }}</li>
+                        <li><i class="icon-check"></i> {{ versionService.ui().landingPlanFreeFeature9 }}</li>
                     </ul>
                 </div>
 
                 <div class="plan-action">
-                    <button (click)="goToLogin()" class="btn-minimal">{{ versionService.ui().landingPlanFreeButton }}</button>
+                    <button (click)="goToLogin()" class="btn-minimal">{{ versionService.ui().landingPlanFreeButton
+                        }}</button>
                 </div>
             </div>
 
             <div class="plan-card premium-card">
                 <div class="plan-header">
                     <h3 class="plan-name">{{ versionService.ui().landingPlanSageTitle }}</h3>
-                    <div class="plan-price">{{ versionService.ui().landingPlanSagePrice }} <span class="period">{{ versionService.ui().landingPlanSagePricePeriod }}</span></div>
+                    <div class="plan-price">{{ versionService.ui().landingPlanSagePrice }} <span class="period">{{
+                            versionService.ui().landingPlanSagePricePeriod }}</span></div>
                     <p class="plan-description">{{ versionService.ui().landingPlanSageSubtitle }}</p>
                 </div>
 
@@ -253,11 +257,14 @@
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanSageFeature5 }}</li>
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanSageFeature6 }}</li>
                         <li><i class="icon-check"></i> {{ versionService.ui().landingPlanSageFeature7 }}</li>
+
+
                     </ul>
                 </div>
 
                 <div class="plan-action">
-                    <button (click)="goToLogin()" class="btn-minimal active">{{ versionService.ui().landingPlanSageButton }}</button>
+                    <button (click)="goToLogin()" class="btn-minimal active">{{
+                        versionService.ui().landingPlanSageButton }}</button>
                 </div>
             </div>
 
@@ -273,7 +280,8 @@
 
                 <div class="contact-info">
                     <span>{{ versionService.ui().landingFaqStillQuestion }}</span>
-                    <a href="mailto:contato@bibliarevelada.com" class="email-link">{{ versionService.ui().landingFaqContactLink }} &rarr;</a>
+                    <a href="mailto:contato@bibliarevelada.com" class="email-link">{{
+                        versionService.ui().landingFaqContactLink }} &rarr;</a>
                 </div>
             </aside>
 

@@ -1,5 +1,9 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    converseComoSao: 'Fale com SAO, o Sábio',
+    porOndeComecar: 'POR ONDE COMEÇAR HOJE?',
+    landingPlanFreeFeature8: 'Quiz diário para fixação do conhecimento',
+    landingPlanFreeFeature9: 'Calendário litúrgico com versículo do dia',
     copy: 'COPIAR',
     evangelho: 'Evangelho',
     salmoResponsorial: 'Salmo Responsorial',
@@ -509,6 +513,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingLogoAlt: 'The Unveiled Bible logo',
     headerLogoAlt: 'The Unveiled Bible',
     headerOpenMenuAriaLabel: 'Open menu',
+    converseComoSao: 'Speak with SAO, the Sage',
     headerBecomeSage: 'Be a Sage',
     techEcosystem: 'SAGE TECHNOLOGY',
     landingEnginePt1: 'We forged the ',
@@ -649,10 +654,13 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionCreateError: 'Unable to create a new conversation.',
     sageChatSessionDelete: 'Delete chat',
     sageChatSessionDeleteAriaLabel: 'Delete chat',
+    porOndeComecar: 'WHERE TO START TODAY?',
     sageChatSessionDeleteConfirm: 'Do you really want to delete this conversation?',
     sageChatDeleteModalEyebrow: 'Confirmation',
     sageChatDeleteModalTitle: 'Delete this conversation?',
     salmoResponsorial: 'Responsorial Psalm',
+    landingPlanFreeFeature8: 'Daily quiz for knowledge retention',
+    landingPlanFreeFeature9: 'Liturgical calendar with verse of the day',
     sageChatDeleteModalSubtitle:
       'Once confirmed, the full history of this conversation will be removed from your Sage Online panel.',
     sageChatDeleteModalCancel: 'Cancel',
@@ -1098,6 +1106,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryChaptersLoading: 'Cargando capítulos...',
     revisarResposta: 'REVISAR RESPUESTA',
     libraryChapterLoading: 'Cargando capítulo...',
+    converseComoSao: 'Conversa como SAO',
     libraryChapterLabel: 'Capítulo',
     evangelho: 'Evangelio',
     pricingAccessDeniedTitle: 'Recurso Exclusivo Plan Sabio',
@@ -1105,6 +1114,8 @@ export const INTERFACE_TRANSLATIONS: any = {
     pricingAccessDeniedDefaultResourceTitle: 'Recurso premium',
     pricingAccessDeniedButton: 'Suscribirse Ahora',
     pricingAccessDeniedButtonLoading: 'Redirigiendo...',
+    landingPlanFreeFeature8: 'Quiz diario para retención de conocimiento',
+    landingPlanFreeFeature9: 'Calendario litúrgico con versículo del día',
     pricingAccessDeniedCheckoutMissingUser:
       'No fue posible identificar tu usuario para iniciar el pago.',
     pricingAccessDeniedCheckoutMissingUrl: 'No fue posible obtener el enlace de pago.',
@@ -1165,6 +1176,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature05Tag3: 'Ranking',
     // Pricing Section
     landingPricingTitle: 'Precios',
+    porOndeComecar: '¿POR DÓNDE COMENZAR HOY?',
     landingPlanFreeTitle: 'Gratuito',
     landingPlanFreePrice: '$0',
     landingPlanFreeSubtitle: 'Para iniciar tu viaje.',

@@ -1,34 +1,75 @@
-<!-- Adicionado #wrapper para calcular a posição exata ignorando o menu lateral -->
 <div class="sanctuary-wrapper" #wrapper>
   <canvas class="celestial-canvas" #particleCanvas></canvas>
 
-  <!-- CAMADA 2: Conteúdo -->
   <div class="sanctuary-overlay">
-    
-    <!-- Novo layout em linha (Flexbox) -->
-    <div class="content-row">
-      
-      <!-- Lado Esquerdo: Logo -->
-      <img src="logo-sem-fundo.png" [alt]="versionService.ui().homeInitialLogoAlt" class="sanctuary-logo" #logoImage>
-      
-      <!-- Centro: Risco Vertical Dourado -->
-      <div class="vertical-divider"></div>
-      
-      <!-- Lado Direito: Textos -->
-      <div class="text-content">
-        <h1 class="monumental-title">
-          <span class="title-kicker">{{ versionService.ui().homeInitialTitleKicker }}</span>
-          <span class="title-main">{{ versionService.ui().homeInitialTitleMain }}</span>
-        </h1>
-        <p class="elegant-subtitle">{{ versionService.ui().homeInitialSubtitle }}</p>
+
+    <div class="center-container">
+
+      <div class="content-row">
+        <img src="logo-sem-fundo.png" [alt]="versionService.ui().homeInitialLogoAlt" class="sanctuary-logo" #logoImage>
+
+        <div class="vertical-divider"></div>
+
+        <div class="text-content">
+          <h1 class="monumental-title">
+            <span class="title-kicker">{{ versionService.ui().homeInitialTitleKicker }}</span>
+            <span class="title-main">{{ versionService.ui().homeInitialTitleMain }}</span>
+          </h1>
+          <p class="elegant-subtitle">{{ versionService.ui().homeInitialSubtitle }}</p>
+        </div>
+      </div>
+
+      <div class="shortcuts-section">
+        <h2 class="shortcuts-headline">{{ versionService.ui().porOndeComecar }}</h2>
+
+        <div class="shortcuts-grid">
+
+          <button class="shortcut-card" (click)="navigateTo('bible')">
+            <div class="icon-frame">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.2" class="svg-icon">
+                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                <path d="M12 6v10M10 8h4"></path>
+              </svg>
+            </div>
+            <span class="card-label">{{versionService.ui().readBible}}</span>
+          </button>
+
+          <button class="shortcut-card" (click)="navigateTo('liturgy')">
+            <div class="icon-frame">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.2" class="svg-icon">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+                <path d="M12 12v6M10 14h4"></path>
+              </svg>
+            </div>
+            <span class="card-label">{{versionService.ui().homeMenuLiturgyCalendar}}</span>
+          </button>
+
+          <button class="shortcut-card" (click)="navigateTo('sage')">
+            <div class="icon-frame">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                stroke-width="1.2" class="svg-icon">
+                <path
+                  d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                <path d="m5 3 1 2.5L8.5 6 6 7 5 9.5 4 7 1.5 6 4 5.5z" />
+                <path d="m19 17 1 2.5 2.5.5-2.5 1-1 2.5-1-2.5-2.5-1 2.5-1z" />
+              </svg>
+            </div>
+            <span class="card-label">{{versionService.ui().converseComoSao}}</span>
+          </button>
+
+        </div>
       </div>
 
     </div>
-
   </div>
 
   <footer class="home-contact-footer">
     <span>{{ versionService.ui().homeInitialContactUs }}: contact.theunveiledbible@gmail.com</span>
   </footer>
-
 </div>

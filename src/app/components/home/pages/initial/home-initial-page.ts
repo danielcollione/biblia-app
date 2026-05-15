@@ -1,6 +1,7 @@
-import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, NgZone, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, ViewChild, ElementRef, NgZone, Inject, PLATFORM_ID, inject } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { VersionService } from '../../../../services/version/version-service';
+import { Router } from '@angular/router';
 
 type CelestialParticle = {
   x: number;
@@ -23,6 +24,7 @@ type CelestialParticle = {
   imports: [CommonModule]
 })
 export class HomeInitialPage implements AfterViewInit, OnDestroy {
+  private readonly router = inject(Router);
   private readonly isBrowser: boolean;
   private readonly particles: CelestialParticle[] = [];
   private canvasContext: CanvasRenderingContext2D | null = null;
@@ -63,6 +65,17 @@ export class HomeInitialPage implements AfterViewInit, OnDestroy {
       this.startAnimationLoop();
     });
   }
+
+  // No seu arquivo LiturgicalCalendarComponent ou equivalente de Home:
+navigateTo(destination: 'bible' | 'liturgy' | 'sage'): void {
+  const routes: Record<string, string> = {
+    bible: '/home/library',        // Ajuste conforme o path real do seu RouterModule
+    liturgy: '/home/liturgy',
+    sage: '/home/sage'
+  };
+
+  this.router.navigate([routes[destination]]);
+}
 
   ngOnDestroy(): void {
     if (this.animationFrameId !== null) {
