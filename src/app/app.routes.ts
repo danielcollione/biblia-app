@@ -27,18 +27,90 @@ export const routes: Routes = [
     component: Home,
     canActivate: [authGuard],
     children: [
-      { path: '', loadComponent: () => import('./components/home/pages/initial/home-initial-page').then(m => m.HomeInitialPage) },
-      { path: 'outlines', loadComponent: () => import('./components/home/pages/outlines/outlines-page').then(m => m.OutlinesPage) },
-      { path: 'prayers', loadComponent: () => import('./components/home/pages/prayers/prayers-page').then(m => m.PrayersPage) },
-      { path: 'sage', loadComponent: () => import('./components/home/pages/sage/sage-page').then(m => m.SagePage) },
-      { path: 'library', loadComponent: () => import('./components/home/pages/library/library-page').then(m => m.LibraryPage) },
-      { path: 'library/bible-selector', loadComponent: () => import('./components/home/pages/library/library-bible-selector-page').then(m => m.LibraryBibleSelectorPage) },
-      { path: 'library/:slug/read/:chapterSlug', loadComponent: () => import('./components/home/pages/library/library-book-reader-page').then(m => m.LibraryBookReaderPage) },
-      { path: 'library/:slug', loadComponent: () => import('./components/home/pages/library/library-book-chapters-page').then(m => m.LibraryBookChaptersPage) },
-      { path: 'quiz', loadComponent: () => import('./components/home/pages/quiz/quiz-page').then(m => m.QuizPage) },
-      { path: 'recommendations', loadComponent: () => import('./components/home/pages/recommendations/recommendations-page').then(m => m.RecommendationsPage) },
-      { path: 'blog', loadComponent: () => import('./components/home/pages/blog/home-blog-page').then(m => m.HomeBlogPage) },
-      { path: 'ranking', loadComponent: () => import('./components/home/pages/ranking/ranking-page').then(m => m.RankingPage) },
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/home/pages/initial/home-initial-page').then(
+            (m) => m.HomeInitialPage,
+          ),
+      },
+      {
+        path: 'outlines',
+        loadComponent: () =>
+          import('./components/home/pages/outlines/outlines-page').then((m) => m.OutlinesPage),
+      },
+      {
+        path: 'prayers',
+        loadComponent: () =>
+          import('./components/home/pages/prayers/prayers-page').then((m) => m.PrayersPage),
+      },
+      {
+        path: 'sage',
+        loadComponent: () =>
+          import('./components/home/pages/sage/sage-page').then((m) => m.SagePage),
+      },
+      {
+        path: 'library',
+        loadComponent: () =>
+          import('./components/home/pages/library/library-page').then((m) => m.LibraryPage),
+      },
+      {
+        path: 'library/bible-selector',
+        loadComponent: () =>
+          import('./components/home/pages/library/library-bible-selector-page').then(
+            (m) => m.LibraryBibleSelectorPage,
+          ),
+      },
+      {
+        path: 'library/:slug/read/:chapterSlug',
+        loadComponent: () =>
+          import('./components/home/pages/library/library-book-reader-page').then(
+            (m) => m.LibraryBookReaderPage,
+          ),
+      },
+      {
+        path: 'library/:slug',
+        loadComponent: () =>
+          import('./components/home/pages/library/library-book-chapters-page').then(
+            (m) => m.LibraryBookChaptersPage,
+          ),
+      },
+      {
+        path: 'quiz',
+        loadComponent: () =>
+          import('./components/home/pages/quiz/quiz-page').then((m) => m.QuizPage),
+      },
+      {
+        path: 'recommendations',
+        loadComponent: () =>
+          import('./components/home/pages/recommendations/recommendations-page').then(
+            (m) => m.RecommendationsPage,
+          ),
+      },
+      {
+        path: 'blog',
+        loadComponent: () =>
+          import('./components/home/pages/blog/home-blog-page').then((m) => m.HomeBlogPage),
+      },
+      {
+        path: 'ranking',
+        loadComponent: () =>
+          import('./components/home/pages/ranking/ranking-page').then((m) => m.RankingPage),
+      },
+      {
+        path: 'liturgy',
+        loadComponent: () =>
+          import('./components/home/pages/ liturgy/liturgical-calendar-component').then(
+            (m) => m.LiturgicalCalendarComponent,
+          ),
+      },
+      {
+        path: 'liturgy/liturgy-detail',
+        loadComponent: () =>
+          import('./components/home/pages/ liturgy/liturgy-detail/liturgy-detail').then(
+            (m) => m.LiturgyDetail,
+          ),
+      },
     ],
   },
   { path: 'login', component: Login, canActivate: [guestGuard] },

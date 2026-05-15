@@ -17,6 +17,7 @@ type HomeMenuKey =
   | 'library'
   | 'quiz'
   | 'recommendations'
+  | 'liturgy'
   | 'blog'
   | 'ranking';
 
@@ -134,6 +135,7 @@ export class Home implements OnInit, OnDestroy {
     { key: 'outlines', route: '/home/outlines' },
     { key: 'prayers', route: '/home/prayers' },
     { key: 'sage', route: '/home/sage' },
+    { key: 'liturgy', route: '/home/liturgy' },
     { key: 'library', route: '/home/library' },
     { key: 'recommendations', route: '/home/recommendations' },
     { key: 'blog', route: '/home/blog' },
@@ -266,6 +268,8 @@ export class Home implements OnInit, OnDestroy {
         return ui.homeMenuPrayerForum;
       case 'sage':
         return ui.homeMenuSageOnline;
+      case 'liturgy':
+        return ui.homeMenuLiturgyCalendar;
       case 'library':
         return ui.homeMenuLibrary;
       case 'quiz':

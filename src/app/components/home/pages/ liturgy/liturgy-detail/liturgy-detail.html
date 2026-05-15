@@ -1,0 +1,63 @@
+<div class="sanctuary-detail-container" *ngIf="liturgy()">
+  <nav class="top-nav">
+    <button class="back-link" (click)="goBack()">← {{versionService.ui().back}}</button>
+  </nav>
+
+  <header class="header-minimal">
+    <span class="rank-tag">{{ dayInfo()?.rankName }}</span>
+    <h1 class="font-cinzel text-title">{{ dayInfo()?.feastName }}</h1>
+    <p class="metadata-line">
+      {{ dayInfo()?.seasonName }} <span class="sep">|</span> {{ getFormattedDate() }}
+    </p>
+  </header>
+
+  <div class="accordion-stack">
+
+    <div class="accordion-item" [class.is-open]="openSections().firstReading">
+      <header class="item-trigger" (click)="toggle('firstReading')">
+        <div class="title-meta">
+          <h2 class="font-cinzel">{{versionService.ui().primeiraLeitura}}</h2>
+          <span class="ref-code">{{ liturgy()?.primeiraLeitura?.referencia }}</span>
+        </div>
+        <span class="chevron-minimal"></span>
+      </header>
+      <div class="expandable-zone">
+        <div class="content-wrapper">
+          <div class="scripture-prose">{{ liturgy()?.primeiraLeitura?.texto }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item" [class.is-open]="openSections().psalm">
+      <header class="item-trigger" (click)="toggle('psalm')">
+        <div class="title-meta">
+          <h2 class="font-cinzel">{{versionService.ui().salmoResponsorial}}</h2>
+          <span class="ref-code">{{ liturgy()?.salmo?.referencia }}</span>
+        </div>
+        <span class="chevron-minimal"></span>
+      </header>
+      <div class="expandable-zone">
+        <div class="content-wrapper">
+          <p class="psalm-response">R. {{ liturgy()?.salmo?.refrao }}</p>
+          <div class="scripture-prose italic">{{ liturgy()?.salmo?.texto }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item gospel-highlight" [class.is-open]="openSections().gospel">
+      <header class="item-trigger" (click)="toggle('gospel')">
+        <div class="title-meta">
+          <h2 class="font-cinzel">{{versionService.ui().evangelho}}</h2>
+          <span class="ref-code">{{ liturgy()?.evangelho?.referencia }}</span>
+        </div>
+        <span class="chevron-minimal"></span>
+      </header>
+      <div class="expandable-zone">
+        <div class="content-wrapper">
+          <div class="scripture-prose">{{ liturgy()?.evangelho?.texto }}</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
