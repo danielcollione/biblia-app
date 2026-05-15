@@ -1,0 +1,592 @@
+// ==========================================
+// CONFIGURAÇÕES GERAIS E VARIÁVEIS
+// ==========================================
+// Força os itens internos a respeitarem a largura
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+$gold-primary: #c5a059;
+$dark-bg: #0a0a0a;
+$cell-bg: rgba(255, 255, 255, 0.02);
+$border-color: rgba(197, 160, 89, 0.1);
+
+$liturgy-purple: #702f8a;
+$liturgy-green: #2d7a42;
+$liturgy-white: #f5f0db;
+$liturgy-red: #9e1b1b;
+$liturgy-rose: #d6879f;
+
+// ==========================================
+// ANIMAÇÕES SUAVES E LUXUOSAS
+// ==========================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ==========================================
+// LAYOUT PRINCIPAL (O ORQUESTRADOR)
+// ==========================================
+:host {
+  align-items: center;
+  height: 100%;
+  box-sizing: border-box; // A BALA DE PRATA: Aplica no próprio componente para não vazar a lateral
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 2rem 1rem 5rem;
+  gap: 2rem;
+  // REMOVIDOS: height, min-height e todos os overflows.
+  // Agora apenas a sua <main> gerencia o scroll sem conflitos!
+}
+
+// Estilo do Título
+.page-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+
+  opacity: 0;
+  animation: fadeIn 1s ease-out forwards;
+
+  .kicker {
+    color: $gold-primary;
+    font-size: 0.85rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+
+  .main-title {
+    color: #fff;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin: 0;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+// ==========================================
+// ESTRUTURA DE COLUNAS (RESPONSIVIDADE)
+// ==========================================
+.content-layout {
+  display: flex;
+  flex-direction: column; // Mobile: Fica um embaixo do outro
+  align-items: center; // Centraliza perfeitamente no Mobile
+  gap: 2.5rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .calendar-column,
+  .verse-column {
+    width: 100%;
+    display: flex;
+    justify-content: center; // Garante que o conteúdo da coluna fique no meio
+  }
+
+  // Desktop
+  @media (min-width: 1024px) {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 3rem;
+
+    .calendar-column {
+      flex: 1;
+      max-width: 650px;
+    }
+
+    .verse-column {
+      flex: 0 0 320px;
+    }
+  }
+}
+
+// ==========================================
+// CARD DO VERSÍCULO
+// ==========================================
+.verse-card {
+  border: 1px solid rgba($gold-primary, 0.15);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  border-radius: 12px;
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  width: 100%;
+  max-width: 500px; // Evita que fique muito largo no tablet/mobile
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+  }
+
+  .verse-header {
+    color: $gold-primary;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+  }
+
+  .verse-text {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 3vw, 1.2rem);
+    color: #fff;
+    font-style: italic;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .verse-ref {
+    color: $gold-primary;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    font-family: 'Cinzel', serif;
+  }
+
+  .verse-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    .action-btn {
+      background: transparent;
+      border: 1px solid rgba($gold-primary, 0.2);
+      color: rgba(255, 255, 255, 0.8);
+      padding: 0.8rem;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      transition: all 0.3s;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+
+      &:hover {
+        background: rgba($gold-primary, 0.05);
+        border-color: $gold-primary;
+        color: $gold-primary;
+      }
+
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+  }
+}
+
+.prayers-hero {
+  text-align: center;
+  padding-top: 56px;
+  display: flex;
+  animation: fadeIn 0.5s ease forwards;
+  h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    color: #cfab6a;
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #d3ab63;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  max-width: 54rem;
+  color: #bdb19d;
+  line-height: 1.6;
+}
+
+// ==========================================
+// CALENDÁRIO LITÚRGICO
+// ==========================================
+.calendar-wrapper {
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 650px; // Segura a largura para centralizar bonitinho no celular
+  font-family: 'Cinzel', serif;
+
+  opacity: 0;
+  animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s forwards;
+
+  @media (max-width: 480px) {
+    padding: 1.5rem 0.5rem; // Padding bem pequeno nas bordas para o Grid ter espaço
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+    gap: 0.5rem;
+
+    .month-title {
+      color: $gold-primary;
+      font-size: clamp(1rem, 4vw, 1.5rem);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin: 0;
+      text-align: center;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid rgba($gold-primary, 0.3);
+      color: $gold-primary;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      &:hover {
+        background: rgba($gold-primary, 0.1);
+        border-color: $gold-primary;
+      }
+    }
+  }
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  width: 100%;
+
+  @media (max-width: 480px) {
+    gap: 2px; // Espaçamento super minimalista para telas muito pequenas
+  }
+}
+
+.weekday-header {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: clamp(0.7rem, 2vw, 0.8rem);
+  letter-spacing: 1px;
+  padding-bottom: 1rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.day-cell {
+  background: $cell-bg;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &.is-today {
+    border-color: $gold-primary;
+    background: rgba($gold-primary, 0.05);
+    box-shadow: inset 0 0 15px rgba($gold-primary, 0.1);
+
+    .day-number {
+      color: $gold-primary;
+      font-weight: 700;
+    }
+  }
+
+  &.empty-cell {
+    background: transparent;
+    cursor: default;
+  }
+
+  &.has-liturgy:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: $border-color;
+    transform: translateY(-2px);
+
+    .liturgy-indicator {
+      transform: scale(1.5);
+    }
+
+    .tooltip {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(-10px);
+    }
+  }
+
+  .day-number {
+    color: #e0e0e0;
+    font-size: clamp(0.8rem, 3vw, 1.1rem);
+    font-family: 'Inter', sans-serif;
+    z-index: 2;
+  }
+}
+
+.liturgy-indicator {
+  width: 8px;           // Aumentei de 6px para 8px para melhor visibilidade
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;       // AQUI ESTÁ A MÁGICA: impede que o flexbox esprema a bolinha
+  display: block;
+  transition: all 0.3s ease;
+
+  @media (max-width: 480px) {
+    width: 6px;
+    height: 6px;
+    margin-top: 4px;
+  }
+
+  // Cores com Glow (Brilho) - Mantidas e reforçadas
+  &.aura-purple {
+    background: $liturgy-purple;
+    box-shadow: 0 0 8px $liturgy-purple;
+  }
+  &.aura-green {
+    background: $liturgy-green;
+    box-shadow: 0 0 8px $liturgy-green;
+  }
+  &.aura-white {
+    background: $liturgy-white;
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  }
+  &.aura-red {
+    background: $liturgy-red;
+    box-shadow: 0 0 8px $liturgy-red;
+  }
+  &.aura-rose {
+    background: $liturgy-rose;
+    box-shadow: 0 0 8px $liturgy-rose;
+  }
+}
+
+// ==========================================
+// HOVER CARD LUXUOSO (Substitui o Tooltip)
+// ==========================================
+// ==========================================
+// HOVER CARD LUXUOSO (CORRIGIDO)
+// ==========================================
+// ==========================================
+// HOVER CARD (A SOLUÇÃO DEFINITIVA)
+// ==========================================
+.sanctuary-hover-card {
+  // Bug 1: Transparência (Cor sólida e Z-index alto)
+  background: #0f0f0f !important;
+  background-color: #0f0f0f !important;
+  backdrop-filter: blur(10px);
+  z-index: 9999;
+  
+  position: absolute;
+  bottom: calc(100% + 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  
+  width: 260px;
+  padding: 1.5rem;
+  border: 1px solid rgba($gold-primary, 0.5);
+  border-radius: 4px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 1);
+  
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+  pointer-events: none;
+
+  // Setinha
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 8px;
+    border-style: solid;
+    border-color: rgba($gold-primary, 0.5) transparent transparent transparent;
+  }
+
+  // Estilo interno (Card)
+  .card-title {
+    font-family: 'Cinzel', serif;
+    color: #fff;
+    font-size: 0.85rem;
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 0.8rem;
+    text-align: left;
+  }
+
+  .card-details {
+    list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem;
+    li {
+      display: flex; align-items: center; gap: 12px; padding-bottom: 0.6rem; border-bottom: 1px dotted rgba(255, 255, 255, 0.1);
+      &:last-child { border-bottom: none; }
+      .detail-icon { color: $gold-primary; font-size: 0.9rem; }
+      .detail-text { font-family: 'Inter', sans-serif; color: rgba(255, 255, 255, 0.7); font-size: 0.7rem; text-transform: uppercase; }
+    }
+    .color-item .liturgy-indicator { width: 10px; height: 10px; border-radius: 50%; margin: 0; }
+  }
+}
+
+// --- LÓGICA DE ALINHAMENTO (PARA NÃO SAIR DA TELA) ---
+
+// 1. PRIMEIRA SEMANA (Abre para baixo)
+.day-cell:nth-child(-n+14) .sanctuary-hover-card {
+  bottom: auto;
+  top: calc(100% + 15px);
+  transform: translateX(-50%) translateY(-10px);
+  &::after { top: auto; bottom: 100%; border-color: transparent transparent rgba($gold-primary, 0.5) transparent; }
+}
+
+// 2. DOMINGOS (Alinha à esquerda)
+.day-cell:nth-child(7n+1) .sanctuary-hover-card {
+  left: 0; transform: translateX(0) translateY(10px);
+  &::after { left: 20px; transform: none; }
+}
+
+// 3. SÁBADOS (Alinha à direita)
+.day-cell:nth-child(7n) .sanctuary-hover-card {
+  left: auto; right: 0; transform: translateX(0) translateY(10px);
+  &::after { left: auto; right: 20px; transform: none; }
+}
+
+// 4. PRIMEIRA SEMANA + CANTO (Correção combinada)
+.day-cell:nth-child(-n+14):nth-child(7n+1) .sanctuary-hover-card { transform: translateX(0) translateY(-10px); }
+.day-cell:nth-child(-n+14):nth-child(7n) .sanctuary-hover-card { transform: translateX(0) translateY(-10px); }
+
+// --- ATIVAÇÃO DO HOVER ---
+.day-cell:hover {
+  z-index: 1001;
+  background: rgba(255, 255, 255, 0.05) !important;
+
+  .sanctuary-hover-card {
+    opacity: 1;
+    visibility: visible;
+    // Força o transform correto removendo o translateY de delay
+    transform: translateX(-50%) translateY(0); 
+  }
+
+  // Re-ajuste de transform para as pontas no hover
+  &:nth-child(7n+1) .sanctuary-hover-card { transform: translateX(0) translateY(0); }
+  &:nth-child(7n) .sanctuary-hover-card { transform: translateX(0) translateY(0); }
+  
+  // Re-ajuste para primeira semana no hover
+  &:nth-child(-n+14) .sanctuary-hover-card { 
+    transform: translateX(-50%) translateY(0); 
+    &.day-cell:nth-child(7n+1) & { transform: translateX(0) translateY(0); }
+    &.day-cell:nth-child(7n) & { transform: translateX(0) translateY(0); }
+  }
+}
+
+// ==========================================
+// CARD DO VERSÍCULO (MANTIDO)
+// ==========================================
+.verse-card {
+  border: 1px solid rgba($gold-primary, 0.15);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.02) 0%, transparent 100%);
+  border-radius: 12px; padding: 2.5rem 1.5rem; text-align: center; width: 100%; box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  opacity: 0; animation: fadeInUp 1s cubic-bezier(0.2, 0.8, 0.2, 1) 0.4s forwards;
+  .verse-header { color: $gold-primary; font-size: 0.75rem; letter-spacing: 3px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; gap: 0.8rem; }
+  .verse-text { font-family: 'Cinzel', serif; font-size: 1.2rem; color: #fff; font-style: italic; line-height: 1.6; margin-bottom: 1.5rem; }
+  .verse-ref { color: $gold-primary; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2.5rem; font-family: 'Cinzel', serif; }
+  .verse-actions { display: flex; flex-direction: column; gap: 1rem;
+    .action-btn { background: transparent; border: 1px solid rgba($gold-primary, 0.2); color: rgba(255, 255, 255, 0.8); padding: 0.8rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.8rem; transition: all 0.3s;
+      &:hover { background: rgba($gold-primary, 0.05); border-color: $gold-primary; color: $gold-primary; }
+      svg { width: 16px; height: 16px; }
+    }
+  }
+}
+
+$gold: #c5a059;
+
+.loading-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  animation: fadeIn 0.3s ease;
+
+  p {
+    color: $gold;
+    margin-top: 1.5rem;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+  }
+}
+
+.spinner-gold {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba($gold, 0.1);
+  border-top: 2px solid $gold;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Classe para desabilitar interações no calendário durante o load
+.loading-active {
+  pointer-events: none;
+  opacity: 0.6;
+  cursor: wait;
+}

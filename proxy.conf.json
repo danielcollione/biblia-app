@@ -4,5 +4,13 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/es-biblia-proxy": {
+    "target": "https://esbiblia.net",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/es-biblia-proxy": ""
+    }
   }
 }

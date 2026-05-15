@@ -12,6 +12,13 @@ const PUBLIC_PATHS = [
   '/api/v1/health',
   '/api/v1/library/books',
   '/covers/',
+  // --- ADICIONE ESTAS DUAS LINHAS ---
+  'bible-api.com',
+  'liturgiadiaria.site',
+  'cpbjr.github.io',
+  'esbiblia.net',
+  'www.abibliadigital.com.br',
+  'https://esbiblia.net',
 ];
 
 function isPublicRequest(url: string): boolean {
@@ -21,20 +28,18 @@ function isPublicRequest(url: string): boolean {
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
 
-  // Se for uma requisição pública, passa direto
+  // Se a URL contiver qualquer um dos caminhos públicos (internos ou externos), 
+  // passa a requisição pura, sem o Header de Authorization.
   if (isPublicRequest(req.url)) {
     return next(req);
   }
 
-  // Tenta obter o token
   const token = authService.getToken();
 
-  // Se não há token, passa a requisição sem modificar
   if (!token) {
     return next(req);
   }
 
-  // Clona a requisição e adiciona o Authorization header
   const clonedReq = req.clone({
     setHeaders: {
       Authorization: `Bearer ${token}`,

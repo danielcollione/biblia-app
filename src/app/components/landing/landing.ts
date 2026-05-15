@@ -127,6 +127,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     private httpClient: HttpClient,
     private cdr: ChangeDetectorRef,
   ) {
+    if (!isPlatformBrowser(this.platformId)) return;
     effect(() => {
       const lang = this.versionService.languageCode();
 

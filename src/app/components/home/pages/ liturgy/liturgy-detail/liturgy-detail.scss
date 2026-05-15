@@ -1,0 +1,216 @@
+$gold: #c5a059;
+$bg-dark: #050505;
+
+:host {
+  height: 100%;
+  display: block;
+  background-color: $bg-dark;
+  color: white;
+}
+
+.sanctuary-detail-container {
+  max-width: 750px; // Reduzido para maior conforto de leitura
+  margin: 0 auto;
+  padding: 2rem 1.5rem 6rem;
+  min-height: 85vh; // Estabiliza o scroll desde o início
+}
+
+$gold: #c5a059; // O dourado principal
+$bg-dark: #050505; // O fundo escuro
+
+.top-nav {
+  // Garante que o nav ocupe espaço e alinhe o botão à esquerda
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 1.5rem 1rem; // Espaçamento ao redor do botão
+  width: 100%;
+}
+
+.back-link {
+  // Remove todos os estilos padrões de botão do navegador
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  font-family: inherit; // Herda a fonte do projeto (sans-serif para UI)
+
+  // -- Tipografia e Visual (Baseado na Imagem) --
+  text-transform: uppercase; // Texto em Maiúsculo
+  font-size: 0.7rem; // Fonte pequena e elegante
+  font-weight: 500; // Peso médio
+  letter-spacing: 2px; // Espaçamento generoso entre as letras (essencial para o look)
+
+  // Cor dourada suave (com opacidade para parecer mais leve, igual à imagem)
+  color: rgba(216, 192, 142, 0.8);
+
+  // -- Alinhamento da Seta e Texto --
+  display: flex;
+  align-items: center;
+  gap: 8px; // Espaço entre o símbolo e a palavra VOLTAR
+
+  // Transição suave para o efeito de hover
+  transition: all 0.3s ease;
+
+  // -- Efeitos de Interação (Hover e Focus) --
+  &:hover,
+  &:focus {
+    outline: none; // Remove o contorno de foco padrão
+    color: rgba(216, 192, 142, 1); // Aumenta a opacidade (brilho) no hover
+    transform: translateX(-2px); // Leve movimento para a esquerda
+  }
+
+  // Se você mantiver o símbolo '←' no HTML, este estilo o torna fino e alinhado
+  &::first-letter {
+    font-family: sans-serif; // Usa fonte padrão para a seta
+    font-size: 1rem; // Ajusta o tamanho da seta especificamente
+    line-height: 1;
+    transform: translateY(-1px); // Ajuste fino vertical
+    display: inline-block;
+  }
+}
+
+.header-minimal {
+  text-align: center;
+  margin: 3rem 0 5rem;
+
+  .rank-tag {
+    color: $gold;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .text-title {
+    font-size: 2.2rem; // Reduzido
+    margin: 0.8rem 0;
+    font-weight: 400;
+  }
+
+  .metadata-line {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    .sep {
+      margin: 0 10px;
+      color: $gold;
+    }
+  }
+}
+
+.accordion-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  position: relative;
+
+  .item-trigger {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.8rem 0;
+    cursor: pointer;
+    // Borda fixa com opacidade 0 para evitar o "tremor" ao abrir
+    border-left: 2px solid rgba($gold, 0);
+    transition: all 0.4s ease;
+
+    .title-meta {
+      padding-left: 1.5rem; // Mantém o espaço para a borda lateral
+
+      h2 {
+        font-size: 1.1rem; // Minimalista
+        margin: 0;
+        color: rgba(255, 255, 255, 0.9);
+      }
+      .ref-code {
+        color: $gold;
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        display: block;
+        margin-top: 4px;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .chevron-minimal {
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid rgba($gold, 0.4);
+    border-bottom: 1.5px solid rgba($gold, 0.4);
+    transform: rotate(-45deg);
+    transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+    margin-right: 10px;
+  }
+
+  // --- ANIMAÇÃO LENTA VIA GRID ---
+  .expandable-zone {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 1.2s cubic-bezier(0.19, 1, 0.22, 1);
+
+    .content-wrapper {
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+
+      // AJUSTE AQUI: Mantemos o padding horizontal SEMPRE ativo
+      // Assim a largura do texto nunca muda, independente de estar aberto ou fechando
+      padding-left: 1.5rem;
+      padding-right: 1.5rem;
+    }
+  }
+
+  // ESTADO ABERTO
+  &.is-open {
+    .item-trigger {
+      border-left-color: $gold;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .chevron-minimal {
+      transform: rotate(45deg);
+      border-color: $gold;
+    }
+
+    .expandable-zone {
+      grid-template-rows: 1fr;
+
+      .content-wrapper {
+        opacity: 1;
+        // Removido o padding dinâmico daqui para evitar o "pulo" visual
+      }
+    }
+  }
+}
+
+.scripture-prose {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  font-size: 0.95rem; // Fonte de leitura ideal
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: justify;
+  white-space: pre-line;
+  &.italic {
+    font-style: italic;
+  }
+}
+
+.psalm-response {
+  color: $gold;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+// Evangelho
+.gospel-highlight.is-open {
+  background: linear-gradient(180deg, rgba($gold, 0.04) 0%, transparent 100%);
+}
