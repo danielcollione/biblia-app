@@ -435,7 +435,7 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   }
 
   irParaBiblia() {
-    this.router.navigate(['/read']);
+    this.router.navigate(['/login']);
   }
 
   irParaMateriais() {
