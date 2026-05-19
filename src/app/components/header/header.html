@@ -20,7 +20,6 @@
             <ul class="nav-links">
                 <li><a routerLink="/" routerLinkActive="active-link"
                         [routerLinkActiveOptions]="{ exact: true }">{{versionService.ui().start}}</a></li>
-                <li><a routerLink="/read" routerLinkActive="active-link">{{versionService.ui().title}}</a></li>
                 <li><a routerLink="/" fragment="sanctuary-section">{{versionService.ui().ferramentas}}</a></li>
                 <li><a routerLink="/" fragment="pricing">{{versionService.ui().pricing}}</a></li>
                 <li><a routerLink="/" fragment="faq">FAQ</a></li>
@@ -41,8 +40,6 @@
             <ul class="nav-links-mobile">
                 <li><a routerLink="/" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }"
                         (click)="closeMenu()">{{versionService.ui().start}}</a></li>
-                <li><a routerLink="/read" routerLinkActive="active-link"
-                        (click)="closeMenu()">{{versionService.ui().title}}</a></li>
                 <li><a routerLink="/" fragment="sanctuary-section"
                         (click)="closeMenu()">{{versionService.ui().ferramentas}}</a></li>
 

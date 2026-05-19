@@ -1,0 +1,901 @@
+{
+  "eras": [
+    {
+      "id": "principios",
+      "title": "The Creation and the Beginnings",
+      "order": 1,
+      "colorTheme": "emerald",
+      "events": [
+        {
+          "id": "criacao-mundo",
+          "numericYear": -10000,
+          "isIndefiniteDate": true,
+          "displayDate": "In the beginning",
+          "title": "The Creation of the World",
+          "description": "God creates the heavens, the earth, and all life, culminating in the creation of humanity.",
+          "biblicalReference": "Genesis 1-2",
+          "imagePath": "assets/images/timeline/criacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "a-queda",
+          "numericYear": -9900,
+          "isIndefiniteDate": true,
+          "displayDate": "In the beginning",
+          "title": "The Fall of Man",
+          "description": "Adam and Eve disobey God in the Garden of Eden, bringing sin and death into the world.",
+          "biblicalReference": "Genesis 3",
+          "imagePath": "assets/images/timeline/queda.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "caim-abel",
+          "numericYear": -9800,
+          "isIndefiniteDate": true,
+          "displayDate": "In the early days",
+          "title": "Cain and Abel",
+          "description": "The first murder in human history, where Cain kills his brother Abel out of jealousy.",
+          "biblicalReference": "Genesis 4",
+          "imagePath": "assets/images/timeline/caim-abel.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "o-diluvio",
+          "numericYear": -2348,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 2348 BC",
+          "title": "The Flood and Noah's Ark",
+          "description": "God sends a global flood to judge the corruption of humanity, saving only Noah, his family, and the animals in the Ark.",
+          "biblicalReference": "Genesis 6-9",
+          "imagePath": "assets/images/timeline/diluvio.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "torre-babel",
+          "numericYear": -2247,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 2247 BC",
+          "title": "The Tower of Babel",
+          "description": "Humanity attempts to build a tower to reach the heavens; God confuses their languages and scatters them across the earth.",
+          "biblicalReference": "Genesis 11:1-9",
+          "imagePath": "assets/images/timeline/babel.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "patriarcas",
+      "title": "The Era of the Patriarchs",
+      "order": 2,
+      "colorTheme": "amber",
+      "events": [
+        {
+          "id": "chamado-abraao",
+          "numericYear": -2091,
+          "isIndefiniteDate": false,
+          "displayDate": "2091 BC",
+          "title": "The Call of Abraham",
+          "description": "God calls Abraham to leave Ur, promising to make him a great nation and to bless all families of the earth through him.",
+          "biblicalReference": "Genesis 12:1-3",
+          "imagePath": "assets/images/timeline/abraao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sodoma-gomorra",
+          "numericYear": -2067,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 2067 BC",
+          "title": "The Destruction of Sodom and Gomorrah",
+          "description": "God destroys the corrupt cities with fire and brimstone; Lot and his daughters escape, but his wife looks back.",
+          "biblicalReference": "Genesis 19",
+          "imagePath": "assets/images/timeline/sodoma.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "sacrificio-isaque",
+          "numericYear": -2054,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 2054 BC",
+          "title": "The Testing of Abraham",
+          "description": "God tests Abraham's faith by asking him to sacrifice Isaac, but provides a ram as a substitute.",
+          "biblicalReference": "Genesis 22",
+          "imagePath": "assets/images/timeline/sacrificio-isaque.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "jaco-esau",
+          "numericYear": -1929,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1929 BC",
+          "title": "Jacob Deceives Esau",
+          "description": "Jacob acquires his brother Esau's birthright blessing and flees to Paddan-Aram.",
+          "biblicalReference": "Genesis 27",
+          "imagePath": "assets/images/timeline/jaco-esau.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "jaco-anjo",
+          "numericYear": -1900,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1900 BC",
+          "title": "Jacob Wrestles with the Angel",
+          "description": "At the ford of Jabbok, Jacob wrestles all night with God and his name is changed to Israel.",
+          "biblicalReference": "Genesis 32",
+          "imagePath": "assets/images/timeline/jaco-anjo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "jose-egito",
+          "numericYear": -1898,
+          "isIndefiniteDate": false,
+          "displayDate": "1898 BC",
+          "title": "Joseph in Egypt",
+          "description": "Joseph is sold as a slave, but through divine providence becomes governor and saves his family from famine.",
+          "biblicalReference": "Genesis 37-41",
+          "imagePath": "assets/images/timeline/jose.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "exodo",
+      "title": "Exodus and Wilderness Wandering",
+      "order": 3,
+      "colorTheme": "blue",
+      "events": [
+        {
+          "id": "nascimento-moises",
+          "numericYear": -1526,
+          "isIndefiniteDate": false,
+          "displayDate": "1526 BC",
+          "title": "The Birth of Moses",
+          "description": "Moses is born amidst Hebrew slavery, saved from the waters of the Nile, and raised in Pharaoh's palace.",
+          "biblicalReference": "Exodus 2",
+          "imagePath": "assets/images/timeline/nascimento-moises.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "saida-egito",
+          "numericYear": -1446,
+          "isIndefiniteDate": false,
+          "displayDate": "1446 BC",
+          "title": "The Ten Plagues and the Exodus",
+          "description": "After the plagues on Egypt and the first Passover, Moses leads the people of Israel across the Red Sea.",
+          "biblicalReference": "Exodus 12-14",
+          "imagePath": "assets/images/timeline/exodo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "dez-mandamentos",
+          "numericYear": -1446,
+          "isIndefiniteDate": false,
+          "displayDate": "1446 BC",
+          "title": "The Law at Mount Sinai",
+          "description": "God gives Moses the Ten Commandments and the instructions for building the Tabernacle.",
+          "biblicalReference": "Exodus 20",
+          "imagePath": "assets/images/timeline/sinai.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "serpente-bronze",
+          "numericYear": -1407,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1407 BC",
+          "title": "The Bronze Serpent",
+          "description": "The people are healed from venomous snake bites in the wilderness by looking at a bronze serpent made by Moses.",
+          "biblicalReference": "Numbers 21",
+          "imagePath": "assets/images/timeline/serpente-bronze.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "morte-moises",
+          "numericYear": -1406,
+          "isIndefiniteDate": false,
+          "displayDate": "1406 BC",
+          "title": "The Death of Moses",
+          "description": "Moses views the Promised Land from the top of Mount Nebo and dies before crossing the Jordan.",
+          "biblicalReference": "Deuteronomy 34",
+          "imagePath": "assets/images/timeline/morte-moises.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "conquista",
+      "title": "Conquest and Judges",
+      "order": 4,
+      "colorTheme": "orange",
+      "events": [
+        {
+          "id": "queda-jerico",
+          "numericYear": -1406,
+          "isIndefiniteDate": false,
+          "displayDate": "1406 BC",
+          "title": "The Fall of Jericho",
+          "description": "Led by Joshua, the Israelites enter the Promised Land and the walls of Jericho fall by the power of God.",
+          "biblicalReference": "Joshua 6",
+          "imagePath": "assets/images/timeline/jerico.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "debora-baraque",
+          "numericYear": -1232,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1232 BC",
+          "title": "The Victory of Deborah",
+          "description": "The prophetess and judge Deborah guides Barak to a great military victory against the Canaanite oppressor Sisera.",
+          "biblicalReference": "Judges 4-5",
+          "imagePath": "assets/images/timeline/debora.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "gideao",
+          "numericYear": -1162,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1162 BC",
+          "title": "The Victory of Gideon",
+          "description": "Gideon, called by God, defeats the massive Midianite army with only 300 men.",
+          "biblicalReference": "Judges 7",
+          "imagePath": "assets/images/timeline/gideao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "historia-rute",
+          "numericYear": -1140,
+          "isIndefiniteDate": false,
+          "displayDate": "Period of the Judges",
+          "title": "The Story of Ruth",
+          "description": "Ruth demonstrates loyalty to Naomi and finds redemption with Boaz, becoming an ancestor of King David.",
+          "biblicalReference": "Ruth 1-4",
+          "imagePath": "assets/images/timeline/rute.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "chamado-samuel",
+          "numericYear": -1080,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1080 BC",
+          "title": "The Call of Samuel",
+          "description": "Still a boy, Samuel hears the voice of God in the Tabernacle, marking the end of the era of the Judges.",
+          "biblicalReference": "1 Samuel 3",
+          "imagePath": "assets/images/timeline/chamado-samuel.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sansao",
+          "numericYear": -1075,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1075 BC",
+          "title": "The Fall of Samson",
+          "description": "Samson destroys the temple of Dagon in his final act of strength against the Philistines.",
+          "biblicalReference": "Judges 16",
+          "imagePath": "assets/images/timeline/sansao.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "reino-unido",
+      "title": "The United Kingdom",
+      "order": 5,
+      "colorTheme": "gold",
+      "events": [
+        {
+          "id": "rei-saul",
+          "numericYear": -1050,
+          "isIndefiniteDate": false,
+          "displayDate": "1050 BC",
+          "title": "Saul Crowned King",
+          "description": "Samuel anoints Saul as the first king of Israel after the people demanded a monarch.",
+          "biblicalReference": "1 Samuel 10",
+          "imagePath": "assets/images/timeline/saul.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "davi-golias",
+          "numericYear": -1025,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 1025 BC",
+          "title": "David and Goliath",
+          "description": "The young shepherd David defeats the Philistine giant Goliath with a sling and a stone.",
+          "biblicalReference": "1 Samuel 17",
+          "imagePath": "assets/images/timeline/davi-golias.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "alianca-davidica",
+          "numericYear": -1003,
+          "isIndefiniteDate": false,
+          "displayDate": "1003 BC",
+          "title": "David Becomes King and the Covenant",
+          "description": "David assumes the throne of all Israel and God establishes an everlasting covenant with his descendants.",
+          "biblicalReference": "2 Samuel 7",
+          "imagePath": "assets/images/timeline/rei-davi.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "templo-salomao",
+          "numericYear": -959,
+          "isIndefiniteDate": false,
+          "displayDate": "959 BC",
+          "title": "Solomon's Temple",
+          "description": "Solomon completes the majestic First Temple in Jerusalem and the glory of the Lord fills the place.",
+          "biblicalReference": "1 Kings 6-8",
+          "imagePath": "assets/images/timeline/templo-salomao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "rainha-saba",
+          "numericYear": -950,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 950 BC",
+          "title": "The Visit of the Queen of Sheba",
+          "description": "The queen travels from afar to test Solomon's immense wisdom and is amazed by the glory of his kingdom.",
+          "biblicalReference": "1 Kings 10",
+          "imagePath": "assets/images/timeline/rainha-saba.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "reino-dividido-exilio",
+      "title": "Divided Kingdom and Exile",
+      "order": 6,
+      "colorTheme": "red",
+      "events": [
+        {
+          "id": "divisao-reino",
+          "numericYear": -931,
+          "isIndefiniteDate": false,
+          "displayDate": "931 BC",
+          "title": "The Division of the Kingdom",
+          "description": "After Solomon's death, the kingdom divides: Israel (North) under Jeroboam and Judah (South) under Rehoboam.",
+          "biblicalReference": "1 Kings 12",
+          "imagePath": "assets/images/timeline/reino-dividido.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "elias-carmelo",
+          "numericYear": -860,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 860 BC",
+          "title": "Elijah at Mount Carmel",
+          "description": "The prophet Elijah challenges and defeats the prophets of Baal, bringing down fire from heaven.",
+          "biblicalReference": "1 Kings 18",
+          "imagePath": "assets/images/timeline/elias-carmelo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "queda-israel",
+          "numericYear": -722,
+          "isIndefiniteDate": false,
+          "displayDate": "722 BC",
+          "title": "The Fall of Israel",
+          "description": "The Assyrian Empire conquers Samaria and takes the ten northern tribes into exile.",
+          "biblicalReference": "2 Kings 17",
+          "imagePath": "assets/images/timeline/queda-israel.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "reforma-josias",
+          "numericYear": -622,
+          "isIndefiniteDate": false,
+          "displayDate": "622 BC",
+          "title": "The Reform of King Josiah",
+          "description": "The Book of the Law is found in the Temple, leading King Josiah to initiate a deep spiritual purification in Judah.",
+          "biblicalReference": "2 Kings 22-23",
+          "imagePath": "assets/images/timeline/reforma-josias.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "fornalha-fogo",
+          "numericYear": -595,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 595 BC",
+          "title": "The Fiery Furnace",
+          "description": "Shadrach, Meshach, and Abednego are thrown into the furnace by Nebuchadnezzar, but emerge unharmed, protected by God.",
+          "biblicalReference": "Daniel 3",
+          "imagePath": "assets/images/timeline/fornalha.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "queda-juda-exilio",
+          "numericYear": -586,
+          "isIndefiniteDate": false,
+          "displayDate": "586 BC",
+          "title": "Fall of Jerusalem",
+          "description": "The Babylonians destroy Jerusalem and Solomon's Temple, taking the people of Judah into captivity.",
+          "biblicalReference": "2 Kings 25",
+          "imagePath": "assets/images/timeline/queda-jerusalem.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ossos-secos",
+          "numericYear": -580,
+          "isIndefiniteDate": false,
+          "displayDate": "During the Exile",
+          "title": "The Vision of the Valley of Dry Bones",
+          "description": "The prophet Ezekiel has a mystical vision of resurrecting bones, symbolizing the future restoration of Israel.",
+          "biblicalReference": "Ezekiel 37",
+          "imagePath": "assets/images/timeline/ossos-secos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "daniel-leoes",
+          "numericYear": -539,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 539 BC",
+          "title": "Daniel in the Lions' Den",
+          "description": "During the Medo-Persian rule, Daniel is thrown to the lions for his faith and is miraculously saved.",
+          "biblicalReference": "Daniel 6",
+          "imagePath": "assets/images/timeline/daniel-leoes.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "o-retorno",
+      "title": "The Return",
+      "order": 7,
+      "colorTheme": "cyan",
+      "events": [
+        {
+          "id": "decreto-ciro",
+          "numericYear": -538,
+          "isIndefiniteDate": false,
+          "displayDate": "538 BC",
+          "title": "The Decree of Cyrus",
+          "description": "Cyrus, king of Persia, allows the exiled Jews to return to Jerusalem.",
+          "biblicalReference": "Ezra 1",
+          "imagePath": "assets/images/timeline/decreto-ciro.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "segundo-templo",
+          "numericYear": -516,
+          "isIndefiniteDate": false,
+          "displayDate": "516 BC",
+          "title": "The Completion of the Second Temple",
+          "description": "The new temple is finished in Jerusalem under the leadership of Zerubbabel.",
+          "biblicalReference": "Ezra 6",
+          "imagePath": "assets/images/timeline/segundo-templo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "historia-ester",
+          "numericYear": -479,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 479 BC",
+          "title": "Esther Saves the Jewish People",
+          "description": "Queen Esther risks her own life to thwart Haman's plot of genocide.",
+          "biblicalReference": "Esther 7-8",
+          "imagePath": "assets/images/timeline/ester.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "muros-neemias",
+          "numericYear": -444,
+          "isIndefiniteDate": false,
+          "displayDate": "444 BC",
+          "title": "The Rebuilding of the Walls",
+          "description": "Nehemiah leads the rapid rebuilding of the walls of Jerusalem in just 52 days.",
+          "biblicalReference": "Nehemiah 6",
+          "imagePath": "assets/images/timeline/neemias.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "vida-de-cristo",
+      "title": "The Life of Christ",
+      "order": 8,
+      "colorTheme": "indigo",
+      "events": [
+        {
+          "id": "nascimento-jesus",
+          "numericYear": -4,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 4 BC",
+          "title": "The Birth of Jesus",
+          "description": "Jesus is born in Bethlehem of Judea, fulfilling messianic prophecies, and is visited by shepherds and wise men.",
+          "biblicalReference": "Luke 2 / Matthew 2",
+          "imagePath": "assets/images/timeline/nascimento-jesus.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "fuga-egito",
+          "numericYear": -3,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 3 BC",
+          "title": "The Flight to Egypt",
+          "description": "Warned by an angel, Joseph flees with Mary and the child Jesus to Egypt, escaping the massacre ordered by Herod.",
+          "biblicalReference": "Matthew 2:13-23",
+          "imagePath": "assets/images/timeline/fuga-egito.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "batismo-jesus",
+          "numericYear": 26,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 26 AD",
+          "title": "The Baptism of Jesus",
+          "description": "Jesus is baptized by John the Baptist in the Jordan River, and the Holy Spirit descends upon Him like a dove.",
+          "biblicalReference": "Matthew 3:13-17",
+          "imagePath": "assets/images/timeline/batismo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "tentacao-deserto",
+          "numericYear": 26,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 26 AD",
+          "title": "The Temptation in the Wilderness",
+          "description": "After fasting 40 days, Jesus is tempted by the devil in the wilderness and overcomes using the Word of God.",
+          "biblicalReference": "Luke 4",
+          "imagePath": "assets/images/timeline/tentacao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "bodas-cana",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 27 AD",
+          "title": "The First Miracle at Cana",
+          "description": "During a wedding feast, Jesus performs His first public miracle, turning water into wine.",
+          "biblicalReference": "John 2:1-11",
+          "imagePath": "assets/images/timeline/bodas-cana.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "nicodemos",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 27 AD",
+          "title": "The Encounter with Nicodemus",
+          "description": "Jesus teaches the Pharisee Nicodemus about the need to be born again of the Spirit.",
+          "biblicalReference": "John 3",
+          "imagePath": "assets/images/timeline/nicodemos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "mulher-samaritana",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 27 AD",
+          "title": "The Samaritan Woman at the Well",
+          "description": "Jesus breaks social barriers by asking a Samaritan woman for water, revealing Himself to her as the Living Water and the Messiah.",
+          "biblicalReference": "John 4",
+          "imagePath": "assets/images/timeline/samaritana.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sermao-monte",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 28 AD",
+          "title": "The Sermon on the Mount",
+          "description": "Jesus teaches the foundations of the Kingdom of God, delivering the Beatitudes and the Lord's Prayer.",
+          "biblicalReference": "Matthew 5-7",
+          "imagePath": "assets/images/timeline/sermao-monte.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "pesca-maravilhosa",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 28 AD",
+          "title": "The Miraculous Catch of Fish",
+          "description": "After a night with no fish, Peter obeys Jesus and the nets break with abundance. Jesus calls them to be 'fishers of men'.",
+          "biblicalReference": "Luke 5:1-11",
+          "imagePath": "assets/images/timeline/pesca-maravilhosa.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "paralitico-cafarnaum",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 28 AD",
+          "title": "Healing the Paralytic Lowered Through the Roof",
+          "description": "Four friends open a hole in the roof to reach Jesus, who forgives the man's sins and makes him walk.",
+          "biblicalReference": "Mark 2:1-12",
+          "imagePath": "assets/images/timeline/paralitico-telhado.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "filha-jairo-mulher-fluxo",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 28 AD",
+          "title": "Jairus's Daughter and the Bleeding Woman",
+          "description": "On the way to resurrect the synagogue leader's daughter, Jesus heals a woman who touched the hem of His garment with faith.",
+          "biblicalReference": "Mark 5:21-43",
+          "imagePath": "assets/images/timeline/filha-jairo.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "tempestade-acalmada",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 28 AD",
+          "title": "Jesus Calms the Storm",
+          "description": "The disciples despair during a fierce storm on the Sea of Galilee, but Jesus rebukes the winds and the sea with a word.",
+          "biblicalReference": "Mark 4:35-41",
+          "imagePath": "assets/images/timeline/tempestade.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "multiplicacao-paes",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 29 AD",
+          "title": "The Feeding of the 5,000",
+          "description": "Jesus miraculously feeds a multitude of five thousand men with only five loaves of bread and two fish.",
+          "biblicalReference": "John 6:1-14",
+          "imagePath": "assets/images/timeline/multiplicacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "anda-sobre-aguas",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 29 AD",
+          "title": "Jesus Walks on Water",
+          "description": "During the night, Jesus goes out to the disciples walking on the sea. Peter attempts to go to Him, but sinks when he doubts.",
+          "biblicalReference": "Matthew 14:22-33",
+          "imagePath": "assets/images/timeline/anda-aguas.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "transfiguracao",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 29 AD",
+          "title": "The Transfiguration",
+          "description": "Jesus is transfigured on the mountain before Peter, James, and John, revealing His glory while conversing with Moses and Elijah.",
+          "biblicalReference": "Matthew 17:1-8",
+          "imagePath": "assets/images/timeline/transfiguracao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "mulher-adultera",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 29 AD",
+          "title": "The Woman Caught in Adultery",
+          "description": "Jesus confronts the woman's accusers, saying: 'Let him who is without sin among you be the first to throw a stone at her'.",
+          "biblicalReference": "John 8:1-11",
+          "imagePath": "assets/images/timeline/adultera.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "bom-samaritano",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 29 AD",
+          "title": "The Parable of the Good Samaritan",
+          "description": "To explain who our neighbor is, Jesus tells the story of the injured man on the road who is helped by a Samaritan.",
+          "biblicalReference": "Luke 10:25-37",
+          "imagePath": "assets/images/timeline/bom-samaritano.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "filho-prodigo",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 30 AD",
+          "title": "The Parable of the Prodigal Son",
+          "description": "Jesus illustrates the grace of God through the story of the rebellious son who returns to the arms of a loving father.",
+          "biblicalReference": "Luke 15:11-32",
+          "imagePath": "assets/images/timeline/filho-prodigo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ressurreicao-lazaro",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 30 AD",
+          "title": "The Resurrection of Lazarus",
+          "description": "Jesus weeps over His friend's death and resurrects him, calling him out of the tomb after four days of being buried.",
+          "biblicalReference": "John 11",
+          "imagePath": "assets/images/timeline/lazaro.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "encontro-zaqueu",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 30 AD",
+          "title": "The Encounter with Zacchaeus",
+          "description": "The tax collector climbs a tree to see Jesus passing by. Jesus stays at his house, bringing salvation and repentance.",
+          "biblicalReference": "Luke 19:1-10",
+          "imagePath": "assets/images/timeline/zaqueu.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "entrada-triunfal",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD (Palm Sunday)",
+          "title": "The Triumphal Entry",
+          "description": "Jesus enters Jerusalem riding on a donkey, acclaimed by the crowds with palm branches and shouts of 'Hosanna'.",
+          "biblicalReference": "Matthew 21",
+          "imagePath": "assets/images/timeline/entrada-triunfal.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "purificacao-templo",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Cleansing of the Temple",
+          "description": "Consumed by zeal, Jesus drives out the money changers and merchants who made the House of God a den of thieves.",
+          "biblicalReference": "Mark 11:15-19",
+          "imagePath": "assets/images/timeline/purificacao-templo.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "ultima-ceia",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Last Supper and Washing of Feet",
+          "description": "Jesus washes the disciples' feet, institutes the New Covenant of the bread and the cup, and warns of Judas's betrayal.",
+          "biblicalReference": "John 13 / Luke 22",
+          "imagePath": "assets/images/timeline/ultima-ceia.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "getsemani-prisao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "Agony in Gethsemane and Arrest",
+          "description": "Jesus prays in anguish in the garden until He sweats blood. He is betrayed with a kiss by Judas and arrested by the guards.",
+          "biblicalReference": "Matthew 26:36-56",
+          "imagePath": "assets/images/timeline/getsemani.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "julgamento-pilatos",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Trial Before Pilate",
+          "description": "Jesus is brought before the Roman governor Pontius Pilate, suffers the scourging, and the crowd chooses to release Barabbas.",
+          "biblicalReference": "John 18-19",
+          "imagePath": "assets/images/timeline/pilatos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "crucificacao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Crucifixion at Calvary",
+          "description": "Jesus carries the cross and is crucified between two thieves. He utters His last words and gives up His spirit.",
+          "biblicalReference": "Luke 23 / John 19",
+          "imagePath": "assets/images/timeline/crucificacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ressurreicao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Empty Tomb and Resurrection",
+          "description": "The women find the tomb empty. Jesus resurrects victoriously on the third day and appears to Mary Magdalene.",
+          "biblicalReference": "John 20",
+          "imagePath": "assets/images/timeline/ressurreicao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "caminho-emaus",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Road to Emmaus",
+          "description": "The resurrected Christ walks with two disciples on the road and reveals the Scriptures, being recognized only in the breaking of the bread.",
+          "biblicalReference": "Luke 24:13-35",
+          "imagePath": "assets/images/timeline/emaus.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "ascensao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Ascension into Heaven",
+          "description": "After 40 days instructing the disciples, Jesus ascends gloriously into heaven before their eyes, promising to return.",
+          "biblicalReference": "Acts 1:9-11",
+          "imagePath": "assets/images/timeline/ascensao.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "igreja-primitiva",
+      "title": "The Early Church",
+      "order": 9,
+      "colorTheme": "violet",
+      "events": [
+        {
+          "id": "pentecostes",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 AD",
+          "title": "The Day of Pentecost",
+          "description": "The Holy Spirit is poured out on the apostles; Peter preaches and nearly three thousand people are baptized.",
+          "biblicalReference": "Acts 2",
+          "imagePath": "assets/images/timeline/pentecostes.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "estevao-martir",
+          "numericYear": 34,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 34 AD",
+          "title": "The Stoning of Stephen",
+          "description": "Stephen, full of grace and power, becomes the first Christian martyr by being stoned in Jerusalem.",
+          "biblicalReference": "Acts 7",
+          "imagePath": "assets/images/timeline/estevao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "conversao-paulo",
+          "numericYear": 35,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 35 AD",
+          "title": "The Conversion of Saul",
+          "description": "On the road to Damascus, the persecutor Saul has an encounter with the resurrected Christ and becomes the apostle Paul.",
+          "biblicalReference": "Acts 9",
+          "imagePath": "assets/images/timeline/conversao-paulo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "concilio-jerusalem",
+          "numericYear": 50,
+          "isIndefiniteDate": false,
+          "displayDate": "50 AD",
+          "title": "The Council of Jerusalem",
+          "description": "The church leaders gather to decide that Gentile converts do not need to follow all Jewish laws.",
+          "biblicalReference": "Acts 15",
+          "imagePath": "assets/images/timeline/concilio.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "paulo-atenas",
+          "numericYear": 51,
+          "isIndefiniteDate": false,
+          "displayDate": "Circa 51 AD",
+          "title": "Paul at the Areopagus in Athens",
+          "description": "During his missionary journeys, Paul preaches to the Greek philosophers about the 'Unknown God'.",
+          "biblicalReference": "Acts 17:16-34",
+          "imagePath": "assets/images/timeline/paulo-atenas.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "incendio-roma",
+          "numericYear": 64,
+          "isIndefiniteDate": false,
+          "displayDate": "64 - 67 AD",
+          "title": "Persecution and Martyrdom",
+          "description": "Emperor Nero blames the Christians for the great fire of Rome, unleashing severe persecutions where Peter and Paul are martyred.",
+          "biblicalReference": "Church History",
+          "imagePath": "assets/images/timeline/persecucao-roma.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "destruicao-templo",
+          "numericYear": 70,
+          "isIndefiniteDate": false,
+          "displayDate": "70 AD",
+          "title": "The Destruction of Jerusalem",
+          "description": "The Roman army, led by Titus, besieges Jerusalem and completely destroys the Second Temple, as Jesus had prophesied.",
+          "biblicalReference": "Matthew 24:1-2 / History",
+          "imagePath": "assets/images/timeline/destruicao-templo.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    }
+  ]
+}
