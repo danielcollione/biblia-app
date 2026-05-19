@@ -1,0 +1,901 @@
+{
+  "eras": [
+    {
+      "id": "principios",
+      "title": "La Creación y los Principios",
+      "order": 1,
+      "colorTheme": "emerald",
+      "events": [
+        {
+          "id": "criacao-mundo",
+          "numericYear": -10000,
+          "isIndefiniteDate": true,
+          "displayDate": "En el principio",
+          "title": "La Creación del Mundo",
+          "description": "Dios crea los cielos, la tierra y toda la vida, culminando en la creación de la humanidad.",
+          "biblicalReference": "Génesis 1-2",
+          "imagePath": "assets/images/timeline/criacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "a-queda",
+          "numericYear": -9900,
+          "isIndefiniteDate": true,
+          "displayDate": "En el principio",
+          "title": "La Caída del Hombre",
+          "description": "Adán y Eva desobedecen a Dios en el Jardín del Edén, trayendo el pecado y la muerte al mundo.",
+          "biblicalReference": "Génesis 3",
+          "imagePath": "assets/images/timeline/queda.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "caim-abel",
+          "numericYear": -9800,
+          "isIndefiniteDate": true,
+          "displayDate": "En los albores",
+          "title": "Caín y Abel",
+          "description": "El primer homicidio de la historia humana, donde Caín mata a su hermano Abel por envidia.",
+          "biblicalReference": "Génesis 4",
+          "imagePath": "assets/images/timeline/caim-abel.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "o-diluvio",
+          "numericYear": -2348,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 2348 a.C.",
+          "title": "El Diluvio y el Arca de Noé",
+          "description": "Dios envía un diluvio global para juzgar la corrupción de la humanidad, salvando solo a Noé, su familia y los animales en el Arca.",
+          "biblicalReference": "Génesis 6-9",
+          "imagePath": "assets/images/timeline/diluvio.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "torre-babel",
+          "numericYear": -2247,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 2247 a.C.",
+          "title": "La Torre de Babel",
+          "description": "La humanidad intenta construir una torre para alcanzar los cielos; Dios confunde sus idiomas y los dispersa por la tierra.",
+          "biblicalReference": "Génesis 11:1-9",
+          "imagePath": "assets/images/timeline/babel.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "patriarcas",
+      "title": "La Era de los Patriarcas",
+      "order": 2,
+      "colorTheme": "amber",
+      "events": [
+        {
+          "id": "chamado-abraao",
+          "numericYear": -2091,
+          "isIndefiniteDate": false,
+          "displayDate": "2091 a.C.",
+          "title": "El Llamado de Abraham",
+          "description": "Dios llama a Abraham para que salga de Ur, prometiendo hacer de él una gran nación y bendecir a todas las familias de la tierra a través de él.",
+          "biblicalReference": "Génesis 12:1-3",
+          "imagePath": "assets/images/timeline/abraao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sodoma-gomorra",
+          "numericYear": -2067,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 2067 a.C.",
+          "title": "La Destrucción de Sodoma y Gomorra",
+          "description": "Dios destruye las ciudades corruptas con fuego y azufre; Lot y sus hijas escapan, pero su esposa mira hacia atrás.",
+          "biblicalReference": "Génesis 19",
+          "imagePath": "assets/images/timeline/sodoma.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "sacrificio-isaque",
+          "numericYear": -2054,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 2054 a.C.",
+          "title": "La Prueba de Abraham",
+          "description": "Dios prueba la fe de Abraham pidiéndole que sacrifique a Isaac, pero provee un cordero como sustituto.",
+          "biblicalReference": "Génesis 22",
+          "imagePath": "assets/images/timeline/sacrificio-isaque.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "jaco-esau",
+          "numericYear": -1929,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1929 a.C.",
+          "title": "Jacob engaña a Esaú",
+          "description": "Jacob adquiere la bendición de la primogenitura de su hermano Esaú y huye a Padán-aram.",
+          "biblicalReference": "Génesis 27",
+          "imagePath": "assets/images/timeline/jaco-esau.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "jaco-anjo",
+          "numericYear": -1900,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1900 a.C.",
+          "title": "Jacob lucha con el Ángel",
+          "description": "En el vado de Jaboc, Jacob lucha toda la noche con Dios y su nombre es cambiado a Israel.",
+          "biblicalReference": "Génesis 32",
+          "imagePath": "assets/images/timeline/jaco-anjo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "jose-egito",
+          "numericYear": -1898,
+          "isIndefiniteDate": false,
+          "displayDate": "1898 a.C.",
+          "title": "José en Egipto",
+          "description": "José es vendido como esclavo, pero a través de la providencia divina se convierte en gobernador y salva a su familia del hambre.",
+          "biblicalReference": "Génesis 37-41",
+          "imagePath": "assets/images/timeline/jose.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "exodo",
+      "title": "Éxodo y Peregrinación",
+      "order": 3,
+      "colorTheme": "blue",
+      "events": [
+        {
+          "id": "nascimento-moises",
+          "numericYear": -1526,
+          "isIndefiniteDate": false,
+          "displayDate": "1526 a.C.",
+          "title": "El Nacimiento de Moisés",
+          "description": "Moisés nace en medio de la esclavitud hebrea, es salvado de las aguas del Nilo y criado en el palacio del Faraón.",
+          "biblicalReference": "Éxodo 2",
+          "imagePath": "assets/images/timeline/nascimento-moises.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "saida-egito",
+          "numericYear": -1446,
+          "isIndefiniteDate": false,
+          "displayDate": "1446 a.C.",
+          "title": "Las Diez Plagas y el Éxodo",
+          "description": "Después de las plagas sobre Egipto y la primera Pascua, Moisés lidera al pueblo de Israel en el cruce del Mar Rojo.",
+          "biblicalReference": "Éxodo 12-14",
+          "imagePath": "assets/images/timeline/exodo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "dez-mandamentos",
+          "numericYear": -1446,
+          "isIndefiniteDate": false,
+          "displayDate": "1446 a.C.",
+          "title": "La Ley en el Monte Sinaí",
+          "description": "Dios entrega a Moisés los Diez Mandamientos y las instrucciones para la construcción del Tabernáculo.",
+          "biblicalReference": "Éxodo 20",
+          "imagePath": "assets/images/timeline/sinai.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "serpente-bronze",
+          "numericYear": -1407,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1407 a.C.",
+          "title": "La Serpiente de Bronce",
+          "description": "El pueblo es curado de mordeduras de serpientes venenosas en el desierto al mirar una serpiente de bronce hecha por Moisés.",
+          "biblicalReference": "Números 21",
+          "imagePath": "assets/images/timeline/serpente-bronze.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "morte-moises",
+          "numericYear": -1406,
+          "isIndefiniteDate": false,
+          "displayDate": "1406 a.C.",
+          "title": "La Muerte de Moisés",
+          "description": "Moisés contempla la Tierra Prometida desde lo alto del Monte Nebo y fallece antes de cruzar el Jordán.",
+          "biblicalReference": "Deuteronomio 34",
+          "imagePath": "assets/images/timeline/morte-moises.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "conquista",
+      "title": "Conquista y Jueces",
+      "order": 4,
+      "colorTheme": "orange",
+      "events": [
+        {
+          "id": "queda-jerico",
+          "numericYear": -1406,
+          "isIndefiniteDate": false,
+          "displayDate": "1406 a.C.",
+          "title": "La Caída de Jericó",
+          "description": "Liderados por Josué, los israelitas entran en la Tierra Prometida y las murallas de Jericó caen por el poder de Dios.",
+          "biblicalReference": "Josué 6",
+          "imagePath": "assets/images/timeline/jerico.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "debora-baraque",
+          "numericYear": -1232,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1232 a.C.",
+          "title": "La Victoria de Débora",
+          "description": "La profetisa y jueza Débora orienta a Barac en la gran victoria militar contra el opresor cananeo Sísara.",
+          "biblicalReference": "Jueces 4-5",
+          "imagePath": "assets/images/timeline/debora.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "gideao",
+          "numericYear": -1162,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1162 a.C.",
+          "title": "La Victoria de Gedeón",
+          "description": "Gedeón, llamado por Dios, derrota al inmenso ejército madianita con solo 300 hombres.",
+          "biblicalReference": "Jueces 7",
+          "imagePath": "assets/images/timeline/gideao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "historia-rute",
+          "numericYear": -1140,
+          "isIndefiniteDate": false,
+          "displayDate": "Período de los Jueces",
+          "title": "La Historia de Rut",
+          "description": "Rut demuestra lealtad a Noemí y encuentra redención con Booz, convirtiéndose en antepasada del rey David.",
+          "biblicalReference": "Rut 1-4",
+          "imagePath": "assets/images/timeline/rute.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "chamado-samuel",
+          "numericYear": -1080,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1080 a.C.",
+          "title": "El Llamado de Samuel",
+          "description": "Aún niño, Samuel escucha la voz de Dios en el Tabernáculo, marcando el fin de la era de los Jueces.",
+          "biblicalReference": "1 Samuel 3",
+          "imagePath": "assets/images/timeline/chamado-samuel.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sansao",
+          "numericYear": -1075,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1075 a.C.",
+          "title": "La Caída de Sansón",
+          "description": "Sansón destruye el templo de Dagón en su último acto de fuerza contra los filisteos.",
+          "biblicalReference": "Jueces 16",
+          "imagePath": "assets/images/timeline/sansao.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "reino-unido",
+      "title": "El Reino Unido",
+      "order": 5,
+      "colorTheme": "gold",
+      "events": [
+        {
+          "id": "rei-saul",
+          "numericYear": -1050,
+          "isIndefiniteDate": false,
+          "displayDate": "1050 a.C.",
+          "title": "Saúl Coronado Rey",
+          "description": "Samuel unge a Saúl como el primer rey de Israel, después de que el pueblo exigiera un monarca.",
+          "biblicalReference": "1 Samuel 10",
+          "imagePath": "assets/images/timeline/saul.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "davi-golias",
+          "numericYear": -1025,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 1025 a.C.",
+          "title": "David y Goliat",
+          "description": "El joven pastor David derrota al gigante filisteo Goliat con una honda y una piedra.",
+          "biblicalReference": "1 Samuel 17",
+          "imagePath": "assets/images/timeline/davi-golias.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "alianca-davidica",
+          "numericYear": -1003,
+          "isIndefiniteDate": false,
+          "displayDate": "1003 a.C.",
+          "title": "David se Convierte en Rey y el Pacto",
+          "description": "David asume el trono de todo Israel y Dios establece un pacto eterno con su descendencia.",
+          "biblicalReference": "2 Samuel 7",
+          "imagePath": "assets/images/timeline/rei-davi.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "templo-salomao",
+          "numericYear": -959,
+          "isIndefiniteDate": false,
+          "displayDate": "959 a.C.",
+          "title": "El Templo de Salomón",
+          "description": "Salomón concluye el majestuoso Primer Templo en Jerusalén y la gloria del Señor llena el lugar.",
+          "biblicalReference": "1 Reyes 6-8",
+          "imagePath": "assets/images/timeline/templo-salomao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "rainha-saba",
+          "numericYear": -950,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 950 a.C.",
+          "title": "La Visita de la Reina de Sabá",
+          "description": "La reina viaja desde lejos para probar la inmensa sabiduría de Salomón y queda maravillada con la gloria de su reino.",
+          "biblicalReference": "1 Reyes 10",
+          "imagePath": "assets/images/timeline/rainha-saba.jpg",
+          "isMajorEvent": false
+        }
+      ]
+    },
+    {
+      "id": "reino-dividido-exilio",
+      "title": "Reino Dividido y Exilio",
+      "order": 6,
+      "colorTheme": "red",
+      "events": [
+        {
+          "id": "divisao-reino",
+          "numericYear": -931,
+          "isIndefiniteDate": false,
+          "displayDate": "931 a.C.",
+          "title": "La División del Reino",
+          "description": "Tras la muerte de Salomón, el reino se divide: Israel (Norte) bajo Jeroboam y Judá (Sur) bajo Roboam.",
+          "biblicalReference": "1 Reyes 12",
+          "imagePath": "assets/images/timeline/reino-dividido.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "elias-carmelo",
+          "numericYear": -860,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 860 a.C.",
+          "title": "Elías en el Monte Carmelo",
+          "description": "El profeta Elías desafía y derrota a los profetas de Baal, haciendo descender fuego del cielo.",
+          "biblicalReference": "1 Reyes 18",
+          "imagePath": "assets/images/timeline/elias-carmelo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "queda-israel",
+          "numericYear": -722,
+          "isIndefiniteDate": false,
+          "displayDate": "722 a.C.",
+          "title": "La Caída de Israel",
+          "description": "El Imperio Asirio conquista Samaria y lleva a las diez tribos del norte al exilio.",
+          "biblicalReference": "2 Reyes 17",
+          "imagePath": "assets/images/timeline/queda-israel.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "reforma-josias",
+          "numericYear": -622,
+          "isIndefiniteDate": false,
+          "displayDate": "622 a.C.",
+          "title": "La Reforma del Rey Josías",
+          "description": "El Libro de la Ley es encontrado en el Templo, llevando al rey Josías a iniciar una profunda purificación espiritual en Judá.",
+          "biblicalReference": "2 Reyes 22-23",
+          "imagePath": "assets/images/timeline/reforma-josias.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "fornalha-fogo",
+          "numericYear": -595,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 595 a.C.",
+          "title": "El Horno de Fuego Ardiente",
+          "description": "Sadrac, Mesac y Abed-nego son arrojados al horno por Nabucodonosor, pero salen ilesos protegidos por Dios.",
+          "biblicalReference": "Daniel 3",
+          "imagePath": "assets/images/timeline/fornalha.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "queda-juda-exilio",
+          "numericYear": -586,
+          "isIndefiniteDate": false,
+          "displayDate": "586 a.C.",
+          "title": "Caída de Jerusalén",
+          "description": "Los babilonios destruyen Jerusalén y el Templo de Salomón, llevando al pueblo de Judá al cautiverio.",
+          "biblicalReference": "2 Reyes 25",
+          "imagePath": "assets/images/timeline/queda-jerusalem.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ossos-secos",
+          "numericYear": -580,
+          "isIndefiniteDate": false,
+          "displayDate": "Durante el Exilio",
+          "title": "La Visión del Valle de los Huesos Secos",
+          "description": "El profeta Ezequiel tiene una visión mística de huesos resucitando, simbolizando la futura restauración de Israel.",
+          "biblicalReference": "Ezequiel 37",
+          "imagePath": "assets/images/timeline/ossos-secos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "daniel-leoes",
+          "numericYear": -539,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 539 a.C.",
+          "title": "Daniel en el Foso de los Leones",
+          "description": "Durante el dominio medopersa, Daniel es arrojado a los leones por su fe y es salvado milagrosamente.",
+          "biblicalReference": "Daniel 6",
+          "imagePath": "assets/images/timeline/daniel-leoes.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "o-retorno",
+      "title": "El Retorno",
+      "order": 7,
+      "colorTheme": "cyan",
+      "events": [
+        {
+          "id": "decreto-ciro",
+          "numericYear": -538,
+          "isIndefiniteDate": false,
+          "displayDate": "538 a.C.",
+          "title": "El Decreto de Ciro",
+          "description": "Ciro, rey de Persia, permite que los judíos exiliados regresen a Jerusalén.",
+          "biblicalReference": "Esdras 1",
+          "imagePath": "assets/images/timeline/decreto-ciro.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "segundo-templo",
+          "numericYear": -516,
+          "isIndefiniteDate": false,
+          "displayDate": "516 a.C.",
+          "title": "La Conclusión del Segundo Templo",
+          "description": "El nuevo templo es finalizado en Jerusalén bajo el liderazgo de Zorobabel.",
+          "biblicalReference": "Esdras 6",
+          "imagePath": "assets/images/timeline/segundo-templo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "historia-ester",
+          "numericYear": -479,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 479 a.C.",
+          "title": "Ester Salva al Pueblo Judío",
+          "description": "La reina Ester arriesga su propia vida para frustrar el plan de genocidio armado por Amán.",
+          "biblicalReference": "Ester 7-8",
+          "imagePath": "assets/images/timeline/ester.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "muros-neemias",
+          "numericYear": -444,
+          "isIndefiniteDate": false,
+          "displayDate": "444 a.C.",
+          "title": "La Reconstrucción de los Muros",
+          "description": "Nehemías lidera la rápida reconstrucción de las murallas de Jerusalén en solo 52 días.",
+          "biblicalReference": "Nehemías 6",
+          "imagePath": "assets/images/timeline/neemias.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "vida-de-cristo",
+      "title": "La Vida de Cristo",
+      "order": 8,
+      "colorTheme": "indigo",
+      "events": [
+        {
+          "id": "nascimento-jesus",
+          "numericYear": -4,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 4 a.C.",
+          "title": "El Nacimiento de Jesús",
+          "description": "Jesús nace en Belén de Judea, cumpliendo las profecías mesiánicas, y es visitado por pastores y magos.",
+          "biblicalReference": "Lucas 2 / Mateo 2",
+          "imagePath": "assets/images/timeline/nascimento-jesus.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "fuga-egito",
+          "numericYear": -3,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 3 a.C.",
+          "title": "La Huida a Egipto",
+          "description": "Avisado por un ángel, José huye con María y el niño Jesús a Egipto, escapando de la masacre ordenada por Herodes.",
+          "biblicalReference": "Mateo 2:13-23",
+          "imagePath": "assets/images/timeline/fuga-egito.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "batismo-jesus",
+          "numericYear": 26,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 26 d.C.",
+          "title": "El Bautismo de Jesús",
+          "description": "Jesús es bautizado por Juan el Bautista en el río Jordán, y el Espíritu Santo desciende sobre Él en forma de paloma.",
+          "biblicalReference": "Mateo 3:13-17",
+          "imagePath": "assets/images/timeline/batismo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "tentacao-deserto",
+          "numericYear": 26,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 26 d.C.",
+          "title": "La Tentación en el Desierto",
+          "description": "Después de ayunar 40 días, Jesús es tentado por el diablo en el desierto y vence usando la Palabra de Dios.",
+          "biblicalReference": "Lucas 4",
+          "imagePath": "assets/images/timeline/tentacao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "bodas-cana",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 27 d.C.",
+          "title": "El Primer Milagro en Caná",
+          "description": "Durante una fiesta de bodas, Jesús realiza su primer milagro público, transformando el agua en vino.",
+          "biblicalReference": "Juan 2:1-11",
+          "imagePath": "assets/images/timeline/bodas-cana.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "nicodemos",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 27 d.C.",
+          "title": "El Encuentro con Nicodemo",
+          "description": "Jesús enseña al fariseo Nicodemo sobre la necesidad de nacer de nuevo en el Espíritu.",
+          "biblicalReference": "Juan 3",
+          "imagePath": "assets/images/timeline/nicodemos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "mulher-samaritana",
+          "numericYear": 27,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 27 d.C.",
+          "title": "La Mujer Samaritana en el Pozo",
+          "description": "Jesús rompe las barreras sociales al pedir agua a una samaritana, revelándose a ella como el Agua Viva y el Mesías.",
+          "biblicalReference": "Juan 4",
+          "imagePath": "assets/images/timeline/samaritana.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "sermao-monte",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 28 d.C.",
+          "title": "El Sermón del Monte",
+          "description": "Jesús enseña los fundamentos del Reino de Dios, pronunciando las Bienaventuranzas y la oración del Padre Nuestro.",
+          "biblicalReference": "Mateo 5-7",
+          "imagePath": "assets/images/timeline/sermao-monte.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "pesca-maravilhosa",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 28 d.C.",
+          "title": "La Pesca Milagrosa",
+          "description": "Después de una noche sin peces, Pedro obedece a Jesús y las redes se rompen con la abundancia. Jesús los llama para ser 'pescadores de hombres'.",
+          "biblicalReference": "Lucas 5:1-11",
+          "imagePath": "assets/images/timeline/pesca-maravilhosa.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "paralitico-cafarnaum",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 28 d.C.",
+          "title": "La Sanidad del Paralítico por el Techo",
+          "description": "Cuatro amigos abren un agujero en el techo para llegar a Jesús, quien perdona los pecados del hombre y lo hace caminar.",
+          "biblicalReference": "Marcos 2:1-12",
+          "imagePath": "assets/images/timeline/paralitico-telhado.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "filha-jairo-mulher-fluxo",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 28 d.C.",
+          "title": "La Hija de Jairo y la Mujer con el Flujo de Sangre",
+          "description": "En el camino para resucitar a la hija del líder de la sinagoga, Jesús sana a una mujer que tocó el borde de su manto con fe.",
+          "biblicalReference": "Marcos 5:21-43",
+          "imagePath": "assets/images/timeline/filha-jairo.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "tempestade-acalmada",
+          "numericYear": 28,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 28 d.C.",
+          "title": "Jesús Calma la Tormenta",
+          "description": "Los discípulos se desesperan durante un fuerte temporal en el Mar de Galilea, pero Jesús reprende a los vientos y al mar con una palabra.",
+          "biblicalReference": "Marcos 4:35-41",
+          "imagePath": "assets/images/timeline/tempestade.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "multiplicacao-paes",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 29 d.C.",
+          "title": "La Multiplicación de los Panes",
+          "description": "Jesús alimenta milagrosamente a una multitud de cinco mil hombres con solo cinco panes y dos peces.",
+          "biblicalReference": "Juan 6:1-14",
+          "imagePath": "assets/images/timeline/multiplicacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "anda-sobre-aguas",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 29 d.C.",
+          "title": "Jesús Camina sobre las Aguas",
+          "description": "Durante la noche, Jesús va al encuentro de los discípulos caminando sobre el mar. Pedro intenta ir hacia Él, pero se hunde al dudar.",
+          "biblicalReference": "Mateo 14:22-33",
+          "imagePath": "assets/images/timeline/anda-aguas.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "transfiguracao",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 29 d.C.",
+          "title": "La Transfiguración",
+          "description": "Jesús es transfigurado en el monte delante de Pedro, Santiago y Juan, revelando Su gloria, mientras conversa con Moisés y Elías.",
+          "biblicalReference": "Mateo 17:1-8",
+          "imagePath": "assets/images/timeline/transfiguracao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "mulher-adultera",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 29 d.C.",
+          "title": "La Mujer Sorprendida en Adulterio",
+          "description": "Jesús confronta a los acusadores de la mujer diciendo: 'El que de vosotros esté sin pecado sea el primero en arrojar la piedra'.",
+          "biblicalReference": "Juan 8:1-11",
+          "imagePath": "assets/images/timeline/adultera.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "bom-samaritano",
+          "numericYear": 29,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 29 d.C.",
+          "title": "La Parábola del Buen Samaritano",
+          "description": "Para explicar quién es nuestro prójimo, Jesús cuenta la historia del hombre herido en el camino que es socorrido por un samaritano.",
+          "biblicalReference": "Lucas 10:25-37",
+          "imagePath": "assets/images/timeline/bom-samaritano.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "filho-prodigo",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 30 d.C.",
+          "title": "La Parábola del Hijo Pródigo",
+          "description": "Jesús ilustra la gracia de Dios a través de la historia del hijo rebelde que regresa a los brazos del padre amoroso.",
+          "biblicalReference": "Lucas 15:11-32",
+          "imagePath": "assets/images/timeline/filho-prodigo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ressurreicao-lazaro",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 30 d.C.",
+          "title": "La Resurrección de Lázaro",
+          "description": "Jesús llora la muerte de su amigo y lo resucita, llamándolo fuera de la tumba después de cuatro días de sepultado.",
+          "biblicalReference": "Juan 11",
+          "imagePath": "assets/images/timeline/lazaro.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "encontro-zaqueu",
+          "numericYear": 30,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 30 d.C.",
+          "title": "El Encuentro con Zaqueo",
+          "description": "El recaudador de impuestos sube a un árbol para ver a Jesús pasar. Jesús se hospeda en su casa, trayendo salvación y arrepentimiento.",
+          "biblicalReference": "Lucas 19:1-10",
+          "imagePath": "assets/images/timeline/zaqueu.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "entrada-triunfal",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C. (Domingo de Ramos)",
+          "title": "La Entrada Triunfal",
+          "description": "Jesús entra en Jerusalén montado en un burrito, aclamado por la multitud con ramas de palmeras y gritos de 'Hosanna'.",
+          "biblicalReference": "Mateo 21",
+          "imagePath": "assets/images/timeline/entrada-triunfal.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "purificacao-templo",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "La Purificación del Templo",
+          "description": "Tomado por el celo, Jesús expulsa a los cambistas y vendedores que hacían de la Casa de Dios una cueva de ladrones.",
+          "biblicalReference": "Marcos 11:15-19",
+          "imagePath": "assets/images/timeline/purificacao-templo.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "ultima-ceia",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "La Última Cena y el Lavatorio de los Pies",
+          "description": "Jesús lava los pies de los discípulos, instituye el Nuevo Pacto del pan y del cáliz y advierte sobre la traición de Judas.",
+          "biblicalReference": "Juan 13 / Lucas 22",
+          "imagePath": "assets/images/timeline/ultima-ceia.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "getsemani-prisao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "Agonía en Getsemaní y el Arresto",
+          "description": "Jesús ora angustiado en el huerto hasta sudar sangre. Es traicionado con un beso por Judas y arrestado por los guardias.",
+          "biblicalReference": "Mateo 26:36-56",
+          "imagePath": "assets/images/timeline/getsemani.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "julgamento-pilatos",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "El Juicio ante Pilato",
+          "description": "Jesús es llevado ante el gobernador romano Poncio Pilato, sufre la flagelación, y la multitud elige liberar a Barrabás.",
+          "biblicalReference": "Juan 18-19",
+          "imagePath": "assets/images/timeline/pilatos.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "crucificacao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "La Crucifixión en el Calvario",
+          "description": "Jesús carga la cruz y es crucificado entre dos ladrones. Pronuncia sus últimas palabras y entrega el espíritu.",
+          "biblicalReference": "Lucas 23 / Juan 19",
+          "imagePath": "assets/images/timeline/crucificacao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "ressurreicao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "La Tumba Vacía y la Resurrección",
+          "description": "Las mujeres encuentran la tumba vacía. Jesús resucita victorioso al tercer día y se aparece a María Magdalena.",
+          "biblicalReference": "Juan 20",
+          "imagePath": "assets/images/timeline/ressurreicao.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "caminho-emaus",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "Los Discípulos de Emaús",
+          "description": "El Cristo resucitado camina con dos discípulos en el camino y les revela las Escrituras, siendo reconocido solo al partir el pan.",
+          "biblicalReference": "Lucas 24:13-35",
+          "imagePath": "assets/images/timeline/emaus.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "ascensao",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "La Ascensión a los Cielos",
+          "description": "Después de 40 días instruyendo a los discípulos, Jesús asciende gloriosamente a los cielos ante sus ojos, prometiendo regresar.",
+          "biblicalReference": "Hechos 1:9-11",
+          "imagePath": "assets/images/timeline/ascensao.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    },
+    {
+      "id": "igreja-primitiva",
+      "title": "La Iglesia Primitiva",
+      "order": 9,
+      "colorTheme": "violet",
+      "events": [
+        {
+          "id": "pentecostes",
+          "numericYear": 33,
+          "isIndefiniteDate": false,
+          "displayDate": "33 d.C.",
+          "title": "El Día de Pentecostés",
+          "description": "El Espíritu Santo es derramado sobre los apóstoles; Pedro predica y casi tres mil personas son bautizadas.",
+          "biblicalReference": "Hechos 2",
+          "imagePath": "assets/images/timeline/pentecostes.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "estevao-martir",
+          "numericYear": 34,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 34 d.C.",
+          "title": "El Apedreamiento de Esteban",
+          "description": "Esteban, lleno de gracia y poder, se convierte en el primer mártir cristiano al ser apedreado en Jerusalén.",
+          "biblicalReference": "Hechos 7",
+          "imagePath": "assets/images/timeline/estevao.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "conversao-paulo",
+          "numericYear": 35,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 35 d.C.",
+          "title": "La Conversión de Saulo",
+          "description": "En el camino a Damasco, el perseguidor Saulo tiene un encuentro con el Cristo resucitado y se convierte en el apóstol Pablo.",
+          "biblicalReference": "Hechos 9",
+          "imagePath": "assets/images/timeline/conversao-paulo.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "concilio-jerusalem",
+          "numericYear": 50,
+          "isIndefiniteDate": false,
+          "displayDate": "50 d.C.",
+          "title": "El Concilio de Jerusalén",
+          "description": "Los líderes de la iglesia se reúnen para decidir que los gentiles convertidos no necesitan seguir todas las leyes judías.",
+          "biblicalReference": "Hechos 15",
+          "imagePath": "assets/images/timeline/concilio.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "paulo-atenas",
+          "numericYear": 51,
+          "isIndefiniteDate": false,
+          "displayDate": "Cerca de 51 d.C.",
+          "title": "Pablo en el Areópago de Atenas",
+          "description": "Durante sus viajes misioneros, Pablo predica a los filósofos griegos sobre el 'Dios no conocido'.",
+          "biblicalReference": "Hechos 17:16-34",
+          "imagePath": "assets/images/timeline/paulo-atenas.jpg",
+          "isMajorEvent": false
+        },
+        {
+          "id": "incendio-roma",
+          "numericYear": 64,
+          "isIndefiniteDate": false,
+          "displayDate": "64 - 67 d.C.",
+          "title": "Persecución y Martirio",
+          "description": "El emperador Nerón culpa a los cristianos por el gran incendio de Roma, desencadenando severas persecuciones donde Pedro y Pablo son martirizados.",
+          "biblicalReference": "Historia de la Iglesia",
+          "imagePath": "assets/images/timeline/persecucao-roma.jpg",
+          "isMajorEvent": true
+        },
+        {
+          "id": "destruicao-templo",
+          "numericYear": 70,
+          "isIndefiniteDate": false,
+          "displayDate": "70 d.C.",
+          "title": "La Destrucción de Jerusalén",
+          "description": "El ejército romano, liderado por Tito, sitia Jerusalén y destruye completamente el Segundo Templo, como Jesús había profetizado.",
+          "biblicalReference": "Mateo 24:1-2 / Historia",
+          "imagePath": "assets/images/timeline/destruicao-templo.jpg",
+          "isMajorEvent": true
+        }
+      ]
+    }
+  ]
+}
