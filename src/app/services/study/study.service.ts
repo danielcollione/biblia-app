@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, timeout } from 'rxjs';
 import { AuthService } from '../auth/auth';
 import { XpPopupService } from '../xp-popup.service';
 
@@ -40,10 +40,11 @@ export class StudyService {
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     });
     return this.http.post<StudyResponseDto>(this.apiUrl, request, { headers }).pipe(
+      timeout(30000),
       tap(() => {
         this.xpPopupService.showXp(1000);
         this.authService.refreshUserProfileFromServer();
-      })
+      }),
     );
   }
 }
