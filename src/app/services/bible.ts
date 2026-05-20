@@ -444,4 +444,34 @@ export class BibleService {
       .replace(/^-+|-+$/g, '')
       .slice(0, 80);
   }
+
+  async getVerseText(
+    bookName: string,
+    chapterNumber: number,
+    verseNumber: number,
+  ): Promise<string | null> {
+    if (!this.dbPromise) return null;
+
+    const db = await this.dbPromise;
+    const version = this.versionService.getCurrentVersion();
+    const biblia = await db.get('versoes', version.id);
+
+    if (!biblia) return null;
+
+    const livro = biblia.find((l: any) => l.name === bookName);
+    if (!livro) return null;
+
+    // O back-end manda 1-based (Ex: Gênesis 1:1), mas o array do JSON é 0-based
+    const chapterIndex = chapterNumber - 1;
+    const verseIndex = verseNumber - 1;
+
+    const chapter = livro.chapters[chapterIndex];
+
+    // Valida se o capítulo e o versículo realmente existem naquele array
+    if (chapter && chapter[verseIndex]) {
+      return chapter[verseIndex];
+    }
+
+    return null;
+  }
 }

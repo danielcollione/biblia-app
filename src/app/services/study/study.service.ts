@@ -41,7 +41,7 @@ export class StudyService {
     });
     return this.http.post<StudyResponseDto>(this.apiUrl, request, { headers }).pipe(
       tap(() => {
-        this.xpPopupService.showXp(1000, 'Estudo gerado');
+        this.xpPopupService.showXp(1000);
         this.authService.refreshUserProfileFromServer();
       })
     );

@@ -1,0 +1,679 @@
+/* --- Variáveis de Tema do Deck --- */
+$bg-dark: #0a0a0a;
+$gold-light: #e6c07a;
+$gold-dark: #8c7360;
+$silver-blue: #9eb6c7;
+$silver-dark: #4a5c68;
+
+.learning-deck-container {
+  padding: 32px;
+  min-height: 100vh;
+  color: #fff;
+  font-family: 'Cinzel', serif;
+}
+
+/* --- Cabeçalho --- */
+.prayers-hero {
+  margin-bottom: 50px;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  padding-top: 56px;
+  animation: fadeIn 0.5s ease forwards;
+  h1 {
+    font-size: 2.5rem;
+    color: #fff;
+    margin: 0.5rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  .subtitle {
+    color: #cfab6a;
+    font-size: 1rem;
+    opacity: 0.8;
+  }
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: #d3ab63;
+  font-family: 'Cinzel', serif;
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.subtitle {
+  margin: 10px 0 0;
+  max-width: 54rem;
+  color: #bdb19d;
+  line-height: 1.6;
+}
+
+/* --- Grid do Deck --- */
+.deck-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 40px;
+  padding: 40px 20px;
+  align-items: start;
+  perspective: 1200px;
+}
+
+/* ========================================= */
+/* A MAGIA: A CARTA RPG - VERSÃO FLUTUANTE  */
+/* ========================================= */
+.rpg-card {
+  position: relative;
+  /* CORREÇÃO DO MOBILE: Impede que o padding aumente a largura total da carta */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 220px;
+  height: 330px;
+  margin: 0 auto;
+  background: #111;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px;
+
+  /* 1. Estado Base: Totalmente visível e relaxado */
+  opacity: 1;
+  transform: translateY(0);
+
+  /* 2. O Segredo: 'backwards' aplica a animação antes, mas solta o card no final */
+  animation: cardEntranceSmooth 0.4s ease-out backwards;
+
+  /* 3. Tempo aumentado para 0.8s para uma flutuação bem lenta e majestosa */
+  transition:
+    transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (hover: hover) {
+  .rpg-card:hover {
+    /* CORREÇÃO DO HOVER: !important quebra a trava do 'forwards' da animação inicial */
+    transform: translateY(-10px) !important;
+    z-index: 10;
+  }
+
+  .rpg-card.card-highlight:hover {
+    .card-inner-glow {
+      border-color: rgba(230, 192, 122, 0.3);
+    }
+  }
+
+  .rpg-card.card-comment:hover {
+    .card-inner-glow {
+      border-color: rgba(158, 182, 199, 0.3);
+    }
+  }
+}
+
+/* --- FEEDBACK TÁTIL PARA CELULAR (E CLIQUE NO PC) --- */
+.rpg-card:active {
+  transform: scale(0.96) !important;
+  transition:
+    transform 0.1s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.1s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.9);
+}
+
+/* Efeito de borda interna metálica/luz */
+.card-inner-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 1;
+  transition: border-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- Estilos Específicos por Tipo (Cores e Sombras Suaves) --- */
+
+/* 1. Carta de Marcação (Highlight) */
+.rpg-card.card-highlight {
+  background: linear-gradient(145deg, #181512 0%, #0d0b0a 100%);
+  border: 1px solid rgba(230, 192, 122, 0.2);
+
+  &:hover {
+    .card-inner-glow {
+      border-color: rgba(230, 192, 122, 0.3);
+    }
+  }
+
+  .card-icon-emblem svg {
+    color: $gold-light;
+  }
+  .card-type-label {
+    color: $gold-light;
+  }
+}
+
+/* 2. Carta de Anotação (Comment) */
+.rpg-card.card-comment {
+  background: linear-gradient(145deg, #101418 0%, #080a0c 100%);
+  border: 1px solid rgba(158, 182, 199, 0.2);
+
+  &:hover {
+    .card-inner-glow {
+      border-color: rgba(158, 182, 199, 0.3);
+    }
+  }
+
+  .card-icon-emblem svg {
+    color: $silver-blue;
+  }
+  .card-type-label {
+    color: $silver-blue;
+  }
+}
+
+/* --- Demais elementos mantidos --- */
+
+.btn-delete-card {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #888;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(255, 50, 50, 0.2);
+    color: #ff5555;
+    border-color: #ff5555;
+  }
+}
+
+.card-icon-emblem {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  position: relative;
+  z-index: 2;
+
+  svg {
+    width: 36px;
+    height: 36px;
+    filter: drop-shadow(0 0 10px currentColor);
+    opacity: 0.9;
+  }
+}
+
+.card-content {
+  text-align: center;
+  z-index: 2;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 12px;
+}
+
+.card-type-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  font-weight: 600;
+  opacity: 0.8;
+}
+
+.card-book {
+  font-size: 1.4rem;
+  margin: 0;
+  color: #fff;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+}
+
+.card-reference {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #aaa;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.verse-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 16px;
+  z-index: 2;
+  font-family: 'Inter', sans-serif;
+}
+
+.language-badge {
+  font-size: 0.7rem;
+  color: #777;
+  letter-spacing: 1px;
+}
+
+.action-hint {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.rpg-card:hover .action-hint {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========================================= */
+/* ANIMAÇÕES & LOADERS                       */
+/* ========================================= */
+
+@keyframes cardEntranceSmooth {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.deck-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 40vh;
+  color: $gold-light;
+
+  .runa-giratoria {
+    width: 40px;
+    height: 40px;
+    border: 2px solid rgba(230, 192, 122, 0.2);
+    border-top-color: $gold-light;
+    border-radius: 50%;
+    animation: spinRune 1s infinite linear;
+    margin-bottom: 20px;
+  }
+}
+
+@keyframes spinRune {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.empty-deck {
+  text-align: center;
+  color: #666;
+  padding: 60px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* ========================================= */
+/* MOBILE / RESPONSIVO                       */
+/* ========================================= */
+@media (max-width: 768px) {
+  .learning-deck-container {
+    padding: 20px 15px;
+  }
+
+  .deck-grid {
+    /* CORREÇÃO DO MOBILE: Força 2 colunas seguras em vez de tentar calcular, evitando estourar a tela */
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .rpg-card {
+    max-width: 100%;
+    height: 250px;
+    padding: 12px;
+  }
+
+  /* Ajuste do Cabeçalho no Mobile */
+  .deck-header {
+    margin-bottom: 40px;
+    gap: 12px;
+
+    .deck-subtitle {
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      line-height: 1.5;
+    }
+
+    .main-title {
+      font-size: 2.2rem;
+    }
+  }
+
+  .card-book {
+    font-size: 1.1rem;
+  }
+
+  .card-icon-emblem svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .btn-delete-card {
+    top: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* ========================================= */
+/* MODAL MÍSTICA DA CARTA ABERTA             */
+/* ========================================= */
+
+.mystic-modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px) grayscale(50%);
+
+  /* O SEGREDO AQUI: Um z-index colossal para passar por cima da Navbar */
+  z-index: 99999;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  box-sizing: border-box;
+  animation: fadeInBackdrop 0.4s ease forwards;
+}
+
+@keyframes fadeInBackdrop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.mystic-modal-card {
+  position: relative;
+  box-sizing: border-box; /* O SEGREDO 1: A borda direita nunca mais vai sumir */
+  width: 100%;
+  max-width: 480px;
+  max-height: 85vh; /* O SEGREDO 2: A carta NUNCA será maior que a tela do celular */
+  background: #0f0f0f;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto; /* O SEGREDO 3: A rolagem acontece DENTRO da carta */
+
+  opacity: 0;
+  transform: scale(0.85) translateY(30px);
+  filter: brightness(1.5);
+  animation: revealModal 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes revealModal {
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: brightness(1);
+  }
+}
+
+.modal-inner-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid;
+  border-radius: 16px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.mystic-modal-card.modal-highlight {
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.9),
+    inset 0 0 80px rgba(230, 192, 122, 0.1);
+  border: 1px solid rgba(230, 192, 122, 0.3);
+  .modal-inner-glow {
+    border-color: rgba(230, 192, 122, 0.2);
+  }
+  .modal-label,
+  .ai-sparkle {
+    color: #e6c07a;
+  }
+}
+
+.mystic-modal-card.modal-comment {
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.9),
+    inset 0 0 80px rgba(158, 182, 199, 0.1);
+  border: 1px solid rgba(158, 182, 199, 0.3);
+  .modal-inner-glow {
+    border-color: rgba(158, 182, 199, 0.2);
+  }
+  .modal-label,
+  .ai-sparkle {
+    color: #9eb6c7;
+  }
+}
+
+/* Botão Fechar Modal - AGORA ELE NUNCA SOME */
+.btn-close-modal {
+  position: sticky; /* Ele vai ficar "grudado" no topo mesmo que você role a tela */
+  top: 0px;
+  align-self: flex-end; /* Joga ele pro canto direito */
+  margin-bottom: -36px; /* Impede dele empurrar o cabeçalho pra baixo */
+  background: rgba(0, 0, 0, 0.8); /* Um pouco mais escuro para garantir leitura */
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #aaa;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  transition: 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transform: rotate(90deg);
+  }
+}
+
+/* Cabeçalho da Modal */
+.modal-header {
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 10px; /* Dá um respiro para o botão flutuante acima */
+  z-index: 2;
+
+  .modal-label {
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  h2 {
+    font-size: 2.2rem;
+    margin: 8px 0;
+    color: #fff;
+    font-weight: 400;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+  .modal-reference {
+    font-size: 0.9rem;
+    color: #aaa;
+    font-family: sans-serif;
+  }
+  .modal-verse-badge {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-left: 8px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Corpo do Texto */
+.modal-body-content {
+  flex-grow: 1;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+
+  .scripture-text {
+    font-size: 1.25rem;
+    line-height: 1.8;
+    color: #e8e8e8;
+    text-align: center;
+    font-style: italic;
+  }
+  .user-comment-text {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #d4d4d4;
+    font-family: sans-serif;
+  }
+}
+
+/* Insight da IA */
+.modal-ai-insight {
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 20px;
+  z-index: 2;
+
+  .ai-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: #fff;
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  .ai-header.header-error {
+    color: #ff6b6b;
+    .ai-sparkle {
+      color: #ff6b6b;
+    }
+  }
+
+  .ai-content-wrapper {
+    position: relative;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .dust-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 1;
+    transition: opacity 1s ease-in-out;
+  }
+
+  .dust-canvas.fade-out {
+    opacity: 0;
+  }
+
+  /* O Texto da IA brotando (Estado Padrão) */
+  .ai-text-reveal {
+    position: relative;
+    z-index: 2;
+    margin: 0;
+    font-family: sans-serif;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #bbb; /* Cor padrão cinza claro para sucesso */
+
+    /* Garante que comece invisível e chame a animação certa */
+    opacity: 0;
+    animation: fadeTextIn 0.8s ease-out forwards;
+  }
+
+  /* O Texto da IA (Estado de Erro) */
+  .ai-text-reveal.text-error {
+    /* Substitui a cor padrão pelo vermelho sem brigar com a animação */
+    color: #ff8888;
+    text-shadow: 0 0 10px rgba(255, 100, 100, 0.2);
+  }
+
+  /* Animação limpa: só mexe na opacidade e no movimento */
+  @keyframes fadeTextIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* ========================================= */
+/* MOBILE APENAS PARA FONTES                 */
+/* ========================================= */
+@media (max-width: 768px) {
+  /* No celular, a gente só diminui a fonte. O comportamento da caixa já está resolvido acima! */
+  .modal-header h2 {
+    font-size: 1.8rem;
+  }
+  .modal-body-content .scripture-text {
+    font-size: 1.1rem;
+  }
+}

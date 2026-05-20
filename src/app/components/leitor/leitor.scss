@@ -186,6 +186,7 @@
 }
 
 .livro-prime {
+  position: relative;
   width: 92%;
   max-width: 1300px;
   // Usamos max-height em vez de height fixo para dar flexibilidade
@@ -973,4 +974,531 @@
   padding: 50px;
   opacity: 0.7;
   letter-spacing: 2px;
+}
+
+.ferramenta-marca-texto {
+  position: absolute;
+  top: 45px; /* Mais para cima no PC */
+  right: 65px; /* Mais para a esquerda no PC */
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-ferramenta {
+  background: transparent;
+  border: 1px solid rgba(74, 55, 40, 0.3); /* Borda sutil cor do tema */
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease;
+  color: #4a3728; /* Cor da tinta do icone */
+}
+
+.btn-ferramenta:hover {
+  background: rgba(74, 55, 40, 0.05);
+  transform: scale(1.05);
+}
+
+.btn-ferramenta.ativo {
+  background: #4a3728;
+  color: #fce83a;
+  border-color: #4a3728;
+  box-shadow: 0 0 10px rgba(74, 55, 40, 0.3);
+}
+
+/* ... mantenha a .paleta-cores-fixa igual estava antes ... */
+
+/* --- Efeito Suave do Grifo (Renderizado pelo Pipe) --- */
+::ng-deep mark.grifo-suave {
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 2px;
+  background-color: var(--cor-fundo);
+  animation: fadeInHighlight 0.6s ease-out forwards;
+}
+
+.paleta-cores-fixa {
+  position: absolute;
+  top: 56px;
+  right: 50%;
+  transform: translateX(50%);
+
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  background: rgba(250, 246, 238, 0.9);
+  padding: 8px 10px;
+  border-radius: 30px;
+  border: 1px solid rgba(74, 55, 40, 0.15);
+  box-shadow: 0 4px 12px rgba(74, 55, 40, 0.1);
+  backdrop-filter: blur(4px);
+
+  /* Usando a nova animação específica para a paleta */
+  animation: fadeInDownPaleta 0.2s ease-out forwards;
+}
+
+/* Bolinhas de Cor */
+.paleta-cores-fixa .color-btn {
+  appearance: none; /* Mata o estilo feio padrão do navegador */
+  -webkit-appearance: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50% !important; /* Força ser um círculo */
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5); /* Efeito 3D premium (brilho interno) */
+}
+
+.paleta-cores-fixa .color-btn:hover {
+  transform: scale(1.2); /* Cresce ao passar o mouse */
+  border-color: rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInHighlight {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: var(--cor-fundo);
+  }
+}
+
+@keyframes fadeInDownPaleta {
+  from {
+    opacity: 0;
+    transform: translate(50%, -10px); /* Mantém o X em 50% e joga 10px pra cima */
+  }
+  to {
+    opacity: 1;
+    transform: translate(50%, 0); /* Mantém o X em 50% na posição final */
+  }
+}
+
+@keyframes fadeInHighlight {
+  0% {
+    background-color: transparent;
+  }
+  100% {
+    background-color: var(--cor-fundo);
+  }
+}
+
+::ng-deep .modo-grifo-ativo,
+::ng-deep .modo-grifo-ativo * {
+  /* Novo cursor convertido em Base64 com o formato do marca-texto! */
+  cursor:
+    url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSIjZmNlODNhIiBzdHJva2U9IiM0YTM3MjgiIHN0cm9rZS13aWR0aD0iMS41Ij48cGF0aCBkPSJtOSAxMS02IDZ2M2g5bDMtMyIvPjxwYXRoIGQ9Im0yMiAxMi00LjYgNC42YTIgMiAwIDAgMS0yLjggMGwtNS4yLTUuMmEyIDIgMCAwIDEgMC0yLjhMMTQgNCIvPjwvc3ZnPg==')
+      2 22,
+    text !important;
+
+  -webkit-user-select: text !important;
+  user-select: text !important;
+}
+
+/* Ajuste específico para Telas Menores (Mobile) */
+@media (max-width: 768px) {
+  .ferramenta-marca-texto {
+    top: 20px;
+    right: 40px;
+  }
+
+  .paleta-cores-fixa {
+    /* No celular, ancora a paleta na direita do botão em vez de centralizar */
+    right: 0;
+    transform: none;
+
+    /* Troca a animação para uma que não force o eixo X para 50% */
+    animation: fadeInDownMobile 0.2s ease-out forwards;
+  }
+}
+
+/* --- NOVA ANIMAÇÃO SÓ PRO MOBILE --- */
+@keyframes fadeInDownMobile {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ======================================================= */
+/* NOVOS ESTILOS: NOTA/ANOTAÇÃO DO CAPÍTULO                */
+/* ======================================================= */
+
+/* Wrapper do botão de nota (Posicionado à esquerda do marca-texto) */
+.ferramenta-nota-wrapper {
+  position: absolute;
+  top: 45px;
+  /* 65px (do marca-texto) + 44px (botão) + 11px (espaço) = 120px */
+  right: 120px;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Alinhamento Mobile para o botão de nota */
+@media (max-width: 768px) {
+  .ferramenta-nota-wrapper {
+    top: 20px;
+    /* 40px (do marca-texto mobile) + 44px (botão) + 11px (espaço) = 95px */
+    right: 95px;
+  }
+}
+
+/* Estado visual quando existe uma nota salva neste capítulo */
+.btn-ferramenta.tem-nota {
+  background: rgba(74, 55, 40, 0.08);
+  border-color: #4a3728;
+  color: #4a3728;
+}
+
+/* --- Balão de Hover da Anotação --- */
+.tooltip-nota-elegante {
+  position: absolute;
+  top: 56px;
+  right: 0;
+  width: 250px;
+  max-height: 120px;
+  background: rgba(250, 246, 238, 0.95);
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(74, 55, 40, 0.15);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(5px);
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+  pointer-events: none;
+  z-index: 60;
+}
+
+.ferramenta-nota-wrapper:hover .tooltip-nota-elegante {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.tooltip-nota-elegante .tooltip-titulo {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #8c7360;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
+
+.tooltip-nota-elegante p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #333;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* --- ESTILOS DO MODAL DE NOTA --- */
+.modal-nota-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 10, 5, 0.5); /* Fundo um pouco mais escuro/sóbrio */
+  backdrop-filter: blur(4px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Mantém apenas um fade ultra-rápido no fundo para não piscar seco */
+  animation: simpleFadeIn 0.15s ease-out;
+}
+
+@keyframes simpleFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modal-nota-content {
+  background: #faf6ee;
+  width: 90%;
+  max-width: 560px;
+  border-radius: 20px; /* Bordas mais suaves */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35); /* Sombra difusa estilo macOS */
+  border: 1px solid rgba(74, 55, 40, 0.1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* Faz o conteúdo respeitar as bordas arredondadas */
+
+  /* ANIMAÇÃO ZUADA REMOVIDA DAQUI! Agora abre limpo. */
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 28px 16px 28px;
+}
+
+.modal-header h3 {
+  margin: 0;
+  color: #35261b;
+  font-family: inherit;
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.btn-fechar {
+  background: transparent;
+  border: none;
+  font-size: 28px;
+  color: #a39183;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.btn-fechar:hover {
+  background: rgba(74, 55, 40, 0.08);
+  color: #4a3728;
+}
+
+.modal-nota-content textarea {
+  width: 100%;
+  height: 220px;
+  padding: 0 28px;
+  border: none; /* O segredo da elegância: sem borda de formulário! */
+  background: transparent;
+  font-family: inherit;
+  font-size: 1.05rem;
+  color: #2c1e13;
+  resize: none;
+  outline: none;
+  line-height: 1.7;
+}
+
+.modal-nota-content textarea::placeholder {
+  color: #b5a79c;
+  font-style: italic;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 28px 24px 28px;
+  /* Um degradê bem sutil caso o texto passe por baixo dos botões */
+  background: linear-gradient(to top, rgba(250, 246, 238, 1) 70%, rgba(250, 246, 238, 0) 100%);
+}
+
+.btn-cancelar {
+  padding: 10px 20px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #8c7360;
+  font-size: 0.95rem;
+  transition:
+    background 0.2s,
+    color 0.2s;
+}
+
+.btn-cancelar:hover {
+  background: rgba(74, 55, 40, 0.08);
+  color: #4a3728;
+}
+
+.btn-salvar {
+  padding: 10px 24px;
+  background: #4a3728;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 10px rgba(74, 55, 40, 0.2);
+  transition: all 0.2s ease;
+
+  /* Adicionado para alinhar o spinner */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 155px; /* Evita que o botão encolha/estique muito ao trocar o texto */
+}
+
+/* Comportamento normal do hover (só se NÃO estiver disabled) */
+.btn-salvar:not(:disabled):hover {
+  background: #35261b;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(74, 55, 40, 0.3);
+}
+
+/* Visual do botão quando está carregando (disabled) */
+.btn-salvar:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* O anel giratório elegante feito com CSS puro */
+.loader-anel {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3); /* Anel transparente base */
+  border-top-color: #ffffff; /* Parte branca que vai girar */
+  border-radius: 50%;
+  animation: girar-loader 0.8s linear infinite;
+}
+
+@keyframes girar-loader {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-ferramenta:disabled {
+  opacity: 0.4;
+  cursor: wait; /* Mouse de "aguarde" */
+  background: rgba(74, 55, 40, 0.03);
+  border-color: rgba(74, 55, 40, 0.1);
+  color: rgba(74, 55, 40, 0.3);
+  transform: none; /* Anula o scale de crescer */
+  box-shadow: none;
+}
+
+/* --- Balão de Hover "Carregando" --- */
+.tooltip-carregando {
+  position: absolute;
+  top: 56px; /* Alinhado perfeitamente com os outros modais/paletas */
+  right: 0;
+  white-space: nowrap; /* Não quebra linha, fica esticado bonitinho */
+  background: rgba(44, 30, 19, 0.9); /* Um marrom bem escuro e premium */
+  color: #faf6ee; /* Letra clara da cor do livro */
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  pointer-events: none;
+  z-index: 70;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+  /* Escondido por padrão */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+}
+
+/* Aciona o balão ao passar o mouse sobre os wrappers, mesmo com botão disabled */
+.ferramenta-nota-wrapper:hover .tooltip-carregando,
+.ferramenta-marca-texto:hover .tooltip-carregando {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ========================================= */
+/* TOOLTIP PREMIUM (Bloqueio do Sábio)       */
+/* ========================================= */
+
+.tooltip-premium-lock {
+  position: absolute;
+  top: 56px; /* Alinhado exatamente como a sua paleta e notas */
+  right: 0;
+  width: 250px;
+  background: linear-gradient(145deg, #181512 0%, #0a0808 100%);
+  border: 1px solid rgba(230, 192, 122, 0.4);
+  border-radius: 12px;
+  padding: 14px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.9);
+  z-index: 90;
+  pointer-events: none;
+
+  /* Estado Inicial (Escondido e ligeiramente para cima) */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-5px);
+  transition: all 0.2s ease;
+
+  .lock-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #e6c07a;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+  }
+
+  .lock-body {
+    color: #bbb;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    margin: 0;
+    text-align: left;
+  }
+}
+
+/* O Gatilho: Ao passar o mouse, ele aparece na mesma hora */
+.ferramenta-nota-wrapper:hover .tooltip-premium-lock,
+.ferramenta-marca-texto:hover .tooltip-premium-lock {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
 }

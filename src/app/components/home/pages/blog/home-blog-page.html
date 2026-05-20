@@ -1,0 +1,145 @@
+<section class="learning-deck-container">
+
+    <header class="prayers-hero">
+        <div class="hero-content">
+            <h1 class="font-inter">{{ versionService.ui().santuarioDoConhecimento}}</h1>
+            <p class="eyebrow">{{ versionService.ui().santuarioDoConhecimentoMsg }}</p>
+        </div>
+    </header>
+
+    @if (isLoading()) {
+    <div class="deck-loader">
+        <div class="runa-giratoria"></div>
+        <p>{{ versionService.ui().getScrolls }}</p>
+    </div>
+    } @else {
+    <div class="deck-grid">
+        @for (card of unifiedDeck(); track card.uniqueId; let i = $index) {
+
+        <div class="rpg-card" [class.card-highlight]="card.cardType === 'highlight'"
+            [class.card-comment]="card.cardType === 'comment'" [style.animation-delay]="(i * 0.08) + 's'"
+            (click)="openCard(card)">
+
+            <div class="card-inner-glow"></div>
+
+            <button class="btn-delete-card" (click)="deleteCard(card, $event)" title="Descartar Carta">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <div class="card-icon-emblem">
+                @if (card.cardType === 'highlight') {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path
+                        d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z">
+                    </path>
+                </svg>
+                } @else {
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path>
+                    <line x1="16" y1="8" x2="2" y2="22"></line>
+                    <line x1="17.5" y1="15" x2="9" y2="15"></line>
+                </svg>
+                }
+            </div>
+
+            <div class="card-content">
+                <span class="card-type-label">
+                    {{ card.cardType === 'highlight' ? versionService.ui().highlight : versionService.ui().note }}
+                </span>
+
+                <h2 class="card-book">{{ card.bookName }}</h2>
+
+                <div class="card-reference">
+                    {{versionService.ui().chapter}} {{ card.chapterNumber }}
+                    @if (card.verseNumber) {
+                    <span class="verse-badge">{{ versionService.ui().verse }} {{ card.verseNumber }}</span>
+                    }
+                </div>
+            </div>
+
+            <div class="card-footer">
+                <span class="language-badge">{{ card.language | uppercase }}</span>
+                <span class="action-hint">{{ versionService.ui().landingHighlightsLabel02 }}</span>
+            </div>
+
+        </div>
+        }
+    </div>
+
+    @if (activeCard(); as modal) {
+    <div class="mystic-modal-backdrop" (click)="closeCard()">
+
+        <div class="mystic-modal-card" [class.modal-highlight]="modal.cardType === 'highlight'"
+            [class.modal-comment]="modal.cardType === 'comment'" (click)="$event.stopPropagation()">
+
+            <div class="modal-inner-glow"></div>
+
+            <button class="btn-close-modal" (click)="closeCard()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 6L6 18M6 6l12 12"></path>
+                </svg>
+            </button>
+
+            <header class="modal-header">
+                <span class="modal-label">{{ modal.cardType === 'highlight' ? versionService.ui().highlight : versionService.ui().note }}</span>
+                <h2>{{ modal.bookName }}</h2>
+                <div class="modal-reference">
+                    {{versionService.ui().chapter}} {{ modal.chapterNumber }}
+                    @if (modal.cardType === 'highlight') {
+                    <span class="modal-verse-badge">{{ versionService.ui().verse }} {{ modal.verseNumber }}</span>
+                    }
+                </div>
+            </header>
+
+            <div class="modal-body-content">
+                @if (modal.cardType === 'highlight') {
+                <p class="scripture-text">"{{ cardVerseText() || versionService.ui().getScrolls }}"</p>
+                } @else {
+                <p class="user-comment-text">"{{ modal.commentText }}"</p>
+                }
+            </div>
+
+            <div class="modal-ai-insight">
+                <div class="ai-header" [class.header-error]="hasInsightError()">
+                    <svg class="ai-sparkle" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path
+                            d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z" />
+                    </svg>
+
+                    <span>
+                        @if (isInsightLoading()) {
+                        {{ versionService.ui().SAOThinking }}
+                        } @else if (hasInsightError()) {
+                        {{ versionService.ui().loginErrorGeneric }}
+                        } @else {
+                        {{versionService.ui().SAOResponse}}
+                        }
+                    </span>
+                </div>
+
+                <div class="ai-content-wrapper">
+                    <canvas #dustCanvas class="dust-canvas" [class.fade-out]="isDustFading()"></canvas>
+
+                    @if (showAiText() && cardAiInsight()) {
+                    <p class="ai-text-reveal" [class.text-error]="hasInsightError()">
+                        {{ cardAiInsight() }}
+                    </p>
+                    }
+                </div>
+            </div>
+
+        </div>
+    </div>
+    }
+
+    @if (unifiedDeck().length === 0) {
+    <div class="empty-deck">
+        <p>{{ versionService.ui().deckEmpty }}</p>
+    </div>
+    }
+    }
+</section>
