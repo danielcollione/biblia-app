@@ -47,7 +47,7 @@ export class PrayersService {
       headers: this.buildHeaders(),
     }).pipe(
       tap(() => {
-        this.xpPopupService.showXp(250, 'Oracao publicada');
+        this.xpPopupService.showXp(250);
         this.authService.refreshUserProfileFromServer();
       })
     );

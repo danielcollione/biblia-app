@@ -14,7 +14,7 @@ export class XpPopupService {
   private timeoutId: ReturnType<typeof setTimeout> | null = null;
   private nextId = 1;
 
-  showXp(amount: number, message = 'Experiencia recebida'): void {
+  showXp(amount: number, message = 'EXP UP'): void {
     if (!Number.isFinite(amount) || amount <= 0) {
       return;
     }

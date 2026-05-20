@@ -83,7 +83,8 @@
 
         <div class="estante-capitulos-horizontal" #estanteCaps>
             @for (cap of bibleService.selectedBook().chapters; track $index) {
-            <button class="card-capitulo-luxo" [class.chapter-read]="bibleService.isChapterRead($index)" (click)="bibleService.selectChapter($index)">
+            <button class="card-capitulo-luxo" [class.chapter-read]="bibleService.isChapterRead($index)"
+                (click)="bibleService.selectChapter($index)">
                 <span class="cap-label">{{versionService.ui().chapter}}</span>
                 <span class="cap-numero">{{ $index + 1 }}</span>
                 @if (bibleService.isChapterRead($index)) {
@@ -118,6 +119,96 @@
             <div class="cantoneira baixo-esq"></div>
             <div class="cantoneira baixo-dir"></div>
 
+            <div class="ferramentas-topo-direito">
+
+                <div class="ferramenta-nota-wrapper">
+                    <button class="btn-ferramenta" [class.tem-nota]="chapterCommentService.currentChapterComment()"
+                        [disabled]="isLoadingComments()" (click)="openNoteModal()"
+                        [style.opacity]="!isSubscriptionActive() ? '0.4' : '1'"
+                        [style.cursor]="!isSubscriptionActive() ? 'not-allowed' : 'pointer'">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <line x1="16" y1="13" x2="8" y2="13"></line>
+                            <line x1="16" y1="17" x2="8" y2="17"></line>
+                            <polyline points="10 9 9 9 8 9"></polyline>
+                        </svg>
+                    </button>
+
+                    @if (!isSubscriptionActive()) {
+                    <div class="tooltip-premium-lock">
+                        <div class="lock-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            {{versionService.ui().seloSabio}}
+                        </div>
+                        <p class="lock-body">{{versionService.ui().seloSageWarning1}}</p>
+                    </div>
+                    } @else {
+                    @if (isLoadingComments()) {
+                    <div class="tooltip-carregando">
+                        <span>{{ versionService.ui().getScrolls }}</span>
+                    </div>
+                    }
+                    @else if (chapterCommentService.currentChapterComment()) {
+                    <div class="tooltip-nota-elegante">
+                        <span class="tooltip-titulo">{{ versionService.ui().yourNote }}:</span>
+                        <p>{{ chapterCommentService.currentChapterComment()?.content }}</p>
+                    </div>
+                    }
+                    }
+                </div>
+
+                <div class="ferramenta-marca-texto">
+                    <button class="btn-ferramenta" [class.ativo]="highlightMode()" (click)="toggleHighlightMenu()"
+                        [disabled]="isLoadingHighlights()" [style.opacity]="!isSubscriptionActive() ? '0.4' : '1'"
+                        [style.cursor]="!isSubscriptionActive() ? 'not-allowed' : 'pointer'">
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 11-6 6v3h9l3-3"></path>
+                            <path d="m22 12-4.6 4.6a2 2 0 0 1-2.8 0l-5.2-5.2a2 2 0 0 1 0-2.8L14 4"></path>
+                        </svg>
+                    </button>
+
+                    @if (!isSubscriptionActive()) {
+                    <div class="tooltip-premium-lock">
+                        <div class="lock-header">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            {{versionService.ui().seloSabio}}
+                        </div>
+                        <p class="lock-body">{{versionService.ui().seloSageWarning1}}</p>
+                    </div>
+                    } @else {
+                    @if (isLoadingHighlights()) {
+                    <div class="tooltip-carregando">
+                        <span>{{ versionService.ui().preparingInks }}</span>
+                    </div>
+                    }
+
+                    @if (showColorMenu() && !isLoadingHighlights()) {
+                    <div class="paleta-cores-fixa">
+                        <button class="color-btn" style="background-color: #fce83a;"
+                            (click)="activateHighlightMode('#fce83a')"></button>
+                        <button class="color-btn" style="background-color: #ffb3ba;"
+                            (click)="activateHighlightMode('#ffb3ba')"></button>
+                        <button class="color-btn" style="background-color: #baffc9;"
+                            (click)="activateHighlightMode('#baffc9')"></button>
+                        <button class="color-btn" style="background-color: #bae1ff;"
+                            (click)="activateHighlightMode('#bae1ff')"></button>
+                    </div>
+                    }
+                    }
+                </div>
+            </div>
+
             <header class="biblia-header-prime">
                 <div class="ornamento-superior"></div>
                 <h1 class="titulo-livro">{{ bibleService.selectedBook().name }}</h1>
@@ -127,12 +218,14 @@
                 <div class="linha-luxo"></div>
             </header>
 
-            <div class="corpo-paginas-prime">
+            <div class="corpo-paginas-prime" (mouseup)="onTextSelected($event)" (touchend)="onTextSelected($event)">
                 <article class="pagina-viva esq">
                     <div class="texto-manuscrito">
                         @for (versiculo of bibleService.currentChapterHalf1(); track $index; let i = $index) {
-                        <span class="v-prime" [style.animation-delay]="(i * 0.05) + 's'">
-                            <sup class="n-prime">{{ i + 1 }}</sup>{{ versiculo }}
+                        <span class="v-prime" [attr.data-verse]="i + 1" [style.animation-delay]="(i * 0.05) + 's'">
+                            <sup class="n-prime">{{ i + 1 }}</sup>
+                            <span class="verse-text"
+                                [innerHTML]="versiculo | applyHighlight : (i + 1) : annotationService.currentChapterHighlights()"></span>
                         </span>
                         }
                     </div>
@@ -141,10 +234,11 @@
                 <article class="pagina-viva dir">
                     <div class="texto-manuscrito">
                         @for (versiculo of bibleService.currentChapterHalf2(); track $index; let i = $index) {
-                        <span class="v-prime"
+                        <span class="v-prime" [attr.data-verse]="bibleService.currentChapterHalf1().length + i + 1"
                             [style.animation-delay]="((bibleService.currentChapterHalf1().length + i) * 0.05) + 's'">
-                            <sup class="n-prime">{{ bibleService.currentChapterHalf1().length + i + 1 }}</sup>{{
-                            versiculo }}
+                            <sup class="n-prime">{{ bibleService.currentChapterHalf1().length + i + 1 }}</sup>
+                            <span class="verse-text"
+                                [innerHTML]="versiculo | applyHighlight : (bibleService.currentChapterHalf1().length + i + 1) : annotationService.currentChapterHighlights()"></span>
                         </span>
                         }
                     </div>
@@ -155,3 +249,26 @@
     }
 
 </div>
+
+@if (showNoteModal()) {
+<div class="modal-nota-backdrop fade-in" (click)="closeNoteModal()">
+    <div class="modal-nota-content" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+            <h3>{{ versionService.ui().yourNote }}</h3>
+            <button class="btn-fechar" (click)="closeNoteModal()">×</button>
+        </div>
+
+        <textarea [value]="noteText()" (input)="updateNoteText($event)"
+            placeholder="{{ versionService.ui().writeReflex }}"></textarea>
+
+        <div class="modal-actions">
+            <button class="btn-cancelar" (click)="closeNoteModal()">{{ versionService.ui().prayersCancel }}</button>
+            <button class="btn-salvar" (click)="saveNote()">@if (isSavingNote()) {
+                <span class="loader-anel"></span> {{ versionService.ui().saving }}...
+                } @else {
+                {{ versionService.ui().saveNote }}
+                }</button>
+        </div>
+    </div>
+</div>
+}

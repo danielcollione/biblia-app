@@ -12,13 +12,13 @@ import { StripeService } from '../../services/stripe/stripe.service';
 
 type HomeMenuKey =
   | 'outlines'
-  | 'prayers'
   | 'sage'
-  | 'library'
-  | 'quiz'
-  | 'recommendations'
   | 'liturgy'
+  | 'library'
   | 'blog'
+  | 'quiz'
+  | 'prayers'
+  | 'recommendations'
   | 'ranking';
 
 type HomeMenuItem = {
@@ -133,13 +133,13 @@ export class Home implements OnInit, OnDestroy {
 
   private readonly menuConfig = signal<HomeMenuItem[]>([
     { key: 'outlines', route: '/home/outlines' },
-    { key: 'prayers', route: '/home/prayers' },
     { key: 'sage', route: '/home/sage' },
     { key: 'liturgy', route: '/home/liturgy' },
     { key: 'library', route: '/home/library' },
-    { key: 'recommendations', route: '/home/recommendations' },
     { key: 'blog', route: '/home/blog' },
     { key: 'quiz', route: '/home/quiz' },
+    { key: 'prayers', route: '/home/prayers' },
+    { key: 'recommendations', route: '/home/recommendations' },
     { key: 'ranking', route: '/home/ranking' },
   ]);
 
@@ -280,7 +280,7 @@ export class Home implements OnInit, OnDestroy {
         return ui.homeMenuRanking;
       case 'blog':
       default:
-        return ui.homeMenuBlog;
+        return ui.aprendizado;
     }
   }
 
