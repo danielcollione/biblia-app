@@ -5,6 +5,7 @@ import { AuthService } from '../../../../services/auth/auth';
 import { VersionService } from '../../../../services/version/version-service';
 import { StudyService, StudyResponseDto } from '../../../../services/study/study.service';
 import { PricingAccessDeniedComponent } from '../../../pricing-access-denied/pricing-access-denied.component';
+import { HttpErrorResponse } from '@angular/common/http';
 
 type EmberParticle = {
   x: number; y: number;
@@ -129,10 +130,21 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
           this.stopLoadingMessageRotation();
           this.isLoading.set(false);
         },
-        error: () => {
-          this.errorMessage.set(this.versionService.ui().sagePageError);
+        error: (err: HttpErrorResponse) => {
           this.stopLoadingMessageRotation();
           this.isLoading.set(false);
+
+          const backendMessage = err.error?.message || err.error;
+
+          // Se for erro de servidor ocupado ou rate limit
+          if (err.status === 503 || err.status === 429) {
+            this.errorMessage.set(this.versionService.ui().insightsError);
+          } else if (typeof backendMessage === 'string' && backendMessage.trim() !== '') {
+            this.errorMessage.set(backendMessage);
+          } else {
+            // Fallback para o seu erro genérico
+            this.errorMessage.set(this.versionService.ui().sagePageError);
+          }
         },
       });
   }

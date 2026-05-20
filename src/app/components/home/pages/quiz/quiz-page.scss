@@ -10,7 +10,6 @@ $success-green: #228b22;
   display: block;
   min-height: 100vh; // Permite que o componente cresça além da altura da tela se necessário
   width: 100%;
-  overflow-y: auto; // Habilita o scroll vertical
   overflow-x: hidden; // Previne scroll horizontal acidental
   color: #e0e0e0;
   font-family: 'Inter', sans-serif;
@@ -112,11 +111,21 @@ $success-green: #228b22;
 }
 
 @keyframes subtle-shake {
-0% { transform: translateX(0); }
-  25% { transform: translateX(-2px) rotate(-0.5deg); }
-  50% { transform: translateX(2px) rotate(0.5deg); }
-  75% { transform: translateX(-1px) rotate(-0.2deg); }
-  100% { transform: translateX(0); }
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2px) rotate(-0.5deg);
+  }
+  50% {
+    transform: translateX(2px) rotate(0.5deg);
+  }
+  75% {
+    transform: translateX(-1px) rotate(-0.2deg);
+  }
+  100% {
+    transform: translateX(0);
+  }
 }
 
 .option-button {
@@ -396,11 +405,21 @@ $success-green: #228b22;
 
 // Responsividade para o Grid
 @media (max-width: 768px) {
+  .quiz-container {
+    // Muda de "center" para "flex-start". Isso impede que o topo seja cortado!
+    justify-content: flex-start;
+
+    // Respiro: 4rem (topo), 1rem (direita), 6rem (base), 1rem (esquerda)
+    padding: 4rem 1rem 6rem 1rem;
+  }
+
   .options-grid {
     grid-template-columns: 1fr;
-    margin-bottom: 2rem; // Dá um respiro extra para não colar no fim do scroll
+    margin-bottom: 2rem;
   }
+
   .question-text {
-    font-size: 1.6rem;
+    font-size: 1.4rem; // Levemente menor para caber melhor na tela do celular
+    margin-bottom: 2.5rem; // Reduz a distância enorme (4rem) que estava no desktop
   }
 }

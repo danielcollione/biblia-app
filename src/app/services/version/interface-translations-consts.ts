@@ -2,7 +2,7 @@ export const INTERFACE_TRANSLATIONS: any = {
   pt: {
     insightsError2:
       'Os poderes da revelação estão esgotados por hoje (Cota excedida). Retorne mais tarde.',
-    insightsError: 'A névoa do tempo obscureceu esta sabedoria. Tente novamente.',
+    insightsError: 'A névoa do tempo obscureceu esta sabedoria. Tente novamente mais tarde.',
     seloSageWarning1: 'Recurso exclusivo para membros. Assine já para eternizar seus pergaminhos.',
     seloSabio: 'Selo do Sábio',
     landingPlanSageFeature8: 'Destaque seus versículos favoritos na Bíblia Online',
@@ -749,7 +749,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     libraryChaptersLoadError: 'Unable to load chapters right now.',
     libraryChaptersLoading: 'Loading chapters...',
     libraryChapterLoading: 'Loading chapter...',
-    insightsError: 'The mists of time have obscured this wisdom. Try again.',
+    insightsError: 'The mists of time have obscured this wisdom. Try again later.',
     libraryChapterLabel: 'Chapter',
     pricingAccessDeniedTitle: 'Sage Plan Exclusive Feature',
     pricingAccessDeniedSubtitle: '',
@@ -1208,7 +1208,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature01Tag1: 'Inteligencia Artificial',
     landingFeature01Tag2: 'Devocional',
     landingFeature01Tag3: 'Sermones',
-    insightsError: 'La bruma del tiempo ha oscurecido esta sabiduría. Inténtalo de nuevo.',
+    insightsError: 'La bruma del tiempo ha oscurecido esta sabiduría. Inténtalo de nuevo más tarde.',
     landingFeature02Title: 'Foro de Oración',
     landingFeature02Description:
       'No camines solo. Únete a nuestra comunidad global, comparte tus peticiones de oración e intercede por hermanos y hermanas alrededor del mundo en un ambiente seguro y acogedor.',
