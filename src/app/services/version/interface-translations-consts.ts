@@ -1,5 +1,7 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    muteSound: 'MUTE O SOM',
+    clickSound: 'CLIQUE PARA OUVIR',
     startNow: 'Começar Agora',
     ladingText:
       'Ferramentas que unem tecnologia e tradição: sabedoria da IA, liturgia histórica, retenção de estudos e oração comunitária. Construa seu legado espiritual em um único Santuário.',
@@ -577,6 +579,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeInitialTitleKicker: 'Welcome to',
     homeInitialTitleMain: 'Sanctuary',
     homeInitialSubtitle: 'Where light, silence, and wisdom meet.',
+    clickSound: 'CLICK FOR SOUND',
     homeInitialContactUs: 'contact us',
     homeInitialContactLabel: 'for inquiries contact:',
     homeInitialContactEmail: 'contact.theunveiledbible@gmail.com',
@@ -757,6 +760,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatOpenSessionsAriaLabel: 'Expand conversations',
     libraryPremiumRequired: 'Only subscribers with an active plan can access this content.',
     libraryPremiumBadge: 'Premium',
+    muteSound: 'MUTE SOUND',
     libraryChaptersLoadError: 'Unable to load chapters right now.',
     libraryChaptersLoading: 'Loading chapters...',
     libraryChapterLoading: 'Loading chapter...',
@@ -1183,6 +1187,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     seloSabio: 'Sello Sabio',
     landingPlanFreeFeature8: 'Quiz diario para retención de conocimiento',
     landingPlanFreeFeature9: 'Calendario litúrgico con versículo del día',
+    clickSound: 'CLIC PARA ESCUCHAR',
     pricingAccessDeniedCheckoutMissingUser:
       'No fue posible identificar tu usuario para iniciar el pago.',
     verse: 'Versículo',
@@ -1227,6 +1232,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     insightsError:
       'La bruma del tiempo ha oscurecido esta sabiduría. Inténtalo de nuevo más tarde.',
     landingFeature02Title: 'Foro de Oración',
+    muteSound: 'SILENCIAR SONIDO',
     landingFeature02Description:
       'No camines solo. Únete a nuestra comunidad global, comparte tus peticiones de oración e intercede por hermanos y hermanas alrededor del mundo en un ambiente seguro y acogedor.',
     landingFeature02Tag1: 'Comunidad',

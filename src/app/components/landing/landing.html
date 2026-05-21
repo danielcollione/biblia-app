@@ -40,7 +40,7 @@
                                 <span class="bar" [class.active]="!isMuted"></span>
                                 <span class="bar" [class.active]="!isMuted"></span>
                             </div>
-                            <span class="unmute-text">{{ isMuted ? 'CLICK FOR SOUND' : 'MUTE SOUND' }}</span>
+                            <span class="unmute-text">{{ isMuted ? versionService.ui().clickSound : versionService.ui().muteSound }}</span>
                         </button>
                     </div>
                 </div>
