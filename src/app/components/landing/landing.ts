@@ -59,6 +59,8 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
   // Signal para rastrear visibilidade dos FAQs (para animação de scroll)
   private faqsVisibilityState = signal<boolean[]>([false, false, false, false, false, false]);
 
+    isMuted: boolean = true;
+
   // Computed signal que constrói dinamicamente o array de features a partir das literais
   public features = computed(() => {
     const ui = this.versionService.ui();
@@ -433,6 +435,17 @@ export class Landing implements OnInit, AfterViewInit, OnDestroy {
     this.metaService.updateTag({ name: 'twitter:card', content: 'summary_large_image' });
     this.metaService.updateTag({ name: 'twitter:title', content: 'A Bíblia Revelada' });
   }
+
+  toggleSound(videoElement: HTMLVideoElement): void {
+    this.isMuted = !this.isMuted;
+    videoElement.muted = this.isMuted;
+    
+    // Se desmutar, garante que o vídeo volte do início para a pessoa ouvir a narração inteira
+    if (!this.isMuted) {
+      videoElement.currentTime = 0;
+    }
+  }
+
 
   irParaBiblia() {
     this.router.navigate(['/login']);

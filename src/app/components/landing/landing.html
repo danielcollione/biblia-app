@@ -1,29 +1,51 @@
 <div class="lp-container">
 
     <section class="hero">
-        <div class="video-wrapper">
-            <video autoplay muted loop playsinline class="bg-video">
-                <source src="./video/key_loop_hd.mp4" type="video/mp4">
-            </video>
-            <div class="video-overlay"></div>
-        </div>
+        <div class="hero-depth-overlay"></div>
 
-        <div class="hero-bottom-container">
-            <div class="bottom-left fade-in">
+        <div class="hero-split-container fade-in">
+
+            <div class="hero-content">
+                <div class="badge-pill">
+                    <span class="sparkle">✧</span>
+                    <span>{{ versionService.ui().jornadaAlemdaLetra.toUpperCase() }}</span>
+                </div>
+
                 <h1 class="main-title">{{ versionService.ui().unveiledBible }}</h1>
-                <p class="main-subtitle">{{ versionService.ui().jornadaAlemdaLetra.toUpperCase() }}</p>
-            </div>
 
-            <div class="bottom-right fade-in">
-                <!-- <p class="tagline">{{ versionService.ui().homeInitialSubtitle.toUpperCase() }}</p> -->
+                <p class="main-description">
+                    {{versionService.ui().ladingText}}
+                </p>
+
                 <div class="button-group">
-                    <button class="hero-btn" routerLink="/home">{{ versionService.ui().readBible.toUpperCase()
-                        }}</button>
-                    <button class="hero-btn btn-outline" routerLink="/home">{{
-                        versionService.ui().headerBecomeSage.toUpperCase()
-                        }}</button>
+                    <button class="hero-btn" routerLink="/" fragment="pricing">
+                        {{ versionService.ui().seePlans.toUpperCase() }}
+                    </button>
+                    <button class="hero-btn btn-outline" routerLink="/home">
+                        {{ versionService.ui().startNow.toUpperCase() }}
+                    </button>
                 </div>
             </div>
+
+            <div class="hero-visual">
+                <div class="video-perspective-wrapper">
+                    <div class="video-container">
+                        <video #heroVideo autoplay muted loop playsinline class="demo-video">
+                            <source src="./marketing-pt-o.mp4" type="video/mp4">
+                        </video>
+
+                        <button class="unmute-badge" (click)="toggleSound(heroVideo)">
+                            <div class="sound-wave">
+                                <span class="bar" [class.active]="!isMuted"></span>
+                                <span class="bar" [class.active]="!isMuted"></span>
+                                <span class="bar" [class.active]="!isMuted"></span>
+                            </div>
+                            <span class="unmute-text">{{ isMuted ? versionService.ui().clickSound : versionService.ui().muteSound }}</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 

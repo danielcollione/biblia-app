@@ -1,5 +1,12 @@
 export const INTERFACE_TRANSLATIONS: any = {
   pt: {
+    muteSound: 'MUTE O SOM',
+    clickSound: 'CLIQUE PARA OUVIR',
+    startNow: 'Começar Agora',
+    ladingText:
+      'Ferramentas que unem tecnologia e tradição: sabedoria da IA, liturgia histórica, retenção de estudos e oração comunitária. Construa seu legado espiritual em um único Santuário.',
+    seePlans: 'Ver Planos',
+    testFree: 'Teste Grátis',
     insightsError2:
       'Os poderes da revelação estão esgotados por hoje (Cota excedida). Retorne mais tarde.',
     insightsError: 'A névoa do tempo obscureceu esta sabedoria. Tente novamente mais tarde.',
@@ -572,6 +579,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     homeInitialTitleKicker: 'Welcome to',
     homeInitialTitleMain: 'Sanctuary',
     homeInitialSubtitle: 'Where light, silence, and wisdom meet.',
+    clickSound: 'CLICK FOR SOUND',
     homeInitialContactUs: 'contact us',
     homeInitialContactLabel: 'for inquiries contact:',
     homeInitialContactEmail: 'contact.theunveiledbible@gmail.com',
@@ -644,6 +652,9 @@ export const INTERFACE_TRANSLATIONS: any = {
     sagePageSubmit: 'Generate Study',
     sagePageLoading: 'Generating...',
     sagePageLoadingStepOne: 'Searching through the Scriptures...',
+    ladingText:
+      'Tools uniting technology and tradition: AI wisdom, historical liturgy, study retention, and community prayer. Build your spiritual legacy within a single Sanctuary.',
+
     sagePageLoadingStepTwo: 'Structuring your study...',
     sagePageLoadingStepThree: 'Connecting context, doctrine and application...',
     sagePageLoadingStepFour: 'Refining a clear message for you...',
@@ -680,10 +691,12 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatEmptySubtitle: 'Pick an insight above or write your theological question below.',
     sageChatYouLabel: 'You',
     sageChatSageLabel: 'Sage',
+    seePlans: 'See Plans',
     sageChatStreaming: 'Streaming response...',
     sageChatInputPlaceholder: 'Write your biblical question here...',
     sageChatSend: 'Send to Sage',
     calendarioLiturgicoMensagem: 'Walk in harmony with the times of grace and the Scriptures.',
+    startNow: 'Start Now',
     sageChatSending: 'Responding...',
     sageChatSessionLoadError: 'Unable to load your conversations right now.',
     sageChatSessionCreateError: 'Unable to create a new conversation.',
@@ -691,6 +704,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatSessionDeleteAriaLabel: 'Delete chat',
     porOndeComecar: 'WHERE TO START TODAY?',
     sageChatSessionDeleteConfirm: 'Do you really want to delete this conversation?',
+    testFree: 'Free Trial',
     sageChatDeleteModalEyebrow: 'Confirmation',
     sageChatDeleteModalTitle: 'Delete this conversation?',
     salmoResponsorial: 'Responsorial Psalm',
@@ -746,6 +760,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     sageChatOpenSessionsAriaLabel: 'Expand conversations',
     libraryPremiumRequired: 'Only subscribers with an active plan can access this content.',
     libraryPremiumBadge: 'Premium',
+    muteSound: 'MUTE SOUND',
     libraryChaptersLoadError: 'Unable to load chapters right now.',
     libraryChaptersLoading: 'Loading chapters...',
     libraryChapterLoading: 'Loading chapter...',
@@ -1168,14 +1183,18 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingPlanSageFeature9: 'Tarjetas de Aprendizaje para Revisar tus Estudios',
     pricingAccessDeniedButton: 'Suscribirse Ahora',
     pricingAccessDeniedButtonLoading: 'Redirigiendo...',
+    testFree: 'Prueba Gratuita',
     seloSabio: 'Sello Sabio',
     landingPlanFreeFeature8: 'Quiz diario para retención de conocimiento',
     landingPlanFreeFeature9: 'Calendario litúrgico con versículo del día',
+    clickSound: 'CLIC PARA ESCUCHAR',
     pricingAccessDeniedCheckoutMissingUser:
       'No fue posible identificar tu usuario para iniciar el pago.',
     verse: 'Versículo',
     pricingAccessDeniedCheckoutMissingUrl: 'No fue posible obtener el enlace de pago.',
     saveNote: 'Salvar Nota',
+    ladingText:
+      'Herramientas que combinan tecnología y tradición: sabiduría de la IA, liturgia histórica, retención del estudio y oración comunitaria. Construye tu legado espiritual en un solo Santuario.',
     pricing: 'Precios',
     pricingAccessDeniedCheckoutStartError:
       'Error al iniciar el pago. Inténtalo nuevamente en unos instantes.',
@@ -1185,10 +1204,12 @@ export const INTERFACE_TRANSLATIONS: any = {
     outlinesPremiumDeniedResourceTitle:
       'El Generador de Contenido esta disponible solo en el Plan Sabio',
     homeMenuLiturgyCalendar: 'Calendario Litúrgico',
+    seePlans: 'Ver Planes',
     versiculoDoDia: 'Versículo del Día',
     highlight: 'Destacar',
     note: 'nota',
     emDesenvolvimento: 'En desarrollo...',
+    startNow: 'Start Now',
     outlinesPremiumDeniedResourceDescription:
       'Crea estudios biblicos estructurados en segundos con IA teologica: introduccion, temas centrales, aplicacion practica y conclusion, listos para compartir y convertir en mensaje.',
     sagePremiumDeniedResourceTitle: 'Sabio Online esta disponible solo en el Plan Sabio',
@@ -1208,8 +1229,10 @@ export const INTERFACE_TRANSLATIONS: any = {
     landingFeature01Tag1: 'Inteligencia Artificial',
     landingFeature01Tag2: 'Devocional',
     landingFeature01Tag3: 'Sermones',
-    insightsError: 'La bruma del tiempo ha oscurecido esta sabiduría. Inténtalo de nuevo más tarde.',
+    insightsError:
+      'La bruma del tiempo ha oscurecido esta sabiduría. Inténtalo de nuevo más tarde.',
     landingFeature02Title: 'Foro de Oración',
+    muteSound: 'SILENCIAR SONIDO',
     landingFeature02Description:
       'No camines solo. Únete a nuestra comunidad global, comparte tus peticiones de oración e intercede por hermanos y hermanas alrededor del mundo en un ambiente seguro y acogedor.',
     landingFeature02Tag1: 'Comunidad',
