@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth/auth';
   selector: 'app-pricing-access-denied',
   standalone: true,
   templateUrl: './pricing-access-denied.component.html',
-  styleUrls: ['./pricing-access-denied.component.scss']
+  styleUrls: ['./pricing-access-denied.component.scss'],
 })
 export class PricingAccessDeniedComponent {
   public readonly versionService = inject(VersionService);
@@ -21,7 +21,10 @@ export class PricingAccessDeniedComponent {
   @Input() deniedResourceDescription = '';
 
   get resolvedResourceTitle(): string {
-    return this.deniedResourceTitle.trim() || this.versionService.ui().pricingAccessDeniedDefaultResourceTitle;
+    return (
+      this.deniedResourceTitle.trim() ||
+      this.versionService.ui().pricingAccessDeniedDefaultResourceTitle
+    );
   }
 
   get hasResourceDescription(): boolean {
@@ -51,24 +54,37 @@ export class PricingAccessDeniedComponent {
           return;
         }
 
-        window.open(url, '_blank');
+        // VERIFICAÇÃO AQUI: Celular vs Desktop
+        if (this.isMobileDevice()) {
+          // Se for celular (iPhone, Android, etc), redireciona na mesma aba
+          window.location.href = url;
+        } else {
+          // Se for computador, abre em uma nova aba
+          window.open(url, '_blank');
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.isStartingCheckout.set(false);
         this.checkoutError.set(
           error?.error?.error ||
             error?.error?.message ||
-            this.versionService.ui().pricingAccessDeniedCheckoutStartError
+            this.versionService.ui().pricingAccessDeniedCheckoutStartError,
         );
-      }
+      },
     });
+  }
+
+  private isMobileDevice(): boolean {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent,
+    );
   }
 
   private resolveCheckoutUserId(): string | null {
     const usuario = this.authService.usuario();
-    
+
     // Tenta primeiro obter do objeto do usuário (pode ter 'id' ou 'userId')
-    const userIdFromObject = 
+    const userIdFromObject =
       (usuario as { id?: string; userId?: string } | null)?.id ||
       (usuario as { id?: string; userId?: string } | null)?.userId;
 
