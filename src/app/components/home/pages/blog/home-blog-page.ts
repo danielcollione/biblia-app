@@ -153,6 +153,7 @@ export class HomeBlogPage implements OnInit {
         card.bookName,
         card.chapterNumber,
         card.verseNumber,
+        card.language
       );
       this.cardVerseText.set(text);
     }
@@ -163,7 +164,7 @@ export class HomeBlogPage implements OnInit {
       chapterNumber: card.chapterNumber,
       verseNumber: card.cardType === 'highlight' ? card.verseNumber : null,
       userText: card.cardType === 'comment' ? card.commentText : null,
-      language: card.language,
+      language: this.versionService.languageCode(),
     };
 
     this.aiInsightService.generateQuickInsight(request as any).subscribe({

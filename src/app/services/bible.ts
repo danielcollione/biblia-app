@@ -7,6 +7,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { AuthService } from './auth/auth';
 import { BibleProgressService } from './bible-progress.service';
 import { XpPopupService } from './xp-popup.service';
+import { firstValueFrom } from 'rxjs';
 
 export interface LivroMetadados {
   id: number;
@@ -349,7 +350,7 @@ export class BibleService {
   }
 
   updateSEO(bookName: string, chapter: number) {
-    const displayTitle = `Biblia Sagrada | A Biblia Revelada`;
+    const displayTitle = `Holy Bible | The Unveiled Bible - ${bookName} ${chapter + 1}`;
 
     this.titleService.setTitle(displayTitle);
 
@@ -445,19 +446,48 @@ export class BibleService {
       .slice(0, 80);
   }
 
-  async getVerseText(
+async getVerseText(
     bookName: string,
     chapterNumber: number,
     verseNumber: number,
+    language?: string,
   ): Promise<string | null> {
     if (!this.dbPromise) return null;
 
     const db = await this.dbPromise;
-    const version = this.versionService.getCurrentVersion();
-    const biblia = await db.get('versoes', version.id);
+    
+    // 1. Definimos qual versão usar (padrão é a ativa)
+    let versionToUse = this.versionService.getCurrentVersion();
 
-    if (!biblia) return null;
+    // Se o idioma foi passado e é diferente do ativo na interface, procuramos a versão correspondente
+    if (language && language !== this.versionService.languageCode()) {
+      const availableVersions = this.versionService.getAvailableVersions();
+      // Procura a primeira versão que comece com o prefixo do idioma (ex: 'en_')
+      const matchingVersion = availableVersions.find(v => v.id.startsWith(`${language}_`));
+      if (matchingVersion) {
+        versionToUse = matchingVersion;
+      }
+    }
 
+    // 2. Tentamos pegar do IndexedDB
+    let biblia = await db.get('versoes', versionToUse.id);
+
+    // 3. Fallback: Se não estiver no IndexedDB, buscamos o JSON daquele idioma silenciosamente
+    if (!biblia) {
+      try {
+        biblia = await firstValueFrom(this.http.get<any[]>(`/${versionToUse.file}`));
+        
+        // Salvamos no IndexedDB para as próximas consultas de cards serem instantâneas
+        if (biblia) {
+          await db.put('versoes', biblia, versionToUse.id);
+        }
+      } catch (error) {
+        console.error(`Erro ao buscar a bíblia da versão ${versionToUse.id} para o card`, error);
+        return null;
+      }
+    }
+
+    // A partir daqui, a lógica de encontrar o versículo continua igual
     const livro = biblia.find((l: any) => l.name === bookName);
     if (!livro) return null;
 
