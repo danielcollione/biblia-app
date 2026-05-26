@@ -247,7 +247,14 @@ export class Home implements OnInit, OnDestroy {
           return;
         }
 
-        window.open(url, '_blank');
+        // VERIFICAÇÃO AQUI: Celular vs Desktop
+        if (this.isMobileDevice()) {
+          // Se for celular (iPhone, Android, etc), redireciona na mesma aba
+          window.location.href = url;
+        } else {
+          // Se for computador, abre em uma nova aba
+          window.open(url, '_blank');
+        }
       },
       error: (error: HttpErrorResponse) => {
         this.isStartingCheckout.set(false);
@@ -259,6 +266,10 @@ export class Home implements OnInit, OnDestroy {
       },
     });
   }
+
+  private isMobileDevice(): boolean {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
 
   private resolveMenuLabel(key: HomeMenuKey, ui: any): string {
     switch (key) {
