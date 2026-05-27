@@ -4,7 +4,7 @@ export const INTERFACE_TRANSLATIONS: any = {
     clickSound: 'CLIQUE PARA OUVIR',
     startNow: 'Começar Agora',
     ladingText:
-      'Ferramentas que unem tecnologia e tradição: sabedoria da IA, liturgia histórica, retenção de estudos e oração comunitária. Construa seu legado espiritual em um único Santuário.',
+      'Ferramentas que unem Tecnologia e Tradição: Utilize os benefícios da Inteligência Artificial com propósito, melhore seus estudos bíblicos e se aproxime dos verdadeiros significados da Bíblia',
     seePlans: 'Ver Planos',
     testFree: 'Teste Grátis',
     insightsError2:

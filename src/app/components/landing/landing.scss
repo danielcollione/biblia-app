@@ -19,7 +19,8 @@ body {
   background-color: #000; /* Define o fundo preto vasto */
 
   /* AQUI ESTÁ A IMAGEM DE FUNDO, CARA. DEFINIDA COM PRIORIDADE MÁXIMA */
-  background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('/thumb-landing.png') !important;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), url('/thumb-landing.png') !important;
 
   /* Ajuste de escala: Diminui o tamanho da imagem para ela não cobrir tudo.
      Tente valores entre 60% e 80% dependendo de quão 'menor' você quer. */
@@ -98,6 +99,7 @@ body {
 }
 
 .main-description {
+  padding: 10px;
   font-size: 1.1rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
