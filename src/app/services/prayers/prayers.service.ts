@@ -31,7 +31,7 @@ export class PrayersService {
   private readonly authService = inject(AuthService);
   private readonly xpPopupService = inject(XpPopupService);
 
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/prayers';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/v1/prayers';
 
   list(page = 0, size = 36): Observable<PrayerPageDto> {
     const params = new HttpParams().set('page', page).set('size', size);

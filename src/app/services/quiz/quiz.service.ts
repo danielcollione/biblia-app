@@ -8,7 +8,7 @@ import { QuizAnswerRequest, DailyQuizResponse, QuizReviewDTO } from './quiz.mode
   providedIn: 'root'
 })
 export class QuizService {
-  private readonly API = `https://backendtub.onrender.com/api/quiz`;
+  private readonly API = `https://backend-tub-256195900392.us-east1.run.app/api/quiz`;
 
   constructor(private http: HttpClient, private versionService: VersionService) {}
 

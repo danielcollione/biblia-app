@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class StripeService {
 
   // Altere para a URL real do seu back-end no Render
-  private readonly API_URL = 'https://backendtub.onrender.com/api/pagamentos';
+  private readonly API_URL = 'https://backend-tub-256195900392.us-east1.run.app/api/pagamentos';
 
   constructor(private http: HttpClient) { }
 

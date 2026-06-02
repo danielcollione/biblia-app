@@ -27,7 +27,7 @@ export interface ChatMessageDto {
 export class SageChatService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/chat';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/chat';
 
   listSessions() {
     return this.http.get<ChatSessionDto[]>(`${this.apiUrl}/sessions`, {

@@ -8,7 +8,7 @@ import { Observable, tap } from 'rxjs';
 export class AuthService {
 
   // A sua URL oficial hospedada no Render!
-  private apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
+  private apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/v1/auth';
 
   constructor(private http: HttpClient) { }
 
