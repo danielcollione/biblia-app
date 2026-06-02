@@ -31,7 +31,7 @@ export class StudyService {
   private readonly authService = inject(AuthService);
   private readonly xpPopupService = inject(XpPopupService);
 
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/studies/generate';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/studies/generate';
 
   generateStudy(request: StudyRequestDto): Observable<StudyResponseDto> {
     const token = this.authService.getToken();

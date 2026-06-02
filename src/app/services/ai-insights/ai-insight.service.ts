@@ -22,7 +22,7 @@ export class AiInsightService {
   private readonly http = inject(HttpClient);
   
   // URL apontando pro controller novo, 100% focado em velocidade
-  private readonly API_URL = 'https://backendtub.onrender.com/api/ai/insights/quick';
+  private readonly API_URL = 'https://backend-tub-256195900392.us-east1.run.app/api/ai/insights/quick';
 
   /**
    * Dispara a requisição para a IA gerar o insight rápido baseado no contexto do card

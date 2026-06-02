@@ -28,7 +28,7 @@ export class AnnotationService {
   private readonly xpPopService = inject(XpPopupService);
 
   // URL da sua API (ajuste conforme seu environment)
-  private readonly API_URL = 'https://backendtub.onrender.com/api/annotations'; 
+  private readonly API_URL = 'https://backend-tub-256195900392.us-east1.run.app/api/annotations'; 
 
   // Estado global dos grifos do capítulo atual para renderizar na tela
   currentChapterHighlights = signal<VerseHighlight[]>([]);

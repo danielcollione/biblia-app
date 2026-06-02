@@ -44,8 +44,8 @@ export class LibraryService {
   private readonly authService = inject(AuthService);
   private readonly versionService = inject(VersionService);
 
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/library/books';
-  private readonly apiBaseUrl = 'https://backendtub.onrender.com';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/v1/library/books';
+  private readonly apiBaseUrl = 'https://backend-tub-256195900392.us-east1.run.app';
 
   listBooks(): Observable<LibraryBookDto[]> {
     return this.getWithOptionalAuthRetry<LibraryBookDto[]>(this.apiUrl);

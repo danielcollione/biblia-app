@@ -33,7 +33,7 @@ export class LearningDeckService {
   private readonly http = inject(HttpClient);
 
   // Ajuste a base URL conforme o seu environment
-  private readonly API_URL = 'https://backendtub.onrender.com/api/annotations/learning-deck';
+  private readonly API_URL = 'https://backend-tub-256195900392.us-east1.run.app/api/annotations/learning-deck';
 
   // Signals de Estado Global para a tela de Aprendizado
   readonly deckHighlights = signal<VerseHighlight[]>([]);

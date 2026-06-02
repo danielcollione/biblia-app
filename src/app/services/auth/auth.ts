@@ -23,7 +23,7 @@ export class AuthService {
   private readonly router = inject(Router);
   private readonly platformId = inject(PLATFORM_ID);
   
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/auth';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/v1/auth';
   private readonly TOKEN_KEY = 'auth_token';
 
   private _usuario = signal<Usuario | null>(null);

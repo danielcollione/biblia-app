@@ -36,7 +36,7 @@ export interface BibleReadStateResponseDto {
 export class BibleProgressService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
-  private readonly apiUrl = 'https://backendtub.onrender.com/api/v1/bible-progress';
+  private readonly apiUrl = 'https://backend-tub-256195900392.us-east1.run.app/api/v1/bible-progress';
 
   registerChapterRead(payload: RegisterBibleChapterReadRequestDto): Observable<BibleChapterProgressResponseDto> {
     return this.http.post<BibleChapterProgressResponseDto>(

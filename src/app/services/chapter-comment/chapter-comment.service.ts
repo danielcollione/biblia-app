@@ -24,7 +24,7 @@ export class ChapterCommentService {
   private readonly versionService = inject(VersionService);
   
   // URL da API (Ajuste para bater com o seu Controller no Spring Boot)
-  private readonly API_URL = 'https://backendtub.onrender.com/api/annotations/comments'; 
+  private readonly API_URL = 'https://backend-tub-256195900392.us-east1.run.app/api/annotations/comments'; 
 
   // Signal que vai guardar o comentário do capítulo que está aberto na tela
   currentChapterComment = signal<ChapterComment | null>(null);
