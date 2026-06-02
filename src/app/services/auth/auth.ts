@@ -2,7 +2,7 @@ import { Injectable, signal, computed, inject, PLATFORM_ID } from '@angular/core
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, finalize, tap } from 'rxjs';
+import { Observable, finalize, tap, throwError } from 'rxjs';
 
 export interface Usuario {
   name: string;
@@ -127,10 +127,7 @@ export class AuthService {
       return;
     }
 
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json'
-    });
+    const headers = this.buildAuthHeaders(token);
 
     const refreshQuery = forceRefresh ? '?forceRefresh=true' : '';
 
@@ -145,6 +142,30 @@ export class AuthService {
       error: () => {
         this.logout();
       }
+    });
+  }
+
+  atualizarNome(name: string): Observable<Usuario> {
+    const token = this.getToken();
+    if (!token || !isPlatformBrowser(this.platformId)) {
+      return throwError(() => new Error('Usuário não autenticado.'));
+    }
+
+    const headers = this.buildAuthHeaders(token);
+
+    return this.http.put<Usuario>(`${this.apiUrl}/me/name`, { name }, { headers }).pipe(
+      tap((profile) => {
+        if (profile) {
+          this.setUsuario(profile);
+        }
+      })
+    );
+  }
+
+  private buildAuthHeaders(token: string): HttpHeaders {
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'
     });
   }
 

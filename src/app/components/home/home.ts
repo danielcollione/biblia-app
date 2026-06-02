@@ -9,6 +9,7 @@ import { BibleService } from '../../services/bible';
 import { BibleVersion, VersionService } from '../../services/version/version-service';
 import { XpPopupService } from '../../services/xp-popup.service';
 import { StripeService } from '../../services/stripe/stripe.service';
+import { HomeProfileEditorPanelComponent } from './components/profile-editor/profile-editor-panel';
 
 type HomeMenuKey =
   | 'outlines'
@@ -29,7 +30,7 @@ type HomeMenuItem = {
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, RouterOutlet],
+  imports: [CommonModule, RouterModule, RouterOutlet, HomeProfileEditorPanelComponent],
   templateUrl: './home.html',
   styleUrls: ['./home.scss'],
 })
@@ -61,6 +62,9 @@ export class Home implements OnInit, OnDestroy {
   readonly failedAvatarUrl = signal<string | null>(null);
   readonly isStartingCheckout = signal(false);
   readonly checkoutError = signal<string | null>(null);
+  readonly isProfileEditorOpen = signal(false);
+  readonly localProfileName = signal<string | null>(null);
+  readonly isSavingProfileName = signal(false);
 
   readonly availableLangs: BibleVersion[] = this.versionService.getAvailableVersions();
   readonly currentVersion = toSignal(this.versionService.activeVersion$);
@@ -156,7 +160,8 @@ export class Home implements OnInit, OnDestroy {
     const usuario = this.authService.usuario();
     const level = Math.max(1, Number(usuario?.level ?? 1));
     const xp = Math.max(0, Number(usuario?.experiencia ?? 0));
-    const name = usuario?.name?.trim() || ui.profileRoyalCollectionMember;
+    const localName = this.localProfileName()?.trim();
+    const name = localName || usuario?.name?.trim() || ui.profileRoyalCollectionMember;
     const avatarUrl = usuario?.avatar?.trim() || null;
     const currentLevelIndex = Math.min(level - 1, this.levelXpThresholds.length - 1);
     const currentLevelStartXp = this.levelXpThresholds[currentLevelIndex] ?? 0;
@@ -222,6 +227,71 @@ export class Home implements OnInit, OnDestroy {
     if (avatarUrl) {
       this.failedAvatarUrl.set(avatarUrl);
     }
+  }
+
+  openProfileEditor(): void {
+    this.isProfileEditorOpen.set(true);
+  }
+
+  closeProfileEditor(): void {
+    this.isProfileEditorOpen.set(false);
+  }
+
+  saveProfileNameLocally(nextName: string): void {
+    if (this.isSavingProfileName()) {
+      return;
+    }
+
+    const currentName = this.userProfile().name?.trim();
+    const normalizedNextName = nextName?.trim();
+
+    if (!normalizedNextName) {
+      this.xpPopupService.showMessage(this.versionService.ui().homeProfileEditorNameInvalidToast);
+      return;
+    }
+
+    if (normalizedNextName === currentName) {
+      this.isProfileEditorOpen.set(false);
+      return;
+    }
+
+    this.isSavingProfileName.set(true);
+
+    this.authService.atualizarNome(normalizedNextName).subscribe({
+      next: (profile) => {
+        this.isSavingProfileName.set(false);
+        this.localProfileName.set(profile?.name?.trim() || normalizedNextName);
+        this.isProfileEditorOpen.set(false);
+        this.xpPopupService.showMessage(this.versionService.ui().homeProfileEditorNameSaveSuccessToast);
+      },
+      error: (error: HttpErrorResponse) => {
+        this.isSavingProfileName.set(false);
+        this.xpPopupService.showMessage(
+          error?.error?.message ||
+            error?.error?.error ||
+            this.versionService.ui().homeProfileEditorNameSaveErrorToast,
+        );
+      },
+    });
+  }
+
+  cancelSubscriptionImmediatelyLocally(): void {
+    this.stripeService.cancelarAssinaturaAgora().subscribe({
+      next: () => {
+        this.isProfileEditorOpen.set(false);
+        this.authService.refreshUserProfileFromServer(true);
+        this.xpPopupService.showMessage(
+          this.versionService.ui().homeProfileEditorSubscriptionCancelSuccessToast,
+        );
+      },
+      error: (error: HttpErrorResponse) => {
+        this.xpPopupService.showMessage(
+          error?.error?.message ||
+            error?.error?.error ||
+            this.versionService.ui().homeProfileEditorSubscriptionCancelErrorToast,
+        );
+      },
+    });
   }
 
   startCheckoutFromHome(): void {

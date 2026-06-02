@@ -22,4 +22,8 @@ export class StripeService {
     // conforme o seu PagamentoController espera.
     return this.http.post<{ url: string }>(`${this.API_URL}/checkout?userId=${userId}`, {});
   }
+
+  cancelarAssinaturaAgora(): Observable<{ status: string; message: string }> {
+    return this.http.post<{ status: string; message: string }>(`${this.API_URL}/cancelar`, {});
+  }
 }

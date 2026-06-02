@@ -367,6 +367,35 @@ li.is-disabled:hover::after {
   }
 }
 
+.profile-name-row {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.profile-edit-trigger {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  background: rgba(197, 160, 89, 0.04);
+  color: $gold-primary;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  &:hover {
+    border-color: rgba(197, 160, 89, 0.55);
+    background: rgba(197, 160, 89, 0.12);
+  }
+}
+
 .profile-stats {
   margin-top: 12px;
   display: grid;
