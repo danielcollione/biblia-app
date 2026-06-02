@@ -1,0 +1,326 @@
+:host {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.profile-editor-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  backdrop-filter: blur(3px);
+}
+
+.profile-editor-modal {
+  position: relative;
+  width: min(560px, 100%);
+  border-radius: 18px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  background: linear-gradient(165deg, #111111, #070707 64%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.6), 0 0 28px rgba(197, 160, 89, 0.15);
+  overflow: hidden;
+  animation: profileEditorEntrance 0.28s cubic-bezier(0.25, 1, 0.33, 1);
+}
+
+@keyframes profileEditorEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.985);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.profile-editor-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 22px 14px;
+  border-bottom: 1px solid rgba(197, 160, 89, 0.14);
+
+  h2 {
+    margin: 2px 0 0;
+    color: #f2eee3;
+    font-family: 'Cinzel', serif;
+    font-size: 1.35rem;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+  }
+}
+
+.profile-editor-kicker {
+  margin: 0;
+  color: #b59862;
+  text-transform: uppercase;
+  letter-spacing: 1.8px;
+  font-size: 0.64rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.profile-editor-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 160, 89, 0.28);
+  background: rgba(197, 160, 89, 0.04);
+  color: #c5a059;
+  cursor: pointer;
+  display: inline-grid;
+  place-items: center;
+
+  svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  &:hover {
+    border-color: rgba(197, 160, 89, 0.52);
+  }
+}
+
+.profile-editor-content {
+  padding: 18px 22px;
+}
+
+.profile-editor-identity {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  gap: 6px;
+}
+
+.profile-editor-avatar {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(197, 160, 89, 0.34);
+  background: linear-gradient(145deg, #d8be86, #c5a059);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  span {
+    font-family: 'Cinzel', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #14120f;
+  }
+}
+
+.profile-editor-name {
+  margin-top: 2px;
+  color: #f2eee3;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.profile-editor-role {
+  color: #b8afa0;
+  font-size: 0.77rem;
+}
+
+.profile-input-label {
+  display: block;
+  color: #d5ccbf;
+  font-size: 0.76rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.profile-input {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 11px;
+  border: 1px solid rgba(197, 160, 89, 0.3);
+  background: rgba(5, 5, 5, 0.9);
+  color: #f2eee3;
+  min-height: 44px;
+  padding: 0 14px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+
+  &:focus {
+    outline: none;
+    border-color: rgba(197, 160, 89, 0.72);
+    box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.16);
+  }
+}
+
+.profile-input-error {
+  margin: 8px 2px 0;
+  color: #e8a6a6;
+  font-size: 0.74rem;
+}
+
+.profile-divider {
+  margin: 18px 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197, 160, 89, 0.35), transparent);
+}
+
+.subscription-zone {
+  border: 1px solid rgba(197, 160, 89, 0.24);
+  border-radius: 12px;
+  padding: 14px;
+  background: rgba(197, 160, 89, 0.04);
+
+  &.subscription-zone--inactive {
+    opacity: 0.65;
+  }
+}
+
+.subscription-copy {
+  h3 {
+    margin: 0;
+    color: #f2eee3;
+    font-family: 'Cinzel', serif;
+    font-size: 0.95rem;
+  }
+
+  p {
+    margin: 8px 0 0;
+    color: #b8afa0;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+}
+
+.subscription-cancel {
+  margin-top: 12px;
+  min-height: 40px;
+  padding: 0 12px;
+  border-radius: 9px;
+  border: 1px solid rgba(224, 136, 136, 0.46);
+  background: rgba(171, 49, 49, 0.12);
+  color: #f2c1c1;
+  cursor: pointer;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.79rem;
+  letter-spacing: 0.5px;
+
+  &:hover {
+    background: rgba(171, 49, 49, 0.2);
+  }
+}
+
+.subscription-confirmation {
+  margin-top: 12px;
+  border: 1px solid rgba(224, 136, 136, 0.28);
+  border-radius: 10px;
+  background: rgba(161, 35, 35, 0.08);
+  padding: 12px;
+
+  p {
+    margin: 0;
+    color: #efd5d5;
+    font-size: 0.8rem;
+  }
+}
+
+.subscription-confirmation-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+
+  button {
+    min-height: 34px;
+    border-radius: 8px;
+    padding: 0 10px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.75rem;
+    letter-spacing: 0.4px;
+  }
+
+  .outline {
+    color: #d5ccbf;
+    background: transparent;
+    border-color: rgba(197, 160, 89, 0.3);
+  }
+
+  .danger {
+    color: #250f0f;
+    background: #e0a6a6;
+    border-color: #e0a6a6;
+  }
+}
+
+.profile-editor-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 14px 22px 20px;
+  border-top: 1px solid rgba(197, 160, 89, 0.14);
+
+  button {
+    min-height: 38px;
+    border-radius: 9px;
+    padding: 0 14px;
+    font-size: 0.77rem;
+    letter-spacing: 1.1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    border: 1px solid transparent;
+  }
+
+  .ghost {
+    color: #d5ccbf;
+    border-color: rgba(197, 160, 89, 0.26);
+    background: transparent;
+  }
+
+  .primary {
+    color: #1f1508;
+    border-color: #d5b36f;
+    background: linear-gradient(135deg, #b8893a, #e6ca8f);
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    padding: 10px;
+  }
+
+  .profile-editor-modal {
+    border-radius: 14px;
+  }
+
+  .profile-editor-header,
+  .profile-editor-content,
+  .profile-editor-actions {
+    padding-left: 14px;
+    padding-right: 14px;
+  }
+
+  .profile-editor-actions {
+    justify-content: stretch;
+
+    button {
+      flex: 1 1 auto;
+    }
+  }
+}

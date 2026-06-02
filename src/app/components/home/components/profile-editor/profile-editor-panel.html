@@ -1,0 +1,106 @@
+<div class="profile-editor-backdrop" (click)="close()"></div>
+
+<section class="profile-editor-modal" role="dialog" aria-modal="true" aria-labelledby="profileEditorTitle">
+  <header class="profile-editor-header">
+    <div>
+      <p class="profile-editor-kicker">{{ versionService.ui().homeProfileEditorKicker }}</p>
+      <h2 id="profileEditorTitle">{{ versionService.ui().homeProfileEditorTitle }}</h2>
+    </div>
+
+    <button
+      class="profile-editor-close"
+      type="button"
+      (click)="close()"
+      [attr.aria-label]="versionService.ui().homeProfileEditorCloseAria"
+    >
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M18 6L6 18"></path>
+        <path d="M6 6l12 12"></path>
+      </svg>
+    </button>
+  </header>
+
+  <div class="profile-editor-content">
+    <section class="profile-editor-identity">
+      <div class="profile-editor-avatar" aria-hidden="true">
+        @if (shouldShowAvatarImage()) {
+          <img
+            [src]="profileAvatarUrl"
+            [alt]="currentName"
+            loading="lazy"
+            decoding="async"
+            referrerpolicy="no-referrer"
+            (error)="onAvatarError()"
+          />
+        } @else {
+          <span>{{ profileAvatarInitial }}</span>
+        }
+      </div>
+
+      <strong class="profile-editor-name">{{ currentName }}</strong>
+      <span class="profile-editor-role">{{ profileRole }}</span>
+    </section>
+
+    <div class="profile-divider"></div>
+
+    <label class="profile-input-label" for="profileNameInput">{{ versionService.ui().homeProfileEditorNameLabel }}</label>
+    <input
+      id="profileNameInput"
+      class="profile-input"
+      type="text"
+      [formControl]="nameControl"
+      [disabled]="isSavingName"
+      maxlength="80"
+      autocomplete="name"
+      [placeholder]="versionService.ui().homeProfileEditorNamePlaceholder"
+    />
+
+    @if (nameControl.invalid && nameControl.touched) {
+      <p class="profile-input-error">{{ versionService.ui().homeProfileEditorNameError }}</p>
+    }
+
+    <div class="profile-divider"></div>
+
+    <section class="subscription-zone" [class.subscription-zone--inactive]="!hasActiveSubscription">
+      <div class="subscription-copy">
+        <h3>{{ versionService.ui().homeProfileEditorSubscriptionTitle }}</h3>
+        @if (hasActiveSubscription) {
+          <p>{{ versionService.ui().homeProfileEditorSubscriptionActiveHint }}</p>
+        } @else {
+          <p>{{ versionService.ui().homeProfileEditorSubscriptionInactiveHint }}</p>
+        }
+      </div>
+
+      @if (hasActiveSubscription) {
+        @if (!isSubscriptionCancelConfirmationOpen()) {
+          <button class="subscription-cancel" type="button" (click)="openSubscriptionCancelConfirmation()">
+            {{ versionService.ui().homeProfileEditorCancelNow }}
+          </button>
+        } @else {
+          <div class="subscription-confirmation">
+            <p>{{ versionService.ui().homeProfileEditorCancelConfirmQuestion }}</p>
+            <div class="subscription-confirmation-actions">
+              <button class="outline" type="button" (click)="abortSubscriptionCancelConfirmation()">
+                {{ versionService.ui().homeProfileEditorCancelBack }}
+              </button>
+              <button class="danger" type="button" (click)="confirmImmediateSubscriptionCancel()">
+                {{ versionService.ui().homeProfileEditorCancelConfirm }}
+              </button>
+            </div>
+          </div>
+        }
+      }
+    </section>
+  </div>
+
+  <footer class="profile-editor-actions">
+    <button class="ghost" type="button" (click)="close()">{{ versionService.ui().homeProfileEditorFooterClose }}</button>
+    <button class="primary" type="button" (click)="save()" [disabled]="isSavingName">
+      @if (isSavingName) {
+        {{ versionService.ui().homeProfileEditorFooterSaving }}
+      } @else {
+        {{ versionService.ui().homeProfileEditorFooterSaveName }}
+      }
+    </button>
+  </footer>
+</section>
