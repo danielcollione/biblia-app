@@ -20,6 +20,11 @@ import {
 import { ApplyHighlightPipe } from '../../pipes/apply-highlight.pipe';
 import { ChapterCommentService } from '../../services/chapter-comment/chapter-comment.service';
 import { AuthService } from '../../services/auth/auth';
+import {
+  AiInsightService,
+  ChapterInsightRequestDTO,
+  InsightResponseDTO,
+} from '../../services/ai-insights/ai-insight.service';
 
 @Component({
   selector: 'app-leitor',
@@ -35,6 +40,7 @@ export class Leitor implements OnInit {
   bibleService = inject(BibleService);
   readonly location = inject(Location);
   annotationService = inject(AnnotationService);
+  aiInsightService = inject(AiInsightService);
   @ViewChild('estanteLivros') estanteLivros!: ElementRef;
   isSavingNote = signal(false);
 
@@ -47,8 +53,13 @@ export class Leitor implements OnInit {
   showNoteModal = signal(false);
   noteText = signal('');
 
+  showChapterInsightModal = signal(false);
+  chapterInsightText = signal('');
+  chapterInsightTitle = signal('');
+
   isLoadingHighlights = signal(false);
   isLoadingComments = signal(false);
+  isGeneratingChapterInsight = signal(false);
 
   constructor(public versionService: VersionService) {
     effect(
@@ -246,6 +257,50 @@ export class Leitor implements OnInit {
 
   closeNoteModal() {
     this.showNoteModal.set(false);
+  }
+
+  openChapterInsightModal() {
+    if (!this.isSubscriptionActive() || this.isGeneratingChapterInsight()) return;
+
+    const book = this.bibleService.selectedBook();
+    const chapterIndex = this.bibleService.currentChapterIndex();
+
+    if (!book || chapterIndex === null) return;
+
+    const request: ChapterInsightRequestDTO = {
+      bookName: book.name,
+      chapterNumber: chapterIndex + 1,
+      language: this.versionService.languageCode() || 'pt',
+    };
+
+    this.isGeneratingChapterInsight.set(true);
+    this.chapterInsightText.set('');
+    this.chapterInsightTitle.set(`${book.name} ${chapterIndex + 1}`);
+
+    this.aiInsightService.generateChapterSummaryInsight(request).subscribe({
+      next: (response) => {
+        this.chapterInsightText.set(this.normalizeChapterInsight(response).insightText);
+        this.showChapterInsightModal.set(true);
+        this.isGeneratingChapterInsight.set(false);
+      },
+      error: (error) => {
+        console.error('Erro ao gerar insight do capítulo:', error);
+        this.chapterInsightText.set('Não foi possível gerar o resumo deste capítulo no momento.');
+        this.showChapterInsightModal.set(true);
+        this.isGeneratingChapterInsight.set(false);
+      },
+    });
+  }
+
+  closeChapterInsightModal() {
+    this.showChapterInsightModal.set(false);
+  }
+
+  private normalizeChapterInsight(response: InsightResponseDTO): InsightResponseDTO {
+    const text = response?.insightText?.trim() || '';
+    return {
+      insightText: text.length <= 300 ? text : text.slice(0, 300).trim(),
+    };
   }
 
   // Atualiza o Signal sem precisar de Angular Forms
