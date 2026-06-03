@@ -1,7 +1,7 @@
 <div class="prayers-shell" #prayersShell>
     <canvas class="prayers-embers-canvas" #embersCanvas></canvas>
 
-    <header class="prayers-hero">
+    <header class="prayers-hero" [style.display]="activePrayer() ? 'none' : 'flex'">
         <div class="hero-content">
             <p class="eyebrow">{{ versionService.ui().prayersEyebrow }}</p>
             <h1 class="font-inter">{{ versionService.ui().prayersTitle }}</h1>
