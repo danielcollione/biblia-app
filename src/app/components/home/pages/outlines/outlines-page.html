@@ -25,80 +25,126 @@
         </div>
       </header>
 
-      <form class="sage-form" (ngSubmit)="generate()">
-
-        <!-- CONTENT TYPE CHIPS -->
-        <div class="form-group">
-          <label class="form-label">{{ versionService.ui().sagePageTypeLabel }}</label>
-          <div class="type-chips">
-            @for (type of contentTypes(); track type.value) {
-              <button
-                type="button"
-                class="type-chip"
-                [class.selected]="contentType === type.value"
-                (click)="contentType = type.value">
-                {{ type.label }}
-              </button>
-            }
-          </div>
-        </div>
-
-        <!-- THEME / VERSE -->
-        <div class="form-group">
-          <label class="form-label" for="themeOrVerse">{{ versionService.ui().sagePageThemeLabel }}</label>
-          <input
-            id="themeOrVerse"
-            class="form-input"
-            type="text"
-            [(ngModel)]="themeOrVerse"
-            name="themeOrVerse"
-            [placeholder]="versionService.ui().sagePageThemePlaceholder"
-            autocomplete="off"
-            required />
-        </div>
-
-        <!-- ADDITIONAL NOTES -->
-        <div class="form-group">
-          <label class="form-label" for="additionalNotes">{{ versionService.ui().sagePageNotesLabel }}</label>
-          <textarea
-            id="additionalNotes"
-            class="form-input form-textarea"
-            [(ngModel)]="additionalNotes"
-            name="additionalNotes"
-            [placeholder]="versionService.ui().sagePageNotesPlaceholder"
-            rows="3">
-          </textarea>
-        </div>
-
-        <!-- ERROR -->
-        @if (errorMessage()) {
-          <p class="sage-error">{{ errorMessage() }}</p>
-        }
-
-        <!-- SUBMIT -->
-        <button class="sage-submit" type="submit" [disabled]="isLoading() || !themeOrVerse.trim()">
-          @if (isLoading()) {
-            <span class="spinner"></span>
-            {{ versionService.ui().sagePageLoading }}
-          } @else {
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M12 3l2.7 5.5L21 9.3l-4.5 4.4 1 6.3L12 17.2 6.5 20l1-6.3L3 9.3l6.3-.8L12 3z"></path>
-            </svg>
-            {{ versionService.ui().sagePageSubmit }}
-          }
+      <div class="study-tabs" role="tablist" aria-label="Navegação de estudos">
+        <button
+          type="button"
+          class="study-tab"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'generate'"
+          [class.active]="activeTab() === 'generate'"
+          (click)="selectTab('generate')">
+          {{ versionService.ui().newStudy }}
         </button>
 
-        @if (isLoading()) {
-          <div class="sage-loading-oracle" aria-live="polite">
-            <div class="oracle-halo"></div>
-            <div class="oracle-copy-wrap">
-              <span class="oracle-label">{{ versionService.ui().sagePageLoading }}</span>
-              <strong class="oracle-copy">{{ currentLoadingMessage() }}</strong>
+        <button
+          type="button"
+          class="study-tab"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'generated'"
+          [class.active]="activeTab() === 'generated'"
+          (click)="selectTab('generated')">
+          {{ versionService.ui().generatedStudies }}
+        </button>
+      </div>
+
+      @if (activeTab() === 'generate') {
+        <form class="sage-form tab-panel" (ngSubmit)="generate()">
+
+          <!-- CONTENT TYPE CHIPS -->
+          <div class="form-group">
+            <label class="form-label">{{ versionService.ui().sagePageTypeLabel }}</label>
+            <div class="type-chips">
+              @for (type of contentTypes(); track type.value) {
+                <button
+                  type="button"
+                  class="type-chip"
+                  [class.selected]="contentType === type.value"
+                  (click)="contentType = type.value">
+                  {{ type.label }}
+                </button>
+              }
             </div>
           </div>
-        }
 
-      </form>
+          <!-- THEME / VERSE -->
+          <div class="form-group">
+            <label class="form-label" for="themeOrVerse">{{ versionService.ui().sagePageThemeLabel }}</label>
+            <input
+              id="themeOrVerse"
+              class="form-input"
+              type="text"
+              [(ngModel)]="themeOrVerse"
+              name="themeOrVerse"
+              [placeholder]="versionService.ui().sagePageThemePlaceholder"
+              autocomplete="off"
+              required />
+          </div>
+
+          <!-- ADDITIONAL NOTES -->
+          <div class="form-group">
+            <label class="form-label" for="additionalNotes">{{ versionService.ui().sagePageNotesLabel }}</label>
+            <textarea
+              id="additionalNotes"
+              class="form-input form-textarea"
+              [(ngModel)]="additionalNotes"
+              name="additionalNotes"
+              [placeholder]="versionService.ui().sagePageNotesPlaceholder"
+              rows="3">
+            </textarea>
+          </div>
+
+          <!-- ERROR -->
+          @if (errorMessage()) {
+            <p class="sage-error">{{ errorMessage() }}</p>
+          }
+
+          <!-- SUBMIT -->
+          <button class="sage-submit" type="submit" [disabled]="isLoading() || !themeOrVerse.trim()">
+            @if (isLoading()) {
+              <span class="spinner"></span>
+              {{ versionService.ui().sagePageLoading }}
+            } @else {
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 3l2.7 5.5L21 9.3l-4.5 4.4 1 6.3L12 17.2 6.5 20l1-6.3L3 9.3l6.3-.8L12 3z"></path>
+              </svg>
+              {{ versionService.ui().sagePageSubmit }}
+            }
+          </button>
+
+          @if (isLoading()) {
+            <div class="sage-loading-oracle" aria-live="polite">
+              <div class="oracle-halo"></div>
+              <div class="oracle-copy-wrap">
+                <span class="oracle-label">{{ versionService.ui().sagePageLoading }}</span>
+                <strong class="oracle-copy">{{ currentLoadingMessage() }}</strong>
+              </div>
+            </div>
+          }
+        </form>
+      } @else {
+        <section class="generated-studies-panel tab-panel">
+          @if (isLoadingGeneratedStudies()) {
+            <div class="generated-state">Carregando estudos...</div>
+          } @else if (!generatedStudies().length) {
+            <div class="generated-state">Nenhum estudo gerado ainda.</div>
+          } @else {
+            <div class="generated-studies-list">
+              @for (study of generatedStudies(); track study.id; let i = $index) {
+                <button
+                  type="button"
+                  class="generated-study-item"
+                  [style.--item-index]="i"
+                  (click)="openStoredStudy(study)">
+                  <span class="generated-study-main">
+                    <span class="generated-study-title">{{ getStoredStudyTitle(study) }}</span>
+                    <span class="generated-study-type">{{ study.contentType }}</span>
+                  </span>
+                </button>
+              }
+            </div>
+          }
+        </section>
+      }
     </div>
   }
 

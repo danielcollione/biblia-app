@@ -28,6 +28,28 @@ $text-muted: #b8afa0;
   }
 }
 
+@media (min-width: 1025px) {
+  .home-shell.sidebar-collapsed {
+    overflow: hidden;
+  }
+
+  .home-shell.sidebar-collapsed .home-main,
+  .home-shell.sidebar-collapsed .home-sidebar,
+  .home-shell.sidebar-collapsed .sidebar-nav {
+    overflow: hidden !important;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .home-shell.sidebar-collapsed .home-main::-webkit-scrollbar,
+  .home-shell.sidebar-collapsed .home-sidebar::-webkit-scrollbar,
+  .home-shell.sidebar-collapsed .sidebar-nav::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+  }
+}
+
 .home-mobile-header {
   display: none;
 }

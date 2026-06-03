@@ -1,9 +1,9 @@
-import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, OnInit, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule, DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { AuthService } from '../../../../services/auth/auth';
 import { VersionService } from '../../../../services/version/version-service';
-import { StudyService, StudyResponseDto } from '../../../../services/study/study.service';
+import { StoredStudyResponseDto, StudyService, StudyResponseDto } from '../../../../services/study/study.service';
 import { PricingAccessDeniedComponent } from '../../../pricing-access-denied/pricing-access-denied.component';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -22,7 +22,7 @@ type EmberParticle = {
   templateUrl: './outlines-page.html',
   styleUrls: ['./outlines-page.scss'],
 })
-export class OutlinesPage implements AfterViewInit, OnDestroy {
+export class OutlinesPage implements OnInit, AfterViewInit, OnDestroy {
   private readonly authService = inject(AuthService);
   readonly versionService = inject(VersionService);
   private readonly studyService = inject(StudyService);
@@ -73,6 +73,9 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
   readonly copied = signal(false);
   readonly activeLoadingMessageIndex = signal(0);
   readonly hasActiveSubscription = computed(() => this.isSubscriptionActive());
+  readonly generatedStudies = signal<StoredStudyResponseDto[]>([]);
+  readonly isLoadingGeneratedStudies = signal(false);
+  readonly activeTab = signal<'generate' | 'generated'>('generate');
 
   readonly contentTypes = computed(() => {
     const ui = this.versionService.ui();
@@ -105,6 +108,12 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
     es: 'Spanish',
   };
 
+  ngOnInit(): void {
+    if (this.hasActiveSubscription()) {
+      this.loadGeneratedStudies();
+    }
+  }
+
   generate(): void {
     if (!this.themeOrVerse.trim()) return;
 
@@ -127,6 +136,7 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
       .subscribe({
         next: (res) => {
           this.result.set(res);
+          this.loadGeneratedStudies();
           this.stopLoadingMessageRotation();
           this.isLoading.set(false);
         },
@@ -156,6 +166,30 @@ export class OutlinesPage implements AfterViewInit, OnDestroy {
     this.themeOrVerse = '';
     this.additionalNotes = '';
     this.contentType = 'Study';
+  }
+
+  openStoredStudy(study: StoredStudyResponseDto): void {
+    const storedStudy = this.resolveStoredStudy(study);
+    if (!storedStudy) {
+      this.errorMessage.set(this.versionService.ui().sagePageError);
+      return;
+    }
+
+    this.contentType = study.contentType || 'Study';
+    this.result.set(storedStudy);
+    this.errorMessage.set(null);
+  }
+
+  getStoredStudyTitle(stored: StoredStudyResponseDto): string {
+    return this.resolveStoredStudy(stored)?.title || stored.themeOrVerse;
+  }
+
+  selectTab(tab: 'generate' | 'generated'): void {
+    this.activeTab.set(tab);
+
+    if (tab === 'generated' && !this.generatedStudies().length && !this.isLoadingGeneratedStudies()) {
+      this.loadGeneratedStudies();
+    }
   }
 
   exportToWhatsApp(): void {
@@ -386,5 +420,24 @@ ${study.conclusion ? `<div class="section"><h2>${ui.sagePageConclusion}</h2><p>$
 
     const expiresAt = new Date(user.subscriptionExpiresAt).getTime();
     return Number.isFinite(expiresAt) && expiresAt > Date.now();
+  }
+
+  private resolveStoredStudy(stored: StoredStudyResponseDto): StudyResponseDto | null {
+    return stored.study ?? stored.generatedStudy ?? null;
+  }
+
+  private loadGeneratedStudies(): void {
+    this.isLoadingGeneratedStudies.set(true);
+
+    this.studyService.listGeneratedStudies().subscribe({
+      next: (studies) => {
+        this.generatedStudies.set(studies ?? []);
+        this.isLoadingGeneratedStudies.set(false);
+      },
+      error: () => {
+        this.generatedStudies.set([]);
+        this.isLoadingGeneratedStudies.set(false);
+      },
+    });
   }
 }
