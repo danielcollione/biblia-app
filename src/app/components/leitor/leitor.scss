@@ -242,7 +242,7 @@
 }
 
 .biblia-header-prime {
-  padding: 40px 0 20px;
+  padding: 96px 0 20px;
   text-align: center;
   flex-shrink: 0;
 
@@ -820,7 +820,7 @@
   }
 
   .biblia-header-prime {
-    padding: 70px 20px 20px; // Empurra o título para baixo do botão Sumário
+    padding: 112px 20px 20px; // Empurra o título para baixo dos botoes e do botão Sumário
     .titulo-livro {
       font-size: 2rem;
     }
@@ -977,13 +977,36 @@
 }
 
 .ferramenta-marca-texto {
-  position: absolute;
-  top: 45px; /* Mais para cima no PC */
-  right: 65px; /* Mais para a esquerda no PC */
+  position: relative;
+  top: auto;
+  right: auto;
   z-index: 50;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 12px;
+}
+
+.ferramenta-ia-wrapper {
+  position: relative;
+  top: auto;
+  right: auto;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ferramentas-topo-direito {
+  position: absolute;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 80;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
   gap: 12px;
 }
 
@@ -999,6 +1022,8 @@
   align-items: center;
   transition: all 0.2s ease;
   color: #4a3728; /* Cor da tinta do icone */
+  position: relative;
+  overflow: visible;
 }
 
 .btn-ferramenta:hover {
@@ -1011,6 +1036,18 @@
   color: #fce83a;
   border-color: #4a3728;
   box-shadow: 0 0 10px rgba(74, 55, 40, 0.3);
+}
+
+.btn-ferramenta-ia.ai-loading::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(74, 55, 40, 0.12);
+  border-top-color: #4a3728;
+  border-right-color: #4a3728;
+  animation: aiButtonSpin 0.8s linear infinite;
+  pointer-events: none;
 }
 
 /* ... mantenha a .paleta-cores-fixa igual estava antes ... */
@@ -1119,9 +1156,9 @@
 
 /* Ajuste específico para Telas Menores (Mobile) */
 @media (max-width: 768px) {
-  .ferramenta-marca-texto {
-    top: 20px;
-    right: 40px;
+  .ferramentas-topo-direito {
+    top: 50px;
+    gap: 10px;
   }
 
   .paleta-cores-fixa {
@@ -1152,22 +1189,26 @@
 
 /* Wrapper do botão de nota (Posicionado à esquerda do marca-texto) */
 .ferramenta-nota-wrapper {
-  position: absolute;
-  top: 45px;
-  /* 65px (do marca-texto) + 44px (botão) + 11px (espaço) = 120px */
-  right: 120px;
+  position: relative;
+  top: auto;
+  right: auto;
   z-index: 50;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+@keyframes aiButtonSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 /* Alinhamento Mobile para o botão de nota */
 @media (max-width: 768px) {
   .ferramenta-nota-wrapper {
-    top: 20px;
-    /* 40px (do marca-texto mobile) + 44px (botão) + 11px (espaço) = 95px */
-    right: 95px;
+    top: auto;
+    right: auto;
   }
 }
 
@@ -1497,8 +1538,74 @@
 
 /* O Gatilho: Ao passar o mouse, ele aparece na mesma hora */
 .ferramenta-nota-wrapper:hover .tooltip-premium-lock,
+.ferramenta-ia-wrapper:hover .tooltip-premium-lock,
 .ferramenta-marca-texto:hover .tooltip-premium-lock {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
+}
+
+/* --- MODAL MINIMALISTA DO RESUMO DE IA --- */
+.modal-ai-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 10, 5, 0.55);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: simpleFadeIn 0.15s ease-out;
+}
+
+.modal-ai-content {
+  width: min(90vw, 620px);
+  background: linear-gradient(180deg, rgba(250, 246, 238, 0.98) 0%, rgba(244, 238, 228, 0.98) 100%);
+  border: 1px solid rgba(74, 55, 40, 0.12);
+  border-radius: 22px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.28);
+  overflow: hidden;
+}
+
+.modal-ai-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 24px 28px 16px;
+}
+
+.modal-ai-kicker {
+  margin: 0 0 6px;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8c7360;
+  font-weight: 700;
+}
+
+.modal-ai-header h3 {
+  margin: 0;
+  color: #35261b;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.modal-ai-body {
+  padding: 0 28px 28px;
+  color: #2c1e13;
+}
+
+.modal-ai-icon {
+  width: 22px;
+  height: 22px;
+  color: #8c7360;
+  margin-bottom: 14px;
+}
+
+.modal-ai-body p {
+  margin: 0;
+  font-size: 1.02rem;
+  line-height: 1.8;
+  white-space: pre-wrap;
 }
