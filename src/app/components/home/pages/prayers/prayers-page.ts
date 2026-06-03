@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, computed, inject, signal } from '@angular/core';
-import { CommonModule, DatePipe, isPlatformBrowser } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, Inject, NgZone, OnDestroy, PLATFORM_ID, ViewChild, inject, signal } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { finalize } from 'rxjs';
 
 import { AuthService } from '../../../../services/auth/auth';
-import { PrayerItemDto, PrayersService } from '../../../../services/prayers/prayers.service';
+import { PrayerCommentDto, PrayerItemDto, PrayersService } from '../../../../services/prayers/prayers.service';
 import { VersionService } from '../../../../services/version/version-service';
 import { CreatePrayerModal } from './modal/create-prayer-modal';
 
@@ -23,7 +23,7 @@ type EmberParticle = {
 @Component({
   selector: 'app-prayers-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, DatePipe, CreatePrayerModal],
+  imports: [CommonModule, FormsModule, CreatePrayerModal],
   templateUrl: './prayers-page.html',
   styleUrl: './prayers-page.scss'
 })
@@ -48,6 +48,13 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
   readonly flashIsError = signal(false);
   readonly currentPage = signal(0);
   readonly hasMorePages = signal(true);
+  readonly activePrayer = signal<PrayerItemDto | null>(null);
+  readonly prayerComments = signal<PrayerCommentDto[]>([]);
+  readonly isLoadingComments = signal(false);
+  readonly isPostingComment = signal(false);
+  readonly newCommentText = signal('');
+  readonly pendingDeletePrayer = signal<PrayerItemDto | null>(null);
+  readonly pendingDeleteComment = signal<PrayerCommentDto | null>(null);
 
   @ViewChild('prayersShell') prayersShellRef!: ElementRef<HTMLElement>;
   @ViewChild('embersCanvas') embersCanvasRef!: ElementRef<HTMLCanvasElement>;
@@ -118,6 +125,45 @@ export class PrayersPage implements AfterViewInit, OnDestroy {
     this.loadPrayers();
   }
 
+  openPrayerDiscussion(prayer: PrayerItemDto): void {
+    this.activePrayer.set(prayer);
+    this.newCommentText.set('');
+    this.loadComments(prayer.id);
+    this.scrollPrayerBoardToTop();
+  }
+
+  closePrayerDiscussion(): void {
+    this.activePrayer.set(null);
+    this.prayerComments.set([]);
+    this.newCommentText.set('');
+  }
+
+  updateNewCommentText(value: string): void {
+    this.newCommentText.set(value);
+  }
+
+  submitPrayerComment(): void {
+    const prayer = this.activePrayer();
+    const content = this.newCommentText().trim();
+
+    if (!prayer || !content || this.isPostingComment()) {
+      return;
+    }
+
+    this.isPostingComment.set(true);
+    this.prayersService.createComment(prayer.id, { content })
+      .pipe(finalize(() => this.isPostingComment.set(false)))
+      .subscribe({
+        next: (createdComment) => {
+          this.prayerComments.update((items) => [...items, createdComment]);
+          this.newCommentText.set('');
+        },
+        error: (error) => {
+          this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersCommentCreateError), true);
+        }
+      });
+  }
+
   loadMorePrayers(): void {
     if (this.isLoadingMore() || !this.hasMorePages()) {
       return;
@@ -148,6 +194,10 @@ onScroll(): void {
   const threshold = 200; // pixels antes do fim para carregar
   const isAtBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - threshold;
 
+  if (this.activePrayer()) {
+    return;
+  }
+
   if (isAtBottom && this.hasMorePages() && !this.isLoadingMore() && !this.isLoading()) {
     this.loadMorePrayers();
   }
@@ -164,8 +214,14 @@ onScroll(): void {
     this.prayersService.toggleLike(prayer.id).subscribe({
       next: (updated) => {
         this.prayers.update((items) => items.map((item) => item.id === prayer.id
-          ? { ...item, likesCount: updated.likesCount, likedByCurrentUser: !item.likedByCurrentUser }
+          ? { ...item, likesCount: updated.likesCount, likedByCurrentUser: updated.likedByCurrentUser }
           : item));
+
+        if (this.activePrayer()?.id === prayer.id) {
+          this.activePrayer.update((current) => current
+            ? { ...current, likesCount: updated.likesCount, likedByCurrentUser: updated.likedByCurrentUser }
+            : current);
+        }
       },
       error: (error) => {
         this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersLikeError), true);
@@ -173,31 +229,98 @@ onScroll(): void {
     });
   }
 
-  canDeletePrayer(): boolean {
-    const user = this.authService.usuario();
-    if (!user) {
-      return false;
+  canDeletePrayer(prayer: PrayerItemDto | null): boolean {
+    const currentUserId = this.authService.usuario()?.id;
+    return !!currentUserId && !!prayer && prayer.userId === currentUserId;
+  }
+
+  openPrayerDeleteConfirm(prayer: PrayerItemDto, event?: Event): void {
+    event?.stopPropagation();
+
+    if (!this.canDeletePrayer(prayer)) {
+      this.showFlash(this.versionService.ui().prayersDeletePrayerAuthorOnly, true);
+      return;
     }
 
-    const isLifetime = user.subscriptionType === 'LIFETIME';
-    return isLifetime && this.hasActiveSubscription();
+    this.pendingDeleteComment.set(null);
+    this.pendingDeletePrayer.set(prayer);
   }
 
   deletePrayer(prayer: PrayerItemDto, event?: Event): void {
     event?.stopPropagation();
 
-    if (!this.canDeletePrayer()) {
-      this.showFlash('Only LIFETIME users can delete prayers.', true);
+    if (!this.canDeletePrayer(prayer)) {
+      this.showFlash(this.versionService.ui().prayersDeletePrayerAuthorOnly, true);
       return;
     }
 
     this.prayersService.delete(prayer.id).subscribe({
       next: () => {
         this.prayers.update(items => items.filter(item => item.id !== prayer.id));
-        this.showFlash('Prayer deleted successfully.', false);
+        if (this.activePrayer()?.id === prayer.id) {
+          this.closePrayerDiscussion();
+        }
+        this.showFlash(this.versionService.ui().prayersDeletePrayerSuccess, false);
       },
       error: (error) => {
-        this.showFlash(this.resolveHttpError(error, 'Unable to delete this prayer right now.'), true);
+        this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersDeletePrayerError), true);
+      }
+    });
+  }
+
+  canDeleteComment(comment: PrayerCommentDto): boolean {
+    const currentUserId = this.authService.usuario()?.id;
+    return !!currentUserId && comment.userId === currentUserId;
+  }
+
+  openCommentDeleteConfirm(comment: PrayerCommentDto, event?: Event): void {
+    event?.stopPropagation();
+
+    if (!this.canDeleteComment(comment)) {
+      this.showFlash(this.versionService.ui().prayersDeleteCommentAuthorOnly, true);
+      return;
+    }
+
+    this.pendingDeletePrayer.set(null);
+    this.pendingDeleteComment.set(comment);
+  }
+
+  closeDeleteConfirmModal(): void {
+    this.pendingDeletePrayer.set(null);
+    this.pendingDeleteComment.set(null);
+  }
+
+  confirmDelete(): void {
+    const prayerToDelete = this.pendingDeletePrayer();
+    if (prayerToDelete) {
+      this.closeDeleteConfirmModal();
+      this.deletePrayer(prayerToDelete);
+      return;
+    }
+
+    const commentToDelete = this.pendingDeleteComment();
+    if (commentToDelete) {
+      this.closeDeleteConfirmModal();
+      this.deletePrayerComment(commentToDelete);
+    }
+  }
+
+  deletePrayerComment(comment: PrayerCommentDto, event?: Event): void {
+    event?.stopPropagation();
+
+    const prayer = this.activePrayer();
+    if (!prayer || !this.canDeleteComment(comment)) {
+      this.showFlash(this.versionService.ui().prayersDeleteCommentAuthorOnly, true);
+      return;
+    }
+
+    this.prayersService.deleteComment(prayer.id, comment.id).subscribe({
+      next: () => {
+        this.prayerComments.update((items) => items.filter((item) => item.id !== comment.id));
+        this.showFlash(this.versionService.ui().prayersDeleteCommentSuccess, false);
+      },
+      error: (error) => {
+        this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersDeleteCommentError), true);
       }
     });
   }
@@ -222,6 +345,33 @@ onScroll(): void {
           this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersLoadError), true);
         }
       });
+  }
+
+  private loadComments(prayerId: string): void {
+    this.isLoadingComments.set(true);
+    this.prayerComments.set([]);
+
+    this.prayersService.listComments(prayerId)
+      .pipe(finalize(() => this.isLoadingComments.set(false)))
+      .subscribe({
+        next: (comments) => {
+          this.prayerComments.set(comments);
+        },
+        error: (error) => {
+          this.showFlash(this.resolveHttpError(error, this.versionService.ui().prayersCommentsLoadError), true);
+        }
+      });
+  }
+
+  private scrollPrayerBoardToTop(): void {
+    if (!this.prayersBoardRef?.nativeElement) {
+      return;
+    }
+
+    this.prayersBoardRef.nativeElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   }
 
   private resolveHttpError(error: { status?: number; error?: { message?: string } | string }, fallback: string): string {

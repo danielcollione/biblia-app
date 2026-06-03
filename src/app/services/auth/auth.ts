@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Observable, finalize, tap, throwError } from 'rxjs';
 
 export interface Usuario {
+  id?: string | null;
   name: string;
   email: string;
   pictureUrl?: string; // Ajustado para o nome real no banco/token
@@ -182,6 +183,7 @@ export class AuthService {
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       this.setUsuario({
+        id: payload.id || null,
         name: payload.name,
         email: payload.sub,
         pictureUrl: payload.picture,
@@ -201,6 +203,7 @@ export class AuthService {
 
   private setUsuario(profile: Usuario): void {
     const normalizedProfile: Usuario = {
+      id: profile.id ?? null,
       name: profile.name,
       email: profile.email,
       pictureUrl: profile.pictureUrl,

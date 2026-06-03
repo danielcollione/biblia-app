@@ -22,47 +22,198 @@
 
     <!-- Container principal com scroll infinito -->
     <section class="prayers-grid-container" #prayersBoard (scroll)="onScroll()">
-        @if (!prayers().length && !isLoading()) {
-            <div class="empty-state">
-                <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
-                <h2 class="font-inter">{{ versionService.ui().prayersEmptyTitle }}</h2>
-                <p class="font-cinzel">{{ versionService.ui().prayersEmptySubtitle }}</p>
-            </div>
-        }
+        @if (activePrayer(); as selectedPrayer) {
+            <section class="prayer-focus-view">
+                <button class="focus-back-btn" type="button" (click)="closePrayerDiscussion()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M19 12H5"></path>
+                        <path d="M12 5l-7 7 7 7"></path>
+                    </svg>
+                    {{ versionService.ui().prayersBackToList }}
+                </button>
 
-        <div class="prayers-grid">
-            @for (prayer of prayers(); track prayer.id; let index = $index) {
-                <article class="prayer-card-minimal" [style.--prayer-enter-delay]="(index % 10 * 50) + 'ms'">
-                    <div class="card-header">
-                        <span class="card-date">{{ prayer.createdAt | date:'dd/MM/yyyy' }}</span>
-                        <button class="like-btn" [class.liked]="prayer.likedByCurrentUser" 
-                                (click)="toggleLike(prayer, $event)" [disabled]="!hasActiveSubscription()">
-                            🙏 <span>{{ prayer.likesCount }}</span>
+                <header class="focus-prayer-header">
+                    <p class="focus-prayer-kicker">{{ versionService.ui().prayersDiscussionKicker }}</p>
+                    <h2 class="focus-prayer-title">{{ selectedPrayer.content }}</h2>
+
+                    <div class="focus-prayer-meta">
+                        <span class="focus-author">{{ selectedPrayer.authorName }}</span>
+                        <span class="focus-date">{{ selectedPrayer.createdAt | date:'dd/MM/yyyy' }}</span>
+
+                        <button
+                            class="prayer-like-chip"
+                            type="button"
+                            [class.liked]="selectedPrayer.likedByCurrentUser"
+                            (click)="toggleLike(selectedPrayer, $event)"
+                            [disabled]="!hasActiveSubscription()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <path d="M7 10v11"></path>
+                                <path d="M14.8 5.8 13 10h6a2 2 0 0 1 1.9 2.6l-1.3 4.5a2 2 0 0 1-1.9 1.4H7"></path>
+                                <path d="M7 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path>
+                            </svg>
+                            <span class="like-count">{{ selectedPrayer.likesCount }}</span>
                         </button>
-                    </div>
 
-                    <p class="card-text">"{{ prayer.content }}"</p>
-
-                    <div class="card-author">
-                        <span class="author-name">{{ prayer.authorName }}</span>
+                        @if (canDeletePrayer(selectedPrayer)) {
+                            <button
+                                class="minimal-delete-button prayer-delete-button"
+                                type="button"
+                                (click)="openPrayerDeleteConfirm(selectedPrayer, $event)"
+                                [attr.aria-label]="versionService.ui().prayersDeletePrayerAria">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"></path>
+                                    <path d="M18 6l-1 13.2A2 2 0 0 1 15 21H9a2 2 0 0 1-2-1.8L6 6"></path>
+                                    <path d="M10 10.5v6"></path>
+                                    <path d="M14 10.5v6"></path>
+                                </svg>
+                            </button>
+                        }
                     </div>
-                </article>
+                </header>
+
+                <div class="focus-comments-block">
+                    @if (isLoadingComments()) {
+                        <div class="comments-loading">
+                            <span class="mini-spinner"></span>
+                            <span>{{ versionService.ui().prayersCommentsLoading }}</span>
+                        </div>
+                    } @else if (!prayerComments().length) {
+                        <div class="comments-empty">
+                            {{ versionService.ui().prayersCommentsEmpty }}
+                        </div>
+                    } @else {
+                        <div class="comments-list">
+                            @for (comment of prayerComments(); track comment.id) {
+                                <article class="comment-item">
+                                    <p class="comment-content">{{ comment.content }}</p>
+                                    <div class="comment-meta">
+                                        <div class="comment-meta-main">
+                                            <span>{{ comment.authorName }}</span>
+                                            <span>{{ comment.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+                                        </div>
+
+                                        @if (canDeleteComment(comment)) {
+                                            <button
+                                                class="minimal-delete-button comment-delete-button"
+                                                type="button"
+                                                (click)="openCommentDeleteConfirm(comment, $event)"
+                                                [attr.aria-label]="versionService.ui().prayersDeleteCommentAria">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                                    <path d="M3 6h18"></path>
+                                                    <path d="M8 6V4.8A1.8 1.8 0 0 1 9.8 3h4.4A1.8 1.8 0 0 1 16 4.8V6"></path>
+                                                    <path d="M18 6l-1 13.2A2 2 0 0 1 15 21H9a2 2 0 0 1-2-1.8L6 6"></path>
+                                                    <path d="M10 10.5v6"></path>
+                                                    <path d="M14 10.5v6"></path>
+                                                </svg>
+                                            </button>
+                                        }
+                                    </div>
+                                </article>
+                            }
+                        </div>
+                    }
+
+                    <div class="focus-comment-composer">
+                    <input
+                        type="text"
+                        class="composer-input"
+                        [ngModel]="newCommentText()"
+                        (ngModelChange)="updateNewCommentText($event)"
+                        (keydown.enter)="submitPrayerComment()"
+                        [placeholder]="versionService.ui().prayersCommentPlaceholder"
+                    />
+
+                    <button
+                        type="button"
+                        class="composer-send"
+                        [disabled]="isPostingComment() || !newCommentText().trim()"
+                        (click)="submitPrayerComment()">
+                        @if (isPostingComment()) {
+                            <span class="mini-spinner"></span>
+                            {{ versionService.ui().prayersCommentSending }}
+                        } @else {
+                            {{ versionService.ui().prayersCommentAction }}
+                        }
+                    </button>
+                    </div>
+                </div>
+            </section>
+        } @else {
+            @if (!prayers().length && !isLoading()) {
+                <div class="empty-state">
+                    <div class="empty-icon">{{ versionService.ui().prayersEmptyIcon }}</div>
+                    <h2 class="font-inter">{{ versionService.ui().prayersEmptyTitle }}</h2>
+                    <p class="font-cinzel">{{ versionService.ui().prayersEmptySubtitle }}</p>
+                </div>
             }
-        </div>
 
-        @if (isLoadingMore()) {
-            <div class="infinite-loader">
-                <span class="mini-spinner"></span>
+            <div class="prayers-list">
+                @for (prayer of prayers(); track prayer.id; let index = $index) {
+                    <article class="prayer-list-item" [style.--prayer-enter-delay]="(index % 12 * 46) + 'ms'" (click)="openPrayerDiscussion(prayer)">
+                        <div class="prayer-list-main">
+                            <p class="prayer-list-text">{{ prayer.content }}</p>
+
+                            <button
+                                class="prayer-like-chip"
+                                type="button"
+                                [class.liked]="prayer.likedByCurrentUser"
+                                (click)="toggleLike(prayer, $event)"
+                                [disabled]="!hasActiveSubscription()">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M7 10v11"></path>
+                                    <path d="M14.8 5.8 13 10h6a2 2 0 0 1 1.9 2.6l-1.3 4.5a2 2 0 0 1-1.9 1.4H7"></path>
+                                    <path d="M7 10H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2h3"></path>
+                                </svg>
+                                <span class="like-count">{{ prayer.likesCount }}</span>
+                            </button>
+                        </div>
+
+                        <div class="prayer-list-meta">
+                            <span class="prayer-list-author">{{ prayer.authorName }}</span>
+                        </div>
+                    </article>
+                }
             </div>
+
+            @if (isLoadingMore()) {
+                <div class="infinite-loader">
+                    <span class="mini-spinner"></span>
+                </div>
+            }
         }
     </section>
 
-    <!-- Botão Fixo Mantido -->
+    @if (!activePrayer()) {
     <button class="floating-create-button" type="button" (click)="openCreateModal()" [class.locked]="!hasActiveSubscription()">
         {{ versionService.ui().prayersCreateButton }}
     </button>
+    }
 </div>
 
 @if (isModalOpen()) {
     <app-create-prayer-modal (closed)="closeCreateModal()" (created)="onPrayerCreated()"></app-create-prayer-modal>
+}
+
+@if (pendingDeletePrayer() || pendingDeleteComment()) {
+    <div class="delete-confirm-backdrop" (click)="closeDeleteConfirmModal()">
+        <section class="delete-confirm-modal" (click)="$event.stopPropagation()">
+            <h3>{{ versionService.ui().prayersDeleteConfirmTitle }}</h3>
+
+            @if (pendingDeletePrayer()) {
+                <p>{{ versionService.ui().prayersDeletePrayerConfirmMessage }}</p>
+            } @else {
+                <p>{{ versionService.ui().prayersDeleteCommentConfirmMessage }}</p>
+            }
+
+            <div class="delete-confirm-actions">
+                <button type="button" class="btn-cancel-delete" (click)="closeDeleteConfirmModal()">
+                    {{ versionService.ui().prayersDeleteConfirmCancel }}
+                </button>
+                <button type="button" class="btn-confirm-delete" (click)="confirmDelete()">
+                    {{ versionService.ui().prayersDeleteConfirmAction }}
+                </button>
+            </div>
+        </section>
+    </div>
 }

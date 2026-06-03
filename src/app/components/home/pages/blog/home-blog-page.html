@@ -18,11 +18,15 @@
 
         <div class="rpg-card" [class.card-highlight]="card.cardType === 'highlight'"
             [class.card-comment]="card.cardType === 'comment'" [style.animation-delay]="(i * 0.08) + 's'"
-            (click)="openCard(card)">
+            (click)="openCard(card, $event)">
 
             <div class="card-inner-glow"></div>
 
-            <button class="btn-delete-card" (click)="deleteCard(card, $event)" title="Descartar Carta">
+            <button type="button" class="btn-delete-card" (click)="requestDeleteCard(card, $event)"
+                (mousedown)="$event.stopPropagation()" (mouseup)="$event.stopPropagation()"
+                (pointerdown)="$event.stopPropagation()" (pointerup)="$event.stopPropagation()"
+                (touchstart)="$event.stopPropagation()" (touchend)="$event.stopPropagation()" aria-label="Excluir card"
+                title="Descartar Carta">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M18 6L6 18M6 6l12 12"></path>
                 </svg>
@@ -85,7 +89,8 @@
             </button>
 
             <header class="modal-header">
-                <span class="modal-label">{{ modal.cardType === 'highlight' ? versionService.ui().highlight : versionService.ui().note }}</span>
+                <span class="modal-label">{{ modal.cardType === 'highlight' ? versionService.ui().highlight :
+                    versionService.ui().note }}</span>
                 <h2>{{ modal.bookName }}</h2>
                 <div class="modal-reference">
                     {{versionService.ui().chapter}} {{ modal.chapterNumber }}
@@ -132,6 +137,35 @@
                 </div>
             </div>
 
+        </div>
+    </div>
+    }
+
+    @if (pendingDeleteCard(); as deleteCard) {
+    <div class="delete-card-modal-backdrop" (click)="closeDeleteModal()">
+        <div class="delete-card-modal" role="dialog" aria-modal="true" (click)="$event.stopPropagation()">
+            <h3>{{ versionService.ui().deleteLearning }}</h3>
+            <p>
+                {{ versionService.ui().deleteLearningConfirmation }}
+            </p>
+            <p class="delete-card-target">
+                {{ deleteCard.bookName }} · {{ versionService.ui().chapter }} {{ deleteCard.chapterNumber }}
+            </p>
+
+            <div class="delete-card-actions">
+                <button type="button" class="btn-cancel-delete" (click)="closeDeleteModal()"
+                    [disabled]="isDeletingCard()">
+                    {{ versionService.ui().sageChatDeleteModalCancel }}
+                </button>
+                <button type="button" class="btn-confirm-delete" (click)="confirmDeleteCard()"
+                    [disabled]="isDeletingCard()">
+                    @if (isDeletingCard()) {
+                    {{ versionService.ui().deleting }}
+                    } @else {
+                    {{ versionService.ui().delete }}
+                    }
+                </button>
+            </div>
         </div>
     </div>
     }

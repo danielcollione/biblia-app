@@ -94,6 +94,8 @@ export class HomeBlogPage implements OnInit {
   readonly isDustFading = signal(false); // Controla o momento que a poeira está sumindo
   readonly showAiText = signal(false);
   readonly hasInsightError = signal(false);
+  readonly pendingDeleteCard = signal<DeckCard | null>(null);
+  readonly isDeletingCard = signal(false);
 
   // --- CANVAS DA POEIRA ---
   @ViewChild('dustCanvas') dustCanvas?: ElementRef<HTMLCanvasElement>;
@@ -125,18 +127,57 @@ export class HomeBlogPage implements OnInit {
     this.deckService.loadDeck().subscribe();
   }
 
-  deleteCard(card: any, event: Event) {
+  requestDeleteCard(card: DeckCard, event: Event): void {
+    event.preventDefault();
     event.stopPropagation();
-    if (confirm('Tem certeza que deseja esquecer este pergaminho?')) {
-      if (card.cardType === 'highlight') {
-        this.deckService.deleteHighlight(card.id).subscribe();
-      } else {
-        this.deckService.deleteComment(card.id).subscribe();
-      }
-    }
+
+    const nativeEvent = event as Event & { stopImmediatePropagation?: () => void };
+    nativeEvent.stopImmediatePropagation?.();
+
+    this.pendingDeleteCard.set(card);
   }
 
-  async openCard(card: DeckCard) {
+  closeDeleteModal(): void {
+    if (this.isDeletingCard()) {
+      return;
+    }
+
+    this.pendingDeleteCard.set(null);
+  }
+
+  confirmDeleteCard(): void {
+    const card = this.pendingDeleteCard();
+    if (!card || this.isDeletingCard()) {
+      return;
+    }
+
+    this.isDeletingCard.set(true);
+
+    const request$ = card.cardType === 'highlight'
+      ? this.deckService.deleteHighlight(card.id)
+      : this.deckService.deleteComment(card.id);
+
+    request$.subscribe({
+      next: () => {
+        this.isDeletingCard.set(false);
+        this.pendingDeleteCard.set(null);
+      },
+      error: () => {
+        this.isDeletingCard.set(false);
+      },
+    });
+  }
+
+  async openCard(card: DeckCard, event?: Event) {
+    if (this.pendingDeleteCard()) {
+      return;
+    }
+
+    const target = event?.target as HTMLElement | null;
+    if (target?.closest('.btn-delete-card')) {
+      return;
+    }
+
     this.activeCard.set(card);
     this.cardVerseText.set(null);
     this.cardAiInsight.set(null);

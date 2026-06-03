@@ -25,6 +25,19 @@ export interface PrayerPageDto {
   last: boolean;
 }
 
+export interface PrayerCommentDto {
+  id: string;
+  prayerId: string;
+  userId: string;
+  authorName: string;
+  content: string;
+  createdAt: string;
+}
+
+export interface CreatePrayerCommentRequestDto {
+  content: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class PrayersService {
   private readonly http = inject(HttpClient);
@@ -61,6 +74,24 @@ export class PrayersService {
 
   delete(prayerId: string): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/${prayerId}`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  deleteComment(prayerId: string, commentId: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${prayerId}/comments/${commentId}`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  listComments(prayerId: string): Observable<PrayerCommentDto[]> {
+    return this.http.get<PrayerCommentDto[]>(`${this.apiUrl}/${prayerId}/comments`, {
+      headers: this.buildHeaders(),
+    });
+  }
+
+  createComment(prayerId: string, request: CreatePrayerCommentRequestDto): Observable<PrayerCommentDto> {
+    return this.http.post<PrayerCommentDto>(`${this.apiUrl}/${prayerId}/comments`, request, {
       headers: this.buildHeaders(),
     });
   }

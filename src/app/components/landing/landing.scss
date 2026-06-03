@@ -102,7 +102,7 @@ body {
   padding: 10px;
   font-size: 1.1rem;
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.7);
+  color: white;
   margin-bottom: 40px;
   font-family: Inter, sans-serif;
   text-shadow: 0 2px 5px rgba(0, 0, 0, 0.9);
@@ -1776,12 +1776,17 @@ p.subtitle.animate-reveal {
       text-align: center;
     }
   }
+
+  .main-description {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 }
 
 .epic-transition-divider {
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 400px;
   overflow: hidden; /* Garante que o brilho não vaze */
   border-top: 1px solid #d1a162;
   border-bottom: 1px solid #d1a162;

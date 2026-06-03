@@ -95,7 +95,6 @@
                         <h3>{{ livro.name }}</h3>
                         <p class="author">{{ bibleService.getMetadados(livro.name).resumo ||
                             versionService.ui().libraryBibleBookFallback }}</p>
-                        <span class="category">{{ bibleTestamentLabel(livro.name) }}</span>
                     </div>
                 </div>
             </article>
